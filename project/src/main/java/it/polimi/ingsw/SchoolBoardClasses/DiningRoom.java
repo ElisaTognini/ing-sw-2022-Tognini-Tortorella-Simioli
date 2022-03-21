@@ -20,8 +20,10 @@ public class DiningRoom {
         redStudentsInDiningRoom = new HashSet<Student>();
     }
 
-    /*needs a smoother version of the conditional code - very repetitive
-    * based on color adds student to different sets to count the correct set*/
+    /*needs a cleaner version of the conditional code - very repetitive
+    * based on color adds student to different sets*/
+
+    /*NEEDS METHOD TO CHECK INFLUENCE FOR PROFESSOR ASSIGNIMENT*/
     public void addStudent(Student myStudent) throws IndexOutOfBoundsException{
 
         switch (myStudent.getColor()){

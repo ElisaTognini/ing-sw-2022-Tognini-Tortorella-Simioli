@@ -1,7 +1,6 @@
 package it.polimi.ingsw.SchoolBoardClasses;
 
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.TowerColor;
+import it.polimi.ingsw.Enums.*;
 
 public class SchoolBoard {
 
