@@ -1,4 +1,6 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.BasicElements;
+
+import it.polimi.ingsw.Enums.PawnDiscColor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +19,8 @@ public class Island {
     private Set<Student> blueStudents;
     private Set<Student> redStudents;
 
-
+    /*initializes sets and the islandID is assigned when the board class
+    * instances the island*/
     public Island(int islandID) {
         this.islandID = islandID;
         hostsMotherNature = false;
@@ -29,6 +32,7 @@ public class Island {
         redStudents = new HashSet<Student>();
     }
 
+    /*adds student into each set by color*/
     public void addStudent(Student myStudent){
 
         switch (myStudent.getColor()){
@@ -83,20 +87,28 @@ public class Island {
         return toRet;
     }
 
+    /*sets to true if mother nature is on island to know if island
+    * can be conquered*/
     public void setHostsToTrue(){
         hostsMotherNature = true;
     }
-
     public void setHostsToFalse(){
         hostsMotherNature = false;
+    }
+
+    /**/
+    public boolean checkForMotherNature(){
+        return hostsMotherNature;
     }
 
     /*public Player getOwner(){
         return owner;
     }
 
+    //board assigns owner
     public void getsConquered(Player owner){
         this.owner = owner;
         conqueredIsland = true;
     }*/
 }
+

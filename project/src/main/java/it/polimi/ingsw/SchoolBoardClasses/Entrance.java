@@ -1,4 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.SchoolBoardClasses;
+
+import it.polimi.ingsw.TailoredExceptions.EmptyException;
+import it.polimi.ingsw.BasicElements.Student;
 
 import java.util.ArrayList;
 
@@ -17,7 +20,7 @@ public class Entrance {
         }
     }
 
-    public void removeStudent(int index) throws EmptyException{
+    public void removeStudent(int index) throws EmptyException {
         if(studentsInEntrance.isEmpty()) throw new EmptyException();
         else studentsInEntrance.remove(index);
     }

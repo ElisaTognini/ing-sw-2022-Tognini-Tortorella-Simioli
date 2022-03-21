@@ -1,4 +1,6 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.BasicElements;
+
+import it.polimi.ingsw.Enums.PawnDiscColor;
 
 public class Student {
 

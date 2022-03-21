@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.BasicElements.Student;
+import it.polimi.ingsw.BasicElements.StudentBag;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

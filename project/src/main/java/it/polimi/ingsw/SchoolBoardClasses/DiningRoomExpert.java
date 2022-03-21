@@ -1,6 +1,9 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.SchoolBoardClasses;
 
-public class DiningRoomExpert extends DiningRoom{
+import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.BasicElements.Student;
+
+public class DiningRoomExpert extends DiningRoom {
 
     /* Collect the five sets of students into a map that uses the PawnDiscColor enum as key and
     the HashSet of students as value

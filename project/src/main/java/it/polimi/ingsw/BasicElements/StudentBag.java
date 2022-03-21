@@ -1,4 +1,7 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.BasicElements;
+
+import it.polimi.ingsw.BasicElements.Student;
+import it.polimi.ingsw.Enums.PawnDiscColor;
 
 import java.util.*;
 
@@ -11,6 +14,7 @@ public class StudentBag {
     private Student tempArrayBlue[] = new Student[24];
     private Student tempArrayYellow[] = new Student[24];
 
+    /*generates a list through adding same size arrays for each color*/
     public StudentBag(){
         for(int i=0; i<24; i++){
              tempArrayPink[i] = new Student(PawnDiscColor.PINK);
@@ -29,6 +33,7 @@ public class StudentBag {
 
     }
 
+    /*randomly draws a student*/
     public Student drawStudent(){
 
         Random rand = new Random();
