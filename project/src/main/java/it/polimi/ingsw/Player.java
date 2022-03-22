@@ -11,12 +11,17 @@ public class Player {
     private AssistantCard[] deck;
     private int numberOfCoins; /*only used in expert mode*/
     private SchoolBoard schoolBoard;
+    private Wizards wizard;
 
     public Player(String nickname){
         this.nickname = nickname;
         isWinner = false;
         numberOfCoins = 0;
         schoolBoard = new SchoolBoard();
+    }
+
+    public String getNickname(){
+        return nickname;
     }
 
     /*this method allows player to choose which wizard to have
@@ -27,9 +32,13 @@ public class Player {
 
     /*operations on the deck will be performed so that the
     * player is able to choose which card to play*/
+
+    /* INSERT EXCEPTION: card already played by other player */
     public AssistantCard chooseAssistantCard(){
 
     }
 
-    /*moves students from entrance to either island or dining room*/
+    public Wizards getWizard(){
+        return wizard;
+    }
 }

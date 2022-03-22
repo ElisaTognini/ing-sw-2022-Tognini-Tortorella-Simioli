@@ -2,8 +2,8 @@ package it.polimi.ingsw;
 
 /* starts and ends game, keeps track of turn, chooses first player*/
 
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PlayerNumber;
+import it.polimi.ingsw.BoardClasses.*;
+import it.polimi.ingsw.Enums.*;
 import java.util.*;
 
 public abstract class Game {
@@ -53,6 +53,8 @@ public abstract class Game {
     }
 
     /*chooses number of towers to have based on the number of players*/
+
+    /*
     private void computeNumbOfTowers(){
         if(this.numberOfPlayers.equals(PlayerNumber.THREE)){
             this.maxNumberOfTowers = 6;
@@ -60,4 +62,5 @@ public abstract class Game {
         else
             this.maxNumberOfTowers = 8;
     }
+     */
 }
