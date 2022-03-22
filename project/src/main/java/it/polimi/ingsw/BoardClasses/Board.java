@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.BoardClasses;
 import it.polimi.ingsw.BasicElements.*;
 import java.util.LinkedList;
 
