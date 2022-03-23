@@ -1,6 +1,8 @@
 package it.polimi.ingsw.BasicElements;
 
 import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Player;
+import it.polimi.ingsw.StudentContainer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,82 +11,29 @@ import java.util.Set;
 
 public class Island {
 
-    //private Player owner;
+    private Player owner;
     private int islandID;
     private boolean hostsMotherNature;
     private boolean conqueredIsland;
-    private Set<Student> pinkStudents;
-    private Set<Student> greenStudents;
-    private Set<Student> yellowStudents;
-    private Set<Student> blueStudents;
-    private Set<Student> redStudents;
+    private StudentContainer container;
 
-    /*initializes sets and the islandID is assigned when the board class
-    * instances the island*/
+    /*student container data structure is used*/
     public Island(int islandID) {
         this.islandID = islandID;
         hostsMotherNature = false;
         conqueredIsland = false;
-        pinkStudents = new HashSet<Student>();
-        greenStudents = new HashSet<Student>();
-        yellowStudents = new HashSet<Student>();
-        blueStudents = new HashSet<Student>();
-        redStudents = new HashSet<Student>();
+        container = new StudentContainer();
     }
 
     /*adds student into each set by color*/
     public void addStudent(Student myStudent){
-
-        switch (myStudent.getColor()){
-
-            case RED:
-                redStudents.add(myStudent);
-                break;
-            case YELLOW:
-                yellowStudents.add(myStudent);
-                break;
-            case PINK:
-                pinkStudents.add(myStudent);
-                break;
-            case BLUE:
-                blueStudents.add(myStudent);
-                break;
-            case GREEN:
-                greenStudents.add(myStudent);
-                break;
-        }
-
+        container.addStudent(myStudent);
     }
 
     //this method returns the number of students of the color given as parameter that are on the island
     //the color taken as parameter is given by the board and is the color of a professor
     public int getInfluenceByColor(PawnDiscColor color){
-        int toRet = 0;
-        switch (color){
-
-            case RED:
-                toRet = redStudents.size();
-                break;
-            case YELLOW:
-                toRet = yellowStudents.size();
-                break;
-            case PINK:
-                toRet = pinkStudents.size();
-                break;
-            case BLUE:
-                toRet = blueStudents.size();
-                break;
-            case GREEN:
-                toRet = greenStudents.size();
-                break;
-        }
-
-        //if player is the owner we need to add 1 to the influence
-        //if (owner.equals(game.getCurrentPlayer())){
-            toRet++;
-        //}
-
-        return toRet;
+        return container.getInfluence(color);
     }
 
     /*sets to true if mother nature is on island to know if island
@@ -96,12 +45,12 @@ public class Island {
         hostsMotherNature = false;
     }
 
-    /**/
+    /*returns true if island hosts mothernature*/
     public boolean checkForMotherNature(){
         return hostsMotherNature;
     }
 
-    /*public Player getOwner(){
+    public Player getOwner(){
         return owner;
     }
 
@@ -109,6 +58,6 @@ public class Island {
     public void getsConquered(Player owner){
         this.owner = owner;
         conqueredIsland = true;
-    }*/
+    }
 }
 

@@ -6,24 +6,21 @@ import java.util.*;
 
 public class AssistantCardDeck {
     private Player owner;
-    //private Wizards wizard;
     private ArrayList<AssistantCard> cards;
 
-    public AssistantCardDeck(/*Wizards wizard*/){
+    public AssistantCardDeck(){
         cards = new ArrayList<AssistantCard>();
-        //this.wizard = wizard;
     }
 
     /*the card IDs go from 1 to 10 for each wizard:
-    * This class uses a JSON file to instantiate the assistant cards in an automated way
-    * si però non riesco manco a fare gli import perchè in qualche modo c'entra Maven maNON CAPISCO*/
+    * This class uses a JSON file to instantiate the assistant cards in an automated way*/
     private void instantiateCards(){
 
     }
 
     /*this method is called when player in turn picks an assistant card
     * it removes the card from the deck and returns a reference to the chosen card;
-    * it throws an InvalidCardException if the loop ever ends, which means either the card was not found or the
+    * it throws an InvalidCardActionException if the loop ever ends, which means either the card was not found or the
     * given ID is invalid*/
     public AssistantCard drawCard(int cardID) throws InvalidCardActionException{
         AssistantCard toRet;

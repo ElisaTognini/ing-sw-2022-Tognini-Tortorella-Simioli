@@ -13,8 +13,9 @@ public abstract class Game {
     private GameMode mode;
     private int maxNumberOfTowers;
 
+    /*
     /*where to retrieve the information about the gamemode?
-    * using setter methods assuming the controller enters them*/
+    * using setter methods assuming the controller enters them
     public Game(PlayerNumber numberOfPlayers, GameMode mode){
         this.numberOfPlayers = numberOfPlayers;
         this.mode = mode;
@@ -47,7 +48,7 @@ public abstract class Game {
     }
 
     /*this method will be implemented when we are sure on how to communicate with
-    * the controller/view*/
+    * the controller/view
     public void startGame(){
 
     }
@@ -62,5 +63,5 @@ public abstract class Game {
         else
             this.maxNumberOfTowers = 8;
     }
-     */
+     */ 
 }
