@@ -6,16 +6,15 @@ import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import java.util.*;
 
-public abstract class Game {
+public class Game {
     private Board board;
     private List<Player> playerList;
     private PlayerNumber numberOfPlayers;
     private GameMode mode;
     private int maxNumberOfTowers;
 
-    /*
     /*where to retrieve the information about the gamemode?
-    * using setter methods assuming the controller enters them
+    * using setter methods assuming the controller enters them*/
     public Game(PlayerNumber numberOfPlayers, GameMode mode){
         this.numberOfPlayers = numberOfPlayers;
         this.mode = mode;
@@ -32,23 +31,19 @@ public abstract class Game {
         else if(numberOfPlayers.equals(PlayerNumber.TEAMS) && mode.equals(GameMode.EXPERT)){
             board = new ExpertTeamsBoard();
         }
-        for(int i=0; i<computeSize(numberOfPlayers);i++){
-            playerList.add(new Player(nickname)); //player's nickname gotten in input
-        }
     }
 
-    private int computeSize(PlayerNumber numberOfPlayers){
-        if(numberOfPlayers.equals(PlayerNumber.TWO)) return 2;
-        else if(numberOfPlayers.equals(PlayerNumber.THREE)) return 3;
-        else return 4;
-    }
     //information retrieving
     public GameMode getMode() {
         return mode;
     }
 
+    public PlayerNumber getNumberOfPlayers(){
+        return numberOfPlayers;
+    }
+
     /*this method will be implemented when we are sure on how to communicate with
-    * the controller/view
+    * the controller/view*/
     public void startGame(){
 
     }
@@ -63,5 +58,5 @@ public abstract class Game {
         else
             this.maxNumberOfTowers = 8;
     }
-     */ 
+     */
 }
