@@ -32,6 +32,7 @@ public class Island {
 
     //this method returns the number of students of the color given as parameter that are on the island
     //the color taken as parameter is given by the board and is the color of a professor
+    /*adding 1 to the influence if the island is conquered by the current player: to be implemented*/
     public int getInfluenceByColor(PawnDiscColor color){
         return container.getInfluence(color);
     }

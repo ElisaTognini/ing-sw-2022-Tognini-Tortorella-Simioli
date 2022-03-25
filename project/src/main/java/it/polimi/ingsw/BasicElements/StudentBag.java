@@ -7,7 +7,7 @@ import java.util.*;
 
 
 public class StudentBag {
-    private List<Student> studentList;
+    protected List<Student> studentList;
     private Student tempArrayPink[] = new Student[24];
     private Student tempArrayRed[] = new Student[24];
     private Student tempArrayGreen[] = new Student[24];

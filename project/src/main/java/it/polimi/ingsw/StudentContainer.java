@@ -5,7 +5,7 @@ import java.util.*;
 
 /*utility data structure which is a hashmap that has
 * - the color enum values as key
-* - the hashsets of students as values*/
+* - the arraylists of students as values*/
 
 public class StudentContainer {
 
