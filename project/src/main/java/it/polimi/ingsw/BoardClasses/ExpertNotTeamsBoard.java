@@ -1,4 +1,4 @@
 package it.polimi.ingsw.BoardClasses;
 
-public class ExpertNotTeamsBoard extends Board{
+public class ExpertNotTeamsBoard extends SimpleNotTeamsBoard{
 }
