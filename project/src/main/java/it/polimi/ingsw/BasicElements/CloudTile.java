@@ -22,7 +22,7 @@ public class CloudTile {
 
     /*checks if cloud has students on it - if all positions of the array are NULL, the
     * cloud tile is empty*/
-    private boolean isCloudEmpty(){
+    public boolean isCloudEmpty(){
         for(int i = 0; i<studentsOnCloud.length; i++){
             if(studentsOnCloud[i] != null)
                 return false;

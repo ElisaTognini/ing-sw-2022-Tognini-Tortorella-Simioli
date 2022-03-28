@@ -17,7 +17,7 @@ public class Player {
         this.nickname = nickname;
         isWinner = false;
         numberOfCoins = 0;
-        schoolBoard = new SchoolBoard();
+        //schoolBoard = new SchoolBoard();
     }
 
     public String getNickname(){
@@ -26,17 +26,17 @@ public class Player {
 
     /*this method allows player to choose which wizard to have
     * as an assistant regarding the cards*/
-    public Wizards choosesWizard(){
+   /* public Wizards choosesWizard(){
 
-    }
+    }*/
 
     /*operations on the deck will be performed so that the
     * player is able to choose which card to play*/
 
     /* INSERT EXCEPTION: card already played by other player */
-    public AssistantCard chooseAssistantCard(){
+    /*public AssistantCard chooseAssistantCard(){
 
-    }
+    }*/
 
     public Wizards getWizard(){
         return wizard;
