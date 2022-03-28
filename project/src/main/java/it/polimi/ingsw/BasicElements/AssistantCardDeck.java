@@ -7,15 +7,26 @@ import java.util.*;
 public class AssistantCardDeck {
     private Player owner;
     private ArrayList<AssistantCard> cards;
+    private final int cardNumber = 10;
 
-    public AssistantCardDeck(){
+    public AssistantCardDeck(Player owner){
+        this.owner = owner;
         cards = new ArrayList<AssistantCard>();
+        this.instantiateCards();
     }
 
     /*the card IDs go from 1 to 10 for each wizard:
-    * This class uses a JSON file to instantiate the assistant cards in an automated way*/
+    * the pattern for IDs and power factor is portrayed by the two loops*/
     private void instantiateCards(){
-
+        int k = 1;
+        int g = 0;
+        for(int i=1; i<=5; i++){
+            for(int j=k; j<k+2; j++){
+                cards.add(new AssistantCard(j, i));
+                g = j;
+            }
+            k = g+1;
+        }
     }
 
     /*this method is called when player in turn picks an assistant card
@@ -32,5 +43,10 @@ public class AssistantCardDeck {
             }
         }
         throw new InvalidCardActionException();
+    }
+
+    /*returns owner*/
+    public Player getOwner(){
+        return owner;
     }
 }

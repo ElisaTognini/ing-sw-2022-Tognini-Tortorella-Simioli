@@ -1,4 +1,4 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.BasicElements.StudentBag;

@@ -5,7 +5,7 @@ public final class AssistantCard {
     int cardValue; //card's power factor
     int motherNatureMovements;
 
-    public AssistantCard(int cardValue, int motherNatureMovements /*, Wizards wizard*/){
+    public AssistantCard(int cardValue, int motherNatureMovements){
         this.cardValue = cardValue;
         this.motherNatureMovements = motherNatureMovements;
     }

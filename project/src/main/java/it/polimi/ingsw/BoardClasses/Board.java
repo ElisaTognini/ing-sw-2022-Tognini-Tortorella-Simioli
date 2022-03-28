@@ -2,7 +2,7 @@ package it.polimi.ingsw.BoardClasses;
 import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.PlayerNumber;
-import it.polimi.ingsw.Enums.TurnFlow;
+import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
@@ -68,6 +68,7 @@ public abstract class Board {
 
     }
 
+    /*chooses the very first player in the game*/
     protected Player chooseFirstPlayer(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(players.size());
