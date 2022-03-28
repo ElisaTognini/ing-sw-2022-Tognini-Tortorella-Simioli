@@ -39,14 +39,10 @@ public class Island {
 
     /*sets to true if mother nature is on island to know if island
     * can be conquered*/
-    public void setHostsToTrue(){
-        hostsMotherNature = true;
-    }
-    public void setHostsToFalse(){
-        hostsMotherNature = false;
-    }
+    public boolean setHostsToTrue(){ return hostsMotherNature = true; }
+    public boolean setHostsToFalse(){ return hostsMotherNature = false; }
 
-    /*returns true if island hosts mothernature*/
+    /*returns true if island hosts mother nature*/
     public boolean checkForMotherNature(){
         return hostsMotherNature;
     }

@@ -4,7 +4,6 @@ import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.TailoredExceptions.*;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class CloudTileTest {
