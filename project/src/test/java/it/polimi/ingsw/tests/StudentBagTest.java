@@ -2,15 +2,17 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.BasicElements.StudentBag;
+import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.TailoredExceptions.EmptyException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class StudentBagTest {
 
-    private StudentBag bag = new StudentBag();
+    private StudentBag bag = new StudentBag(120);
 
     @Test
-    public void testDraw(){
+    public void testDraw() throws EmptyException{
 
         Student stud;
         int countP=0, countY=0, countG=0, countR=0, countB=0;
@@ -48,6 +50,12 @@ public class StudentBagTest {
         assertEquals(24, countR);
         assertEquals(24, countY);
         assertEquals(24, countG);
+
+        try{
+            bag.drawStudent();
+        }catch (EmptyException e){
+            System.out.println("exception caught!");
+        }
     }
 
 }

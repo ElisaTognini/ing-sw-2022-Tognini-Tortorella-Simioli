@@ -9,7 +9,7 @@ public class SimpleNotTeamsBoard extends Board{
 
     public SimpleNotTeamsBoard(){
         super();
-        this.bag = new StudentBag();
+        //this.bag = new StudentBag();
         this.currentlyPlaying = chooseFirstPlayer();
         // this.numberOfPlayers = Game.getNumberOfPlayers();
         if(numberOfPlayers.equals(numberOfPlayers.THREE)) clouds.add(new CloudTile(numberOfPlayers.convert(numberOfPlayers)));
@@ -19,7 +19,7 @@ public class SimpleNotTeamsBoard extends Board{
         super.setup();
         for(int i = 0; i < numberOfPlayers.convert(numberOfPlayers); i++){
             for(int j = 0; j <= numberOfPlayers.convert(numberOfPlayers); j++){
-                islandPlacement.get(i).addStudent(bag.drawStudent());
+                //islandPlacement.get(i).addStudent(bag.drawStudent());
             }
         }
     }
