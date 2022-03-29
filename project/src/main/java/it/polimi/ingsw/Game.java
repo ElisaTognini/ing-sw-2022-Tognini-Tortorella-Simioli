@@ -6,11 +6,11 @@ import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import java.util.*;
 
-public class Game {
+public abstract class Game {
     private Board board;
     private List<Player> playerList;
-    private PlayerNumber numberOfPlayers;
-    private GameMode mode;
+    private static PlayerNumber numberOfPlayers;
+    private static GameMode mode;
     private int maxNumberOfTowers;
 
     /*where to retrieve the information about the gamemode?
@@ -34,11 +34,11 @@ public class Game {
     }
 
     //information retrieving
-    public GameMode getMode() {
+    public static GameMode getMode() {
         return mode;
     }
 
-    public PlayerNumber getNumberOfPlayers(){
+    public static PlayerNumber getNumberOfPlayers(){
         return numberOfPlayers;
     }
 

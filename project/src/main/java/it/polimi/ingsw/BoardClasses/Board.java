@@ -3,6 +3,7 @@ import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.PlayerNumber;
 import it.polimi.ingsw.Enums.*;
+import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
@@ -12,44 +13,28 @@ import java.util.Random;
 
 public abstract class Board {
 
-    protected LinkedList<Island> islandPlacement;
-    protected StudentBag bag;
-    protected MotherNature motherNature;
-    protected final int islandNumber = 12;
-    protected Player currentlyPlaying;
-    protected TurnFlow currentStage;
-    protected PlayerNumber numberOfPlayers;
-    protected ArrayList<CloudTile> clouds;
-    protected ArrayList<Player> players;
-    protected ArrayList<SchoolBoard> schoolBoards;
-    protected ArrayList<AssistantCardDeck> decks;
-    protected ArrayList<Professor> professors;
+    private GameMode mode;
+    private PlayerNumber numberOfPlayers;
+    private BoardInterface boardInterface;
+    protected static TurnManager turnManager;
 
     public Board(){
-        this.clouds = new ArrayList<CloudTile>();
-        clouds.add(new CloudTile(0));
-        clouds.add(new CloudTile(1));
-        this.professors = new ArrayList<Professor>();
-        for (PawnDiscColor color : PawnDiscColor.values()) {
-            professors.add(new Professor(color));
+        /*board interface implementation changes based on gamemode*/
+        mode = Game.getMode();
+        numberOfPlayers = Game.getNumberOfPlayers();
+
+        if(mode.equals(GameMode.SIMPLE)){
+            boardInterface = new BoardInterface();
         }
-        this.motherNature = new MotherNature();
-        this.islandPlacement = new LinkedList<Island>();
-        placeIslands();
-        this.decks = new ArrayList<AssistantCardDeck>();
-        // basing off the number of players, we will have dedicated decks
-        this.schoolBoards = new ArrayList<SchoolBoard>();
-        // as before,basing off the number of players, we will have as many school boards as they are
-        this.currentStage = TurnFlow.BEGINS_TURN;
-        
+        else if(mode.equals(GameMode.EXPERT)){
+            boardInterface = new BoardInterfaceExpert();
+        }
     }
 /* for each game mode, setup includes:
 * - placing mother nature on a random island tile
 * - add one student on each island except for the sixth island from mother nature */
     public void setup(){
-        motherNature.setPosition(randomPlaceMotherNature());
-        islandPlacement.get(motherNature.getPosition()).setHostsToTrue();
-        /* ten students must be extracted randomly and placed on the islands, skipping the sixth from MN*/
+
     }
 
     public void roundSetup(){
@@ -62,31 +47,15 @@ public abstract class Board {
 
     protected void placeIslands(){
 
-        for (int i = 0; i < islandNumber; i++){
-            islandPlacement.add(new Island(i));
-        }
-
     }
 
     /*chooses the very first player in the game*/
     protected Player chooseFirstPlayer(){
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(players.size());
-        Player firstPlayer = players.get(randomIndex);
 
-        return firstPlayer;
     }
 
     protected int randomPlaceMotherNature(){
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(islandNumber);
-        return randomIndex;
+
     }
-
-    /* these methods are supposed to be called directly by the player */
-
-    public void picksCard(int cardID, String nickname){}
-    public void moveStudents(String nickname, char[] colors, char[] islandOrDiningRoom, int[] islandID){}
-    public void picksCloudTile(String nickname, int cloudNumber){}
 
 }

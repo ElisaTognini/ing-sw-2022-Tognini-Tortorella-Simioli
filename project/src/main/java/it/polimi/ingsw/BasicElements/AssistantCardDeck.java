@@ -38,11 +38,18 @@ public class AssistantCardDeck {
         for(AssistantCard c : cards){
             if (c.getAssistantCardID() == cardID){
                 toRet = cards.get(cards.indexOf(c));
-                cards.remove(cards.indexOf(c));
                 return toRet;
             }
         }
         throw new InvalidCardActionException();
+    }
+
+    public void removeCard(int cardID){
+        for(AssistantCard c : cards){
+            if (c.getAssistantCardID() == cardID) {
+                cards.remove(cards.indexOf(c));
+            }
+        }
     }
 
     /*returns owner*/
