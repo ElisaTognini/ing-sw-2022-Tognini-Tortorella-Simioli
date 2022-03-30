@@ -12,12 +12,14 @@ public class Player {
     private int numberOfCoins; /*only used in expert mode*/
     private SchoolBoard schoolBoard;
     private Wizards wizard;
+    private boolean cardPicked;
 
     public Player(String nickname){
         this.nickname = nickname;
         isWinner = false;
         numberOfCoins = 0;
         //schoolBoard = new SchoolBoard();
+        cardPicked = false;
     }
 
     public String getNickname(){
@@ -41,4 +43,10 @@ public class Player {
     public Wizards getWizard(){
         return wizard;
     }
+
+    public boolean getCardPicked(){ return cardPicked; }
+
+    public void setCardPickedToTrue(){ cardPicked = true; }
+
+    public void setCardPickedToFalse(){ cardPicked = false; }
 }
