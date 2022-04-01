@@ -1,36 +1,38 @@
 package it.polimi.ingsw.BoardClasses;
 
+import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Player;
 import java.util.*;
 
+
 public class TurnManager {
-    public static TurnFlow currentState;
+    public TurnFlow currentState;
     private ArrayList<Player> players;
     private ArrayList<Player> sortedPlayers;
-    private static Player currentPlayer;
-    private SortedMap<Player, Integer> cardToPlayer;
+    private Player currentPlayer;
+    private ArrayList<AssistantCard> cards;
 
     /* playerList is based on the order in which each player enters the lobby */
     public TurnManager(ArrayList<Player> playerList){
         players = new ArrayList<>();
         sortedPlayers = new ArrayList<>();
         players.addAll(playerList);
-        cardToPlayer = new TreeMap<>();
+        cards = new ArrayList<>();
     }
 
     /* returns the current state of the turn */
-    public static TurnFlow getCurrentState(){
+    public TurnFlow getCurrentState(){
         return currentState;
     }
 
     /* returns the player who is currently playing */
-    public static Player getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
     /* a step forwards in the turn */
-    public static void changeState(TurnFlow state){
+    public void changeState(TurnFlow state){
         currentState = state;
     }
 
@@ -53,28 +55,35 @@ public class TurnManager {
     }
 
 
-    /*ALL CHECKS AND EXCEPTION FOR INVALID CARD ACTIONS ARE HANDLED
-    * BY THE BOARD CLASS - A CARD IS NOT STORED IF IT IS NOT VALID, AND THE TURN ONLY MOVES FORWARD
-    * WHEN CARD IS STORED*/
-    public boolean checkForDupe(int cardID){
-        if(!cardToPlayer.containsValue(cardID)) return false;
+    public boolean checkForDupe(AssistantCard card){
+        if(!cards.contains(card)) return false;
         return true;
         //true if dupe is present, false otherwise
     }
 
     /*when this method is called, the round moves forward (if all players have picked a card) */
-    public void storeCards(int cardID){
-        cardToPlayer.put(currentPlayer, cardID);
+    public void storeCards(AssistantCard card){
+        cards.add(card);
         currentPlayer.setCardPickedToTrue();
 
-        if(cardToPlayer.size() == players.size()){
+        if(cards.size() == players.size()){
             changeState(TurnFlow.CARD_PICKED);
+            sortActionPhase();
         }
 
         else
             currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
 
     }
+
+    /* this method reorders the cards in "cards" ArrayList in ascending order */
+    /* so it's possible to compute the order in which every player enters the Action Phase */
+    /* and passes the first player of the next planning phase to the computeTurnOrder method */
+    private void sortActionPhase(){
+        Collections.sort(cards);
+        computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
+    }
+
 
     public void startRound(){
         for(Player p : players) p.setCardPickedToFalse();

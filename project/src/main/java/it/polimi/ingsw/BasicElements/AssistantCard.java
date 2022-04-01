@@ -1,13 +1,17 @@
 package it.polimi.ingsw.BasicElements;
 
-public final class AssistantCard {
+import it.polimi.ingsw.Player;
+
+public final class AssistantCard implements Comparable{
 
     int cardValue; //card's power factor
     int motherNatureMovements;
+    private Player owner;
 
-    public AssistantCard(int cardValue, int motherNatureMovements){
+    public AssistantCard(int cardValue, int motherNatureMovements, Player owner){
         this.cardValue = cardValue;
         this.motherNatureMovements = motherNatureMovements;
+        this.owner = owner;
     }
 
     public int getAssistantCardID(){
@@ -25,4 +29,13 @@ public final class AssistantCard {
         else return ((AssistantCard) other).cardValue == this.cardValue;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        AssistantCard o1 = (AssistantCard) o;
+        return this.cardValue - o1.cardValue;
+    }
+
+    public Player getOwner(){
+        return owner;
+    }
 }

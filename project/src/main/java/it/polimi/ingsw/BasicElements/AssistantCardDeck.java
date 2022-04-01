@@ -22,7 +22,7 @@ public class AssistantCardDeck {
         int g = 0;
         for(int i=1; i<=5; i++){
             for(int j=k; j<k+2; j++){
-                cards.add(new AssistantCard(j, i));
+                cards.add(new AssistantCard(j, i, owner));
                 g = j;
             }
             k = g+1;
