@@ -4,6 +4,7 @@ import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.StudentContainer;
+import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 public class DiningRoomExpert extends DiningRoom {
 
@@ -24,5 +25,16 @@ public class DiningRoomExpert extends DiningRoom {
             return true;
         }
         return false;
+    }
+
+    /* expert mode cards can remove students from this section, adding a method
+    * to handle that as part of a Strategy pattern */
+    public Student removeStudentByColor(PawnDiscColor color) throws EmptyException{
+        if(super.influenceForProf(color) < 1){
+            throw new EmptyException();
+        }
+        else{
+            return super.getContainer().retrieveStudent(color);
+        }
     }
 }

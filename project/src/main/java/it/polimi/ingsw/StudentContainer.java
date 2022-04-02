@@ -49,4 +49,9 @@ public class StudentContainer {
 
         return toReturn;
     }
+
+    public int size(){
+        return pinkStudentsInDiningRoom.size() + yellowStudentsInDiningRoom.size() + redStudentsInDiningRoom.size()
+                + greenStudentsInDiningRoom.size() + blueStudentsInDiningRoom.size();
+    }
 }

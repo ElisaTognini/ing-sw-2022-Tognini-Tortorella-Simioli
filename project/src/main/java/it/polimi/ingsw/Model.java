@@ -6,16 +6,16 @@ import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import java.util.*;
 
-public abstract class Game {
+public class Model {
     private Board board;
     private List<Player> playerList;
-    private static PlayerNumber numberOfPlayers;
-    private static GameMode mode;
+    private final PlayerNumber numberOfPlayers;
+    private final GameMode mode;
     private int maxNumberOfTowers;
 
     /*where to retrieve the information about the gamemode?
     * using setter methods assuming the controller enters them*/
-    public Game(PlayerNumber numberOfPlayers, GameMode mode){
+    public Model(PlayerNumber numberOfPlayers, GameMode mode){
         this.numberOfPlayers = numberOfPlayers;
         this.mode = mode;
         playerList = new ArrayList<Player>();

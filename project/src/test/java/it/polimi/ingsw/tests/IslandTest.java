@@ -24,9 +24,9 @@ public class IslandTest {
 
     @Test
     public void testHostsMotherNature(){
-        assertEquals(true, islandToTest.setHostsToTrue());
+        assertEquals(true, islandToTest.getHost());
         assertEquals(true, islandToTest.checkForMotherNature());
-        assertEquals(false, islandToTest.setHostsToFalse());
+        assertEquals(false, islandToTest.getHost());
         assertEquals(false, islandToTest.checkForMotherNature());
     }
 

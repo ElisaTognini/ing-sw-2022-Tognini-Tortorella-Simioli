@@ -6,15 +6,17 @@ public class CloudTile {
 
     /*the array stores the three students currently on the cloud
     * the ID is given when the board class instances the cloud*/
-    Student[] studentsOnCloud;
-    int cloudID;
+    private Student[] studentsOnCloud;
+    private final int cloudID;
+    private final int numberOfStudents;
 
     /*the array is initialized with null values to indicate that no students
     * have been added yet*/
-    public CloudTile(int cloudID){
+    public CloudTile(int cloudID, int numberOfStudents){
         this.cloudID = cloudID;
+        this.numberOfStudents = numberOfStudents;
 
-        studentsOnCloud = new Student[3];
+        studentsOnCloud = new Student[numberOfStudents];
         for(int i=0; i<studentsOnCloud.length; i++){
             studentsOnCloud[i] = null;
         }
@@ -46,7 +48,7 @@ public class CloudTile {
     /*copies the current state of the students into a local array that is then
     * returned, and resets the attribute array to null*/
     public Student[] retrieveFromCloud() throws EmptyException{
-        Student toReturn[] = new Student[3];
+        Student toReturn[] = new Student[numberOfStudents];
 
         if(isCloudEmpty()){
             throw new EmptyException();

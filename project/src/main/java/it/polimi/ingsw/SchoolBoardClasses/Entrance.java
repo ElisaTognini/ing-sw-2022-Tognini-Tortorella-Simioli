@@ -1,5 +1,7 @@
 package it.polimi.ingsw.SchoolBoardClasses;
 
+import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.StudentContainer;
 import it.polimi.ingsw.TailoredExceptions.EmptyException;
 import it.polimi.ingsw.BasicElements.Student;
 
@@ -7,22 +9,22 @@ import java.util.ArrayList;
 
 public class Entrance {
 
-    private ArrayList<Student> studentsInEntrance;
+    private StudentContainer studentsInEntrance;
 
     public Entrance() {
-        this.studentsInEntrance = new ArrayList<Student>();
+        this.studentsInEntrance = new StudentContainer();
     }
 
     public void addStudent(Student myStudent) throws ArrayIndexOutOfBoundsException{
         if (studentsInEntrance.size()>=7) throw new ArrayIndexOutOfBoundsException();
         else {
-            studentsInEntrance.add(myStudent);
+            studentsInEntrance.addStudent(myStudent);
         }
     }
 
-    public void removeStudent(int index) throws EmptyException {
-        if(studentsInEntrance.isEmpty()) throw new EmptyException();
-        else studentsInEntrance.remove(index);
+    public Student removeStudent(PawnDiscColor color) throws EmptyException {
+        if(studentsInEntrance.size() == 0) throw new EmptyException();
+        return studentsInEntrance.retrieveStudent(color);
     }
 
 }

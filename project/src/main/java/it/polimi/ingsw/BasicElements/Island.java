@@ -12,10 +12,11 @@ import java.util.Set;
 public class Island {
 
     private Player owner;
-    private int islandID;
+    private final int islandID;
     private boolean hostsMotherNature;
     private boolean conqueredIsland;
     private StudentContainer container;
+    private boolean noEntrytile;
 
     /*student container data structure is used*/
     public Island(int islandID) {
@@ -23,6 +24,7 @@ public class Island {
         hostsMotherNature = false;
         conqueredIsland = false;
         container = new StudentContainer();
+        noEntrytile = false;
     }
 
     /*adds student into each set by color*/
@@ -39,13 +41,21 @@ public class Island {
 
     /*sets to true if mother nature is on island to know if island
     * can be conquered*/
-    public boolean setHostsToTrue(){ return hostsMotherNature = true; }
-    public boolean setHostsToFalse(){ return hostsMotherNature = false; }
+    public void setHostsToTrue(){ hostsMotherNature = true; }
+    public void setHostsToFalse(){ hostsMotherNature = false; }
+    public boolean getHost(){ return hostsMotherNature; }
 
     /*returns true if island hosts mother nature*/
-    public boolean checkForMotherNature(){
-        return hostsMotherNature;
-    }
+    public boolean checkForMotherNature(){ return hostsMotherNature; }
+
+    /* sets to true if an island has got a no entry tile */
+    public void setNoEntrytileToTrue(){ noEntrytile = true; }
+
+    /* sets to false if an island hasn't got a no entry tile on it */
+    public void setNoEntrytileToFalse(){ noEntrytile = false; }
+
+    /* returns true if an island is blocked by a No Entry Tile (Expert Mode) */
+    public boolean isANoEntryTile(){ return noEntrytile; }
 
     public Player getOwner(){
         return owner;
@@ -56,5 +66,15 @@ public class Island {
         this.owner = owner;
         conqueredIsland = true;
     }
+
+    public int getIslandID(){
+        return islandID;
+    }
+
+    public boolean checkIfConquered(){ return conqueredIsland;}
+
+    public void setConquered(){conqueredIsland = true;}
+    public void setNotConquered(){conqueredIsland = false;}
+
 }
 

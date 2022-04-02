@@ -5,8 +5,9 @@ import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Player;
 import java.util.*;
 
+/* this class manages the turn/round flow for both the Planning and Action Phases, based on the cards played */
 
-public class TurnManager {
+public class RoundManager {
     public TurnFlow currentState;
     private ArrayList<Player> players;
     private ArrayList<Player> sortedPlayers;
@@ -14,7 +15,7 @@ public class TurnManager {
     private ArrayList<AssistantCard> cards;
 
     /* playerList is based on the order in which each player enters the lobby */
-    public TurnManager(ArrayList<Player> playerList){
+    public RoundManager(ArrayList<Player> playerList){
         players = new ArrayList<>();
         sortedPlayers = new ArrayList<>();
         players.addAll(playerList);

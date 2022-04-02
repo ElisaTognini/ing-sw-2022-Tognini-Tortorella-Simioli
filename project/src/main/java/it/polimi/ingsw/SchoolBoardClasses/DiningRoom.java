@@ -27,4 +27,8 @@ public class DiningRoom {
     public int influenceForProf(PawnDiscColor color){
         return container.getInfluence(color);
     }
+
+    public StudentContainer getContainer(){
+        return container;
+    }
 }
