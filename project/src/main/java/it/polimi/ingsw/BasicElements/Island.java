@@ -3,6 +3,7 @@ package it.polimi.ingsw.BasicElements;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.StudentContainer;
+import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,7 @@ public class Island {
     private boolean conqueredIsland;
     private StudentContainer container;
     private boolean noEntryTile;
+    private int numberOfTowers;
 
     /*student container data structure is used*/
     public Island(int islandID) {
@@ -25,11 +27,16 @@ public class Island {
         conqueredIsland = false;
         container = new StudentContainer();
         noEntryTile = false;
+        numberOfTowers = 0;
     }
 
     /*adds student into each set by color*/
     public void addStudent(Student myStudent){
         container.addStudent(myStudent);
+    }
+    public Student removeStudent(PawnDiscColor color) throws EmptyException{
+        if(container.size() == 0) throw new EmptyException();
+        return container.retrieveStudent(color);
     }
 
     //this method returns the number of students of the color given as parameter that are on the island
@@ -73,8 +80,13 @@ public class Island {
 
     public boolean checkIfConquered(){ return conqueredIsland;}
 
-    public void setConquered(){conqueredIsland = true;}
-    public void setNotConquered(){conqueredIsland = false;}
+    public void increaseNumberOfTowers(int number){
+        numberOfTowers += number;
+    }
+
+    public int getNumberOfTowers(){
+        return numberOfTowers;
+    }
 
 }
 

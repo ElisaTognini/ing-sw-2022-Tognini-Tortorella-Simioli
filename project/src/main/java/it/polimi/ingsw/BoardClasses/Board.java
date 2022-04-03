@@ -112,7 +112,7 @@ public class Board {
     public void moveMotherNature(int movements){
         int position = motherNature.getPosition();
         islands.get(position).setHostsToFalse();
-        motherNature.setPosition((motherNature.getPosition() + movements) % 12);
+        motherNature.setPosition((motherNature.getPosition() + movements) % islands.size());
         islands.get(motherNature.getPosition()).setHostsToTrue();
     }
 
@@ -150,7 +150,7 @@ public class Board {
                 }
                 if(islands.get(motherNature.getPosition()).checkIfConquered()){
                     if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())){
-                        sum = sum +1;
+                        sum = sum + islands.get(motherNature.getPosition()).getNumberOfTowers();
                     }
                 }
                 if(sum > maxSum){
@@ -164,7 +164,7 @@ public class Board {
             islands.get(motherNature.getPosition()).getsConquered(conqueror);
             for(SchoolBoard sb: schoolBoards){
                 if(sb.getOwner().getNickname().equals(nickname)){
-                    sb.getTowerSection().towerToIsland();
+                    sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
                 }
             }
 
@@ -176,14 +176,47 @@ public class Board {
             if (!islands.get(motherNature.getPosition()).getOwner().equals(nickname)) {
                 for(SchoolBoard sb: schoolBoards){
                     if(islands.get(motherNature.getPosition()).getOwner().equals(sb.getOwner())){
-                        sb.getTowerSection().returnTower();
+                        sb.getTowerSection().returnTowers(islands.get(motherNature.getPosition()).getNumberOfTowers());
                     }
                 }
             }
         }
     }
 
+    public void checkForMerge(String nickname) throws EmptyException {
+        if(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().equals(nickname)){
+            if(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().equals(nickname)){
+                merge(motherNature.getPosition(), (motherNature.getPosition() - 1)%islands.size(),
+                        (motherNature.getPosition() + 1)%islands.size());
+            }
+            merge(motherNature.getPosition(), (motherNature.getPosition() - 1)%islands.size());
+        }
+        if(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().equals(nickname)){
+            merge(motherNature.getPosition(), (motherNature.getPosition() + 1)%islands.size());
+        }
+    }
 
+    /* it is not known at this time which of the two indexes is the greater */
+    private void merge(int index1, int index2) throws EmptyException {
+        islands.get(index1).increaseNumberOfTowers(islands.get(index2).getNumberOfTowers());
+        int k = 0;
+        Island toKeep;
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            k = islands.get(index1).getInfluenceByColor(c);
+            for(int i = 0; i < k; i++){
+                islands.get(index1).addStudent(islands.get(index2).removeStudent(c));
+            }
+        }
+        toKeep = islands.get(index1);
+        islands.remove(index2);
+        motherNature.setPosition(islands.indexOf(toKeep));
+
+    }
+
+    private void merge(int index1, int index2, int index3) throws EmptyException {
+        merge(index1, index2);
+        merge(motherNature.getPosition(), index3);
+    }
     /* END OF METHODS FOLLOWING THE PLAYER'S ACTIONS */
 
     /* SERVICE METHODS FOR INITIALIZATION */

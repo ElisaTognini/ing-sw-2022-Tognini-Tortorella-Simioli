@@ -15,14 +15,14 @@ public class TowerSection {
     }
 
     //Puts Tower back when an island get conquered by another player
-    public void returnTower() throws TooManyTowersException {
+    public void returnTowers(int number) throws TooManyTowersException {
         if(numberOfTowers+1>=maxNumberOfTowers) throw new TooManyTowersException();
-        else numberOfTowers++;
+        else numberOfTowers += number;
     }
 
     // Decrements number of towers when the player conquers an island
-    public void towerToIsland() throws EmptyException {
-        if(numberOfTowers==0) throw new EmptyException();
-        numberOfTowers--;
+    public void towersToIsland(int number) throws EmptyException {
+        if(numberOfTowers <= numberOfTowers - number) throw new EmptyException();
+        numberOfTowers -= number;
     }
 }
