@@ -138,9 +138,48 @@ public class Board {
         }
     }
 
-    public void conquerIsland(String nickname){
-        for(Professor p : professors){
+    public void conquerIsland(String nickname) throws TooManyTowersException, EmptyException {
+        int sum;
+        int maxSum = 0;
+        Player conqueror = null;
+        for(SchoolBoard sb : schoolBoards){
+            sum = 0;
+            for(PawnDiscColor color: PawnDiscColor.values()){
+                if(sb.getProfessorTable().hasProfessor(color)){
+                    sum = sum + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                }
+                if(islands.get(motherNature.getPosition()).checkIfConquered()){
+                    if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())){
+                        sum = sum +1;
+                    }
+                }
+                if(sum > maxSum){
+                    maxSum = sum;
+                    conqueror = sb.getOwner();
+                }
+            }
+        }
+        if(conqueror.getNickname().equals(nickname)){
+            fixTowers(nickname);
+            islands.get(motherNature.getPosition()).getsConquered(conqueror);
+            for(SchoolBoard sb: schoolBoards){
+                if(sb.getOwner().getNickname().equals(nickname)){
+                    sb.getTowerSection().towerToIsland();
+                }
+            }
 
+        }
+    }
+
+    private void fixTowers(String nickname) throws TooManyTowersException {
+        if(islands.get(motherNature.getPosition()).checkIfConquered()) {
+            if (!islands.get(motherNature.getPosition()).getOwner().equals(nickname)) {
+                for(SchoolBoard sb: schoolBoards){
+                    if(islands.get(motherNature.getPosition()).getOwner().equals(sb.getOwner())){
+                        sb.getTowerSection().returnTower();
+                    }
+                }
+            }
         }
     }
 

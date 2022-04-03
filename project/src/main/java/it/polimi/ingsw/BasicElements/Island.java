@@ -16,7 +16,7 @@ public class Island {
     private boolean hostsMotherNature;
     private boolean conqueredIsland;
     private StudentContainer container;
-    private boolean noEntrytile;
+    private boolean noEntryTile;
 
     /*student container data structure is used*/
     public Island(int islandID) {
@@ -24,7 +24,7 @@ public class Island {
         hostsMotherNature = false;
         conqueredIsland = false;
         container = new StudentContainer();
-        noEntrytile = false;
+        noEntryTile = false;
     }
 
     /*adds student into each set by color*/
@@ -49,13 +49,13 @@ public class Island {
     public boolean checkForMotherNature(){ return hostsMotherNature; }
 
     /* sets to true if an island has got a no entry tile */
-    public void setNoEntrytileToTrue(){ noEntrytile = true; }
+    public void setNoEntryTileToTrue(){ noEntryTile = true; }
 
     /* sets to false if an island hasn't got a no entry tile on it */
-    public void setNoEntrytileToFalse(){ noEntrytile = false; }
+    public void setNoEntryTileToFalse(){ noEntryTile = false; }
 
     /* returns true if an island is blocked by a No Entry Tile (Expert Mode) */
-    public boolean isANoEntryTile(){ return noEntrytile; }
+    public boolean isANoEntryTile(){ return noEntryTile; }
 
     public Player getOwner(){
         return owner;

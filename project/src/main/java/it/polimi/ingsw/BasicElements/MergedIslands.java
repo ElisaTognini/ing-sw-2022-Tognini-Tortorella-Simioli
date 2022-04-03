@@ -4,6 +4,7 @@ import java.util.*;
 public class MergedIslands {
 
     private ArrayList<Island> islands;
+    private int mergeID;
 
     public MergedIslands(){
         islands = new ArrayList<Island>();
