@@ -19,6 +19,8 @@ public class Island {
     private StudentContainer container;
     private boolean noEntryTile;
     private int numberOfTowers;
+    private int towersOnHold;
+    private int extra;
 
     /*student container data structure is used*/
     public Island(int islandID) {
@@ -28,6 +30,8 @@ public class Island {
         container = new StudentContainer();
         noEntryTile = false;
         numberOfTowers = 0;
+        towersOnHold = 0;
+        extra = 0;
     }
 
     /*adds student into each set by color*/
@@ -87,6 +91,9 @@ public class Island {
     public int getNumberOfTowers(){
         return numberOfTowers;
     }
-
+    public int getTowersOnHold(){ return towersOnHold; }
+    public void setTowersOnHold(int n) { numberOfTowers = n; }
+    public void setExtra(int n){ extra = n;}
+    public int getExtra(){ return extra;}
 }
 

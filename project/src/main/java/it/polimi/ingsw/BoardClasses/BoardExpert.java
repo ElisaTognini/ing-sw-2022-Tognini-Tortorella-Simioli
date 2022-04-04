@@ -9,6 +9,7 @@ import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.TailoredExceptions.EmptyException;
 import it.polimi.ingsw.TailoredExceptions.FullCloudException;
+import it.polimi.ingsw.TailoredExceptions.TooManyTowersException;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,52 @@ public class BoardExpert extends Board{
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void conquerIsland(String nickname) throws TooManyTowersException, EmptyException{
+        int sum;
+        int maxSum = 0;
+        Player conqueror = null;
+        if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
+            islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
+            //card5.retrieveNoEntryTile()
+        }
+        else {
+            for(SchoolBoard sb : schoolBoards){
+                sum = 0;
+                for(PawnDiscColor color: PawnDiscColor.values()){
+                    if(sb.getProfessorTable().hasProfessor(color)){
+                        sum = sum + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                    }
+                    if(islands.get(motherNature.getPosition()).checkIfConquered()){
+                        if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
+                            if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0) {
+                                sum = sum + islands.get(motherNature.getPosition()).getNumberOfTowers();
+                                sum = sum + islands.get(motherNature.getPosition()).getExtra();
+                            }
+                        }
+                    }
+                    if(sum > maxSum){
+                        maxSum = sum;
+                        conqueror = sb.getOwner();
+                    }
+                }
+            }
+            islands.get(motherNature.getPosition()).setTowersOnHold(0);
+            islands.get(motherNature.getPosition()).setExtra(0);
+            if(conqueror.getNickname().equals(nickname)){
+                fixTowers(nickname);
+                islands.get(motherNature.getPosition()).getsConquered(conqueror);
+                for(SchoolBoard sb: schoolBoards){
+                    if(sb.getOwner().getNickname().equals(nickname)){
+                        sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+                    }
+                }
+
+            }
+
         }
     }
 
