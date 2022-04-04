@@ -285,4 +285,12 @@ public class Board {
 
     /* END OF SERVICE METHODS FOR INITIALIZATION */
 
+    /* GETTER METHODS */
+    public StudentBag getStudentBag(){
+        return studentBag;
+    }
+
+    public ArrayList<Island> getIslandList(){
+        return islands;
+    }
 }

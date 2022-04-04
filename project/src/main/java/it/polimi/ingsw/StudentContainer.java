@@ -1,6 +1,8 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.*;
+import it.polimi.ingsw.TailoredExceptions.EmptyException;
+
 import java.util.*;
 
 /*utility data structure which is a hashmap that has
@@ -42,8 +44,11 @@ public class StudentContainer {
         container.get(student.getColor()).add(student);
     }
 
-    public Student retrieveStudent(PawnDiscColor color){
+    public Student retrieveStudent(PawnDiscColor color) throws EmptyException{
         Student toReturn;
+        if(container.get(color).size() == 0){
+            throw new EmptyException();
+        }
         toReturn = container.get(color).get(container.get(color).size()-1);
         container.get(color).remove(container.get(color).size()-1);
 

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.BoardClasses;
 
+import it.polimi.ingsw.Expert.CardManager;
+import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.CoinCounter;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
@@ -13,11 +15,15 @@ import java.util.ArrayList;
 public class BoardExpert extends Board{
 
     private CoinCounter[] coins;
+    private CharacterCardTemplate[] extractedCards;
+    private CardManager cardManager;
 
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                        int studentsInEntrance, GameMode mode){
         super(players, numberOfClouds, numberOfTowers, studentsOnClouds, studentsInEntrance, mode);
         coins = new CoinCounter[players.size()];
+        extractedCards = new CharacterCardTemplate[3];
+        cardManager = new CardManager(this);
     }
 
     @Override
