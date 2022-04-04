@@ -21,6 +21,8 @@ public class Island {
     private int numberOfTowers;
     private int towersOnHold;
     private int extra;
+    private int influence;
+    private int ignoredInfluence;
 
     /*student container data structure is used*/
     public Island(int islandID) {
@@ -32,6 +34,8 @@ public class Island {
         numberOfTowers = 0;
         towersOnHold = 0;
         extra = 0;
+        influence = 0;
+        ignoredInfluence = 0;
     }
 
     /*adds student into each set by color*/
@@ -47,7 +51,9 @@ public class Island {
     //the color taken as parameter is given by the board and is the color of a professor
     /*adding 1 to the influence if the island is conquered by the current player: to be implemented*/
     public int getInfluenceByColor(PawnDiscColor color){
-            return container.getInfluence(color);
+            influence = container.getInfluence(color) + ignoredInfluence;
+            ignoredInfluence = 0;
+            return influence;
     }
 
     /*sets to true if mother nature is on island to know if island
@@ -95,5 +101,9 @@ public class Island {
     public void setTowersOnHold(int n) { numberOfTowers = n; }
     public void setExtra(int n){ extra = n;}
     public int getExtra(){ return extra;}
+
+    public void ignoreInfluence(PawnDiscColor color){
+        ignoredInfluence = -container.getInfluence(color);
+    }
 }
 
