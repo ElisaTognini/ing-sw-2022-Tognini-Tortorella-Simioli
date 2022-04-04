@@ -43,7 +43,7 @@ public class Island {
     //the color taken as parameter is given by the board and is the color of a professor
     /*adding 1 to the influence if the island is conquered by the current player: to be implemented*/
     public int getInfluenceByColor(PawnDiscColor color){
-        return container.getInfluence(color);
+            return container.getInfluence(color);
     }
 
     /*sets to true if mother nature is on island to know if island
@@ -62,7 +62,7 @@ public class Island {
     public void setNoEntryTileToFalse(){ noEntryTile = false; }
 
     /* returns true if an island is blocked by a No Entry Tile (Expert Mode) */
-    public boolean isANoEntryTile(){ return noEntryTile; }
+    public boolean hasANoEntryTile(){ return noEntryTile; }
 
     public Player getOwner(){
         return owner;
