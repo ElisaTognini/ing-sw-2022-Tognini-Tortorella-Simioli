@@ -15,15 +15,8 @@ public class SchoolBoard {
         entrance = new Entrance();
         professorTable = new ProfessorTable();
         towerSection = new TowerSection(numberOfTowers, towerColor);
+        diningRoom = new DiningRoom();
         this.owner = owner;
-
-        if(mode.equals(GameMode.EXPERT)){
-            diningRoom = new DiningRoomExpert();
-        }
-        else if (mode.equals(GameMode.SIMPLE)){
-            diningRoom = new DiningRoom();
-        }
-
     }
 
     public Player getOwner(){

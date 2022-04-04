@@ -11,20 +11,20 @@ import java.util.Random;
 
 public class Board {
 
-    private ArrayList<Player> players;
-    private ArrayList<SchoolBoard> schoolBoards;
-    private ArrayList<Island> islands;
-    private StudentBag studentBag;
-    private ArrayList<CloudTile> clouds;
-    private ArrayList<Professor> professors;
-    private MotherNature motherNature;
-    private ArrayList<AssistantCardDeck> decks;
-    private final int numberOfClouds;
-    private final int numberOfTowers;
-    private final int studentsOnClouds;
-    private final GameMode mode;
-    private TowerColor tokenColor;
-    private final int studentsInEntrance;
+    protected ArrayList<Player> players;
+    protected ArrayList<SchoolBoard> schoolBoards;
+    protected ArrayList<Island> islands;
+    protected StudentBag studentBag;
+    protected ArrayList<CloudTile> clouds;
+    protected ArrayList<Professor> professors;
+    protected MotherNature motherNature;
+    protected ArrayList<AssistantCardDeck> decks;
+    protected final int numberOfClouds;
+    protected final int numberOfTowers;
+    protected final int studentsOnClouds;
+    protected final GameMode mode;
+    protected TowerColor tokenColor;
+    protected final int studentsInEntrance;
 
     /* numberOfClouds and numberOfTowers will be computed by the Model class
     *  based on the number of players in the lobby */
@@ -171,7 +171,7 @@ public class Board {
         }
     }
 
-    private void fixTowers(String nickname) throws TooManyTowersException {
+    protected void fixTowers(String nickname) throws TooManyTowersException {
         if(islands.get(motherNature.getPosition()).checkIfConquered()) {
             if (!islands.get(motherNature.getPosition()).getOwner().equals(nickname)) {
                 for(SchoolBoard sb: schoolBoards){
@@ -197,7 +197,7 @@ public class Board {
     }
 
     /* it is not known at this time which of the two indexes is the greater */
-    private void merge(int index1, int index2) throws EmptyException {
+    protected void merge(int index1, int index2) throws EmptyException {
         islands.get(index1).increaseNumberOfTowers(islands.get(index2).getNumberOfTowers());
         int k = 0;
         Island toKeep;
@@ -213,7 +213,7 @@ public class Board {
 
     }
 
-    private void merge(int index1, int index2, int index3) throws EmptyException {
+    protected void merge(int index1, int index2, int index3) throws EmptyException {
         merge(index1, index2);
         merge(motherNature.getPosition(), index3);
     }
@@ -221,14 +221,14 @@ public class Board {
 
     /* SERVICE METHODS FOR INITIALIZATION */
 
-    private void placeIslands(){
+    protected void placeIslands(){
         for(int i = 0; i < 12; i++){
             islands.add(new Island(i));
         }
     }
 
     /* this method generates a random index indicating the island on which mother nature will be initially placed */
-    private void placeMotherNature(){
+    protected void placeMotherNature(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(islands.size());
         islands.get(randomIndex).setHostsToTrue();
@@ -236,7 +236,7 @@ public class Board {
     }
 
     /* this method initializes the clouds ArrayList, the size of which is based on the number of players */
-    private void placeClouds(){
+    protected void placeClouds(){
         for(int i = 0; i < numberOfClouds; i++){
             clouds.add(new CloudTile(i, studentsOnClouds));
         }
@@ -244,7 +244,7 @@ public class Board {
 
     /* this method places the initial ten students on the available islands
     *  (those that don't host mother nature or are opposite to the island that does) */
-    private void placeStudents() throws EmptyException {
+    protected void placeStudents() throws EmptyException {
         for(Island i : islands){
             if(!i.getHost() || !(i.getIslandID() % 6 == motherNature.getPosition() % 6)){
                 i.addStudent(studentBag.drawStudent());
@@ -252,7 +252,7 @@ public class Board {
         }
     }
 
-    private void studentsOnClouds() throws EmptyException, FullCloudException {
+    protected void studentsOnClouds() throws EmptyException, FullCloudException {
         Student[] students = new Student[studentsOnClouds];
         for(CloudTile c : clouds){
             for(int i = 0; i < studentsOnClouds; i++){
@@ -262,7 +262,7 @@ public class Board {
         }
     }
 
-    private void initializeSchoolBoards() throws EmptyException{
+    protected void initializeSchoolBoards() throws EmptyException{
         for(int i=0; i<players.size(); i++){
             schoolBoards.add(new SchoolBoard(numberOfTowers, tokenColor.convert(i), mode, players.get(i)));
             for(int j = 0; j<studentsInEntrance; j++){
@@ -271,13 +271,13 @@ public class Board {
         }
     }
 
-    private void initializeProfessors(){
+    protected void initializeProfessors(){
         for(PawnDiscColor c : PawnDiscColor.values()){
             professors.add(new Professor(c));
         }
     }
 
-    private void initializeDecks(){
+    protected void initializeDecks(){
         for(Player p : players){
             decks.add(new AssistantCardDeck(p));
         }

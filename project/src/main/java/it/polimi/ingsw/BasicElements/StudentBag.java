@@ -39,7 +39,9 @@ public class StudentBag {
         return extracted;
     }
 
-
+    public void addStudentBack(Student student){
+        studentList.add(student);
+    }
     public int availableStudents(){
         return studentList.size();
     }

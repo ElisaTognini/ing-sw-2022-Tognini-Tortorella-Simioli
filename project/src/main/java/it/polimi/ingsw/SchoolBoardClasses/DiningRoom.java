@@ -24,6 +24,13 @@ public class DiningRoom {
 
     }
 
+    public boolean checkIfMod3(PawnDiscColor color){
+        if(container.getInfluence(color) % 3 == 0){
+            return true;
+        }
+        return false;
+    }
+
     public int influenceForProf(PawnDiscColor color){
         return container.getInfluence(color);
     }
