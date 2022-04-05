@@ -7,7 +7,7 @@ import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 public class Player {
 
     private String nickname;
-    boolean isWinner;
+    private boolean isWinner;
     private AssistantCard[] deck;
     private int numberOfCoins; /*only used in expert mode*/
     private SchoolBoard schoolBoard;

@@ -8,7 +8,7 @@ import java.util.*;
 /* this class manages the turn/round flow for both the Planning and Action Phases, based on the cards played */
 
 public class RoundManager {
-    public TurnFlow currentState;
+    private TurnFlow currentState;
     private ArrayList<Player> players;
     private ArrayList<Player> sortedPlayers;
     private Player currentPlayer;
