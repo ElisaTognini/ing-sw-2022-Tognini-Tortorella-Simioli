@@ -2,6 +2,8 @@ package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.Board;
 
+/* adds 2 to the influence of the player who purchased this card */
+
 public class Card8 extends CharacterCardTemplate{
 
     public Card8(Board board){
