@@ -139,7 +139,7 @@ public class BoardExpert extends Board{
         if(noEntryTiles == 0) throw new EmptyException();
     }
 
-    public void purchaseCharacterCard(String nickname, int characterCardID){
+/*    public void purchaseCharacterCard(String nickname, int characterCardID){
         for(CharacterCardTemplate card : extractedCards){
             if(characterCardID == card.getCardID()){
                 for()
@@ -147,7 +147,9 @@ public class BoardExpert extends Board{
         }
     }
 
-    public void useCard /*???*/
+ */
+
+    public void useCard(){} /*???*/
 
     //public void
 
