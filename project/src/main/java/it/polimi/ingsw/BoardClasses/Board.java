@@ -293,4 +293,18 @@ public class Board {
     public ArrayList<Island> getIslandList(){
         return islands;
     }
+
+    public SchoolBoard getPlayerSchoolBoard(String nickname) throws ActionNotAuthorizedException {
+        for(SchoolBoard sb : schoolBoards){
+            if(sb.getOwner().getNickname().equals(nickname)){
+                return sb;
+            }
+        }
+        throw new ActionNotAuthorizedException();
+    }
+
+    public ArrayList<SchoolBoard> getSchoolBoards(){
+        return schoolBoards;
+    }
+
 }

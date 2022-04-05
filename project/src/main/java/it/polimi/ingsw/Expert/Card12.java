@@ -9,8 +9,6 @@ import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
-import java.util.ArrayList;
-
 public class Card12 extends CharacterCardTemplate{
 
     public Card12(Board board){
@@ -19,9 +17,9 @@ public class Card12 extends CharacterCardTemplate{
         cost = 3;
     }
 
-    public void useCard(PawnDiscColor color, ArrayList<SchoolBoard> schoolBoards) throws EmptyException {
-        for(SchoolBoard sb : schoolBoards){
-            for(int i = 0; i < sb.getDiningRoom().getContainer().size() || i < 3; i++){
+    public void useCard(PawnDiscColor color) throws EmptyException {
+        for(SchoolBoard sb : board.getSchoolBoards()){
+            for(int i = 0; i < sb.getDiningRoom().influenceForProf(color) || i < 3; i++){
                 board.getStudentBag().addStudentBack(sb.getDiningRoom().getContainer().retrieveStudent(color));
             }
         }
