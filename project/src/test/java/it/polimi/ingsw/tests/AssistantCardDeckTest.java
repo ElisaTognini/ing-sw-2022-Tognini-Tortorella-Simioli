@@ -4,7 +4,7 @@ import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.TailoredExceptions.InvalidCardActionException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.*;
 

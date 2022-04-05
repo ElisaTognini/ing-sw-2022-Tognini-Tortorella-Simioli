@@ -2,7 +2,7 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.PawnDiscColor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 
 public class IslandTest {
