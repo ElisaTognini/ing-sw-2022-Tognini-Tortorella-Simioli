@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tests;
 import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BasicElements.AssistantCardDeck;
+import it.polimi.ingsw.Player;
 import it.polimi.ingsw.TailoredExceptions.InvalidCardActionException;
 import org.junit.Test;
 
@@ -12,10 +13,11 @@ public class AssistantCardTest {
 
     AssistantCard c;
     ArrayList<AssistantCard> list = new ArrayList<>();
+    Player owner;
 
     @Test
     public void createAttempt(){
-        c = new AssistantCard(1, 1);
+        c = new AssistantCard(1, 1, owner);
         assertEquals(1, c.getAssistantCardID());
         assertEquals(1, c.getMotherNatureMovements());
     }
@@ -23,7 +25,7 @@ public class AssistantCardTest {
     @Test
     public void checkRepeated(){
         for(int i=0; i<10; i++){
-            list.add(new AssistantCard(i, i));
+            list.add(new AssistantCard(i, i, owner));
             assertEquals(i, list.get(i).getAssistantCardID());
             assertEquals(i, list.get(i).getMotherNatureMovements());
         }
@@ -32,8 +34,8 @@ public class AssistantCardTest {
     @Test
     public void testEquals(){
         AssistantCard c1, c2;
-        c1 = new AssistantCard(1, 2);
-        c2 = new AssistantCard(1, 3);
+        c1 = new AssistantCard(1, 2, owner);
+        c2 = new AssistantCard(1, 3, owner);
         assertEquals(true, c1.equals(c2));
     }
 }

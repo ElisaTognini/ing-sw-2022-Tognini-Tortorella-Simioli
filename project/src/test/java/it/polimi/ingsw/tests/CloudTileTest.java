@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class CloudTileTest {
 
-    private CloudTile cloud = new CloudTile(0);
+    private CloudTile cloud = new CloudTile(0, 4);
     private Student[] array;
 
     /* tests if cloud is actually empty after initialisation */
