@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.StudentContainer;
@@ -15,7 +16,7 @@ public class Card11 extends CharacterCardTemplate{
 
     private StudentContainer students;
 
-    public Card11(Board board){
+    public Card11(BoardExpert board){
         super(board);
         cardID = 11;
         cost = 2;

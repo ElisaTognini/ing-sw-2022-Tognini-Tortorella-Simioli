@@ -5,13 +5,14 @@ package it.polimi.ingsw.Expert;
 *  return as many students as they have */
 
 import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 public class Card12 extends CharacterCardTemplate{
 
-    public Card12(Board board){
+    public Card12(BoardExpert board){
         super(board);
         cardID = 12;
         cost = 3;

@@ -1,10 +1,11 @@
 package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 
 public class Card6 extends CharacterCardTemplate{
 
-    public Card6(Board board){
+    public Card6(BoardExpert board){
         super(board);
         cardID = 6;
         cost = 3;

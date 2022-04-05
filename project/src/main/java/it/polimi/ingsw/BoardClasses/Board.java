@@ -45,7 +45,7 @@ public class Board {
         this.studentsInEntrance = studentsInEntrance;
     }
 
-    public void setup() throws EmptyException, FullCloudException{
+    public void setup() throws EmptyException, FullCloudException, InvalidCardActionException {
         this.studentBag = new StudentBag(10);
         placeIslands();
         placeMotherNature();
@@ -84,7 +84,7 @@ public class Board {
     }
 
     /* this method moves a student from the entrance to the dining room */
-    public void moveStudent(PawnDiscColor color, String nickname) throws EmptyException{
+    public void moveStudent(PawnDiscColor color, String nickname) throws EmptyException, ActionNotAuthorizedException {
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
                 sb.getDiningRoom().addStudent(sb.getEntrance().removeStudent(color));

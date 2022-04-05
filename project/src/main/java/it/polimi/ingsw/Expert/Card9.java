@@ -4,11 +4,12 @@ package it.polimi.ingsw.Expert;
 *  during the influence calculation of the turn in which the card is played */
 
 import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 
 public class Card9 extends CharacterCardTemplate{
 
-    public Card9(Board board){
+    public Card9(BoardExpert board){
         super(board);
         cardID = 9;
         cost = 3;

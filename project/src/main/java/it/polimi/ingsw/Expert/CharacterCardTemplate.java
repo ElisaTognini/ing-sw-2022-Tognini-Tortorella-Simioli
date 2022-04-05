@@ -1,13 +1,12 @@
 package it.polimi.ingsw.Expert;
-
-import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 
 public abstract class CharacterCardTemplate {
     protected int cost;
     protected int cardID;
-    protected Board board;
+    protected BoardExpert board;
 
-    public CharacterCardTemplate(Board board){
+    public CharacterCardTemplate(BoardExpert board){
         this.board = board;
     }
 
@@ -19,4 +18,7 @@ public abstract class CharacterCardTemplate {
         return cost;
     }
 
+    public int getCardID(){
+        return cardID;
+    }
 }

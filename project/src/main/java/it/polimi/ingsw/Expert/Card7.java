@@ -1,13 +1,12 @@
 package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BasicElements.Student;
-import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.StudentContainer;
 import it.polimi.ingsw.TailoredExceptions.ActionNotAuthorizedException;
 import it.polimi.ingsw.TailoredExceptions.EmptyException;
-import it.polimi.ingsw.TailoredExceptions.InvalidCardActionException;
 
 import java.util.ArrayList;
 
@@ -17,7 +16,7 @@ public class Card7 extends CharacterCardTemplate{
 
     private StudentContainer students;
 
-    public Card7(Board board) throws EmptyException {
+    public Card7(BoardExpert board) throws EmptyException {
         super(board);
         cardID = 7;
         cost = 1;

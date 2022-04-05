@@ -1,5 +1,6 @@
 package it.polimi.ingsw.BoardClasses;
 
+import it.polimi.ingsw.BasicElements.Professor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.CoinCounter;
@@ -7,30 +8,61 @@ import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
-import it.polimi.ingsw.TailoredExceptions.FullCloudException;
-import it.polimi.ingsw.TailoredExceptions.TooManyTowersException;
+import it.polimi.ingsw.TailoredExceptions.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BoardExpert extends Board{
 
     private CoinCounter[] coins;
     private CharacterCardTemplate[] extractedCards;
     private CardManager cardManager;
+    private Professor[] influenceModifier;
+    private int noEntryTiles;
+    private int[] cardIDs;
+    private final int numberOfCharacterCards = 12;
+    private final int cardsToInstantiate = 3;
 
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                        int studentsInEntrance, GameMode mode){
         super(players, numberOfClouds, numberOfTowers, studentsOnClouds, studentsInEntrance, mode);
         coins = new CoinCounter[players.size()];
-        extractedCards = new CharacterCardTemplate[3];
+        extractedCards = new CharacterCardTemplate[cardsToInstantiate];
         cardManager = new CardManager(this);
+        influenceModifier = new Professor[5];
+        noEntryTiles = 4;
+        cardIDs = new int[cardsToInstantiate];
     }
 
     @Override
-    public void setup() throws EmptyException, FullCloudException {
+    public void setup() throws EmptyException, FullCloudException, InvalidCardActionException {
         super.setup();
         /* initialization for character cards */
+        chooseCardIndexes();
+        for(int i = 0; i<cardsToInstantiate; i++){
+            extractedCards[i] = cardManager.returnCard(cardIDs[i]);
+        }
+
+    }
+
+    /* method that extracts the three random cards and stores them after calling the factory class */
+    private void chooseCardIndexes(){
+        Random rand = new Random();
+        int randomIndex;
+        randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
+        cardIDs[0] = randomIndex;
+        for(int i = 1; i < cardIDs.length; i++){
+            randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
+            for(int j = 0; j < i; j++){
+                if(randomIndex == cardIDs[j]){
+                    i--;
+                }
+                else{
+                    cardIDs[i] = randomIndex;
+                }
+            }
+        }
     }
 
     public void assignCoin(String nickname, PawnDiscColor color){
@@ -48,13 +80,19 @@ public class BoardExpert extends Board{
     }
 
     @Override
+    public void moveStudent(PawnDiscColor color, String nickname) throws EmptyException, ActionNotAuthorizedException {
+        super.moveStudent(color, nickname);
+        assignCoin(nickname, color);
+    }
+
+    @Override
     public void conquerIsland(String nickname) throws TooManyTowersException, EmptyException{
         int sum;
         int maxSum = 0;
         Player conqueror = null;
         if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
             islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
-            //card5.retrieveNoEntryTile()
+            putBackNoEntryTile();
         }
         else {
             for(SchoolBoard sb : schoolBoards){
@@ -92,6 +130,26 @@ public class BoardExpert extends Board{
 
         }
     }
+
+    public void putBackNoEntryTile(){
+        noEntryTiles++;
+    }
+
+    public void useNoEntryTile() throws EmptyException{
+        if(noEntryTiles == 0) throw new EmptyException();
+    }
+
+    public void purchaseCharacterCard(String nickname, int characterCardID){
+        for(CharacterCardTemplate card : extractedCards){
+            if(characterCardID == card.getCardID()){
+                for()
+            }
+        }
+    }
+
+    public void useCard /*???*/
+
+    //public void
 
     /*methods to implement
     * - purchase character card

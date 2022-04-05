@@ -67,4 +67,8 @@ public class Model {
         }
     }
 
+    public boolean checkForWinner(){
+
+    }
+
 }
