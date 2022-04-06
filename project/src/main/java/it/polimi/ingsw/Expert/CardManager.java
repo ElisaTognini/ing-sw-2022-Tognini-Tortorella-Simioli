@@ -14,7 +14,7 @@ public class CardManager {
         this.board = board;
     }
 
-    public CharacterCardTemplate returnCard(int cardID) throws EmptyException, InvalidCardActionException {
+    public CharacterCardTemplate returnCard(int cardID){
         switch(cardID){
             case 1:
                 return new Card1(board);
@@ -40,8 +40,8 @@ public class CardManager {
                 return new Card11(board);
             case 12:
                 return new Card12(board);
-            default:
-                throw new InvalidCardActionException();
         }
+
+        return null;
     }
 }

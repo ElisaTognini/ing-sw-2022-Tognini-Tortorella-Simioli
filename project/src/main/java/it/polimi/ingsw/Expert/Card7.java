@@ -16,7 +16,7 @@ public class Card7 extends CharacterCardTemplate{
 
     private StudentContainer students;
 
-    public Card7(BoardExpert board) throws EmptyException {
+    public Card7(BoardExpert board){
         super(board);
         cardID = 7;
         cost = 1;
@@ -24,7 +24,7 @@ public class Card7 extends CharacterCardTemplate{
         setupCard();
     }
 
-    private void setupCard() throws EmptyException {
+    private void setupCard(){
         for(int i=0; i<6; i++){
             students.addStudent(board.getStudentBag().drawStudent());
         }
@@ -32,21 +32,16 @@ public class Card7 extends CharacterCardTemplate{
 
     public void useCard(ArrayList<PawnDiscColor> studentsToEntrance, ArrayList<PawnDiscColor> studentsToChange,
                         String nickname)
-            throws ActionNotAuthorizedException, EmptyException {
+    {
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
         Student student1;
 
-        if(studentsToEntrance.size()!=studentsToChange.size() || studentsToChange.size()>3) {
-            throw new ActionNotAuthorizedException();
-        }
-        else {
-            for(int i = 0; i < studentsToEntrance.size(); i++){
-                student1 = sb.getEntrance().removeStudent(studentsToChange.get(i));
-                students.addStudent(student1);
-                student1 = students.retrieveStudent(studentsToEntrance.get(i));
-                sb.getEntrance().addStudent(student1);
+        for(int i = 0; i < studentsToEntrance.size(); i++){
+            student1 = sb.getEntrance().removeStudent(studentsToChange.get(i));
+            students.addStudent(student1);
+            student1 = students.retrieveStudent(studentsToEntrance.get(i));
+            sb.getEntrance().addStudent(student1);
             }
 
-        }
     }
 }

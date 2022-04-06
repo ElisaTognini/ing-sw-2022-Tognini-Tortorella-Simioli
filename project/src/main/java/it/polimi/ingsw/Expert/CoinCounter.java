@@ -23,4 +23,17 @@ public class CoinCounter {
     public void addCoin(){
         counter++;
     }
+
+    public void purchase(int cost){
+        this.counter -= cost;
+    }
+
+    public boolean checkIfEnoughCoins(int cost){
+        if(counter >= cost){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

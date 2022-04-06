@@ -12,7 +12,7 @@ public class Card1 extends CharacterCardTemplate{
 
     private StudentContainer students;
 
-    public Card1(BoardExpert board) throws EmptyException {
+    public Card1(BoardExpert board){
         super(board);
         cardID = 1;
         cost = 1;
@@ -25,7 +25,7 @@ public class Card1 extends CharacterCardTemplate{
         setupCard();
     }
 
-    private void setupCard() throws EmptyException {
+    private void setupCard(){
         for(int i=0; i<4; i++){
             students.addStudent(board.getStudentBag().drawStudent());
         }

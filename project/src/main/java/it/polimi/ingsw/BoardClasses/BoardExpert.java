@@ -35,8 +35,11 @@ public class BoardExpert extends Board{
         cardIDs = new int[cardsToInstantiate];
     }
 
+
+    /* board class setup is overridden here to add the instantiation of all the expert game
+    * elements (cards, coins) */
     @Override
-    public void setup() throws EmptyException, FullCloudException, InvalidCardActionException {
+    public void setup(){
         super.setup();
         /* initialization for character cards */
         chooseCardIndexes();
@@ -46,47 +49,16 @@ public class BoardExpert extends Board{
 
     }
 
-    /* method that extracts the three random cards and stores them after calling the factory class */
-    private void chooseCardIndexes(){
-        Random rand = new Random();
-        int randomIndex;
-        randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
-        cardIDs[0] = randomIndex;
-        for(int i = 1; i < cardIDs.length; i++){
-            randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
-            for(int j = 0; j < i; j++){
-                if(randomIndex == cardIDs[j]){
-                    i--;
-                }
-                else{
-                    cardIDs[i] = randomIndex;
-                }
-            }
-        }
-    }
 
-    public void assignCoin(String nickname, PawnDiscColor color){
-        for(SchoolBoard sb : schoolBoards){
-            if(sb.getOwner().getNickname().equals(nickname)){
-                if(sb.getDiningRoom().checkIfMod3(color)){
-                    for(CoinCounter c : coins){
-                        if(c.getOwner().getNickname().equals(nickname)){
-                            c.addCoin();
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     @Override
-    public void moveStudent(PawnDiscColor color, String nickname) throws EmptyException, ActionNotAuthorizedException {
+    public void moveStudent(PawnDiscColor color, String nickname){
         super.moveStudent(color, nickname);
         assignCoin(nickname, color);
     }
 
     @Override
-    public void conquerIsland(String nickname) throws TooManyTowersException, EmptyException{
+    public void conquerIsland(String nickname){
         int sum;
         int maxSum = 0;
         Player conqueror = null;
@@ -131,34 +103,84 @@ public class BoardExpert extends Board{
         }
     }
 
+    /* methods for the regular usages of noEntryTiles in the game
+    * checks if valid action, sets and unsets noentrytiles */
+
     public void putBackNoEntryTile(){
         noEntryTiles++;
     }
 
     public void useNoEntryTile() throws EmptyException{
-        if(noEntryTiles == 0) throw new EmptyException();
+        noEntryTiles--;
     }
 
-/*    public void purchaseCharacterCard(String nickname, int characterCardID){
+    public boolean checkIfEnoughNoEntryTiles(){
+        if(noEntryTiles == 0)
+            return false;
+        else
+            return true;
+    }
+
+    public void purchaseCharacterCard(String nickname, int characterCardID){
         for(CharacterCardTemplate card : extractedCards){
             if(characterCardID == card.getCardID()){
-                for()
+                getPlayersCoinCounter(nickname).purchase(card.getCost());
             }
         }
     }
 
- */
+    public boolean checkIfCardPresent(int cardID){
+        for(CharacterCardTemplate c : extractedCards){
+            if(c.getCardID() == cardID)
+                return true;
+        }
+        return false;
+    }
 
-    public void useCard(){} /*???*/
+    private CoinCounter getPlayersCoinCounter(String nickname) throws IllegalArgumentException{
+        for(CoinCounter c : coins){
+            if(c.getOwner().getNickname().equals(nickname)){
+                return c;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 
-    //public void
+    /* method that extracts the three random cards and stores them after calling the factory class */
+    private void chooseCardIndexes(){
+        Random rand = new Random();
+        int randomIndex;
+        randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
+        cardIDs[0] = randomIndex;
+        for(int i = 1; i < cardIDs.length; i++){
+            randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
+            for(int j = 0; j < i; j++){
+                if(randomIndex == cardIDs[j]){
+                    i--;
+                }
+                else{
+                    cardIDs[i] = randomIndex;
+                }
+            }
+        }
+    }
 
-    /*methods to implement
-    * - purchase character card
-    * - extract three random character cards
-    * - initialize character cards
-    * CARD CLASS INTERFACE WHICH HOLDS COST AND OVERLOADED EFFECT METHODS WHICH IMPLEMENT DIFFERENT FUNCTIONALITIES
-    * DEPENDING ON THE CARD - FACTORY METHOD TO INSTANTIATE ONLY THE NEEDED/EXTRACTED CARDS
-    * card effects will partially use already written methods to act out their effects*/
+    public void assignCoin(String nickname, PawnDiscColor color){
+        for(SchoolBoard sb : schoolBoards){
+            if(sb.getOwner().getNickname().equals(nickname)){
+                if(sb.getDiningRoom().checkIfMod3(color)){
+                    for(CoinCounter c : coins){
+                        if(c.getOwner().getNickname().equals(nickname)){
+                            c.addCoin();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void useCard(){
+        //?
+    }
 
 }
