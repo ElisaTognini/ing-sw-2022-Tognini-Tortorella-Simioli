@@ -12,7 +12,7 @@ public class StudentBagTest {
     private StudentBag bag = new StudentBag(120);
 
     @Test
-    public void testDraw() throws EmptyException{
+    public void testDraw(){
 
         Student stud;
         int countP=0, countY=0, countG=0, countR=0, countB=0;
@@ -51,11 +51,5 @@ public class StudentBagTest {
         assertEquals(24, countY);
         assertEquals(24, countG);
 
-        try{
-            bag.drawStudent();
-        }catch (EmptyException e){
-            System.out.println("exception caught!");
-        }
     }
-
 }

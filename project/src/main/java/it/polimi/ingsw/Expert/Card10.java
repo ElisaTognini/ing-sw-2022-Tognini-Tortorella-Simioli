@@ -26,21 +26,25 @@ public class Card10 extends CharacterCardTemplate{
     *  or use 2 different methods: useCard1 and useCard2 for one or two switches */
 
     public void useCard(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
-                        String nickname) throws EmptyException, ActionNotAuthorizedException {
+                        String nickname){
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
 
         Student student1;
-
-        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
-           studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2){
-            throw new ActionNotAuthorizedException();
-        }
 
         for(int i = 0; i < studentsInEntrance.size(); i++){
             student1 = sb.getEntrance().removeStudent(studentsInEntrance.get(i));
             sb.getEntrance().addStudent(sb.getDiningRoom().getContainer().retrieveStudent(studentsInDiningRoom.get(i)));
             sb.getDiningRoom().getContainer().addStudent(student1);
         }
+
+    }
+
+    public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
+                                            String nickname){
+
+        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
+                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2) return true;
+        else return false;
 
     }
 
