@@ -44,11 +44,9 @@ public class StudentContainer {
         container.get(student.getColor()).add(student);
     }
 
-    public Student retrieveStudent(PawnDiscColor color) throws EmptyException{
+    public Student retrieveStudent(PawnDiscColor color){
         Student toReturn;
-        if(container.get(color).size() == 0){
-            throw new EmptyException();
-        }
+
         toReturn = container.get(color).get(container.get(color).size()-1);
         container.get(color).remove(container.get(color).size()-1);
 
@@ -58,5 +56,10 @@ public class StudentContainer {
     public int size(){
         return pinkStudentsInDiningRoom.size() + yellowStudentsInDiningRoom.size() + redStudentsInDiningRoom.size()
                 + greenStudentsInDiningRoom.size() + blueStudentsInDiningRoom.size();
+    }
+
+    public boolean checkIfContainerIsEmpty(PawnDiscColor color){
+        if(container.get(color).size() == 0) return true;
+        else return false;
     }
 }

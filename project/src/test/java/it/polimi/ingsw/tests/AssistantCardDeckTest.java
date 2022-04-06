@@ -19,18 +19,12 @@ public class AssistantCardDeckTest {
     }
 
     @Test
-    public void checksDraw() throws InvalidCardActionException {
+    public void checksDraw(){
         AssistantCard c;
         for(int i=1; i<=10; i++){
             c = deckTest.drawCard(i);
             assertEquals(i, c.getAssistantCardID());
             System.out.println("card ID " + c.getAssistantCardID() + " power factor " + c.getMotherNatureMovements());
-        }
-
-        try{
-            deckTest.drawCard(1);
-        }catch(InvalidCardActionException e){
-            System.out.println("exception detected!");
         }
     }
 

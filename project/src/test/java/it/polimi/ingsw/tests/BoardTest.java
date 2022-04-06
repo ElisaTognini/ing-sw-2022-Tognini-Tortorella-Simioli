@@ -13,20 +13,18 @@ import static org.junit.Assert.*;
 
 public class BoardTest {
 
-    private static ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Player> players = new ArrayList<>();
+    Board boardToTest = new Board(players, 2, 8,
+            3, 7, GameMode.SIMPLE);
 
-    @BeforeAll
-    public static void setup() {
+    public void setup() {
         players.add(new Player("player1"));
         players.add(new Player("player2"));
     }
 
-    Board boardToTest = new Board(players, 2, 8,
-            3, 7, GameMode.SIMPLE);
-
     @Test
-    public void playAssistantCardTest() throws InvalidCardActionException, EmptyException, FullCloudException {
-
+    public void playAssistantCardTest(){
+        setup();
         boardToTest.setup();
         AssistantCard card = new AssistantCard(1, 1, players.get(0));
         card = boardToTest.playAssistantCard(1, "player1");

@@ -20,9 +20,8 @@ public class CloudTileTest {
     /* tests if addStudent works properly: it should add the first three students in the array and
     * throw an exception for the last one*/
     @Test
-    public void testAddStudent() throws FullCloudException, EmptyException {
+    public void testAddStudent(){
         array = new Student[4];
-        try {
             for (int i = 0; i < 3; i++) {
                 array[i] = new Student(PawnDiscColor.RED);
                 cloud.fillCloud(array);
@@ -31,14 +30,11 @@ public class CloudTileTest {
             }
             cloud.fillCloud(array);
             cloud.fillCloud(array);
-        }catch (FullCloudException e){
-            System.out.println("exception caught!");
-        }
     }
     /* tests if retrieveStudentFromCloud works properly: it should retrieve the first three students in
     * the array and throw an exception for the last one because it doesn't exist*/
     @Test
-    public void testRetrieveStudentFromCloud() throws EmptyException, FullCloudException {
+    public void testRetrieveStudentFromCloud(){
             array = new Student[4];
             for (int i = 0; i < 3; i++) {
                 array[i] = new Student(PawnDiscColor.RED);
