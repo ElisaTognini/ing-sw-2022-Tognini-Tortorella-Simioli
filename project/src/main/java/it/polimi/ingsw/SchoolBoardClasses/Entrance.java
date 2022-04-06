@@ -22,9 +22,12 @@ public class Entrance {
         }
     }
 
-    public Student removeStudent(PawnDiscColor color) throws EmptyException {
-        if(studentsInEntrance.size() == 0) throw new EmptyException();
+    public Student removeStudent(PawnDiscColor color){
         return studentsInEntrance.retrieveStudent(color);
     }
 
+    public boolean checkIfEntranceIsEmpty(){
+        if(studentsInEntrance.size() == 0) return true;
+        else return false;
+    }
 }
