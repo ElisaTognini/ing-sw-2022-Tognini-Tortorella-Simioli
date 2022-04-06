@@ -1,7 +1,6 @@
 package it.polimi.ingsw.SchoolBoardClasses;
 
 import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 import it.polimi.ingsw.BasicElements.Professor;
 
 import java.util.ArrayList;

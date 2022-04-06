@@ -2,7 +2,6 @@ package it.polimi.ingsw.BasicElements;
 
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 import java.util.*;
 

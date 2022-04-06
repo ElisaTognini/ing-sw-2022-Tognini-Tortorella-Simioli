@@ -2,7 +2,6 @@ package it.polimi.ingsw.tests;
 import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.Player;
-import it.polimi.ingsw.TailoredExceptions.InvalidCardActionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

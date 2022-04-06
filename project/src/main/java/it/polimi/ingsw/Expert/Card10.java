@@ -7,8 +7,6 @@ import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
-import it.polimi.ingsw.TailoredExceptions.ActionNotAuthorizedException;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 import java.util.ArrayList;
 
@@ -36,15 +34,6 @@ public class Card10 extends CharacterCardTemplate{
             sb.getEntrance().addStudent(sb.getDiningRoom().getContainer().retrieveStudent(studentsInDiningRoom.get(i)));
             sb.getDiningRoom().getContainer().addStudent(student1);
         }
-
-    }
-
-    public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
-                                            String nickname){
-
-        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
-                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2) return true;
-        else return false;
 
     }
 

@@ -3,7 +3,6 @@ package it.polimi.ingsw.tests;
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.BasicElements.StudentBag;
 import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 

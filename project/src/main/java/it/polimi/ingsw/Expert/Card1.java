@@ -6,7 +6,6 @@ import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.StudentContainer;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 public class Card1 extends CharacterCardTemplate{
 
@@ -20,7 +19,7 @@ public class Card1 extends CharacterCardTemplate{
         setupCard();
     }
 
-    public void useCard(PawnDiscColor color, int islandID) throws EmptyException{
+    public void useCard(PawnDiscColor color, int islandID){
         board.getIslandList().get(islandID).addStudent(students.retrieveStudent(color));
         setupCard();
     }

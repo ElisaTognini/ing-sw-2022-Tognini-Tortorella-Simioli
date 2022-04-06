@@ -5,7 +5,6 @@ import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
-import it.polimi.ingsw.TailoredExceptions.ActionNotAuthorizedException;
 
 import java.util.ArrayList;
 
@@ -18,7 +17,7 @@ public class Card2 extends CharacterCardTemplate{
         cost = 2;
     }
 
-    public void useCard(String nickname, ArrayList<PawnDiscColor> to_control) throws ActionNotAuthorizedException {
+    public void useCard(String nickname, ArrayList<PawnDiscColor> to_control){
         SchoolBoard sb;
 
         sb = board.getPlayerSchoolBoard(nickname);

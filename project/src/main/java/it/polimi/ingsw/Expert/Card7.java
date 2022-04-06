@@ -5,8 +5,6 @@ import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.StudentContainer;
-import it.polimi.ingsw.TailoredExceptions.ActionNotAuthorizedException;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 import java.util.ArrayList;
 

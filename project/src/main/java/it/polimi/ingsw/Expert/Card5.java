@@ -2,7 +2,6 @@ package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 /* this character card places no entry tiles on islands of choice in order not to block
 * influence calculation if mother nature ends there */
@@ -14,7 +13,7 @@ public class Card5 extends CharacterCardTemplate{
         cost = 2;
     }
 
-    public void useCard(int islandID) throws EmptyException {
+    public void useCard(int islandID){
         board.getIslandList().get(islandID).setNoEntryTileToTrue();
         board.useNoEntryTile();
     }

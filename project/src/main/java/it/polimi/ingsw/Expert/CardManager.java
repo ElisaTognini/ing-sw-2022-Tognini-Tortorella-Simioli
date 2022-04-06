@@ -2,8 +2,6 @@ package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
-import it.polimi.ingsw.TailoredExceptions.InvalidCardActionException;
 
 /* factory class */
 

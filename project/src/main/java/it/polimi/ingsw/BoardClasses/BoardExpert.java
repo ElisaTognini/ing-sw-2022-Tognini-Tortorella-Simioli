@@ -8,7 +8,6 @@ import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
-import it.polimi.ingsw.TailoredExceptions.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -110,7 +109,7 @@ public class BoardExpert extends Board{
         noEntryTiles++;
     }
 
-    public void useNoEntryTile() throws EmptyException{
+    public void useNoEntryTile(){
         noEntryTiles--;
     }
 
@@ -137,13 +136,13 @@ public class BoardExpert extends Board{
         return false;
     }
 
-    private CoinCounter getPlayersCoinCounter(String nickname) throws IllegalArgumentException{
+    private CoinCounter getPlayersCoinCounter(String nickname){
         for(CoinCounter c : coins){
             if(c.getOwner().getNickname().equals(nickname)){
                 return c;
             }
         }
-        throw new IllegalArgumentException();
+        return null;
     }
 
     /* method that extracts the three random cards and stores them after calling the factory class */

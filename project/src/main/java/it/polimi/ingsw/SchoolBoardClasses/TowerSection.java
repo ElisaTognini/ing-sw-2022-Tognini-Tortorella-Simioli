@@ -1,6 +1,4 @@
 package it.polimi.ingsw.SchoolBoardClasses;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
-import it.polimi.ingsw.TailoredExceptions.TooManyTowersException;
 import it.polimi.ingsw.Enums.TowerColor;
 
 public class TowerSection {

@@ -3,7 +3,6 @@ package it.polimi.ingsw.BasicElements;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.StudentContainer;
-import it.polimi.ingsw.TailoredExceptions.EmptyException;
 
 import java.util.HashSet;
 import java.util.Set;
