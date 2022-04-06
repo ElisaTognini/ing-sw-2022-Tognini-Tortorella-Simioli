@@ -14,12 +14,7 @@ public class DiningRoom {
         container = new StudentContainer();
     }
 
-    public void addStudent(Student myStudent) throws IndexOutOfBoundsException{
-
-        if(container.getInfluence(myStudent.getColor()) >= 10){
-            throw new IndexOutOfBoundsException();
-        };
-
+    public void addStudent(Student myStudent){
         container.addStudent(myStudent);
 
     }
@@ -37,5 +32,10 @@ public class DiningRoom {
 
     public StudentContainer getContainer(){
         return container;
+    }
+
+    public boolean checkIfDiningRoomIsFull(Student myStudent){
+        if(container.getInfluence(myStudent.getColor()) >= 10) return true;
+        else return false;
     }
 }
