@@ -1,7 +1,5 @@
 package it.polimi.ingsw.BasicElements;
 
-import it.polimi.ingsw.TailoredExceptions.*;
-
 public class CloudTile {
 
     /*the array stores the three students currently on the cloud

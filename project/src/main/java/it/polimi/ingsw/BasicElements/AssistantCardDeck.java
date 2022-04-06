@@ -1,6 +1,5 @@
 package it.polimi.ingsw.BasicElements;
 import it.polimi.ingsw.*;
-import it.polimi.ingsw.TailoredExceptions.*;
 
 import java.util.*;
 

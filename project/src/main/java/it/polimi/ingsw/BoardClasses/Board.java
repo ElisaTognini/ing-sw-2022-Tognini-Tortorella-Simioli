@@ -4,7 +4,6 @@ import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
-import it.polimi.ingsw.TailoredExceptions.*;
 
 import java.util.ArrayList;
 import java.util.Random;
