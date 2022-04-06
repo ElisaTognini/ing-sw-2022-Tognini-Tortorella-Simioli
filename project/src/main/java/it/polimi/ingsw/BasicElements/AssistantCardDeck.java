@@ -33,7 +33,7 @@ public class AssistantCardDeck {
     * it removes the card from the deck and returns a reference to the chosen card;
     * it throws an InvalidCardActionException if the loop ever ends, which means either the card was not found or the
     * given ID is invalid*/
-    public AssistantCard drawCard(int cardID) throws InvalidCardActionException{
+    public AssistantCard drawCard(int cardID){
         AssistantCard toRet;
         for(AssistantCard c : cards){
             if (c.getAssistantCardID() == cardID){
@@ -41,7 +41,7 @@ public class AssistantCardDeck {
                 return toRet;
             }
         }
-        throw new InvalidCardActionException();
+        return null;
     }
 
     public void removeCard(int cardID){
@@ -55,5 +55,18 @@ public class AssistantCardDeck {
     /*returns owner*/
     public Player getOwner(){
         return owner;
+    }
+
+    /* checks if a card the player wants to play is inside their deck*/
+    public boolean checkIfCardIsPresent(int cardID) {
+        for (AssistantCard c : cards) {
+            if (c.getAssistantCardID() == cardID) return true;
+        }
+        return false;
+    }
+
+    public boolean checkIfDeckIsEmpty(){
+        if(cards.size() == 0) return true;
+        else return false;
     }
 }

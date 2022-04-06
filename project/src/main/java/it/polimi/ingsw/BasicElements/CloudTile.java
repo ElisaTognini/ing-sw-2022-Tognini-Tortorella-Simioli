@@ -34,11 +34,7 @@ public class CloudTile {
 
     /*assigns the references to the students entered as a parameter
     * to the class attribute (this.studentsOnCloud)*/
-    public void fillCloud(Student studentsToAdd[]) throws FullCloudException{
-
-        if(isCloudEmpty() == false){
-            throw new FullCloudException();
-        }
+    public void fillCloud(Student studentsToAdd[]){
 
         for(int i = 0; i<studentsOnCloud.length ; i++){
             studentsOnCloud[i] = studentsToAdd[i];
@@ -47,12 +43,8 @@ public class CloudTile {
 
     /*copies the current state of the students into a local array that is then
     * returned, and resets the attribute array to null*/
-    public Student[] retrieveFromCloud() throws EmptyException{
+    public Student[] retrieveFromCloud(){
         Student toReturn[] = new Student[numberOfStudents];
-
-        if(isCloudEmpty()){
-            throw new EmptyException();
-        }
 
         for(int i=0; i<studentsOnCloud.length; i++){
             toReturn[i] = studentsOnCloud[i];

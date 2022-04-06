@@ -38,12 +38,17 @@ public class Island {
         ignoredInfluence = 0;
     }
 
+    /* checks if the island is empty*/
+    public boolean checkIfIslandIsEmpty(){
+        if(container.size() == 0) return true;
+        else return false;
+    }
+
     /*adds student into each set by color*/
     public void addStudent(Student myStudent){
         container.addStudent(myStudent);
     }
-    public Student removeStudent(PawnDiscColor color) throws EmptyException{
-        if(container.size() == 0) throw new EmptyException();
+    public Student removeStudent(PawnDiscColor color){
         return container.retrieveStudent(color);
     }
 

@@ -8,8 +8,10 @@ import java.util.*;
 
 
 public class StudentBag {
+
     protected List<Student> studentList;
     private int numStudents;
+
     /*generates a list through adding same size arrays for each color*/
     public StudentBag(int numStudents){
         this.numStudents = numStudents;
@@ -24,12 +26,12 @@ public class StudentBag {
 
     }
 
-    /*randomly draws a student*/
-    public Student drawStudent() throws EmptyException {
+    /* checks to see if there are any students left in the bag*/
 
-        if(studentList.isEmpty()){
-            throw new EmptyException();
-        }
+    public boolean checkIfStudentBagEmpty(){ return studentList.isEmpty(); }
+
+    /*randomly draws a student*/
+    public Student drawStudent(){
 
         Random rand = new Random();
         int randomIndex = rand.nextInt(studentList.size());
