@@ -14,14 +14,12 @@ public class BoardTest {
     Board boardToTest = new Board(players, 2, 8,
             3, 7, GameMode.SIMPLE);
 
-    public void setup() {
-        players.add(new Player("player1"));
-        players.add(new Player("player2"));
-    }
+
 
     @Test
     public void playAssistantCardTest(){
-        setup();
+        players.add(new Player("player1"));
+        players.add(new Player("player2"));
         boardToTest.setup();
         AssistantCard card = new AssistantCard(1, 1, players.get(0));
         card = boardToTest.playAssistantCard(1, "player1");

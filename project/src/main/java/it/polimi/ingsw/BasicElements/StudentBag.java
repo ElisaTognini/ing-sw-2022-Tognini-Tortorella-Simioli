@@ -31,9 +31,14 @@ public class StudentBag {
 
     /*randomly draws a student*/
     public Student drawStudent(){
-
+        int bound = studentList.size();
+        if(bound == 1){
+            Student s = studentList.get(0);
+            studentList.remove(s);
+            return s;
+        }
         Random rand = new Random();
-        int randomIndex = rand.nextInt(studentList.size());
+        int randomIndex = rand.nextInt(bound);
         Student extracted = studentList.get(randomIndex);
         studentList.remove(extracted);
 

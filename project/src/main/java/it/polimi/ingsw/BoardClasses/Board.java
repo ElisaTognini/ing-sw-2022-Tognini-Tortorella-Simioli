@@ -245,7 +245,7 @@ public class Board {
     *  (those that don't host mother nature or are opposite to the island that does) */
     protected void placeStudents(){
         for(Island i : islands){
-            if(!i.getHost() || !(i.getIslandID() % 6 == motherNature.getPosition() % 6)){
+            if(!i.getHost() || !((i.getIslandID() % 6) == (motherNature.getPosition() % 6))){
                 i.addStudent(studentBag.drawStudent());
             }
         }
