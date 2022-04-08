@@ -9,13 +9,26 @@ import java.util.ArrayList;
 public class Entrance {
 
     private StudentContainer studentsInEntrance;
+    private int studentNumber;
 
-    public Entrance() {
+    public Entrance(int studentNumber) {
+        this.studentNumber = studentNumber;
         this.studentsInEntrance = new StudentContainer();
     }
 
     public void addStudent(Student myStudent){
-        if (studentsInEntrance.size()<7) studentsInEntrance.addStudent(myStudent);
+        if (studentsInEntrance.size()<studentNumber)
+            studentsInEntrance.addStudent(myStudent);
+    }
+
+    public boolean isEntranceFull(){
+        int sum = 0;
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            sum += studentsInEntrance.getInfluence(c);
+        }
+        if(sum >= studentNumber)
+            return true;
+        return false;
     }
 
     public Student removeStudent(PawnDiscColor color){
@@ -24,6 +37,11 @@ public class Entrance {
 
     public boolean checkIfEntranceIsEmpty(){
         if(studentsInEntrance.size() == 0) return true;
+        else return false;
+    }
+
+    public boolean isColorAvailable(PawnDiscColor c){
+        if(studentsInEntrance.getInfluence(c) > 0) return true;
         else return false;
     }
 }

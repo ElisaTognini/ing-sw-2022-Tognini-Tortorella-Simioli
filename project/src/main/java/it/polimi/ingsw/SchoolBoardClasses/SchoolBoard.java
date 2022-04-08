@@ -11,8 +11,8 @@ public class SchoolBoard {
     private TowerSection towerSection;
     private Player owner;
 
-    public SchoolBoard(int numberOfTowers, TowerColor towerColor, GameMode mode, Player owner){
-        entrance = new Entrance();
+    public SchoolBoard(int studentsInEntrance, int numberOfTowers, TowerColor towerColor, GameMode mode, Player owner){
+        entrance = new Entrance(studentsInEntrance);
         professorTable = new ProfessorTable();
         towerSection = new TowerSection(numberOfTowers, towerColor);
         diningRoom = new DiningRoom();

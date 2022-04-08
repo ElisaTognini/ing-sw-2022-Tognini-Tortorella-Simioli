@@ -48,8 +48,6 @@ public class BoardExpert extends Board{
 
     }
 
-
-
     @Override
     public void moveStudent(PawnDiscColor color, String nickname){
         super.moveStudent(color, nickname);
@@ -120,6 +118,8 @@ public class BoardExpert extends Board{
             return true;
     }
 
+    /* method retrieves the current player's coinCounter and decrements its number by retrieving the
+    * desiderd character card's cost */
     public void purchaseCharacterCard(String nickname, int characterCardID){
         for(CharacterCardTemplate card : extractedCards){
             if(characterCardID == card.getCardID()){

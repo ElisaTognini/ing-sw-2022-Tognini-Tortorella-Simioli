@@ -115,11 +115,19 @@ public class Board {
         islands.get(motherNature.getPosition()).setHostsToTrue();
     }
 
+
+    /* this method runs through the possible colors and
+    * - initializes player and influence to default values
+    *  - iterates schoolboards and finds the player with the max influence of the current color
+    *  - assigns the professor to the player with the maximum influence of said color
+    * corner case: if two players have the same influence for a color, who gets the professor? needs rule clarification */
     public void assignProfessors(){
         int maxInfluence = 0;
         int temp = 0;
         String maxPlayer = "";
         for(PawnDiscColor c : PawnDiscColor.values()){
+            maxPlayer = "";
+            maxInfluence = 0;
             for(SchoolBoard sb : schoolBoards){
                 temp = sb.getDiningRoom().influenceForProf(c);
                 if(temp > maxInfluence){
@@ -137,6 +145,10 @@ public class Board {
         }
     }
 
+    /* manca la parte in cui viene aggiunta la prima torre all'isola altrimenti il metodo non funziona:
+    * quando sulla fine viene fatto towersToIsland si tenta di ottenere il numero di torri già presente sull'isola,
+    * che inizialmente è zero ma non viene mai aumentato
+    * + corner case delle influenze uguali */
     public void conquerIsland(String nickname){
         int sum;
         int maxSum = 0;
@@ -219,7 +231,6 @@ public class Board {
     /* END OF METHODS FOLLOWING THE PLAYER'S ACTIONS */
 
     /* SERVICE METHODS FOR INITIALIZATION */
-
     protected void placeIslands(){
         for(int i = 0; i < 12; i++){
             islands.add(new Island(i));
@@ -244,9 +255,14 @@ public class Board {
     /* this method places the initial ten students on the available islands
     *  (those that don't host mother nature or are opposite to the island that does) */
     protected void placeStudents(){
+        int pos1, pos2;
         for(Island i : islands){
-            if(!i.getHost() || !((i.getIslandID() % 6) == (motherNature.getPosition() % 6))){
-                i.addStudent(studentBag.drawStudent());
+            pos1 = i.getIslandID() % 6;
+            pos2 = motherNature.getPosition() % 6;
+            if(!i.getHost()){
+                if(!(pos1 == pos2)) {
+                    i.addStudent(studentBag.drawStudent());
+                }
             }
         }
     }
@@ -262,8 +278,12 @@ public class Board {
     }
 
     protected void initializeSchoolBoards(){
+        TowerColor c = TowerColor.BLACK;
         for(int i=0; i<players.size(); i++){
-            schoolBoards.add(new SchoolBoard(numberOfTowers, tokenColor.convert(i), mode, players.get(i)));
+            if(i==0) c = TowerColor.BLACK;
+            else if(i == 1) c = TowerColor.WHITE;
+            else if (i == 2) c = TowerColor.GREY;
+            schoolBoards.add(new SchoolBoard(studentsInEntrance ,numberOfTowers,c , mode, players.get(i)));
             for(int j = 0; j<studentsInEntrance; j++){
                 schoolBoards.get(i).getEntrance().addStudent(studentBag.drawStudent());
             }
@@ -304,6 +324,33 @@ public class Board {
 
     public ArrayList<SchoolBoard> getSchoolBoards(){
         return schoolBoards;
+    }
+    public int getMotherNaturePosition(){
+        return motherNature.getPosition();
+    }
+    /* END OF GETTER METHODS */
+
+    /* METHODS FOR LEGAL ACTION CHECKS */
+    public boolean isDeckEmpty(String nickname){
+        for(AssistantCardDeck deck : decks){
+            if(nickname.equals(deck.getOwner().getNickname())){
+                return deck.checkIfDeckIsEmpty();
+            }
+        }
+        return false;
+    }
+
+    public boolean isCardInDeck(String nickname, int cardID){
+        for(AssistantCardDeck deck: decks){
+            if(nickname.equals(deck.getOwner().getNickname())){
+                return deck.checkIfCardIsPresent(cardID);
+            }
+        }
+        return false;
+    }
+
+    public boolean colorAvailableInEntrance(String nickname, PawnDiscColor color){
+        return getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(color);
     }
 
 }

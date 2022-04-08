@@ -50,5 +50,13 @@ public class ProfessorTable {
         }
     }
 
+    @Override
+    public String toString(){
+        String ret = "";
+        for(Professor p : professors){
+            ret += p.getColor() + "  " + p.isOwnedByPlayer() + "\n";
+        }
 
+        return ret;
+    }
 }

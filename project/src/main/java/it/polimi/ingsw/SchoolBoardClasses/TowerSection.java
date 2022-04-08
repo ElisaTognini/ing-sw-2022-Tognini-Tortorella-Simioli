@@ -9,6 +9,7 @@ public class TowerSection {
 
     public TowerSection(int maxNumberOfTowers, TowerColor color) {
         this.maxNumberOfTowers = maxNumberOfTowers;
+        this.numberOfTowers = maxNumberOfTowers;
         this.color = color;
     }
 
