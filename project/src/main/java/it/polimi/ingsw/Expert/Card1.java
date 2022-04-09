@@ -19,6 +19,7 @@ public class Card1 extends CharacterCardTemplate{
         setupCard();
     }
 
+
     public void useCard(PawnDiscColor color, int islandID){
         board.getIslandList().get(islandID).addStudent(students.retrieveStudent(color));
         setupCard();

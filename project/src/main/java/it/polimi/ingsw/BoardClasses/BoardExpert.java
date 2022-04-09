@@ -1,5 +1,6 @@
 package it.polimi.ingsw.BoardClasses;
 
+import it.polimi.ingsw.BasicElements.MotherNature;
 import it.polimi.ingsw.BasicElements.Professor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
@@ -22,6 +23,7 @@ public class BoardExpert extends Board{
     private int[] cardIDs;
     private final int numberOfCharacterCards = 12;
     private final int cardsToInstantiate = 3;
+    private int additional_moves;
 
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                        int studentsInEntrance, GameMode mode){
@@ -100,6 +102,17 @@ public class BoardExpert extends Board{
         }
     }
 
+    @Override
+    public void moveMotherNature(int movements){
+        if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
+            islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
+            putBackNoEntryTile();
+        }
+        super.moveMotherNature(movements);
+        motherNature.setPosition(motherNature.getPosition()+additional_moves);
+        additional_moves = 0;
+    }
+
     /* methods for the regular usages of noEntryTiles in the game
     * checks if valid action, sets and unsets noentrytiles */
 
@@ -116,6 +129,11 @@ public class BoardExpert extends Board{
             return false;
         else
             return true;
+    }
+
+    /* methods which allows to set the additional moves for the effect of card 4*/
+    public void setAdditionalMoves(int moves){
+        additional_moves = moves;
     }
 
     /* method retrieves the current player's coinCounter and decrements its number by retrieving the
@@ -182,4 +200,7 @@ public class BoardExpert extends Board{
         //?
     }
 
+    public void setMotherNaturePosition(int pos){
+        motherNature.setPosition(pos);
+    }
 }

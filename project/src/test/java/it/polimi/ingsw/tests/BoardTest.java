@@ -118,30 +118,56 @@ public class BoardTest {
         boardToTest.setup();
 
         /* simulated turn (partial)*/
-        int ip;
-        /* at the end of this loop each player will have moved
-        * three students on one of the first three islands */
-        for(Player p: players){
-            ip = 0;
-            while(ip < 3){
-                for(PawnDiscColor c : PawnDiscColor.values()){
-                    if(boardToTest.colorAvailableInEntrance(p.getNickname(), c)){
-                        boardToTest.moveStudent(c, p.getNickname(), ip);
-                        ip++;
-                        if(boardToTest.colorAvailableInEntrance(p.getNickname(), c)){
-                            boardToTest.moveStudent(c, p.getNickname());
-                        }
-                    }
+        int ip = 0;
+        while(ip < 3){
+            for(PawnDiscColor c : PawnDiscColor.values()){
+                if(boardToTest.colorAvailableInEntrance("player2", c)) {
+                    boardToTest.moveStudent(c, "player2", boardToTest.getMotherNaturePosition());
+                    ip++;
+                }
+                if(boardToTest.colorAvailableInEntrance("player2", c)){
+                    boardToTest.moveStudent(c,"player2");
                 }
             }
         }
-
-        /* once the students have moved both on islands and on the dining rooms,
-        * this method attempts to conquer an island */
-        boardToTest.moveMotherNature(5);
         boardToTest.assignProfessors();
-        for(Player p: players){
-            boardToTest.conquerIsland(p.getNickname());
+        System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
+        boardToTest.conquerIsland("player2");
+        if(boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered())
+            System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
+    }
+
+    /* more structured game-phase tests will be possible when testing the
+    * Model class and controller classes*/
+    /* out of bounds exception is thrown, i still need to understand where  */
+    @Test
+    public void repeatedConqueringTest() {
+        players.add(new Player("player1"));
+        players.add(new Player("player2"));
+        boardToTest = new Board(players, 2, 8,
+                3, 30, GameMode.SIMPLE);
+        boardToTest.setup();
+        int ip = 0;
+        for (int i = 0; i < 3; i++) {
+            while (ip < 3) {
+                for (PawnDiscColor c : PawnDiscColor.values()) {
+                    if (boardToTest.colorAvailableInEntrance("player2", c)) {
+                        boardToTest.moveStudent(c, "player2", boardToTest.getMotherNaturePosition());
+                        ip++;
+                    }
+                    if (boardToTest.colorAvailableInEntrance("player2", c)) {
+                        boardToTest.moveStudent(c, "player2");
+                    }
+                }
+            }
+            boardToTest.assignProfessors();
+            System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
+            boardToTest.conquerIsland("player2");
+            if (boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered())
+                System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
+
+            boardToTest.checkForMerge("player2");
+            boardToTest.moveMotherNature(1);
         }
     }
 

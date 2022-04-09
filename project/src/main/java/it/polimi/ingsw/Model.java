@@ -1,7 +1,11 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
+import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
+
+import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.*;
 
 public class Model {
@@ -67,8 +71,40 @@ public class Model {
         }
     }
 
-    //public boolean checkForWinner(){
 
-    //}
+    /* this method will be called by the controller each time a round is over; if it
+    * does return true, the controller will proceed to call the method which determines the winner */
+    public boolean isGameOver(){
+        /*the game ends if a player runs out of towers*/
+        for(SchoolBoard sb: board.getSchoolBoards()){
+            if(sb.getTowerSection().isTowerSectionEmpty()){
+                return true;
+            }
+        }
+
+        /*or when only three islands are left after the mergings */
+        if(board.getIslandList().size() == 3)
+            return true;
+
+        /* or when there are no more students in the bag */
+        if(board.getStudentBag().checkIfStudentBagEmpty())
+            return true;
+
+        /* or if any player runs out of assistant cards */
+        for(AssistantCardDeck deck : board.getDecks()){
+            if(deck.checkIfDeckIsEmpty()) return true;
+        }
+
+        return false;
+    }
+
+    /* the winner is the player with the least towers in their tower section. In case of a tie regarding the
+    * number of towers, the winner is whoever controls the most professors. Method
+    * returns a reference to the winner  */
+    public Player getWinner(){
+
+    }
+
+    /*still needs a method to use a character card*/
 
 }

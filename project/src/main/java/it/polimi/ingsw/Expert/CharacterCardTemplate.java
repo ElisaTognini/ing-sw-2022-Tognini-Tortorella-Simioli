@@ -25,6 +25,9 @@ public abstract class CharacterCardTemplate {
         return cardID;
     }
 
+    //method overridden in cards that need parameters
+    public void useCard(Object o, String nickname){}
+
     public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
                                             String nickname){
 

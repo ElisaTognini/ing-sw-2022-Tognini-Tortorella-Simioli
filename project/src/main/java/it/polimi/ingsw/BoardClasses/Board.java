@@ -175,7 +175,13 @@ public class Board {
             islands.get(motherNature.getPosition()).getsConquered(conqueror);
             for(SchoolBoard sb: schoolBoards){
                 if(sb.getOwner().getNickname().equals(nickname)){
-                    sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+                    if(islands.get(motherNature.getPosition()).getNumberOfTowers() == 0){
+                        sb.getTowerSection().towersToIsland(1);
+                        islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
+                    }
+                    else {
+                        sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+                    }
                 }
             }
 
@@ -194,16 +200,33 @@ public class Board {
         }
     }
 
+    /* DA RISCRIVERE */
     public void checkForMerge(String nickname){
-        if(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().equals(nickname)){
-            if(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().equals(nickname)){
-                merge(motherNature.getPosition(), (motherNature.getPosition() - 1)%islands.size(),
-                        (motherNature.getPosition() + 1)%islands.size());
+        boolean notNull1 = false;
+        boolean notNullMinus1 = false;
+        if(!(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner() == null))
+            notNull1 = true;
+        if(!(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner() == null))
+            notNullMinus1 = true;
+
+        if(notNull1 && notNullMinus1){
+            if (islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
+                if (islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
+                    merge(motherNature.getPosition(), (motherNature.getPosition() - 1) % islands.size(),
+                            (motherNature.getPosition() + 1) % islands.size());
+                }
             }
-            merge(motherNature.getPosition(), (motherNature.getPosition() - 1)%islands.size());
         }
-        if(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().equals(nickname)){
-            merge(motherNature.getPosition(), (motherNature.getPosition() + 1)%islands.size());
+        if(notNull1){
+            if (islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
+                merge(motherNature.getPosition(), (motherNature.getPosition() + 1) % islands.size());
+            }
+        }
+
+        if(notNullMinus1){
+            if(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().getNickname().equals(nickname)){
+                merge(motherNature.getPosition(), (motherNature.getPosition() - 1) % islands.size());
+            }
         }
     }
 
@@ -213,7 +236,7 @@ public class Board {
         int k = 0;
         Island toKeep;
         for(PawnDiscColor c : PawnDiscColor.values()){
-            k = islands.get(index1).getInfluenceByColor(c);
+            k = islands.get(index2).getInfluenceByColor(c);
             for(int i = 0; i < k; i++){
                 islands.get(index1).addStudent(islands.get(index2).removeStudent(c));
             }
@@ -221,7 +244,6 @@ public class Board {
         toKeep = islands.get(index1);
         islands.remove(index2);
         motherNature.setPosition(islands.indexOf(toKeep));
-
     }
 
     protected void merge(int index1, int index2, int index3){
@@ -327,6 +349,10 @@ public class Board {
     }
     public int getMotherNaturePosition(){
         return motherNature.getPosition();
+    }
+
+    public ArrayList<AssistantCardDeck> getDecks(){
+        return decks;
     }
     /* END OF GETTER METHODS */
 

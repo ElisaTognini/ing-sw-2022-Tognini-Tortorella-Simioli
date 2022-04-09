@@ -9,6 +9,7 @@ import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import java.util.ArrayList;
 
 /* take control of any number of professors for the turn */
+/* i need help with developing this card */
 public class Card2 extends CharacterCardTemplate{
 
     public Card2(BoardExpert board){

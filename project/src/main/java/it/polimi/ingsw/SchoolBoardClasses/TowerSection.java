@@ -32,4 +32,9 @@ public class TowerSection {
         if(numberOfTowers <= numberOfTowers - number) return true;
         else return false;
     }
+
+    public boolean isTowerSectionEmpty(){
+        if(numberOfTowers == 0) return true;
+        return false;
+    }
 }
