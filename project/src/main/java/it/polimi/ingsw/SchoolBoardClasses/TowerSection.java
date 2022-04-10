@@ -37,4 +37,8 @@ public class TowerSection {
         if(numberOfTowers == 0) return true;
         return false;
     }
+
+    public int getNumberOfTowers(){
+        return numberOfTowers;
+    }
 }

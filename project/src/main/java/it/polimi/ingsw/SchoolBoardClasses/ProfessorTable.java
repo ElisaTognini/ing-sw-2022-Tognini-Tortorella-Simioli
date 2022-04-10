@@ -50,6 +50,15 @@ public class ProfessorTable {
         }
     }
 
+    public int getNumberOfProfessors(){
+        int count = 0;
+        for(Professor p : professors){
+            if(p.isOwnedByPlayer())
+                count++;
+        }
+        return count;
+    }
+
     @Override
     public String toString(){
         String ret = "";

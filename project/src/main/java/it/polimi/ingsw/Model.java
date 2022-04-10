@@ -8,6 +8,7 @@ import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.*;
 
+/* will implement Observable */
 public class Model {
     private Board board;
     private RoundManager roundManager;
@@ -102,7 +103,39 @@ public class Model {
     * number of towers, the winner is whoever controls the most professors. Method
     * returns a reference to the winner  */
     public Player getWinner(){
+        int minTowers = board.getPlayerSchoolBoard(playerList.get(0).getNickname()).getTowerSection().getNumberOfTowers();
+        Player winner = playerList.get(0);
+        ArrayList<Player> tiedPlayers = new ArrayList<>();
+        boolean tie = false;
 
+        for(int i = 1; i < numberOfPlayers; i++){
+            if(board.getPlayerSchoolBoard(playerList.get(i).getNickname()).getTowerSection().getNumberOfTowers() < minTowers){
+                minTowers = board.getPlayerSchoolBoard(playerList.get(i).getNickname()).getTowerSection().getNumberOfTowers();
+                winner = playerList.get(i);
+                tie = false;
+            }
+            else if(board.getPlayerSchoolBoard(playerList.get(i).getNickname()).getTowerSection().getNumberOfTowers() == minTowers){
+                tie = true;
+                tiedPlayers.add(playerList.get(i));
+            }
+        }
+
+        /* in case of a tie, one of the possible winners is stored in the winner local variable.
+        * To determine the actual winner we need to find the player we are tying with and confront the
+        * number of professors that is controlled */
+        if(tie){
+            int count = 0;
+            int max = -1;
+            int temp;
+            for(Player p : tiedPlayers){
+                temp = board.getPlayerSchoolBoard(p.getNickname()).getProfessorTable().getNumberOfProfessors();
+                if(temp > max){
+                    max = temp;
+                    winner = p;
+                }
+            }
+        }
+        return winner;
     }
 
     /*still needs a method to use a character card*/

@@ -38,7 +38,9 @@ public class BoardExpert extends Board{
 
 
     /* board class setup is overridden here to add the instantiation of all the expert game
-    * elements (cards, coins) */
+    * elements (cards, coins)
+    * the extracted card ids are stored in an array which is then iterated to
+    * instantiate the character cards, which will be stored in the extractedCards array*/
     @Override
     public void setup(){
         super.setup();
@@ -64,6 +66,7 @@ public class BoardExpert extends Board{
         if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
             islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
             putBackNoEntryTile();
+            return;
         }
         else {
             for(SchoolBoard sb : schoolBoards){
@@ -104,10 +107,6 @@ public class BoardExpert extends Board{
 
     @Override
     public void moveMotherNature(int movements){
-        if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
-            islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
-            putBackNoEntryTile();
-        }
         super.moveMotherNature(movements);
         motherNature.setPosition(motherNature.getPosition()+additional_moves);
         additional_moves = 0;
@@ -124,6 +123,7 @@ public class BoardExpert extends Board{
         noEntryTiles--;
     }
 
+    /* called by the controller */
     public boolean checkIfEnoughNoEntryTiles(){
         if(noEntryTiles == 0)
             return false;
