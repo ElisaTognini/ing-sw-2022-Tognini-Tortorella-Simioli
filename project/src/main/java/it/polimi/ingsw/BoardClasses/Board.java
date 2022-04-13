@@ -5,8 +5,7 @@ import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Board {
 
