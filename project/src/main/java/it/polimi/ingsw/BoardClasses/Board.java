@@ -144,46 +144,44 @@ public class Board {
         }
     }
 
-    /* manca la parte in cui viene aggiunta la prima torre all'isola altrimenti il metodo non funziona:
-    * quando sulla fine viene fatto towersToIsland si tenta di ottenere il numero di torri già presente sull'isola,
-    * che inizialmente è zero ma non viene mai aumentato
-    * + corner case delle influenze uguali */
-    public void conquerIsland(String nickname){
+    /*  */
+    public void conquerIsland(String nickname) {
         int sum;
         int maxSum = 0;
         Player conqueror = null;
-        for(SchoolBoard sb : schoolBoards){
+        /*if at the end of the method the conqueror is still null, nobody conquers*/
+        for (SchoolBoard sb : schoolBoards) {
             sum = 0;
-            for(PawnDiscColor color: PawnDiscColor.values()){
-                if(sb.getProfessorTable().hasProfessor(color)){
+            for (PawnDiscColor color : PawnDiscColor.values()) {
+                if (sb.getProfessorTable().hasProfessor(color)) {
                     sum = sum + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                 }
-                if(islands.get(motherNature.getPosition()).checkIfConquered()){
-                    if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())){
+                if (islands.get(motherNature.getPosition()).checkIfConquered()) {
+                    if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
                         sum = sum + islands.get(motherNature.getPosition()).getNumberOfTowers();
                     }
                 }
-                if(sum > maxSum){
+                if (sum > maxSum) {
                     maxSum = sum;
                     conqueror = sb.getOwner();
                 }
             }
         }
-        if(conqueror.getNickname().equals(nickname)){
-            fixTowers(nickname);
-            islands.get(motherNature.getPosition()).getsConquered(conqueror);
-            for(SchoolBoard sb: schoolBoards){
-                if(sb.getOwner().getNickname().equals(nickname)){
-                    if(islands.get(motherNature.getPosition()).getNumberOfTowers() == 0){
-                        sb.getTowerSection().towersToIsland(1);
-                        islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
-                    }
-                    else {
-                        sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+        if (conqueror != null) {
+            if (conqueror.getNickname().equals(nickname)) {
+                fixTowers(nickname);
+                islands.get(motherNature.getPosition()).getsConquered(conqueror);
+                for (SchoolBoard sb : schoolBoards) {
+                    if (sb.getOwner().getNickname().equals(nickname)) {
+                        if (islands.get(motherNature.getPosition()).getNumberOfTowers() == 0) {
+                            sb.getTowerSection().towersToIsland(1);
+                            islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
+                        } else {
+                            sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -199,19 +197,21 @@ public class Board {
         }
     }
 
-    /* DA RISCRIVERE */
+    /* this method checks whether the adjacent islands are also conquered by the current players. It handles
+    * the case in which the nearing island's owner is null. This method, if islands need merging,
+    * calls the merge method which handles the moving of students and towers basing on indexes (using an arraylist)*/
     public void checkForMerge(String nickname){
         boolean notNull1 = false;
         boolean notNullMinus1 = false;
         if(!(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner() == null))
             notNull1 = true;
-        if(!(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner() == null))
+        if(!(islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner() == null))
             notNullMinus1 = true;
 
         if(notNull1 && notNullMinus1){
-            if (islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
+            if (islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname().equals(nickname)) {
                 if (islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
-                    merge(motherNature.getPosition(), (motherNature.getPosition() - 1) % islands.size(),
+                    merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size(),
                             (motherNature.getPosition() + 1) % islands.size());
                 }
             }
@@ -223,8 +223,8 @@ public class Board {
         }
 
         if(notNullMinus1){
-            if(islands.get((motherNature.getPosition() - 1) % islands.size()).getOwner().getNickname().equals(nickname)){
-                merge(motherNature.getPosition(), (motherNature.getPosition() - 1) % islands.size());
+            if(islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname().equals(nickname)){
+                merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size());
             }
         }
     }
@@ -352,6 +352,10 @@ public class Board {
 
     public ArrayList<AssistantCardDeck> getDecks(){
         return decks;
+    }
+
+    public MotherNature getMotherNature(){
+        return motherNature;
     }
     /* END OF GETTER METHODS */
 
