@@ -15,7 +15,7 @@ public class Card3 extends CharacterCardTemplate{
 
     /* this method saves the previous position on mother nature, changes it,
     * forces the board to resolve the island. After that, the position of mother nature goes back
-    * to its previous value (which ensures the turn proceeds as normal)  */
+    * to its previous value (which ensures the turn proceeds as normal)
     @Override
     public void useCard(Object o, String nickname){
         IslandIDParameter parameters;
@@ -28,7 +28,7 @@ public class Card3 extends CharacterCardTemplate{
 
         oldPos = board.getMotherNaturePosition();
         board.setMotherNaturePosition(parameters.getIslandID());
-        board.conquerIsland(nickname);
+        board.conquerIsland();
         board.setMotherNaturePosition(oldPos);
-    }
+    }*/
 }

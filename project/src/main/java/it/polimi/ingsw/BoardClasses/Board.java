@@ -144,57 +144,67 @@ public class Board {
         }
     }
 
-    /*  */
-    public void conquerIsland(String nickname) {
-        int sum;
-        int maxSum = 0;
+    /*  if two players have the same influence over an unconquered island, the island will not be
+    * conquered. If two players hold the same influence over a conquered island, the island
+    * will not change its owner.*/
+    public void conquerIsland() {
+        int[] sum = new int[players.size()];
+        int i = 0;
+        int maxInfluence;
+        boolean duece = false;
         Player conqueror = null;
         /*if at the end of the method the conqueror is still null, nobody conquers*/
         for (SchoolBoard sb : schoolBoards) {
-            sum = 0;
+            sum[i] = 0;
             for (PawnDiscColor color : PawnDiscColor.values()) {
                 if (sb.getProfessorTable().hasProfessor(color)) {
-                    sum = sum + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                    sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                 }
                 if (islands.get(motherNature.getPosition()).checkIfConquered()) {
                     if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
-                        sum = sum + islands.get(motherNature.getPosition()).getNumberOfTowers();
-                    }
-                }
-                if (sum > maxSum) {
-                    maxSum = sum;
-                    conqueror = sb.getOwner();
-                }
-            }
-        }
-        if (conqueror != null) {
-            if (conqueror.getNickname().equals(nickname)) {
-                fixTowers(nickname);
-                islands.get(motherNature.getPosition()).getsConquered(conqueror);
-                for (SchoolBoard sb : schoolBoards) {
-                    if (sb.getOwner().getNickname().equals(nickname)) {
-                        if (islands.get(motherNature.getPosition()).getNumberOfTowers() == 0) {
-                            sb.getTowerSection().towersToIsland(1);
-                            islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
-                        } else {
-                            sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
-                        }
+                        sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
                     }
                 }
             }
+            i++;
         }
-    }
 
-    protected void fixTowers(String nickname){
-        if(islands.get(motherNature.getPosition()).checkIfConquered()) {
-            if (!islands.get(motherNature.getPosition()).getOwner().equals(nickname)) {
-                for(SchoolBoard sb: schoolBoards){
-                    if(islands.get(motherNature.getPosition()).getOwner().equals(sb.getOwner())){
-                        sb.getTowerSection().returnTowers(islands.get(motherNature.getPosition()).getNumberOfTowers());
-                    }
-                }
+        /* decides who conquers the island */
+        i = 0;
+        maxInfluence = 0;
+        for(SchoolBoard sb : schoolBoards){
+            if(sum[i] > maxInfluence){
+                maxInfluence = sum[i];
+                conqueror = sb.getOwner();
+                duece = false;
             }
+            else if(sum[i] == maxInfluence && maxInfluence != 0 ){
+                duece = true;
+            }
+            i++;
         }
+
+        if(duece || conqueror == null){
+            return;
+        }
+
+        if(islands.get(motherNature.getPosition()).checkIfConquered()){
+            if(islands.get(motherNature.getPosition()).getOwner().equals(conqueror)){
+                return;
+            }
+            //returning towers to old owner
+            getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
+                    islands.get(motherNature.getPosition()).getNumberOfTowers());
+            //retrieving towers from conqueror's schoolboard
+            getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+        }
+
+        if(!islands.get(motherNature.getPosition()).checkIfConquered()){
+            getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(1);
+            islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
+        }
+
+        islands.get(motherNature.getPosition()).getsConquered(conqueror);
     }
 
     /* this method checks whether the adjacent islands are also conquered by the current players. It handles

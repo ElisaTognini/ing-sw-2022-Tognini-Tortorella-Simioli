@@ -132,7 +132,7 @@ public class BoardTest {
         }
         boardToTest.assignProfessors();
         System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
-        boardToTest.conquerIsland("player2");
+        boardToTest.conquerIsland();
         if(boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered())
             System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
     }
@@ -163,7 +163,7 @@ public class BoardTest {
             }
             boardToTest.assignProfessors();
             System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
-            boardToTest.conquerIsland("player2");
+            boardToTest.conquerIsland();
             if (boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered())
                 System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
 
@@ -177,36 +177,57 @@ public class BoardTest {
     public void conquerTest() {
         players.add(new Player("player1"));
         players.add(new Player("player2"));
-        players.add(new Player("player3"));
-        boardToTest = new Board(players, 3, 6,
-                4, 30, GameMode.SIMPLE);
+        boardToTest = new Board(players, 2, 8,
+                3, 30, GameMode.SIMPLE);
         boardToTest.setup();
 
         /* tests the conquering of empty islands */
         boardToTest.getMotherNature().setPosition((boardToTest.getMotherNaturePosition() + 6) % 12);
         System.out.println("is island empty? " + boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfIslandIsEmpty());
-        boardToTest.conquerIsland("player1");
+        boardToTest.conquerIsland();
 
         assertEquals(false, boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered());
-
-        boardToTest.moveMotherNature(1);
-        assertEquals(false, boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfIslandIsEmpty());
 
         /* checks the conquering of an island when two players hold the same influence - unconquered island */
         /* if the island has not yet been conquered and there is a tie between players regarding the influence,
          * the island is conquered by the current player (nickname in the conquerIsland parameters)*/
         for (int i = 0; i < 2; i++) {
             boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1", boardToTest.getMotherNaturePosition());
-            boardToTest.moveStudent(PawnDiscColor.YELLOW,
+            boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1");
             boardToTest.moveStudent(PawnDiscColor.PINK, "player2", boardToTest.getMotherNaturePosition());
+            boardToTest.moveStudent(PawnDiscColor.PINK, "player2");
         }
         boardToTest.assignProfessors();
-        PlayerSchoolBoard("player1").getProfessorTable());
         System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
 
-        boardToTest.conquerIsland("player2");
-        assertEquals("player2", boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname());
+        boardToTest.conquerIsland();
+        try{
+            boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname();
+        }catch(NullPointerException e){
+            System.out.println("island wasn't conquered!");
+        }
 
+        /*checking if a conquered island with the same influence doesn't change owner*/
+        try {
+            boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1", boardToTest.getMotherNaturePosition());
+            boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1");
+        }catch(IndexOutOfBoundsException e){
+            System.out.println("not enough yellow students");
+        }
+
+        boardToTest.assignProfessors();
+        boardToTest.conquerIsland();
+        assertEquals("player1", boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname());
+
+        try {
+            boardToTest.moveStudent(PawnDiscColor.PINK, "player2", boardToTest.getMotherNaturePosition());
+            boardToTest.moveStudent(PawnDiscColor.PINK, "player2");
+        }catch(IndexOutOfBoundsException e){
+            System.out.println("not enough pink students");
+        }
+        boardToTest.assignProfessors();
+        boardToTest.conquerIsland();
+        assertEquals("player1", boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname());
     }
 
 }

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.BoardClasses;
 
-import it.polimi.ingsw.BasicElements.MotherNature;
 import it.polimi.ingsw.BasicElements.Professor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
@@ -59,8 +58,8 @@ public class BoardExpert extends Board{
     }
 
     @Override
-    public void conquerIsland(String nickname){
-        int sum;
+    public void conquerIsland(){
+        /*int sum;
         int maxSum = 0;
         Player conqueror = null;
         if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
@@ -102,7 +101,7 @@ public class BoardExpert extends Board{
 
             }
 
-        }
+        }*/
     }
 
     @Override
