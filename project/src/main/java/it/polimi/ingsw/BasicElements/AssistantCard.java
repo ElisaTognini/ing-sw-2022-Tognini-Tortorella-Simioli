@@ -35,6 +35,11 @@ public final class AssistantCard implements Comparable{
         return this.cardValue - o1.cardValue;
     }
 
+    @Override
+    public String toString(){
+        return "power factor : " + cardValue + " deck owned by " + owner.getNickname() + "\n";
+    }
+
     public Player getOwner(){
         return owner;
     }

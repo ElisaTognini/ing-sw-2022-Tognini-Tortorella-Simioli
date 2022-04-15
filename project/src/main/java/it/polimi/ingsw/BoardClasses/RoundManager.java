@@ -50,12 +50,13 @@ public class RoundManager {
         sortedPlayers.clear();
         sortedPlayers.addAll(players);
         for(int i = 0; i < firstPlayer; i++){
-            sortedPlayers.remove(i);
+            sortedPlayers.remove(0);
             sortedPlayers.add(players.get(i));
         }
+        currentPlayer = sortedPlayers.get(0);
     }
 
-
+    //da risolvere: non deve ricevere una card ma un indice
     public boolean checkForDupe(AssistantCard card){
         if(!cards.contains(card)) return false;
         return true;
@@ -72,15 +73,12 @@ public class RoundManager {
             sortActionPhase();
         }
 
-        else
-            currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
-
     }
 
     /* this method reorders the cards in "cards" ArrayList in ascending order */
     /* so it's possible to compute the order in which every player enters the Action Phase */
     /* and passes the first player of the next planning phase to the computeTurnOrder method */
-    private void sortActionPhase(){
+    public void sortActionPhase(){
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
     }
@@ -90,4 +88,15 @@ public class RoundManager {
         for(Player p : players) p.setCardPickedToFalse();
         changeState(TurnFlow.BEGINS_TURN);
     }
+
+    public void refreshCurrentPlayer(){
+        if(sortedPlayers.indexOf(currentPlayer) < sortedPlayers.size()-1){
+            currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
+        }
+    }
+
+    public ArrayList<AssistantCard> getCards(){
+        return cards;
+    }
+
 }

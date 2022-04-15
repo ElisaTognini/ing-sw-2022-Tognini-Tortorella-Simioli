@@ -65,6 +65,7 @@ public class Board {
     public AssistantCard playAssistantCard(int cardID, String nickname){
         for(AssistantCardDeck d : decks){
             if(d.getOwner().getNickname().equals(nickname)){
+                d.getOwner().setCardPickedToTrue();
                 return d.drawCard(cardID);
             }
         }
