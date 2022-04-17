@@ -152,7 +152,7 @@ public class Board {
         int[] sum = new int[players.size()];
         int i = 0;
         int maxInfluence;
-        boolean duece = false;
+        boolean deuce = false;
         Player conqueror = null;
         /*if at the end of the method the conqueror is still null, nobody conquers*/
         for (SchoolBoard sb : schoolBoards) {
@@ -177,15 +177,15 @@ public class Board {
             if(sum[i] > maxInfluence){
                 maxInfluence = sum[i];
                 conqueror = sb.getOwner();
-                duece = false;
+                deuce = false;
             }
             else if(sum[i] == maxInfluence && maxInfluence != 0 ){
-                duece = true;
+                deuce = true;
             }
             i++;
         }
 
-        if(duece || conqueror == null){
+        if(deuce || conqueror == null){
             return;
         }
 

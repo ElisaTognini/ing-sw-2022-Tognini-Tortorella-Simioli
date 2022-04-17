@@ -59,9 +59,13 @@ public class BoardExpert extends Board{
 
     @Override
     public void conquerIsland(){
-        /*int sum;
-        int maxSum = 0;
+        int[] sum = new int[players.size()];
+        int i = 0, maxInfluence;
         Player conqueror = null;
+        boolean deuce = false;
+
+        super.conquerIsland();
+
         if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
             islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
             putBackNoEntryTile();
@@ -69,39 +73,68 @@ public class BoardExpert extends Board{
         }
         else {
             for(SchoolBoard sb : schoolBoards){
-                sum = 0;
+                sum[i] = 0;
                 for(PawnDiscColor color: PawnDiscColor.values()){
                     if(sb.getProfessorTable().hasProfessor(color)){
-                        sum = sum + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                        sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                     }
                     if(islands.get(motherNature.getPosition()).checkIfConquered()){
                         if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
-                            if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0) {
-                                sum = sum + islands.get(motherNature.getPosition()).getNumberOfTowers();
-                                sum = sum + islands.get(motherNature.getPosition()).getExtra();
-                            }
+                           /*checks if player has played character card which cancels the influence of the tower(s) on a
+                            * island */
+                            if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0)
+                                sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
+                            /* adds extra points to the influence of a player; extra is set to 2 only if player
+                            * purchased character card 8, otherwise it is 0 */
+                            sum[i] = sum[i] + islands.get(motherNature.getPosition()).getExtra();
                         }
                     }
-                    if(sum > maxSum){
-                        maxSum = sum;
-                        conqueror = sb.getOwner();
-                    }
                 }
+                i++;
             }
+
+            /* sets variables modified by character card affecting influence back to default */
             islands.get(motherNature.getPosition()).setTowersOnHold(0);
             islands.get(motherNature.getPosition()).setExtra(0);
-            if(conqueror.getNickname().equals(nickname)){
-                fixTowers(nickname);
-                islands.get(motherNature.getPosition()).getsConquered(conqueror);
-                for(SchoolBoard sb: schoolBoards){
-                    if(sb.getOwner().getNickname().equals(nickname)){
-                        sb.getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
-                    }
-                }
 
+            /* decides who conquers the island */
+            /*i = 0;
+            maxInfluence = 0;
+            for(SchoolBoard sb : schoolBoards){
+                if(sum[i] > maxInfluence){
+                    maxInfluence = sum[i];
+                    conqueror = sb.getOwner();
+                    deuce = false;
+                }
+                else if(sum[i] == maxInfluence && maxInfluence != 0 ){
+                    deuce = true;
+                }
+                i++;
             }
 
-        }*/
+            if(deuce || conqueror == null){
+                return;
+            }
+
+            if(islands.get(motherNature.getPosition()).checkIfConquered()){
+                if(islands.get(motherNature.getPosition()).getOwner().equals(conqueror)){
+                    return;
+                }
+                //returning towers to old owner
+                getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
+                        islands.get(motherNature.getPosition()).getNumberOfTowers());
+                //retrieving towers from conqueror's schoolboard
+                getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+            }
+
+            if(!islands.get(motherNature.getPosition()).checkIfConquered()){
+                getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(1);
+                islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
+            }
+
+            islands.get(motherNature.getPosition()).getsConquered(conqueror); */
+
+        }
     }
 
     @Override
@@ -112,7 +145,7 @@ public class BoardExpert extends Board{
     }
 
     /* methods for the regular usages of noEntryTiles in the game
-    * checks if valid action, sets and unsets noentrytiles */
+    * checks if valid action, sets and unsets noEntryTiles */
 
     public void putBackNoEntryTile(){
         noEntryTiles++;
@@ -136,7 +169,7 @@ public class BoardExpert extends Board{
     }
 
     /* method retrieves the current player's coinCounter and decrements its number by retrieving the
-    * desiderd character card's cost */
+    * desired character card's cost */
     public void purchaseCharacterCard(String nickname, int characterCardID){
         for(CharacterCardTemplate card : extractedCards){
             if(characterCardID == card.getCardID()){

@@ -1,7 +1,8 @@
 package it.polimi.ingsw.Expert;
 
-import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
+
+/* when resolving Conquering on an island, Towers do not count towards influence */
 
 public class Card6 extends CharacterCardTemplate{
 
