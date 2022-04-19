@@ -10,6 +10,7 @@ public class SchoolBoard {
     private ProfessorTable professorTable;
     private TowerSection towerSection;
     private Player owner;
+    private boolean modifiedTable;
 
     public SchoolBoard(int studentsInEntrance, int numberOfTowers, TowerColor towerColor, GameMode mode, Player owner){
         entrance = new Entrance(studentsInEntrance);
@@ -17,6 +18,7 @@ public class SchoolBoard {
         towerSection = new TowerSection(numberOfTowers, towerColor);
         diningRoom = new DiningRoom();
         this.owner = owner;
+        modifiedTable = false;
     }
 
     public Player getOwner(){
@@ -38,4 +40,11 @@ public class SchoolBoard {
     public TowerSection getTowerSection(){
         return towerSection;
     }
+
+    /* flag set if player plays character card 2, in order to reset the professor's table previous state */
+    public void setModifiedTable(){
+        modifiedTable = true;
+    }
+
+    public boolean getModifiedTable(){return modifiedTable;}
 }

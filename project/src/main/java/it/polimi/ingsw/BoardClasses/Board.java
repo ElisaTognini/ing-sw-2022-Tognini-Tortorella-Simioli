@@ -260,6 +260,9 @@ public class Board {
         merge(index1, index2);
         merge(motherNature.getPosition(), index3);
     }
+
+    /* this method is only used in Expert mode, it is declared here for overriding*/
+    public void useCard(Object o, String nickname, int cardID){}
     /* END OF METHODS FOLLOWING THE PLAYER'S ACTIONS */
 
     /* SERVICE METHODS FOR INITIALIZATION */

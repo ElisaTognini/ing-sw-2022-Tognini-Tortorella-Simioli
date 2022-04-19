@@ -12,9 +12,16 @@ public class Card6 extends CharacterCardTemplate{
         cost = 3;
     }
 
-    public void useCard(int islandID){
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
         int temp = 0;
-        temp = board.getIslandList().get(islandID).getNumberOfTowers();
-        board.getIslandList().get(islandID).setTowersOnHold(temp);
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        temp = board.getIslandList().get(parameters.getIslandID()).getNumberOfTowers();
+        board.getIslandList().get(parameters.getIslandID()).setTowersOnHold(temp);
     }
 }

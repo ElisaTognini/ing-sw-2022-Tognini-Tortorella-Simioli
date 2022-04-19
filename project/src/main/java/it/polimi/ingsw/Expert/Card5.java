@@ -2,7 +2,7 @@ package it.polimi.ingsw.Expert;
 
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 
-/* this character card places no entry tiles on islands of choice in order not to block
+/* this character card places no entry tiles on islands of choice in order to block
 * influence calculation if mother nature ends there */
 
 public class Card5 extends CharacterCardTemplate{
@@ -13,8 +13,16 @@ public class Card5 extends CharacterCardTemplate{
         cost = 2;
     }
 
-    public void useCard(int islandID){
-        board.getIslandList().get(islandID).setNoEntryTileToTrue();
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
+
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        board.getIslandList().get(parameters.getIslandID()).setNoEntryTileToTrue();
         board.useNoEntryTile();
     }
 

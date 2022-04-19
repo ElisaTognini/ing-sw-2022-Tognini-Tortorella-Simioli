@@ -56,11 +56,15 @@ public class RoundManager {
         currentPlayer = sortedPlayers.get(0);
     }
 
-    //da risolvere: non deve ricevere una card ma un indice
-    public boolean checkForDupe(AssistantCard card){
-        if(!cards.contains(card)) return false;
-        return true;
+    /* this method checks if two players have played the same card;
+    * the corner case when the player has only one card left is already handled by sortActionPhase because
+    * sort does not reorder equal elements */
+    public boolean checkForDupe(int cardID){
+        for(AssistantCard c: cards) {
+            if (c.getAssistantCardID() == cardID) return true;
+        }
         //true if dupe is present, false otherwise
+        return false;
     }
 
     /*when this method is called, the round moves forward (if all players have picked a card) */

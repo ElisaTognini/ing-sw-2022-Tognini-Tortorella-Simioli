@@ -28,12 +28,5 @@ public abstract class CharacterCardTemplate {
     //method overridden in cards that need parameters
     public void useCard(Object o, String nickname){}
 
-    public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
-                                            String nickname){
 
-        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
-                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2) return true;
-        else return false;
-
-    }
 }

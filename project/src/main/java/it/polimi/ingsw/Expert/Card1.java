@@ -19,10 +19,16 @@ public class Card1 extends CharacterCardTemplate{
         setupCard();
     }
 
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
 
-    public void useCard(PawnDiscColor color, int islandID){
-        board.getIslandList().get(islandID).addStudent(students.retrieveStudent(color));
-        setupCard();
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        board.getIslandList().get(parameters.getIslandID()).addStudent(students.retrieveStudent(parameters.getColor()));
+        students.addStudent(board.getStudentBag().drawStudent());
     }
 
     private void setupCard(){

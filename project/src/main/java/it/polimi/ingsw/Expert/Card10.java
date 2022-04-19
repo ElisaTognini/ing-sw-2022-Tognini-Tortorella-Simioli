@@ -14,20 +14,26 @@ import java.util.ArrayList;
 
 public class Card10 extends CharacterCardTemplate{
 
+    /**/
+
     public Card10(BoardExpert board){
         super(board);
         cardID = 10;
         cost = 1;
     }
 
-    /* insert null for students you don't want to switch
-    *  or use 2 different methods: useCard1 and useCard2 for one or two switches */
-
-    public void useCard(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
-                        String nickname){
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
-
         Student student1;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        ArrayList<PawnDiscColor> studentsInEntrance = parameters.getColorArrayList();
+        ArrayList<PawnDiscColor> studentsInDiningRoom = parameters.getColorArrayList2();
 
         for(int i = 0; i < studentsInEntrance.size(); i++){
             student1 = sb.getEntrance().removeStudent(studentsInEntrance.get(i));
@@ -36,5 +42,15 @@ public class Card10 extends CharacterCardTemplate{
         }
 
     }
+
+    public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
+                                            String nickname){
+
+        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
+                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2) return true;
+        else return false;
+
+    }
+
 
 }

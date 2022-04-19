@@ -9,7 +9,7 @@ import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import java.util.ArrayList;
 
 /* take control of any number of professors for the turn */
-/* i need help with developing this card */
+
 public class Card2 extends CharacterCardTemplate{
 
     public Card2(BoardExpert board){
@@ -17,11 +17,21 @@ public class Card2 extends CharacterCardTemplate{
         cardID = 2;
         cost = 2;
     }
-
-    public void useCard(String nickname, ArrayList<PawnDiscColor> to_control){
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
         SchoolBoard sb;
 
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
         sb = board.getPlayerSchoolBoard(nickname);
+        sb.getProfessorTable().saveProfessors();
+
+        for(PawnDiscColor c: parameters.getColorArrayList()){
+                sb.getProfessorTable().addProfessor(c);
+        }
 
     }
 }

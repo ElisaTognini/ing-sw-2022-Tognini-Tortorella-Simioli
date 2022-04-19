@@ -64,7 +64,6 @@ public class BoardExpert extends Board{
         Player conqueror = null;
         boolean deuce = false;
 
-        super.conquerIsland();
 
         if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
             islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
@@ -90,6 +89,10 @@ public class BoardExpert extends Board{
                         }
                     }
                 }
+                /* only used if character card 2 has been played */
+                if(sb.getModifiedTable()){
+                    sb.getProfessorTable().resetPreviousProfessorTable();
+                }
                 i++;
             }
 
@@ -98,7 +101,7 @@ public class BoardExpert extends Board{
             islands.get(motherNature.getPosition()).setExtra(0);
 
             /* decides who conquers the island */
-            /*i = 0;
+            i = 0;
             maxInfluence = 0;
             for(SchoolBoard sb : schoolBoards){
                 if(sum[i] > maxInfluence){
@@ -132,7 +135,7 @@ public class BoardExpert extends Board{
                 islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
             }
 
-            islands.get(motherNature.getPosition()).getsConquered(conqueror); */
+            islands.get(motherNature.getPosition()).getsConquered(conqueror);
 
         }
     }
@@ -228,11 +231,15 @@ public class BoardExpert extends Board{
         }
     }
 
-    public void useCard(){
-        //?
+    /* this method activates the effect of the character card purchased by the player */
+    public void useCard(Object o, String nickname, int cardID){
+        for(CharacterCardTemplate c: extractedCards){
+            if(c.getCardID() == cardID) c.useCard(o,nickname);
+        }
     }
 
     public void setMotherNaturePosition(int pos){
         motherNature.setPosition(pos);
     }
+
 }

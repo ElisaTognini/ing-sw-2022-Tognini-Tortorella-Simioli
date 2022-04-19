@@ -14,9 +14,15 @@ public class Card9 extends CharacterCardTemplate{
         cardID = 9;
         cost = 3;
     }
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
 
-    public void useCard(PawnDiscColor color, int islandID){
-        board.getIslandList().get(islandID).ignoreInfluence(color);
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        board.getIslandList().get(parameters.getIslandID()).ignoreInfluence(parameters.getColor());
     }
 
 }

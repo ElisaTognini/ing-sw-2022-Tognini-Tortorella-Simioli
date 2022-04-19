@@ -10,6 +10,7 @@ public class Professor {
 
     public Professor(PawnDiscColor color) {
         this.color = color;
+        this.ownedByPlayer = false;
     }
 
     public PawnDiscColor getColor() {

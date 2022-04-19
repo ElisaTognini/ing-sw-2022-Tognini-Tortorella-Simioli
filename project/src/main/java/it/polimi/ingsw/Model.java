@@ -5,7 +5,6 @@ import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.*;
 
 /* will implement Observable */
@@ -50,7 +49,7 @@ public class Model {
                     studentsInEntrance, mode);
         }
     }
-
+/* according to the choices of mode and number of players, this method computes those values for the board*/
     private void computeSettings(){
         studentsOnCloud = numberOfPlayers + 1; //to change if teams
         numberOfClouds = numberOfPlayers;
@@ -83,7 +82,7 @@ public class Model {
             }
         }
 
-        /*or when only three islands are left after the mergings */
+        /*or when only three islands are left after the merging */
         if(board.getIslandList().size() == 3)
             return true;
 
@@ -102,7 +101,7 @@ public class Model {
     /* the winner is the player with the least towers in their tower section. In case of a tie regarding the
     * number of towers, the winner is whoever controls the most professors. Method
     * returns a reference to the winner  */
-    public Player getWinner(){
+    public String getWinner(){
         int minTowers = board.getPlayerSchoolBoard(playerList.get(0).getNickname()).getTowerSection().getNumberOfTowers();
         Player winner = playerList.get(0);
         ArrayList<Player> tiedPlayers = new ArrayList<>();
@@ -113,6 +112,7 @@ public class Model {
                 minTowers = board.getPlayerSchoolBoard(playerList.get(i).getNickname()).getTowerSection().getNumberOfTowers();
                 winner = playerList.get(i);
                 tie = false;
+                tiedPlayers.clear();
             }
             else if(board.getPlayerSchoolBoard(playerList.get(i).getNickname()).getTowerSection().getNumberOfTowers() == minTowers){
                 tie = true;
@@ -135,9 +135,11 @@ public class Model {
                 }
             }
         }
-        return winner;
+        return winner.getNickname();
     }
 
-    /*still needs a method to use a character card*/
+    public void useCard(Object o, String nickname, int cardID){
+        board.useCard(o,nickname,cardID);
+    }
 
 }

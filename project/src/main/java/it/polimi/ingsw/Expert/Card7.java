@@ -8,7 +8,7 @@ import it.polimi.ingsw.StudentContainer;
 
 import java.util.ArrayList;
 
-/* the player can choose up to three students on this card to switch with three in their dining room*/
+/* the player can choose up to three students on this card to switch with three in their entrance*/
 
 public class Card7 extends CharacterCardTemplate{
 
@@ -28,18 +28,26 @@ public class Card7 extends CharacterCardTemplate{
         }
     }
 
-    public void useCard(ArrayList<PawnDiscColor> studentsToEntrance, ArrayList<PawnDiscColor> studentsToChange,
-                        String nickname)
-    {
+    public void useCard(Object o, String nickname){
+        Parameter parameters;
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
         Student student1;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        ArrayList<PawnDiscColor> studentsToEntrance = parameters.getColorArrayList();
+        ArrayList<PawnDiscColor> studentsToChange = parameters.getColorArrayList2();
 
         for(int i = 0; i < studentsToEntrance.size(); i++){
             student1 = sb.getEntrance().removeStudent(studentsToChange.get(i));
             students.addStudent(student1);
             student1 = students.retrieveStudent(studentsToEntrance.get(i));
             sb.getEntrance().addStudent(student1);
-            }
+        }
 
     }
+
 }

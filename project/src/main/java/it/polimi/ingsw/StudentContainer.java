@@ -11,28 +11,28 @@ import java.util.*;
 public class StudentContainer {
 
     //value hash sets
-    private ArrayList<Student> pinkStudentsInDiningRoom;
-    private ArrayList<Student> yellowStudentsInDiningRoom;
-    private ArrayList<Student> greenStudentsInDiningRoom;
-    private ArrayList<Student> blueStudentsInDiningRoom;
-    private ArrayList<Student> redStudentsInDiningRoom;
+    private ArrayList<Student> pinkStudents;
+    private ArrayList<Student> yellowStudents;
+    private ArrayList<Student> greenStudents;
+    private ArrayList<Student> blueStudents;
+    private ArrayList<Student> redStudents;
 
     private Map<PawnDiscColor, ArrayList<Student>> container;
 
     public StudentContainer() {
-        pinkStudentsInDiningRoom = new ArrayList<Student>();
-        yellowStudentsInDiningRoom = new ArrayList<Student>();
-        blueStudentsInDiningRoom = new ArrayList<Student>();
-        greenStudentsInDiningRoom = new ArrayList<Student>();
-        redStudentsInDiningRoom = new ArrayList<Student>();
+        pinkStudents = new ArrayList<Student>();
+        yellowStudents = new ArrayList<Student>();
+        blueStudents = new ArrayList<Student>();
+        greenStudents = new ArrayList<Student>();
+        redStudents = new ArrayList<Student>();
 
         container = new HashMap<PawnDiscColor, ArrayList<Student>>();
 
-        container.put(PawnDiscColor.PINK, pinkStudentsInDiningRoom);
-        container.put(PawnDiscColor.RED, redStudentsInDiningRoom);
-        container.put(PawnDiscColor.BLUE, blueStudentsInDiningRoom);
-        container.put(PawnDiscColor.YELLOW, yellowStudentsInDiningRoom);
-        container.put(PawnDiscColor.GREEN, greenStudentsInDiningRoom);
+        container.put(PawnDiscColor.PINK, pinkStudents);
+        container.put(PawnDiscColor.RED, redStudents);
+        container.put(PawnDiscColor.BLUE, blueStudents);
+        container.put(PawnDiscColor.YELLOW, yellowStudents);
+        container.put(PawnDiscColor.GREEN, greenStudents);
     }
 
     public int getInfluence(PawnDiscColor color){
@@ -53,8 +53,8 @@ public class StudentContainer {
     }
 
     public int size(){
-        return pinkStudentsInDiningRoom.size() + yellowStudentsInDiningRoom.size() + redStudentsInDiningRoom.size()
-                + greenStudentsInDiningRoom.size() + blueStudentsInDiningRoom.size();
+        return pinkStudents.size() + yellowStudents.size() + redStudents.size()
+                + greenStudents.size() + blueStudents.size();
     }
 
     public boolean checkIfContainerIsEmpty(PawnDiscColor color){
