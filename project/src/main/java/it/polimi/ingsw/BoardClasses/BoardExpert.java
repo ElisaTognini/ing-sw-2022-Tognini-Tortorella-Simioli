@@ -17,7 +17,6 @@ public class BoardExpert extends Board{
     private CoinCounter[] coins;
     private CharacterCardTemplate[] extractedCards;
     private CardManager cardManager;
-    private Professor[] influenceModifier;
     private int noEntryTiles;
     private int[] cardIDs;
     private final int numberOfCharacterCards = 12;
@@ -30,7 +29,6 @@ public class BoardExpert extends Board{
         coins = new CoinCounter[players.size()];
         extractedCards = new CharacterCardTemplate[cardsToInstantiate];
         cardManager = new CardManager(this);
-        influenceModifier = new Professor[5];
         noEntryTiles = 4;
         cardIDs = new int[cardsToInstantiate];
     }
@@ -49,6 +47,12 @@ public class BoardExpert extends Board{
             extractedCards[i] = cardManager.returnCard(cardIDs[i]);
         }
 
+        /* initializing coin counters for each player */
+        int i = 0;
+        for(Player p : players){
+            coins[i] = new CoinCounter(p);
+            i++;
+        }
     }
 
     @Override
@@ -177,6 +181,7 @@ public class BoardExpert extends Board{
         for(CharacterCardTemplate card : extractedCards){
             if(characterCardID == card.getCardID()){
                 getPlayersCoinCounter(nickname).purchase(card.getCost());
+                card.increaseCost();
             }
         }
     }
@@ -189,13 +194,21 @@ public class BoardExpert extends Board{
         return false;
     }
 
-    private CoinCounter getPlayersCoinCounter(String nickname){
+    public CoinCounter getPlayersCoinCounter(String nickname){
         for(CoinCounter c : coins){
             if(c.getOwner().getNickname().equals(nickname)){
                 return c;
             }
         }
         return null;
+    }
+
+    public int getCardsCost(int cardID){
+        for(CharacterCardTemplate c : extractedCards){
+            if(c.getCardID() == cardID)
+                return c.getCost();
+        }
+        return 0;
     }
 
     /* method that extracts the three random cards and stores them after calling the factory class */
@@ -241,5 +254,4 @@ public class BoardExpert extends Board{
     public void setMotherNaturePosition(int pos){
         motherNature.setPosition(pos);
     }
-
 }

@@ -19,9 +19,9 @@ public class CardManager {
             case 2:
                 return new Card2(board);
             case 3:
-                //return new Card3(board);
+                return new Card3(board);
             case 4:
-                //return new Card4(board);
+                return new Card4(board);
             case 5:
                 return new Card5(board);
             case 6:

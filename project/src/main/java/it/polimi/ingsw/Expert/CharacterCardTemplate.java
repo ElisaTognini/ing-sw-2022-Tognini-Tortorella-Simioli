@@ -13,7 +13,7 @@ public abstract class CharacterCardTemplate {
         this.board = board;
     }
 
-    protected void increaseCost(){
+    public void increaseCost(){
         cost++;
     }
 
