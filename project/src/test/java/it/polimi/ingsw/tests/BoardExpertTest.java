@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class BoardExpertTest {
 
-    BoardExpert board;
-    ArrayList<Player> players = new ArrayList<Player>();
+    private BoardExpert board;
+    private ArrayList<Player> players = new ArrayList<Player>();
 
     @Test
     /* following the execution of the method with the debugger;

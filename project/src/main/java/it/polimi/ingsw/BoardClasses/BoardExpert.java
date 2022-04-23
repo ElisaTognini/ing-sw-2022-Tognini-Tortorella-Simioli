@@ -12,7 +12,7 @@ import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BoardExpert extends Board{
+public class BoardExpert extends Board {
 
     private CoinCounter[] coins;
     private CharacterCardTemplate[] extractedCards;
@@ -24,7 +24,7 @@ public class BoardExpert extends Board{
     private int additional_moves;
 
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
-                       int studentsInEntrance, GameMode mode){
+                       int studentsInEntrance, GameMode mode) {
         super(players, numberOfClouds, numberOfTowers, studentsOnClouds, studentsInEntrance, mode);
         coins = new CoinCounter[players.size()];
         extractedCards = new CharacterCardTemplate[cardsToInstantiate];
@@ -35,66 +35,65 @@ public class BoardExpert extends Board{
 
 
     /* board class setup is overridden here to add the instantiation of all the expert game
-    * elements (cards, coins)
-    * the extracted card ids are stored in an array which is then iterated to
-    * instantiate the character cards, which will be stored in the extractedCards array*/
+     * elements (cards, coins)
+     * the extracted card ids are stored in an array which is then iterated to
+     * instantiate the character cards, which will be stored in the extractedCards array*/
     @Override
-    public void setup(){
+    public void setup() {
         super.setup();
         /* initialization for character cards */
         chooseCardIndexes();
-        for(int i = 0; i<cardsToInstantiate; i++){
+        for (int i = 0; i < cardsToInstantiate; i++) {
             extractedCards[i] = cardManager.returnCard(cardIDs[i]);
         }
 
         /* initializing coin counters for each player */
         int i = 0;
-        for(Player p : players){
+        for (Player p : players) {
             coins[i] = new CoinCounter(p);
             i++;
         }
     }
 
     @Override
-    public void moveStudent(PawnDiscColor color, String nickname){
+    public void moveStudent(PawnDiscColor color, String nickname) {
         super.moveStudent(color, nickname);
         assignCoin(nickname, color);
     }
 
     @Override
-    public void conquerIsland(){
+    public void conquerIsland() {
         int[] sum = new int[players.size()];
         int i = 0, maxInfluence;
         Player conqueror = null;
         boolean deuce = false;
 
 
-        if(islands.get(motherNature.getPosition()).hasANoEntryTile()){
+        if (islands.get(motherNature.getPosition()).hasANoEntryTile()) {
             islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
             putBackNoEntryTile();
             return;
-        }
-        else {
-            for(SchoolBoard sb : schoolBoards){
+        } else {
+            for (SchoolBoard sb : schoolBoards) {
                 sum[i] = 0;
-                for(PawnDiscColor color: PawnDiscColor.values()){
-                    if(sb.getProfessorTable().hasProfessor(color)){
+                for (PawnDiscColor color : PawnDiscColor.values()) {
+                    if (sb.getProfessorTable().hasProfessor(color)) {
                         sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                     }
-                    if(islands.get(motherNature.getPosition()).checkIfConquered()){
-                        if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
-                           /*checks if player has played character card which cancels the influence of the tower(s) on a
-                            * island */
+                    if (islands.get(motherNature.getPosition()).checkIfConquered()) {
+                        if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
+                            /*checks if player has played character card which cancels the influence of the tower(s) on a
+                             * island */
                             if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0)
                                 sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
                             /* adds extra points to the influence of a player; extra is set to 2 only if player
-                            * purchased character card 8, otherwise it is 0 */
+                             * purchased character card 8, otherwise it is 0 */
                             sum[i] = sum[i] + islands.get(motherNature.getPosition()).getExtra();
                         }
                     }
                 }
                 /* only used if character card 2 has been played */
-                if(sb.getModifiedTable()){
+                if (sb.getModifiedTable()) {
                     sb.getProfessorTable().resetPreviousProfessorTable();
                 }
                 i++;
@@ -107,24 +106,23 @@ public class BoardExpert extends Board{
             /* decides who conquers the island */
             i = 0;
             maxInfluence = 0;
-            for(SchoolBoard sb : schoolBoards){
-                if(sum[i] > maxInfluence){
+            for (SchoolBoard sb : schoolBoards) {
+                if (sum[i] > maxInfluence) {
                     maxInfluence = sum[i];
                     conqueror = sb.getOwner();
                     deuce = false;
-                }
-                else if(sum[i] == maxInfluence && maxInfluence != 0 ){
+                } else if (sum[i] == maxInfluence && maxInfluence != 0) {
                     deuce = true;
                 }
                 i++;
             }
 
-            if(deuce || conqueror == null){
+            if (deuce || conqueror == null) {
                 return;
             }
 
-            if(islands.get(motherNature.getPosition()).checkIfConquered()){
-                if(islands.get(motherNature.getPosition()).getOwner().equals(conqueror)){
+            if (islands.get(motherNature.getPosition()).checkIfConquered()) {
+                if (islands.get(motherNature.getPosition()).getOwner().equals(conqueror)) {
                     return;
                 }
                 //returning towers to old owner
@@ -134,7 +132,7 @@ public class BoardExpert extends Board{
                 getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
             }
 
-            if(!islands.get(motherNature.getPosition()).checkIfConquered()){
+            if (!islands.get(motherNature.getPosition()).checkIfConquered()) {
                 getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(1);
                 islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
             }
@@ -145,97 +143,98 @@ public class BoardExpert extends Board{
     }
 
     @Override
-    public void moveMotherNature(int movements){
+    public void moveMotherNature(int movements) {
         super.moveMotherNature(movements);
-        motherNature.setPosition(motherNature.getPosition()+additional_moves);
+        motherNature.setPosition(motherNature.getPosition() + additional_moves);
         additional_moves = 0;
     }
 
     /* methods for the regular usages of noEntryTiles in the game
-    * checks if valid action, sets and unsets noEntryTiles */
+     * checks if valid action, sets and unsets noEntryTiles */
 
-    public void putBackNoEntryTile(){
+    public void putBackNoEntryTile() {
         noEntryTiles++;
     }
 
-    public void useNoEntryTile(){
+    public void useNoEntryTile() {
         noEntryTiles--;
     }
 
     /* called by the controller */
-    public boolean checkIfEnoughNoEntryTiles(){
-        if(noEntryTiles == 0)
+    public boolean checkIfEnoughNoEntryTiles() {
+        if (noEntryTiles == 0)
             return false;
         else
             return true;
     }
 
     /* methods which allows to set the additional moves for the effect of card 4*/
-    public void setAdditionalMoves(int moves){
+    public void setAdditionalMoves(int moves) {
         additional_moves = moves;
     }
 
     /* method retrieves the current player's coinCounter and decrements its number by retrieving the
-    * desired character card's cost */
-    public void purchaseCharacterCard(String nickname, int characterCardID){
-        for(CharacterCardTemplate card : extractedCards){
-            if(characterCardID == card.getCardID()){
+     * desired character card's cost */
+    public void purchaseCharacterCard(String nickname, int characterCardID) {
+        for (CharacterCardTemplate card : extractedCards) {
+            if (characterCardID == card.getCardID()) {
                 getPlayersCoinCounter(nickname).purchase(card.getCost());
                 card.increaseCost();
             }
         }
     }
 
-    public boolean checkIfCardPresent(int cardID){
-        for(CharacterCardTemplate c : extractedCards){
-            if(c.getCardID() == cardID)
+    public boolean checkIfCardPresent(int cardID) {
+        for (CharacterCardTemplate c : extractedCards) {
+            if (c.getCardID() == cardID)
                 return true;
         }
         return false;
     }
 
-    public CoinCounter getPlayersCoinCounter(String nickname){
-        for(CoinCounter c : coins){
-            if(c.getOwner().getNickname().equals(nickname)){
+    public CoinCounter getPlayersCoinCounter(String nickname) {
+        for (CoinCounter c : coins) {
+            if (c.getOwner().getNickname().equals(nickname)) {
                 return c;
             }
         }
         return null;
     }
 
-    public int getCardsCost(int cardID){
-        for(CharacterCardTemplate c : extractedCards){
-            if(c.getCardID() == cardID)
+    public int getCardsCost(int cardID) {
+        for (CharacterCardTemplate c : extractedCards) {
+            if (c.getCardID() == cardID)
                 return c.getCost();
         }
         return 0;
     }
 
+    public CharacterCardTemplate[] getExtractedCards() { return extractedCards; }
+
     /* method that extracts the three random cards and stores them after calling the factory class */
-    private void chooseCardIndexes(){
+    private void chooseCardIndexes() {
         Random rand = new Random();
         int randomIndex;
         randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
         cardIDs[0] = randomIndex;
-        for(int i = 1; i < cardIDs.length; i++){
+        for (int i = 1; i < cardIDs.length; i++) {
             randomIndex = rand.nextInt(numberOfCharacterCards) + 1;
-            for(int j = 0; j < i; j++){
-                if(randomIndex == cardIDs[j]){
+            for (int j = 0; j < i; j++) {
+                if (randomIndex == cardIDs[j]) {
                     i--;
-                }
-                else{
+                } else {
                     cardIDs[i] = randomIndex;
                 }
             }
         }
     }
 
-    public void assignCoin(String nickname, PawnDiscColor color){
-        for(SchoolBoard sb : schoolBoards){
-            if(sb.getOwner().getNickname().equals(nickname)){
-                if(sb.getDiningRoom().checkIfMod3(color)){
-                    for(CoinCounter c : coins){
-                        if(c.getOwner().getNickname().equals(nickname)){
+    public void assignCoin(String nickname, PawnDiscColor color) {
+        for (SchoolBoard sb : schoolBoards) {
+            if (sb.getOwner().getNickname().equals(nickname)) {
+                if (sb.getDiningRoom().checkIfMod3(color)) {
+                    for (CoinCounter c : coins) {
+                        if (c.getOwner().getNickname().equals(nickname)) {
                             c.addCoin();
                         }
                     }
@@ -245,13 +244,18 @@ public class BoardExpert extends Board{
     }
 
     /* this method activates the effect of the character card purchased by the player */
-    public void useCard(Object o, String nickname, int cardID){
-        for(CharacterCardTemplate c: extractedCards){
-            if(c.getCardID() == cardID) c.useCard(o,nickname);
+    public void useCard(Object o, String nickname, int cardID) {
+        for (CharacterCardTemplate c : extractedCards) {
+            if (c.getCardID() == cardID) c.useCard(o, nickname);
         }
     }
 
-    public void setMotherNaturePosition(int pos){
+    public void setMotherNaturePosition(int pos) {
         motherNature.setPosition(pos);
+    }
+
+    /* METHOD FOR TEST PURPOSE ONLY - WON'T BE USED BY PLAYERS*/
+    public void setExtractedCards(CharacterCardTemplate[] cards) {
+        extractedCards = cards;
     }
 }

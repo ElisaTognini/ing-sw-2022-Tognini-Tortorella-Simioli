@@ -1,5 +1,5 @@
 package it.polimi.ingsw.tests;
 
-public class Card1Test {
+public class Card4Test {
 
 }
