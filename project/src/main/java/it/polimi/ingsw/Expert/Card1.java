@@ -6,7 +6,8 @@ import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.StudentContainer;
-
+/* take one student from this card and place it on an island of your choice; then
+* draw another student and place it on this card */
 public class Card1 extends CharacterCardTemplate{
 
     private StudentContainer students;

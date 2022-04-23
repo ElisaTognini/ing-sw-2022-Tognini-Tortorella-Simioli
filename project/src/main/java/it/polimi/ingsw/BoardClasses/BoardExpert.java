@@ -247,6 +247,7 @@ public class BoardExpert extends Board {
     public void useCard(Object o, String nickname, int cardID) {
         for (CharacterCardTemplate c : extractedCards) {
             if (c.getCardID() == cardID) c.useCard(o, nickname);
+            c.increaseCost();
         }
     }
 
