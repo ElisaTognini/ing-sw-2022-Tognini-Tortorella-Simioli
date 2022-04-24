@@ -179,7 +179,6 @@ public class BoardExpert extends Board {
         for (CharacterCardTemplate card : extractedCards) {
             if (characterCardID == card.getCardID()) {
                 getPlayersCoinCounter(nickname).purchase(card.getCost());
-                card.increaseCost();
             }
         }
     }

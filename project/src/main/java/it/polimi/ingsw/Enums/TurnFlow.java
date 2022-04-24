@@ -3,7 +3,7 @@ package it.polimi.ingsw.Enums;
 public enum TurnFlow {
     BEGINS_TURN,
     CARD_PICKED,
-    MOVES_STUDENTS,
+    MOVED_STUDENTS,
     CHOOSE_CHARACTER_CARD,
     PICKS_CLOUD,
 }

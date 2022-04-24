@@ -13,6 +13,7 @@ public class RoundManager {
     private ArrayList<Player> sortedPlayers;
     private Player currentPlayer;
     private ArrayList<AssistantCard> cards;
+    private int movedStudents;
 
     /* playerList is based on the order in which each player enters the lobby */
     public RoundManager(ArrayList<Player> playerList){
@@ -20,6 +21,7 @@ public class RoundManager {
         sortedPlayers = new ArrayList<>();
         players.addAll(playerList);
         cards = new ArrayList<>();
+        movedStudents = 0;
     }
 
     /* returns the current state of the turn */
@@ -91,6 +93,7 @@ public class RoundManager {
     public void startRound(){
         for(Player p : players) p.setCardPickedToFalse();
         changeState(TurnFlow.BEGINS_TURN);
+        movedStudents = 0;
     }
 
     public void refreshCurrentPlayer(){
@@ -101,6 +104,20 @@ public class RoundManager {
 
     public ArrayList<AssistantCard> getCards(){
         return cards;
+    }
+
+
+    /* the following two methods are needed in order to limit the number of students moved to three */
+    public boolean threeStudentsMoved(String nickname){
+        if(movedStudents == 3){
+            movedStudents = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public void increaseMovedStudents(){
+        movedStudents++;
     }
 
 }
