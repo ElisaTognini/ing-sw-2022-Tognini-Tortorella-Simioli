@@ -68,4 +68,8 @@ public class AssistantCardDeck {
         if(cards.size() == 0) return true;
         else return false;
     }
+
+    public int size(){
+        return cards.size();
+    }
 }

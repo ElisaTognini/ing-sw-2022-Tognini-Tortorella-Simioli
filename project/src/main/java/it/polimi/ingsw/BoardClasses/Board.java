@@ -371,6 +371,28 @@ public class Board {
     public MotherNature getMotherNature(){
         return motherNature;
     }
+
+    public CloudTile getCloud(int cloudID){
+        return clouds.get(cloudID);
+    }
+
+    public boolean allCloudsPicked(){
+        for(CloudTile c : clouds){
+            if(!c.isCloudEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public AssistantCardDeck getPlayersDeck(String nickname){
+        for(AssistantCardDeck deck : decks){
+            if(deck.getOwner().getNickname().equals(nickname))
+                return deck;
+        }
+        return null;
+    }
+
     /* END OF GETTER METHODS */
 
     /* METHODS FOR LEGAL ACTION CHECKS */

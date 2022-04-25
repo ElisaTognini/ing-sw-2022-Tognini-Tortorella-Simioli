@@ -101,7 +101,7 @@ public class Model {
     /* the winner is the player with the least towers in their tower section. In case of a tie regarding the
     * number of towers, the winner is whoever controls the most professors. Method
     * returns a reference to the winner  */
-    public String getWinner(){
+    public Player getWinner(){
         int minTowers = board.getPlayerSchoolBoard(playerList.get(0).getNickname()).getTowerSection().getNumberOfTowers();
         Player winner = playerList.get(0);
         ArrayList<Player> tiedPlayers = new ArrayList<>();
@@ -135,11 +135,14 @@ public class Model {
                 }
             }
         }
-        return winner.getNickname();
+        return winner;
     }
 
     public void useCard(Object o, String nickname, int cardID){
         board.useCard(o,nickname,cardID);
     }
 
+    public int getNumberOfClouds (){
+        return numberOfClouds;
+    }
 }

@@ -106,6 +106,14 @@ public class RoundManager {
         return cards;
     }
 
+    public AssistantCard getCurrentPlayersCard(){
+        for(AssistantCard c : cards){
+            if(c.getOwner().getNickname().equals(currentPlayer.getNickname())){
+                return c;
+            }
+        }
+        return null;
+    }
 
     /* the following two methods are needed in order to limit the number of students moved to three */
     public boolean threeStudentsMoved(String nickname){

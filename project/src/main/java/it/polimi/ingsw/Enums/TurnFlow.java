@@ -5,7 +5,7 @@ public enum TurnFlow {
     CARD_PICKED,
     MOVED_STUDENTS,
     CHOOSE_CHARACTER_CARD,
-    PICKS_CLOUD,
+    PICKED_CLOUD,
 }
 
 /*the choice of a character card can happen at any moment during the turn,

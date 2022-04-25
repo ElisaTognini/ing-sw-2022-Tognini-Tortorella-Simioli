@@ -32,4 +32,8 @@ public class Player {
     public void setCardPickedToTrue(){ cardPicked = true; }
 
     public void setCardPickedToFalse(){ cardPicked = false; }
+
+    public void setWinner(){
+        isWinner = true;
+    }
 }

@@ -34,8 +34,8 @@ public class DiningRoom {
         return container;
     }
 
-    public boolean checkIfDiningRoomIsFull(Student myStudent){
-        if(container.getInfluence(myStudent.getColor()) >= 10) return true;
+    public boolean checkIfDiningRoomIsFull(PawnDiscColor color){
+        if(container.getInfluence(color) >= 10) return true;
         else return false;
     }
 }
