@@ -14,6 +14,7 @@ public class RoundManager {
     private Player currentPlayer;
     private ArrayList<AssistantCard> cards;
     private int movedStudents;
+    private ArrayList<Player> sortedPlayerActions;
 
     /* playerList is based on the order in which each player enters the lobby */
     public RoundManager(ArrayList<Player> playerList){
@@ -22,6 +23,7 @@ public class RoundManager {
         players.addAll(playerList);
         cards = new ArrayList<>();
         movedStudents = 0;
+        sortedPlayerActions = new ArrayList<>();
     }
 
     /* returns the current state of the turn */
@@ -87,6 +89,17 @@ public class RoundManager {
     public void sortActionPhase(){
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
+        currentPlayer = cards.get(0).getOwner();
+        for(AssistantCard c: cards){
+            sortedPlayerActions.add(c.getOwner());
+        }
+    }
+
+    /* this method changes the player based on the order of the assistant cards*/
+    public void refreshCurrentPlayerAction(){
+        if(sortedPlayerActions.indexOf(currentPlayer) < sortedPlayerActions.size()-1){
+            currentPlayer = sortedPlayerActions.get(sortedPlayerActions.indexOf(currentPlayer) + 1);
+        }
     }
 
 

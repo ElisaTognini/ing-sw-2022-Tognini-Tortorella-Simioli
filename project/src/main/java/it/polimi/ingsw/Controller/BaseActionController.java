@@ -106,7 +106,7 @@ public class BaseActionController {
     public boolean picksCloud(String nickname, int cloudID){
 
         if(isLastRound){
-            //display lastround message
+            //display last round message
             return true;
         }
 
@@ -115,7 +115,7 @@ public class BaseActionController {
                 if(!(cloudID > model.getNumberOfClouds()-1 || cloudID < 0)){
                     if(!model.getBoard().getCloud(cloudID).isCloudEmpty()){
                         model.getBoard().chooseCloudTile(nickname, cloudID);
-                        roundManager.refreshCurrentPlayer();
+                        roundManager.refreshCurrentPlayerAction();
                         roundManager.changeState(TurnFlow.PICKED_CLOUD);
                         if(model.isGameOver()){
                             endGame();
@@ -191,6 +191,7 @@ public class BaseActionController {
     * a cloud tile*/
     private void startNewRound(){
         roundManager.startRound();
+        model.getBoard().roundSetup();
         /*checks if studentBag is empty or if decks only
           have one card left ; if any of those conditions is true current round will be last round*/
         if(model.getBoard().getStudentBag().checkIfStudentBagEmpty() ||

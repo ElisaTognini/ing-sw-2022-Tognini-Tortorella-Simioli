@@ -23,6 +23,7 @@ public class Board {
     protected final GameMode mode;
     protected TowerColor tokenColor;
     protected final int studentsInEntrance;
+    protected boolean lastRound;
 
     /* numberOfClouds and numberOfTowers will be computed by the Model class
     *  based on the number of players in the lobby */
@@ -41,6 +42,7 @@ public class Board {
         this.studentsOnClouds = studentsOnClouds;
         this.mode = mode;
         this.studentsInEntrance = studentsInEntrance;
+        this.lastRound = false;
     }
 
     public void setup() {
@@ -306,8 +308,11 @@ public class Board {
         Student[] students = new Student[studentsOnClouds];
         for(CloudTile c : clouds){
             for(int i = 0; i < studentsOnClouds; i++){
-                students[i] = studentBag.drawStudent();
+                if(!studentBag.checkIfStudentBagEmpty()) {
+                    students[i] = studentBag.drawStudent();
+                } else lastRound = true;
             }
+            if(lastRound) return;
             c.fillCloud(students);
         }
     }
@@ -392,6 +397,8 @@ public class Board {
         }
         return null;
     }
+
+    public boolean isLastRound(){ return lastRound; }
 
     /* END OF GETTER METHODS */
 
