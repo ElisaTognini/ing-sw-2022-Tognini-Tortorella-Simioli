@@ -70,7 +70,7 @@ public class BoardExpert extends Board {
 
 
         if (islands.get(motherNature.getPosition()).hasANoEntryTile()) {
-            islands.get(motherNature.getPosition()).setNoEntryTileToFalse();
+            islands.get(motherNature.getPosition()).removeNoEntryTile();
             putBackNoEntryTile();
             return;
         } else {
@@ -152,9 +152,7 @@ public class BoardExpert extends Board {
     /* methods for the regular usages of noEntryTiles in the game
      * checks if valid action, sets and unsets noEntryTiles */
 
-    public void putBackNoEntryTile() {
-        noEntryTiles++;
-    }
+    public void putBackNoEntryTile() { noEntryTiles++; }
 
     public void useNoEntryTile() {
         noEntryTiles--;
@@ -258,4 +256,5 @@ public class BoardExpert extends Board {
     public void setExtractedCards(CharacterCardTemplate[] cards) {
         extractedCards = cards;
     }
+    public int getNoEntryTiles(){ return noEntryTiles; }
 }

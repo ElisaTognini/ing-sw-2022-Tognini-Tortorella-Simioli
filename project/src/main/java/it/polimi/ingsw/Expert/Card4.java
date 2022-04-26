@@ -19,6 +19,7 @@ public class Card4 extends CharacterCardTemplate{
             parameters = (Parameter) o;
         } else throw new IllegalArgumentException();
 
-        board.setAdditionalMoves(parameters.getMoves());
+        if (parameters.getMoves() < 2) board.setAdditionalMoves(parameters.getMoves());
+        else throw new IndexOutOfBoundsException();
     }
 }

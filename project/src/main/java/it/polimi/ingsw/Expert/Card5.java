@@ -22,7 +22,7 @@ public class Card5 extends CharacterCardTemplate{
         }
         else throw new IllegalArgumentException();
 
-        board.getIslandList().get(parameters.getIslandID()).setNoEntryTileToTrue();
+        board.getIslandList().get(parameters.getIslandID()).addNoEntryTile();
         board.useNoEntryTile();
     }
 

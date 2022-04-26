@@ -2,17 +2,17 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
 import it.polimi.ingsw.Player;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-public class Card4Test {
+import static org.junit.Assert.assertFalse;
+
+public class Card6Test {
     BoardExpert board;
     ArrayList<Player> players;
 
@@ -29,32 +29,23 @@ public class Card4Test {
 
         //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
-        cards[0] = manager.returnCard(4);
+        cards[0] = manager.returnCard(6);
         cards[1] = manager.returnCard(4);
-        cards[2] = manager.returnCard(4);
+        cards[2] = manager.returnCard(5);
 
         board.setExtractedCards(cards);
     }
 
     @Test
-    /* test executed with two parameters, one allowed and the other forbidden; the test runs
-    * successfully for the first parameter, while throws an index out of bound exception for the second, as
-    * it should because the player's only allowed to make two additional moves*/
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        param.setMoves(1);
+        /* aggiungere le torri per controllare se funziona la carta */
+        param.setIslandID(8);
         try {
-            board.useCard(param, "player1", 4);
-        }catch(IndexOutOfBoundsException e){
+            board.useCard(param, "player1", 5);
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("not allowed\n");
         }
-        param.setMoves(3);
-        try {
-            board.useCard(param, "player1", 4);
-        }catch(IndexOutOfBoundsException e){
-            System.out.println("not allowed\n");
-        }
-
     }
 }
