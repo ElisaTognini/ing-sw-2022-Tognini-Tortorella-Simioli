@@ -4,7 +4,7 @@ public enum TurnFlow {
     BEGINS_TURN,
     CARD_PICKED,
     MOVED_STUDENTS,
-    CHOOSE_CHARACTER_CARD,
+    //CHOOSE_CHARACTER_CARD,
     PICKED_CLOUD,
 }
 

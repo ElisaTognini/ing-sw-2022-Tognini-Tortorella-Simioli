@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Expert;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Player;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,5 @@ public abstract class CharacterCardTemplate {
 
     //method overridden in cards that need parameters
     public void useCard(Object o, String nickname){}
-
 
 }

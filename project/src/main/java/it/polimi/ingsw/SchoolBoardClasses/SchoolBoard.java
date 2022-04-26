@@ -45,6 +45,7 @@ public class SchoolBoard {
     public void setModifiedTable(){
         modifiedTable = true;
     }
+    public void resetModifiedTable(){modifiedTable = false;}
 
     public boolean getModifiedTable(){return modifiedTable;}
 }

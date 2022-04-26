@@ -112,5 +112,6 @@ public class Island {
     public void ignoreInfluence(PawnDiscColor color){
         ignoredInfluence = -container.getInfluence(color);
     }
+    public void setIgnoredInfluencetoZero(){ignoredInfluence = 0;}
 }
 

@@ -21,9 +21,9 @@ public class Board {
     protected final int numberOfTowers;
     protected final int studentsOnClouds;
     protected final GameMode mode;
-    protected TowerColor tokenColor;
     protected final int studentsInEntrance;
     protected boolean lastRound;
+    protected boolean isGameOver;
 
     /* numberOfClouds and numberOfTowers will be computed by the Model class
     *  based on the number of players in the lobby */
@@ -43,6 +43,7 @@ public class Board {
         this.mode = mode;
         this.studentsInEntrance = studentsInEntrance;
         this.lastRound = false;
+        this.isGameOver = false;
     }
 
     public void setup() {
@@ -199,8 +200,14 @@ public class Board {
             getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
                     islands.get(motherNature.getPosition()).getNumberOfTowers());
             //retrieving towers from conqueror's schoolboard
-            getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
-        }
+            if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
+                islands.get(motherNature.getPosition()).getNumberOfTowers())) {
+                getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
+            }else{
+                isGameOver = true;
+                return;
+            }
+            }
 
         if(!islands.get(motherNature.getPosition()).checkIfConquered()){
             getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(1);
@@ -399,6 +406,7 @@ public class Board {
     }
 
     public boolean isLastRound(){ return lastRound; }
+    public boolean isGameOver(){ return isGameOver;}
 
     /* END OF GETTER METHODS */
 

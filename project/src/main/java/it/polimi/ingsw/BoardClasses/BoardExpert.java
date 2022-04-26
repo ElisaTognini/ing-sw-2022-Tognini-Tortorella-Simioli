@@ -1,5 +1,6 @@
 package it.polimi.ingsw.BoardClasses;
 
+import it.polimi.ingsw.BasicElements.Island;
 import it.polimi.ingsw.BasicElements.Professor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
@@ -33,6 +34,21 @@ public class BoardExpert extends Board {
         cardIDs = new int[cardsToInstantiate];
     }
 
+    @Override
+    public void roundSetup(){
+        super.roundSetup();
+        /* setting extras back to default values */
+        additional_moves = 0;
+        for(Island i : islands){
+            i.setTowersOnHold(0);
+            i.setExtra(0);
+            i.setIgnoredInfluencetoZero();
+        }
+        for(SchoolBoard sb : schoolBoards){
+            sb.resetModifiedTable();
+        }
+
+    }
 
     /* board class setup is overridden here to add the instantiation of all the expert game
      * elements (cards, coins)

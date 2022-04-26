@@ -24,6 +24,7 @@ public class BaseActionController {
 
     public void startGame(){
         /* first player of the game is picked and stored */
+        model.getBoard().setup();
         roundManager.computeTurnOrder(roundManager.pickFirstPlayerIndex());
         roundManager.changeState(TurnFlow.BEGINS_TURN);
 
@@ -177,6 +178,10 @@ public class BaseActionController {
             model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
             /* attempts to conquer an island */
             model.getBoard().assignProfessors();
+            /*checks if player has enough towers: if not, current player is the winner.*/
+            if(model.getBoard().isGameOver()){
+                endGame();
+            }
             model.getBoard().conquerIsland();
             /*attempts to merge islands*/
             model.getBoard().checkForMerge(nickname);
@@ -190,12 +195,12 @@ public class BaseActionController {
     /* this method starts a new round once all players have picked
     * a cloud tile*/
     private void startNewRound(){
+        isLastRound = model.getBoard().isLastRound();
         roundManager.startRound();
         model.getBoard().roundSetup();
         /*checks if studentBag is empty or if decks only
           have one card left ; if any of those conditions is true current round will be last round*/
-        if(model.getBoard().getStudentBag().checkIfStudentBagEmpty() ||
-            model.getBoard().getDecks().get(0).size() == 1){
+        if(model.getBoard().getDecks().get(0).size() == 1){
             isLastRound = true;
         }
     }
