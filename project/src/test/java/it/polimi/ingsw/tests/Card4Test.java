@@ -27,11 +27,10 @@ public class Card4Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(4);
-        cards[1] = manager.returnCard(4);
-        cards[2] = manager.returnCard(4);
+        cards[1] = manager.returnCard(5);
+        cards[2] = manager.returnCard(6);
 
         board.setExtractedCards(cards);
     }

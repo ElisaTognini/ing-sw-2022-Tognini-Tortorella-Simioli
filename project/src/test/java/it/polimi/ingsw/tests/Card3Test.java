@@ -6,11 +6,13 @@ import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
 import it.polimi.ingsw.Player;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
-public class Card5Test {
+public class Card3Test {
+
     BoardExpert board;
     ArrayList<Player> players;
 
@@ -25,10 +27,11 @@ public class Card5Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
+        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
-        cards[0] = manager.returnCard(1);
-        cards[1] = manager.returnCard(4);
-        cards[2] = manager.returnCard(5);
+        cards[0] = manager.returnCard(3);
+        cards[1] = manager.returnCard(1);
+        cards[2] = manager.returnCard(4);
 
         board.setExtractedCards(cards);
     }
@@ -37,15 +40,8 @@ public class Card5Test {
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        /* covers corner case of more than one no entry tile on the same island*/
-        for(int i=0; i<4;i++ ) {
-            param.setIslandID(3);
-            try {
-                board.useCard(param, "player1", 5);
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("not allowed\n");
-            }
-        }
-        assertFalse(board.checkIfEnoughNoEntryTiles());
+        param.setIslandID(3);
+            board.useCard(param, "player1", 3);
     }
+
 }

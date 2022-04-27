@@ -10,7 +10,7 @@ public class Card3 extends CharacterCardTemplate{
     public Card3(BoardExpert board) {
         super(board);
         cost = 3;
-        cardID = 4;
+        cardID = 3;
     }
 
     /* this method saves the previous position on mother nature, changes it,
@@ -28,6 +28,7 @@ public class Card3 extends CharacterCardTemplate{
 
         oldPos = board.getMotherNaturePosition();
         board.setMotherNaturePosition(parameters.getIslandID());
+        board.assignProfessors();
         board.conquerIsland();
         board.setMotherNaturePosition(oldPos);
     }

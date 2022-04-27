@@ -45,6 +45,9 @@ public class BoardExpert extends Board {
             i.setIgnoredInfluencetoZero();
         }
         for(SchoolBoard sb : schoolBoards){
+            if(sb.getModifiedTable()){
+                sb.getProfessorTable().resetPreviousProfessorTable();
+            }
             sb.resetModifiedTable();
         }
 
@@ -259,8 +262,10 @@ public class BoardExpert extends Board {
     /* this method activates the effect of the character card purchased by the player */
     public void useCard(Object o, String nickname, int cardID) {
         for (CharacterCardTemplate c : extractedCards) {
-            if (c.getCardID() == cardID) c.useCard(o, nickname);
-            c.increaseCost();
+            if (c.getCardID() == cardID) {
+                c.useCard(o, nickname);
+                c.increaseCost();
+            }
         }
     }
 

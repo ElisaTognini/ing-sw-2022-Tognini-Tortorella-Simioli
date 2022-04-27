@@ -105,7 +105,7 @@ public class Island {
         return numberOfTowers;
     }
     public int getTowersOnHold(){ return towersOnHold; }
-    public void setTowersOnHold(int n) { numberOfTowers = n; }
+    public void setTowersOnHold(int n) { towersOnHold = n; }
     public void setExtra(int n){ extra = n;}
     public int getExtra(){ return extra;}
 

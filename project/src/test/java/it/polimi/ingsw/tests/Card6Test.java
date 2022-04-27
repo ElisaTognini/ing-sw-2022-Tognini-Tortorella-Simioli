@@ -2,6 +2,7 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
+import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
@@ -23,11 +24,10 @@ public class Card6Test {
         players = new ArrayList<>();
         players.add(new Player("player1"));
         players.add(new Player("player2"));
-        board = new BoardExpert(players, 2, 8, 3, 7, GameMode.EXPERT);
+        board = new BoardExpert(players, 2, 8, 3, 20, GameMode.EXPERT);
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(6);
         cards[1] = manager.returnCard(4);
@@ -40,10 +40,29 @@ public class Card6Test {
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        /* aggiungere le torri per controllare se funziona la carta */
+        board.setMotherNaturePosition(8);
+        if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.RED)) {
+            board.moveStudent(PawnDiscColor.RED, "player1", 8);
+            if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.RED)) {
+                board.moveStudent(PawnDiscColor.RED, "player1");
+            }
+        }
+        board.assignProfessors();
+        board.conquerIsland();
+        if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
+            board.moveStudent(PawnDiscColor.BLUE, "player2", 8);
+            if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
+                board.moveStudent(PawnDiscColor.BLUE, "player2", 8);
+                if (board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
+                    board.moveStudent(PawnDiscColor.BLUE, "player2");
+                }
+            }
+        }
+        board.assignProfessors();
         param.setIslandID(8);
         try {
-            board.useCard(param, "player1", 5);
+            board.useCard(param, "player2", 6);
+            board.conquerIsland();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("not allowed\n");
         }
