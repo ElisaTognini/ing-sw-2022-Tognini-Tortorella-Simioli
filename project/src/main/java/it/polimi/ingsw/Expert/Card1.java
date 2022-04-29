@@ -29,7 +29,38 @@ public class Card1 extends CharacterCardTemplate{
         else throw new IllegalArgumentException();
 
         board.getIslandList().get(parameters.getIslandID()).addStudent(students.retrieveStudent(parameters.getColor()));
-        students.addStudent(board.getStudentBag().drawStudent());
+
+        /* if bag is empty, a new student is not to be added and it means that it's the last round */
+
+        if(board.getStudentBag().checkIfStudentBagEmpty()){
+            board.setLastRound();
+        }
+        else
+            students.addStudent(board.getStudentBag().drawStudent());
+    }
+
+
+    /*
+    checks:
+     - if chosen color is available on the card
+     - if there is at least one student on the card (if StudentBag is empty)
+     */
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        if(students.getInfluence(parameters.getColor()) > 0){
+            if(students.size() > 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void setupCard(){

@@ -43,12 +43,36 @@ public class Card10 extends CharacterCardTemplate{
 
     }
 
-    public boolean checkIfActionIsForbidden(ArrayList<PawnDiscColor> studentsInEntrance, ArrayList<PawnDiscColor> studentsInDiningRoom,
-                                            String nickname){
 
-        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
-                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2) return true;
-        else return false;
+    /* checks that player has got at least two students in entrance of the requested colors */
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname){
+
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        ArrayList<PawnDiscColor> studentsInEntrance = parameters.getColorArrayList();
+        ArrayList<PawnDiscColor> studentsInDiningRoom = parameters.getColorArrayList2();
+
+        if(studentsInEntrance.size()==studentsInDiningRoom.size() ||
+                studentsInDiningRoom.size() <= 2 || studentsInEntrance.size() <= 2){
+            for(PawnDiscColor c : studentsInEntrance){
+                if(!board.getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(c)){
+                    return true;
+                }
+            }
+            for(PawnDiscColor c : studentsInDiningRoom){
+                if(board.getPlayerSchoolBoard(nickname).getDiningRoom().influenceForProf(c) == 0){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
 
     }
 

@@ -2,6 +2,7 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
+import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
@@ -48,4 +49,11 @@ public class Card5Test {
         }
         assertFalse(board.checkIfEnoughNoEntryTiles());
     }
+
+    @Test
+    public void forbiddenActionTest(){
+        /* to be added: corner case test for when all of the no entry tiles have been placed
+        *  and also to be checked if they are added back to the board once a player goes on the island */
+    }
+
 }

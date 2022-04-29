@@ -35,4 +35,9 @@ public class Card12 extends CharacterCardTemplate{
         }
     }
 
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }

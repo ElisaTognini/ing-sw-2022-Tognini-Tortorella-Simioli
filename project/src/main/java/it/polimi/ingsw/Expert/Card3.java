@@ -32,4 +32,10 @@ public class Card3 extends CharacterCardTemplate{
         board.conquerIsland();
         board.setMotherNaturePosition(oldPos);
     }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }

@@ -24,4 +24,10 @@ public class Card6 extends CharacterCardTemplate{
         temp = board.getIslandList().get(parameters.getIslandID()).getNumberOfTowers();
         board.getIslandList().get(parameters.getIslandID()).setTowersOnHold(temp);
     }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }

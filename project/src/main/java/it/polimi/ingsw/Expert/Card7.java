@@ -47,7 +47,31 @@ public class Card7 extends CharacterCardTemplate{
             student1 = students.retrieveStudent(studentsToEntrance.get(i));
             sb.getEntrance().addStudent(student1);
         }
+    }
 
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        for(PawnDiscColor c : parameters.getColorArrayList()) {
+            if (students.getInfluence(c) > 0) {
+                if (students.size() > 0) {
+                    return false;
+                }
+            }
+        }
+        for(PawnDiscColor c : parameters.getColorArrayList2()){
+            if(board.getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(c)){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

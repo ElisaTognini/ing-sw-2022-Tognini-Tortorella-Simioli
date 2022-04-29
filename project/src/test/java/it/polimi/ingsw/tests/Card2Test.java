@@ -8,6 +8,8 @@ import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
 
@@ -80,6 +82,19 @@ public class Card2Test {
         }catch(IllegalArgumentException e){
             System.out.println("error");
         }
+    }
+
+    @Test
+    public void forbiddenActionTest(){
+        initTest();
+        Parameter param = new Parameter();
+        ArrayList<PawnDiscColor> colors = new ArrayList<>();
+        colors.add(PawnDiscColor.GREEN);
+        colors.add(PawnDiscColor.BLUE);
+        colors.add(PawnDiscColor.PINK);
+        param.setColorArrayList(colors);
+
+        assertFalse(board.isActionForbidden(2, param, "player2"));
     }
 
 }

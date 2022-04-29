@@ -406,6 +406,9 @@ public class Board {
     }
 
     public boolean isLastRound(){ return lastRound; }
+
+    public void setLastRound(){ lastRound = true; }
+
     public boolean isGameOver(){ return isGameOver;}
 
     /* END OF GETTER METHODS */

@@ -36,13 +36,37 @@ public class Card11 extends CharacterCardTemplate{
         else throw new IllegalArgumentException();
 
         sb.getDiningRoom().addStudent(students.retrieveStudent(parameters.getColor()));
-        students.addStudent(board.getStudentBag().drawStudent());
+        if(board.getStudentBag().checkIfStudentBagEmpty()){
+            board.setLastRound();
+        }
+        else
+            students.addStudent(board.getStudentBag().drawStudent());
     }
 
     private void setupCard() {
         for(int i=0; i<4; i++){
             students.addStudent(board.getStudentBag().drawStudent());
         }
+    }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        if(students.getInfluence(parameters.getColor()) > 0){
+            if(students.size() > 0){
+                if(!board.getPlayerSchoolBoard(nickname).getDiningRoom().checkIfDiningRoomIsFull(parameters.getColor())) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

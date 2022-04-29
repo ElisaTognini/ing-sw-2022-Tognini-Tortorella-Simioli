@@ -26,4 +26,17 @@ public class Card5 extends CharacterCardTemplate{
         board.useNoEntryTile();
     }
 
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+
+
+
+        return false;
+    }
+
 }

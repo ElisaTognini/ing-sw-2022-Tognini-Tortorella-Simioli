@@ -269,6 +269,15 @@ public class BoardExpert extends Board {
         }
     }
 
+    public boolean isActionForbidden(int cardID, Object o, String nickname){
+        for(CharacterCardTemplate c : extractedCards){
+            if(c.getCardID() == cardID){
+                return c.checkIfActionIsForbidden(o, nickname);
+            }
+        }
+        return true;
+    }
+
     public void setMotherNaturePosition(int pos) {
         motherNature.setPosition(pos);
     }
@@ -277,5 +286,4 @@ public class BoardExpert extends Board {
     public void setExtractedCards(CharacterCardTemplate[] cards) {
         extractedCards = cards;
     }
-    public int getNoEntryTiles(){ return noEntryTiles; }
 }

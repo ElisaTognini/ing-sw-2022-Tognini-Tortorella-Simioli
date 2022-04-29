@@ -2,6 +2,7 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
+import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertFalse;
 
 public class Card3Test {
 
@@ -42,6 +45,15 @@ public class Card3Test {
         Parameter param = new Parameter();
         param.setIslandID(3);
             board.useCard(param, "player1", 3);
+    }
+
+    @Test
+    public void forbiddenActionTest(){
+        initTest();
+        Parameter param = new Parameter();
+        param.setIslandID(3);
+
+        assertFalse(board.isActionForbidden(3, param, "player2"));
     }
 
 }

@@ -27,6 +27,8 @@ public abstract class CharacterCardTemplate {
     }
 
     //method overridden in cards that need parameters
-    public void useCard(Object o, String nickname){}
+    public abstract void useCard(Object o, String nickname) throws IllegalArgumentException;
+
+    public abstract boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException;
 
 }

@@ -18,8 +18,20 @@ public class Card4 extends CharacterCardTemplate{
         if (o instanceof Parameter) {
             parameters = (Parameter) o;
         } else throw new IllegalArgumentException();
-
-        if (parameters.getMoves() < 2) board.setAdditionalMoves(parameters.getMoves());
-        else throw new IndexOutOfBoundsException();
+        board.setAdditionalMoves(parameters.getMoves());
     }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        Parameter parameters;
+        if(o instanceof Parameter){
+            parameters = (Parameter) o;
+        }
+        else throw  new IllegalArgumentException();
+        if(parameters.getMoves() > 2 || parameters.getMoves() < 0){
+            return true;
+        }
+        return false;
+    }
+
 }

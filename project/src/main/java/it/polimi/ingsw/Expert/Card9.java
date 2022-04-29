@@ -25,4 +25,9 @@ public class Card9 extends CharacterCardTemplate{
         board.getIslandList().get(parameters.getIslandID()).ignoreInfluence(parameters.getColor());
     }
 
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }

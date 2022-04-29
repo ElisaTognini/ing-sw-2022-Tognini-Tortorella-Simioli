@@ -31,8 +31,8 @@ public class Card1Test {
         //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(1);
-        cards[1] = manager.returnCard(1);
-        cards[2] = manager.returnCard(1);
+        cards[1] = manager.returnCard(2);
+        cards[2] = manager.returnCard(3);
 
         board.setExtractedCards(cards);
     }
@@ -45,10 +45,10 @@ public class Card1Test {
         Parameter param = new Parameter();
         param.setColor(PawnDiscColor.PINK);
         param.setIslandID(2);
-        try {
+        if(!board.isActionForbidden(1, param, "player1")) {
             board.useCard(param, "player1", 1);
-        }catch(IndexOutOfBoundsException e){
-            System.out.println("no pink students on card");
         }
+        else
+            System.out.println("No pink students on card");
     }
 }

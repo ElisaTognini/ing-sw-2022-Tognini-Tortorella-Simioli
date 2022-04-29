@@ -33,6 +33,11 @@ public class Card2 extends CharacterCardTemplate{
                 sb.getProfessorTable().addProfessor(c);
         }
         sb.setModifiedTable();
-
     }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }

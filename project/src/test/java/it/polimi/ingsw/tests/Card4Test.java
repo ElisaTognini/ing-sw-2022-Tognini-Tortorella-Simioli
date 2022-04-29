@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.*;
+
 public class Card4Test {
     BoardExpert board;
     ArrayList<Player> players;
@@ -54,6 +56,15 @@ public class Card4Test {
         }catch(IndexOutOfBoundsException e){
             System.out.println("not allowed\n");
         }
-
     }
+
+    @Test
+    public void forbiddenActionTest(){
+        initTest();
+        Parameter param = new Parameter();
+        param.setMoves(6);
+
+        assertTrue(board.isActionForbidden(4, param, "player2"));
+    }
+
 }

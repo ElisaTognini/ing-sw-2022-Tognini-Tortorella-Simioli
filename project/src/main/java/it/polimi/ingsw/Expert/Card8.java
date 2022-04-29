@@ -25,4 +25,10 @@ public class Card8 extends CharacterCardTemplate{
 
         board.getIslandList().get(parameters.getIslandID()).setExtra(2);
     }
+
+    @Override
+    public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        return false;
+    }
+
 }
