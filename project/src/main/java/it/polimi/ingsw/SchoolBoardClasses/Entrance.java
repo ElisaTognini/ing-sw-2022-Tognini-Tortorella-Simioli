@@ -44,4 +44,16 @@ public class Entrance {
         if(studentsInEntrance.getInfluence(c) > 0) return true;
         else return false;
     }
+
+    public int getColorAvailability(PawnDiscColor color){return studentsInEntrance.getInfluence(color);}
+
+    @Override
+    public String toString(){
+        return "In entrance" +
+                "\nYELLOW " + studentsInEntrance.getInfluence(PawnDiscColor.YELLOW) +
+                "\nPINK " + studentsInEntrance.getInfluence(PawnDiscColor.PINK) +
+                "\nGREEN " + studentsInEntrance.getInfluence(PawnDiscColor.GREEN) +
+                "\nBLUE " + studentsInEntrance.getInfluence(PawnDiscColor.BLUE) +
+                "\nRED " + studentsInEntrance.getInfluence(PawnDiscColor.RED);
+    }
 }

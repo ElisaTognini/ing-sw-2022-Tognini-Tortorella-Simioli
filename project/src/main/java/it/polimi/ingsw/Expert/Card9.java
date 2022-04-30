@@ -22,7 +22,7 @@ public class Card9 extends CharacterCardTemplate{
         }
         else throw new IllegalArgumentException();
 
-        board.getIslandList().get(parameters.getIslandID()).ignoreInfluence(parameters.getColor());
+        board.getIslandList().get(board.getMotherNaturePosition()).ignoreInfluence(parameters.getColor());
     }
 
     @Override

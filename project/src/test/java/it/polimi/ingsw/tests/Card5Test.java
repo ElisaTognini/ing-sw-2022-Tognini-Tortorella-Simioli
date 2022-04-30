@@ -54,6 +54,32 @@ public class Card5Test {
     public void forbiddenActionTest(){
         /* to be added: corner case test for when all of the no entry tiles have been placed
         *  and also to be checked if they are added back to the board once a player goes on the island */
+        initTest();
+        Parameter param = new Parameter();
+        param.setIslandID(2);
+
+        for(int i = 0; i < 7; i++){
+            if(!board.isActionForbidden(5, param, "player1"))
+            {
+                board.useCard(param, "player1", 5);
+                System.out.println("NE tile placed.");
+            }
+            else{
+                System.out.println("out of NE tiles");
+            }
+        }
+    }
+
+    @Test
+    public void NEtileRetrievalTest(){
+        forbiddenActionTest();
+        /* at this point, we have 4 NEtiles on island 2 */
+        System.out.println("we have " + board.getIslandList().get(2).getNumberOfNEtiles() + " NE tiles");
+        board.setMotherNaturePosition(2);
+        board.conquerIsland();
+        assertEquals(3, board.getIslandList().get(2).getNumberOfNEtiles());
+        board.conquerIsland();
+        assertEquals(2, board.getIslandList().get(2).getNumberOfNEtiles());
     }
 
 }

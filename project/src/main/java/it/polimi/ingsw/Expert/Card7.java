@@ -53,25 +53,43 @@ public class Card7 extends CharacterCardTemplate{
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
 
         Parameter parameters;
+        int sum1 = 0;
+        int sum2 = 0;
 
         if(o instanceof Parameter){
             parameters = (Parameter)o;
         }
         else throw new IllegalArgumentException();
 
-        for(PawnDiscColor c : parameters.getColorArrayList()) {
-            if (students.getInfluence(c) > 0) {
-                if (students.size() > 0) {
-                    return false;
-                }
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            sum1 = 0;
+            sum2 = 0;
+            for(PawnDiscColor cParam  : parameters.getColorArrayList()){
+                if(c.equals(cParam))
+                    sum1++;
             }
-        }
-        for(PawnDiscColor c : parameters.getColorArrayList2()){
-            if(board.getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(c)){
-                return false;
+
+            for(PawnDiscColor cParam  : parameters.getColorArrayList2()){
+                if(c.equals(cParam))
+                    sum2++;
             }
+
+            if(students.getInfluence(c) < sum1)
+                return true;
+            if(board.getPlayerSchoolBoard(nickname).getEntrance().getColorAvailability(c) < sum2)
+                return true;
         }
-        return true;
+
+        return false;
+    }
+
+    @Override
+    public String toString(){
+        return "on the card\n" + "PINK " + students.getInfluence(PawnDiscColor.PINK) +
+                "\nYELLOW " + students.getInfluence(PawnDiscColor.YELLOW) +
+                "\nGREEN " + students.getInfluence(PawnDiscColor.GREEN) +
+                "\nBLUE " + students.getInfluence(PawnDiscColor.BLUE) +
+                "\nRED " + students.getInfluence(PawnDiscColor.RED) + "\n\n";
     }
 
 }

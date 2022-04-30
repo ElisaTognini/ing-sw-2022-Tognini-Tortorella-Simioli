@@ -38,4 +38,14 @@ public class DiningRoom {
         if(container.getInfluence(color) >= 10) return true;
         else return false;
     }
+
+    @Override
+    public String toString(){
+        return "in dining room: \n"+
+                "\nPINK " + container.getInfluence(PawnDiscColor.PINK) +
+                "\nYELLOW " + container.getInfluence(PawnDiscColor.YELLOW) +
+                "\nBLUE " + container.getInfluence(PawnDiscColor.BLUE) +
+                "\nGREEN " + container.getInfluence(PawnDiscColor.GREEN) +
+                "\nRED " + container.getInfluence(PawnDiscColor.RED);
+    }
 }

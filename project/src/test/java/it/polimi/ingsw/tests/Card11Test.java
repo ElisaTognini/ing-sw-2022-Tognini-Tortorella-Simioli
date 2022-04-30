@@ -1,5 +1,4 @@
 package it.polimi.ingsw.tests;
-
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
@@ -9,11 +8,13 @@ import it.polimi.ingsw.Expert.Parameter;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
+import static org.junit.Assert.*;
 
-public class Card1Test {
-
+/* in setup, draw 4 students and place them on this card
+ *  take 1 student from this card and place it in your dining room.
+ *  then, take a new student from the bag and place it on this card */
+public class Card11Test {
     BoardExpert board;
     ArrayList<Player> players;
 
@@ -30,26 +31,31 @@ public class Card1Test {
 
         //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
-        cards[0] = manager.returnCard(1);
-        cards[1] = manager.returnCard(2);
-        cards[2] = manager.returnCard(3);
+        cards[0] = manager.returnCard(11);
+        cards[1] = manager.returnCard(1);
+        cards[2] = manager.returnCard(4);
 
         board.setExtractedCards(cards);
     }
 
-    @RepeatedTest(5)
-    /*test followed with a debugger shows the correct
-    * effects acted by the card on the board.*/
+    @RepeatedTest(10)
     public void usageTest(){
         initTest();
+
         Parameter param = new Parameter();
-        param.setColor(PawnDiscColor.PINK);
-        param.setIslandID(2);
-        if(!board.isActionForbidden(1, param, "player1")) {
-            board.useCard(param, "player1", 1);
+        param.setColor(PawnDiscColor.YELLOW);
+
+        System.out.println(board.getPlayerSchoolBoard("player1").getDiningRoom());
+        if(!board.isActionForbidden(11, param, "player1")){
+            board.useCard(param, "player1", 11);
+            System.out.println(board.getPlayerSchoolBoard("player1").getDiningRoom());
         }
         else
-            System.out.println("No pink students on card");
+        {
+            System.out.println("action not permitted");
+        }
     }
+
+    /*to test: last three students remaining with an empty bag.*/
 
 }

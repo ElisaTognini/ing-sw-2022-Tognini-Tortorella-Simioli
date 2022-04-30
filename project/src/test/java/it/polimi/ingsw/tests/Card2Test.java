@@ -39,7 +39,6 @@ public class Card2Test {
     }
 
     @Test
-
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();

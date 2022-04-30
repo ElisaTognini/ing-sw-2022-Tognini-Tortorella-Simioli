@@ -113,5 +113,6 @@ public class Island {
         ignoredInfluence = -container.getInfluence(color);
     }
     public void setIgnoredInfluencetoZero(){ignoredInfluence = 0;}
+    public int getNumberOfNEtiles(){return noEntryTile;}
 }
 

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Expert;
 
-/*  */
-
 import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
@@ -13,8 +11,6 @@ import java.util.ArrayList;
 /* you may switch up to 2 students between your entrance and your dining room */
 
 public class Card10 extends CharacterCardTemplate{
-
-    /**/
 
     public Card10(BoardExpert board){
         super(board);
@@ -49,6 +45,8 @@ public class Card10 extends CharacterCardTemplate{
     public boolean checkIfActionIsForbidden(Object o, String nickname){
 
         Parameter parameters;
+        int sum1 = 0;
+        int sum2 = 0;
 
         if(o instanceof Parameter){
             parameters = (Parameter)o;
@@ -58,21 +56,31 @@ public class Card10 extends CharacterCardTemplate{
         ArrayList<PawnDiscColor> studentsInEntrance = parameters.getColorArrayList();
         ArrayList<PawnDiscColor> studentsInDiningRoom = parameters.getColorArrayList2();
 
-        if(studentsInEntrance.size()==studentsInDiningRoom.size() ||
-                studentsInDiningRoom.size() <= 2 || studentsInEntrance.size() <= 2){
+        if(studentsInEntrance.size()!=studentsInDiningRoom.size() ||
+                studentsInDiningRoom.size() > 2 || studentsInEntrance.size() > 2)
+            return true;
+
+        for(PawnDiscColor color : PawnDiscColor.values()){
+            sum1 = 0;
+            sum2 = 0;
             for(PawnDiscColor c : studentsInEntrance){
-                if(!board.getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(c)){
-                    return true;
-                }
+                if(c.equals(color))
+                    sum1++;
             }
+
             for(PawnDiscColor c : studentsInDiningRoom){
-                if(board.getPlayerSchoolBoard(nickname).getDiningRoom().influenceForProf(c) == 0){
-                    return true;
-                }
+                if(c.equals(color))
+                    sum2++;
             }
-            return false;
+
+            if(board.getPlayerSchoolBoard(nickname).getEntrance().getColorAvailability(color) < sum1)
+                return true;
+
+            if(board.getPlayerSchoolBoard(nickname).getDiningRoom().influenceForProf(color) < sum2)
+                return true;
         }
-        return true;
+
+        return false;
 
     }
 

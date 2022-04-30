@@ -8,19 +8,18 @@ import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.Parameter;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.Test;
-
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertFalse;
-
-public class Card6Test {
+/* this card allows to choose a color of student that will add no influence
+ *  during the influence calculation of the turn in which the card is played */
+public class Card9Test {
     BoardExpert board;
     ArrayList<Player> players;
+    CharacterCardTemplate[] cards;
 
     @Test
-    //testing the initialization of the card
     public void initTest(){
-        CharacterCardTemplate[] cards;
         players = new ArrayList<>();
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -29,7 +28,7 @@ public class Card6Test {
         CardManager manager = new CardManager(board);
 
         cards = new CharacterCardTemplate[3];
-        cards[0] = manager.returnCard(6);
+        cards[0] = manager.returnCard(9);
         cards[1] = manager.returnCard(4);
         cards[2] = manager.returnCard(5);
 
@@ -40,15 +39,7 @@ public class Card6Test {
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        board.setMotherNaturePosition(8);
-        if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.RED)) {
-            board.moveStudent(PawnDiscColor.RED, "player1", 8);
-            if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.RED)) {
-                board.moveStudent(PawnDiscColor.RED, "player1");
-            }
-        }
-        board.assignProfessors();
-        board.conquerIsland();
+        board.setMotherNaturePosition(5);
         if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
             board.moveStudent(PawnDiscColor.BLUE, "player2", 8);
             if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
@@ -59,21 +50,13 @@ public class Card6Test {
             }
         }
         board.assignProfessors();
-        param.setIslandID(8);
-        try {
-            board.useCard(param, "player2", 6);
+        param.setColor(PawnDiscColor.BLUE);
+        if(!board.isActionForbidden(9, param, "player2")){
+            board.useCard(param, "player2", 9);
             board.conquerIsland();
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("not allowed\n");
+            board.roundSetup();
         }
-    }
 
-    @Test
-    public void actionForbiddenTest(){
-        initTest();
-        Parameter param = new Parameter();
-        param.setIslandID(2);
-        assertFalse(board.isActionForbidden(6, param, "player2"));
+        assertEquals(null, board.getIslandList().get(5).getOwner());
     }
-
 }
