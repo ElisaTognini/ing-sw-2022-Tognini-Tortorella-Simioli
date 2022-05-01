@@ -13,12 +13,10 @@ public class ExpertModeController {
 
     private Model model;
     private RoundManager roundManager;
-    private BaseActionController baseController;
 
-    public ExpertModeController(Model model, BaseActionController controller){
+    public ExpertModeController(Model model){
         this.model = model;
         this.roundManager = model.getRoundManager();
-        this.baseController = controller;
     }
 
     /* this class handles expert mode functionalities:

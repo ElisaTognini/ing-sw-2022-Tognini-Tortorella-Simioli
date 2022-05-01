@@ -138,11 +138,9 @@ public class Model {
         return winner;
     }
 
-    public void useCard(Object o, String nickname, int cardID){
-        board.useCard(o,nickname,cardID);
-    }
-
     public int getNumberOfClouds (){
         return numberOfClouds;
     }
+
+    public GameMode getMode(){return mode;}
 }
