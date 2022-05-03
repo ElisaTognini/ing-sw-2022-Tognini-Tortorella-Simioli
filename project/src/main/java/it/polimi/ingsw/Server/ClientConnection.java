@@ -1,16 +1,14 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Enums.GameMode;
-import sun.jvm.hotspot.utilities.Observable;
+import java.util.Observable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Locale;
 
-import static jdk.internal.net.http.common.Utils.close;
-
+@Deprecated
 public class ClientConnection extends Observable implements Runnable {
 
     private Socket socket;
