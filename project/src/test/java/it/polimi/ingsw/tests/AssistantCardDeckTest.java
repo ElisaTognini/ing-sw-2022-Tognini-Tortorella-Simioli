@@ -4,21 +4,24 @@ import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.Assert.*;
 
 public class AssistantCardDeckTest {
 
-    Player owns = new Player("player");
-    AssistantCardDeck deckTest = new AssistantCardDeck(owns);
+    Player owns;
+    AssistantCardDeck deckTest;
 
     @Test
-    public void getsPlayer(){
+    public void getsPlayer() {
+        owns = new Player("player");
+        deckTest = new AssistantCardDeck(owns);
         assertEquals(owns, deckTest.getOwner());
     }
 
     @Test
     public void checksDraw(){
+        owns = new Player("player");
+        deckTest = new AssistantCardDeck(owns);
         AssistantCard c;
         for(int i=1; i<=10; i++){
             c = deckTest.drawCard(i);
@@ -29,8 +32,11 @@ public class AssistantCardDeckTest {
 
     @Test
     public void testLoops(){
+        owns = new Player("player");
+        deckTest = new AssistantCardDeck(owns);
         int k = 1;
         int g = 0;
+
         for(int i=1; i<=5; i++){
             for(int j=k; j<k+2; j++){
                 System.out.println("id: " + j + "  value: " + i);
@@ -38,5 +44,21 @@ public class AssistantCardDeckTest {
             }
             k = g+1;
         }
+    }
+
+    @Test
+    public void checkIfDeckIsEmptyTest(){
+        owns = new Player("player");
+        deckTest = new AssistantCardDeck(owns);
+        int i = 0;
+        AssistantCard c;
+
+        assertFalse(deckTest.checkIfDeckIsEmpty());
+        for(i=1; i<11; i++){
+            c = deckTest.drawCard(i);
+            assertFalse(deckTest.checkIfDeckIsEmpty());
+            deckTest.removeCard(c.getAssistantCardID());
+        }
+        assertTrue(deckTest.checkIfDeckIsEmpty());
     }
 }

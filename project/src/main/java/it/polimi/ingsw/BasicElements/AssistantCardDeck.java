@@ -46,7 +46,8 @@ public class AssistantCardDeck {
     public void removeCard(int cardID){
         for(AssistantCard c : cards){
             if (c.getAssistantCardID() == cardID) {
-                cards.remove(cards.indexOf(c));
+                cards.remove(c);
+                break;
             }
         }
     }

@@ -26,7 +26,6 @@ public class ExpertModeController {
         board = (BoardExpert) model.getBoard();
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(!roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)){
-                //write a method in boardexpert that resets all extras caused by cards when round starts
                 if(board.checkIfCardPresent(cardID)){
                     if(board.getPlayersCoinCounter(nickname).checkIfEnoughCoins(
                             board.getCardsCost(cardID))){
