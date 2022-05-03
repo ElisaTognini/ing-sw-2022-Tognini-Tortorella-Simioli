@@ -19,7 +19,6 @@ public class Island {
     private int noEntryTile;
     private int numberOfTowers;
     private int towersOnHold;
-    private int extra;
     private int influence;
     private int ignoredInfluence;
 
@@ -32,7 +31,6 @@ public class Island {
         noEntryTile = 0;
         numberOfTowers = 0;
         towersOnHold = 0;
-        extra = 0;
         influence = 0;
         ignoredInfluence = 0;
     }
@@ -106,8 +104,6 @@ public class Island {
     }
     public int getTowersOnHold(){ return towersOnHold; }
     public void setTowersOnHold(int n) { towersOnHold = n; }
-    public void setExtra(int n){ extra = n;}
-    public int getExtra(){ return extra;}
 
     public void ignoreInfluence(PawnDiscColor color){
         ignoredInfluence = -container.getInfluence(color);

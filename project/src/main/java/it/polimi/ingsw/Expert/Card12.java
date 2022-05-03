@@ -22,6 +22,7 @@ public class Card12 extends CharacterCardTemplate{
 
     public void useCard(Object o, String nickname){
         Parameter parameters;
+        int bound;
 
         if(o instanceof Parameter){
             parameters = (Parameter)o;
@@ -29,7 +30,13 @@ public class Card12 extends CharacterCardTemplate{
         else throw new IllegalArgumentException();
 
         for(SchoolBoard sb : board.getSchoolBoards()){
-            for(int i = 0; i < sb.getDiningRoom().influenceForProf(parameters.getColor()) || i < 3; i++){
+
+            if(sb.getDiningRoom().influenceForProf(parameters.getColor()) >= 3 )
+                bound  = 3;
+            else
+                bound = sb.getDiningRoom().influenceForProf(parameters.getColor());
+
+            for(int i = 0; i < bound; i++){
                 board.getStudentBag().addStudentBack(sb.getDiningRoom().getContainer().retrieveStudent(parameters.getColor()));
             }
         }

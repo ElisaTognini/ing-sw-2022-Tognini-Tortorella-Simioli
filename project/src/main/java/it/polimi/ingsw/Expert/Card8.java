@@ -23,7 +23,7 @@ public class Card8 extends CharacterCardTemplate{
         }
         else throw new IllegalArgumentException();
 
-        board.getIslandList().get(parameters.getIslandID()).setExtra(2);
+        board.setExtra(nickname);
     }
 
     @Override

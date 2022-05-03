@@ -23,6 +23,7 @@ public class BoardExpert extends Board {
     private final int numberOfCharacterCards = 12;
     private final int cardsToInstantiate = 3;
     private int additional_moves;
+    private String extra;
 
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                        int studentsInEntrance, GameMode mode) {
@@ -32,6 +33,7 @@ public class BoardExpert extends Board {
         cardManager = new CardManager(this);
         noEntryTiles = 4;
         cardIDs = new int[cardsToInstantiate];
+        extra = null;
     }
 
     @Override
@@ -39,9 +41,9 @@ public class BoardExpert extends Board {
         super.roundSetup();
         /* setting extras back to default values */
         additional_moves = 0;
+        extra = null;
         for(Island i : islands){
             i.setTowersOnHold(0);
-            i.setExtra(0);
             i.setIgnoredInfluencetoZero();
         }
         for(SchoolBoard sb : schoolBoards){
@@ -105,11 +107,13 @@ public class BoardExpert extends Board {
                              * island */
                             if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0)
                                 sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
-                            /* adds extra points to the influence of a player; extra is set to 2 only if player
-                             * purchased character card 8, otherwise it is 0 */
-                            sum[i] = sum[i] + islands.get(motherNature.getPosition()).getExtra();
                         }
                     }
+                }
+                /* if the player purchased card 8, his nickname has been saved in extra, therefore
+                 * two extra points are added to the influence */
+                if(extra != null) {
+                    if (extra.equals(sb.getOwner().getNickname())) sum[i] = sum[i] + 2;
                 }
                 /* only used if character card 2 has been played */
                 if (sb.getModifiedTable()) {
@@ -120,7 +124,7 @@ public class BoardExpert extends Board {
 
             /* sets variables modified by character card affecting influence back to default */
             islands.get(motherNature.getPosition()).setTowersOnHold(0);
-            islands.get(motherNature.getPosition()).setExtra(0);
+            extra = null;
 
             /* decides who conquers the island */
             i = 0;
@@ -281,6 +285,8 @@ public class BoardExpert extends Board {
     public void setMotherNaturePosition(int pos) {
         motherNature.setPosition(pos);
     }
+
+    public void setExtra(String nickname) {extra = nickname;}
 
     /* METHOD FOR TEST PURPOSE ONLY - WON'T BE USED BY PLAYERS*/
     public void setExtractedCards(CharacterCardTemplate[] cards) {
