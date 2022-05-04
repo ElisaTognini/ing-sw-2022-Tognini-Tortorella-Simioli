@@ -38,6 +38,7 @@ public class ClientConnection extends Observable implements Runnable {
             }
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Something went wrong!");
+            e.printStackTrace();
         } finally {
             close();
         }
@@ -46,6 +47,7 @@ public class ClientConnection extends Observable implements Runnable {
     public synchronized boolean isActive() { return active;}
 
     public synchronized void setNickname(String nickname) { this.nickname = nickname;}
+    public synchronized String getNickname(){return nickname;}
 
     public synchronized void send(ServerMessage message){
         try{
@@ -128,7 +130,8 @@ public class ClientConnection extends Observable implements Runnable {
             }
         }
     }
-
+    /* this method will be used for all players, but for the second and third players there will also be a check
+    * that will call this method again if the inserted nickname has already been chosen. */
     public synchronized String parseNickname(){
         Object read;
         ObjectInputStream in;
@@ -140,7 +143,7 @@ public class ClientConnection extends Observable implements Runnable {
                 if (read instanceof BaseUserMessage){
                     return ((BaseUserMessage) read).getNickname();
                 }
-                else send(new BaseServerMessage(CustomMessage.errorGameMode));
+                else send(new BaseServerMessage(CustomMessage.invalidFormat));
             } catch (IOException | ClassNotFoundException  e) {
                 System.err.println("Input stream error\n");
             }

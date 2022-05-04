@@ -14,7 +14,7 @@ public class Match {
     private Model model;
     private int numberOfPlayers;
     private GameMode gameMode;
-    private HashMap<String, VirtualView> matchPlayers;
+    private ArrayList<VirtualView> matchPlayersViews;
 
     public Match(Server server, int numberOfPlayers, GameMode gameMode){
         this.server = server;
@@ -26,6 +26,15 @@ public class Match {
     public void instantiateMVC(Model model, Controller controller, ArrayList<VirtualView> views){
         this.model = model;
         this.controller = controller;
+        this.matchPlayersViews = views;
+    }
+
+    public GameMode getGameMode(){return gameMode;}
+
+    public synchronized void sendAll(ServerMessage message){
+        for(VirtualView v : matchPlayersViews){
+            v.getClientConnection().asyncSend(message);
+        }
     }
 
 }
