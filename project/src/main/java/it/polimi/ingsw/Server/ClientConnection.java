@@ -20,7 +20,7 @@ public class ClientConnection extends Observable implements Runnable {
     public ClientConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
-        active = true;
+        active =  true;
     }
 
     @Override
