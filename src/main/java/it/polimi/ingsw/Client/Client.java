@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Client {
-
+    private Parser parser;
     private String ip;
     private int port;
     private boolean active = true;
@@ -49,15 +49,18 @@ public class Client {
             System.err.println("Something went wrong while creating socket");
         }
     }
+    /* invece di fargli ritornare un thread, viene chiamata con una notify() in modo tale che un thread
+    * nasca e muoia in questo metodo (simile alla syncSend in ClientConnection) per poter avere un mex
+    * come parametro */
 
     public Thread asyncWriteToSocket(ObjectOutputStream socketOut) {
         UserMessage input;
-        //input = parseInput();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
                     while(isActive()){
+                        //input =
                         //socketOut.writeObject(input);
                         socketOut.flush();
                         socketOut.reset();
