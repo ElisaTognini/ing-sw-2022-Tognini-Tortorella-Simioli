@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ing-sw-2022-Tognini-Tortorella-Simioli" />
-        <module name="softeng-GC19" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -1,4 +1,7 @@
-/* package it.polimi.ingsw.Client;
+package it.polimi.ingsw.Client;
+
+import it.polimi.ingsw.Server.BaseUserMessage;
+import it.polimi.ingsw.Server.UserMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -47,10 +50,48 @@ public class Client {
         }
     }
 
-    private Thread asyncWriteToSocket(ObjectOutputStream socketOut) {
+    public Thread asyncWriteToSocket(ObjectOutputStream socketOut) {
+        UserMessage input;
+        //input = parseInput();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    while(isActive()){
+                        //socketOut.writeObject(input);
+                        socketOut.flush();
+                        socketOut.reset();
+                    }
+                } catch (Exception e){
+                    setActive(false);
+                }
+            }
+        });
+        t.start();
+        return t;
     }
 
-    private Thread asyncReadFromSocket(ObjectInputStream socketIn) {
+    public Thread asyncReadFromSocket(ObjectInputStream socketIn) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    while (isActive()){
+                        Object input = socketIn.readObject();
+                        if(input instanceof BaseUserMessage){
+                            /* notify() to the view, so the view will update all changes and show them to the user*/
+                        } else if (input instanceof ViewUpdateMessage){
+                            /* notify() to the view, containing a different type of message from the one above*/
+                        } else {
+                            throw new IllegalArgumentException();
+                        }
+                    }
+                } catch (Exception e){
+                    setActive(false);
+                }
+            }
+        });
+        t.start();
+        return t;
     }
 }
-*/
