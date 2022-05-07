@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client {
     private Parser parser;
     private String ip;
     private int port;
     private boolean active = true;
+    private ExecutorService executor = Executors.newFixedThreadPool(128);
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -49,31 +52,23 @@ public class Client {
             System.err.println("Something went wrong while creating socket");
         }
     }
-    /* invece di fargli ritornare un thread, viene chiamata con una notify() in modo tale che un thread
-    * nasca e muoia in questo metodo (simile alla syncSend in ClientConnection) per poter avere un mex
-    * come parametro */
+    /* metodo chiamato da un'altra classe, presumibilmente il Parser,
+     dopo che sono stati fatti i controlli per la validità dell'azione dell'utente */
 
-    public Thread asyncWriteToSocket(ObjectOutputStream socketOut) {
-        Thread t = new Thread(new Runnable() {
+    public void asyncWriteToSocket(ObjectOutputStream socketOut, UserMessage input) {
+        executor.submit(new Runnable() {
             @Override
             public void run() {
-                BaseUserMessage input;
-                try{
-                    while(isActive()){
-                        input = new BaseUserMessage();
-                        input.setNumberOfPlayers(3);
-
-                        socketOut.writeObject(input);
-                        socketOut.flush();
-                        socketOut.reset();
-                    }
-                } catch (Exception e){
-                    setActive(false);
+                try {
+                    socketOut.writeObject(input);
+                    socketOut.flush();
+                    socketOut.reset();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
+
             }
         });
-        t.start();
-        return t;
     }
 
     public Thread asyncReadFromSocket(ObjectInputStream socketIn) {

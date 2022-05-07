@@ -35,18 +35,18 @@ public class Server {
         String nickChecker;
         waitingClients.add(c);
         if(waitingClients.size() == 1 ){
-            c.send(new BaseServerMessage(CustomMessage.requestNumberOfPlayers));
+            c.send(new SetupServerMessage(CustomMessage.requestNumberOfPlayers));
             matchPlayers = c.parseNumberOfPlayers();
-            c.send(new BaseServerMessage(CustomMessage.requestGameMode));
+            c.send(new SetupServerMessage(CustomMessage.requestGameMode));
             gameMode = c.parseGameMode();
-            c.send(new BaseServerMessage(CustomMessage.askNickname));
+            c.send(new SetupServerMessage(CustomMessage.askNickname));
             c.setNickname(c.parseNickname());
             /* Now creating match*/
             matches.add(new Match(this, matchPlayers, gameMode));
         }
         else if(waitingClients.size() == matchPlayers){
             do {
-                c.send(new BaseServerMessage(CustomMessage.askNickname));
+                c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
             }while(isNicknameDuplicated(nickChecker, c));
             matchInitializer();
@@ -55,7 +55,7 @@ public class Server {
         }
         else if(1 < waitingClients.size() && waitingClients.size() < matchPlayers){
             do {
-                c.send(new BaseServerMessage(CustomMessage.askNickname));
+                c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
             }while(isNicknameDuplicated(nickChecker, c));
         }
@@ -64,7 +64,7 @@ public class Server {
     private boolean isNicknameDuplicated(String n, ClientConnection conn){
         for(ClientConnection c: waitingClients){
             if(n.equals(c.getNickname())) {
-                c.send(new BaseServerMessage(CustomMessage.duplicatedNickname));
+                c.send(new SetupServerMessage(CustomMessage.duplicatedNickname));
                 return true;
             }
         }

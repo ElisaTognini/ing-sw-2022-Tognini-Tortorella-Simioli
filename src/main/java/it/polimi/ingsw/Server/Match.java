@@ -33,6 +33,7 @@ public class Match {
 
     public synchronized void sendAll(ServerMessage message){
         for(VirtualView v : matchPlayersViews){
+            /* non è clientConnection a fare la asyncSend, ma un metodo della view (da scrivere)*/
             v.getClientConnection().asyncSend(message);
         }
     }
