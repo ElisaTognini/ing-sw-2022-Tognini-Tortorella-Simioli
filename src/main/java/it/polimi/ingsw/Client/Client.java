@@ -34,9 +34,9 @@ public class Client {
 
             try {
                 Thread t0 = asyncReadFromSocket(socketIn);
-                Thread t1 = asyncWriteToSocket(socketOut);
+                //Thread t1 = asyncWriteToSocket(socketOut);
                 t0.join();
-                t1.join();
+                //t1.join();
             } catch (InterruptedException e){
                 System.err.println("Thread issue.");
             }finally {
@@ -54,14 +54,16 @@ public class Client {
     * come parametro */
 
     public Thread asyncWriteToSocket(ObjectOutputStream socketOut) {
-        UserMessage input;
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                BaseUserMessage input;
                 try{
                     while(isActive()){
-                        //input =
-                        //socketOut.writeObject(input);
+                        input = new BaseUserMessage();
+                        input.setNumberOfPlayers(3);
+
+                        socketOut.writeObject(input);
                         socketOut.flush();
                         socketOut.reset();
                     }

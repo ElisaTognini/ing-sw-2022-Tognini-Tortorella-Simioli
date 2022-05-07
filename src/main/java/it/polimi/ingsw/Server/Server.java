@@ -101,6 +101,7 @@ public class Server {
                 System.out.println("Connection established.");
                 ClientConnection clientConnection = new ClientConnection(newSocket, this);
                 executor.submit(clientConnection);
+                System.out.println("ClientConnection submitted to executor");
             } catch (IOException e){
                 System.err.println("Connection error!");
             }

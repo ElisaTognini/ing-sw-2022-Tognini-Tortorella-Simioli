@@ -27,6 +27,7 @@ public class ClientConnection extends Observable implements Runnable {
     public void run() {
         ObjectInputStream in;
         Object read;
+        System.out.println("clientconnection run method has been called");
         try {
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());

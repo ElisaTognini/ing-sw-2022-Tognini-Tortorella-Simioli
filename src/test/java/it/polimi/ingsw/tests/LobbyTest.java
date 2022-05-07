@@ -1,5 +1,6 @@
-/*package it.polimi.ingsw.tests;
+package it.polimi.ingsw.tests;
 
+import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Server.Server;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.net.Socket;
 public class LobbyTest {
 
     private Server server;
+    private Client client;
 
     @Test
     public void lobbyTestServer(){
@@ -18,9 +20,8 @@ public class LobbyTest {
 
     @Test
     public void lobbyTestClient() throws IOException {
-        Socket socket = new Socket("127.0.0.1", 12345);
-        socket.close();
+        client = new Client("127.0.0.1", 12345);
+        client.run();
     }
 
 }
-*/
