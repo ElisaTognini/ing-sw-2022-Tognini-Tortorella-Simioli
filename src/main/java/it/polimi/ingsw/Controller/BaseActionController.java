@@ -58,19 +58,24 @@ public class BaseActionController {
                             return true;
                         } else {
                             /* the view will display that the card has already been played */
+                            match.sendErrorTo(nickname,
+                                    new BaseServerMessage(CustomMessage.cardAlreadyPlayedError));
                         }
                     }
                 }
                 else{
                     /* the view will display that the card is not present inside the deck */
+                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.cardNotPresentError));
                 }
             }
             else{
                 /* the view will display that the action cannot be performed at this point of the turn */
+                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
             }
         }
         else{
             /* the view will display that it's not this player's turn */
+            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
         }
         return false;
     }
@@ -87,6 +92,7 @@ public class BaseActionController {
                 return true;
             }else{
                 /* view will display that dining room has no more available spaces for desired color */
+                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.fullDRError));
             }
         }
         return false;
@@ -112,6 +118,7 @@ public class BaseActionController {
 
         if(isLastRound){
             //display last round message
+            match.sendAll(new BaseServerMessage(CustomMessage.lastRound));
             return true;
         }
 
@@ -130,16 +137,16 @@ public class BaseActionController {
                         }
                         return true;
                     }else{
-                        match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().emptyCloudError));
+                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.emptyCloudError));
                     }
                 }else{
-                    match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().invalidCloudIDError));
+                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.invalidCloudIDError));
                 }
             } else {
-                match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().turnFlowError));
+                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
             }
         }else{
-            match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().notYourTurnError));
+            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
         }
         return false;
     }
@@ -157,18 +164,22 @@ public class BaseActionController {
                     }
                     else{
                         /* the view will display that the color is not available in the entrance */
+                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.colorNotAvailableError));
                     }
                 }
                 else{
                     /* the view will display that three students have already been moved */
+                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.allStudentsMovedError));
                 }
             }
             else{
                 /* the view will display that the action cannot be performed at this point of the turn */
+                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
             }
         }
         else{
             /* the view will display that it's not this player's turn */
+            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
         }
 
         return false;

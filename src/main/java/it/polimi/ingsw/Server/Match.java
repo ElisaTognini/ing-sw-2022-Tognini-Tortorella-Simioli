@@ -5,7 +5,6 @@ import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Match {
 
@@ -36,7 +35,7 @@ public class Match {
 
     public synchronized void sendAll(BaseServerMessage message){
         for(VirtualView v : matchPlayersViews){
-            v.sendErrorMessage(message);
+            v.sendMessage(message);
         }
     }
 
@@ -51,7 +50,7 @@ public class Match {
     public void sendErrorTo(String nickname, BaseServerMessage message){
         for(VirtualView v : matchPlayersViews){
             if(v.getNickname().equals(nickname)){
-                v.sendErrorMessage(message);
+                v.sendMessage(message);
             }
         }
     }

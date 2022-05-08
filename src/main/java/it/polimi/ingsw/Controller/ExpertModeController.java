@@ -5,6 +5,8 @@ import it.polimi.ingsw.BoardClasses.RoundManager;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Server.BaseServerMessage;
+import it.polimi.ingsw.Server.CustomMessage;
 import it.polimi.ingsw.Server.Match;
 
 public class ExpertModeController {
@@ -21,39 +23,42 @@ public class ExpertModeController {
         this.roundManager = model.getRoundManager();
     }
 
+    public void setMatch(Match m){ this.match = m;}
+
     /* this class handles expert mode functionalities:
     * - using the character card */
-    public synchronized boolean useCharacterCard(String nickname, Object o, int cardID){
+    public synchronized boolean useCharacterCard(String nickname, Object o, int cardID) {
         BoardExpert board;
         board = (BoardExpert) model.getBoard();
-        if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
-            if(!roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)){
-                if(board.checkIfCardPresent(cardID)){
-                    if(board.getPlayersCoinCounter(nickname).checkIfEnoughCoins(
-                            board.getCardsCost(cardID))){
-                            board.purchaseCharacterCard(nickname, cardID);
-                            try {
-                                board.useCard(o, nickname, cardID);
-                            }catch(IllegalArgumentException e){
-                                //prints wrong param format error
-                            }
-                    }else{
+        if (roundManager.getCurrentPlayer().getNickname().equals(nickname)) {
+            if (!roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
+                if (board.checkIfCardPresent(cardID)) {
+                    if (board.getPlayersCoinCounter(nickname).checkIfEnoughCoins(
+                            board.getCardsCost(cardID))) {
+                        board.purchaseCharacterCard(nickname, cardID);
+                        try {
+                            board.useCard(o, nickname, cardID);
+                        } catch (IllegalArgumentException e) {
+                            //prints wrong param format error
+                            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.wrongFormat));
+                        }
+                    } else {
                         //player doesn't have enough coins
+                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notEnoughCoinsError));
+
                     }
-                }else{
-                    //card has not been extracted
+                } else{
+                        //card has not been extracted
+                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.charCardNotExtractedError));
+                    }
+                } else {
+                    //not the right moment in the turn
+                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
                 }
-            }else{
-                //not the right moment in the turn
+            } else {
+                //error message: not your turn
+                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
             }
-        }else{
-            //error message: not your turn
-        }
         return false;
     }
-
-    public void setMatch(Match match){
-        this.match = match;
-    }
-
 }
