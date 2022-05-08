@@ -5,6 +5,7 @@ import it.polimi.ingsw.BoardClasses.RoundManager;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Server.Match;
 
 public class ExpertModeController {
     /* controller class that handles expert game mode -
@@ -13,6 +14,7 @@ public class ExpertModeController {
 
     private Model model;
     private RoundManager roundManager;
+    private Match match;
 
     public ExpertModeController(Model model){
         this.model = model;
@@ -21,7 +23,7 @@ public class ExpertModeController {
 
     /* this class handles expert mode functionalities:
     * - using the character card */
-    public boolean useCharacterCard(String nickname, Object o, int cardID){
+    public synchronized boolean useCharacterCard(String nickname, Object o, int cardID){
         BoardExpert board;
         board = (BoardExpert) model.getBoard();
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
@@ -48,6 +50,10 @@ public class ExpertModeController {
             //error message: not your turn
         }
         return false;
+    }
+
+    public void setMatch(Match match){
+        this.match = match;
     }
 
 }

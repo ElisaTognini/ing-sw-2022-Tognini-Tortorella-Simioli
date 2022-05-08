@@ -29,14 +29,14 @@ public class Match {
         this.model = model;
         this.controller = controller;
         this.matchPlayersViews = views;
+        controller.setMatch(this);
     }
 
     public GameMode getGameMode(){return gameMode;}
 
-    public synchronized void sendAll(ServerMessage message){
+    public synchronized void sendAll(BaseServerMessage message){
         for(VirtualView v : matchPlayersViews){
-            /* non è clientConnection a fare la asyncSend, ma un metodo della view (da scrivere)*/
-            v.getClientConnection().asyncSend(message);
+            v.sendErrorMessage(message);
         }
     }
 
@@ -46,5 +46,13 @@ public class Match {
 
     public ArrayList<VirtualView> getMatchPlayersViews(){
         return matchPlayersViews;
+    }
+
+    public void sendErrorTo(String nickname, BaseServerMessage message){
+        for(VirtualView v : matchPlayersViews){
+            if(v.getNickname().equals(nickname)){
+                v.sendErrorMessage(message);
+            }
+        }
     }
 }

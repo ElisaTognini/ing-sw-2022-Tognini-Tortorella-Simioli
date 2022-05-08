@@ -29,4 +29,18 @@ public class ViewUpdateMessageWrapper extends Observable {
 
         notifyObservers(message);
     }
+
+    public void sendRoundSetup(Board board){
+        ViewUpdateMessage message = new ViewUpdateMessage();
+        ArrayList<String> clouds = new ArrayList<>();
+
+        for(int i = 0; i < board.getNumberOfClouds(); i++){
+            clouds.add(board.getCloud(i).toString());
+        }
+        message.setActionType(ActionType.ROUND_SETUP);
+        message.setChangesCloud(clouds);
+
+        notifyObservers(message);
+
+    }
 }

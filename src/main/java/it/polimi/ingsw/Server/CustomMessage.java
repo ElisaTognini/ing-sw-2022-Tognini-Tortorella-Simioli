@@ -13,4 +13,8 @@ public class CustomMessage {
     public static String chooseWizard = "Choose your wizard.\n";
     public static String duplicatedWizard = "This wizard has already been chosen. Please choose another one.\n";
     public static String matchStarting = "Match is starting...\n";
+    public static String emptyCloudError = "The cloud you picked is empty!\n";
+    public String invalidCloudIDError = "The cloud ID you provided is not valid!\n";
+    public String turnFlowError = "You cannot perform this action at this time in your turn.\n";
+    public String notYourTurnError = "You are not the player currently in turn!\n";
 }

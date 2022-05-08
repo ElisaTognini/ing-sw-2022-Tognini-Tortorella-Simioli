@@ -34,6 +34,11 @@ public class VirtualView extends Observable implements Observer {
         clientConnection.asyncSend((ViewUpdateMessage) arg);
     }
 
+    public void sendErrorMessage(BaseServerMessage message){
+        clientConnection.asyncSend(message);
+    }
+
     public ClientConnection getClientConnection(){ return clientConnection; }
+    public String getNickname(){return nickname;}
 
 }

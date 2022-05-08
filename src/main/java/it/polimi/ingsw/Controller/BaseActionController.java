@@ -5,12 +5,16 @@ import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Server.BaseServerMessage;
+import it.polimi.ingsw.Server.CustomMessage;
+import it.polimi.ingsw.Server.Match;
 
 public class BaseActionController {
     private Model model;
     private RoundManager roundManager;
     private boolean isLastRound;
     private Player winner;
+    private Match match;
 
     /* model and roundManager will be given as parameters when the lobby is created
     * in the network classes */
@@ -41,7 +45,7 @@ public class BaseActionController {
     /* -------------- METHODS THAT CHECK AND ENACT PLAYER'S ACTIONS --------------- */
 
     /* this method will receive cardID and nickname as a network message */
-    public boolean chooseAssistantCard(int cardID, String nickname){
+    public synchronized boolean chooseAssistantCard(int cardID, String nickname){
 
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)){
@@ -73,7 +77,7 @@ public class BaseActionController {
 
     /* after checking if the move is legal, student is moved to dining room from current
     * player's entrance */
-    public boolean moveStudentToDR(PawnDiscColor color, String nickname){
+    public synchronized boolean moveStudentToDR(PawnDiscColor color, String nickname){
 
         if(checkStudents(color, nickname)){
             if(!model.getBoard().getPlayerSchoolBoard(nickname).getDiningRoom().checkIfDiningRoomIsFull(color)){
@@ -90,7 +94,7 @@ public class BaseActionController {
 
     /* after checking if the move is legal, student is moved to selected island from current
      * player's entrance */
-    public boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
+    public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
 
         if(checkStudents(color, nickname)){
             model.getBoard().moveStudent(color, nickname, islandID);
@@ -104,7 +108,7 @@ public class BaseActionController {
 
     /* method allows current player to pick a cloud if the turn timing is right,
     if the supplied cloud id is valid and if the chosen cloud is not empty  */
-    public boolean picksCloud(String nickname, int cloudID){
+    public synchronized boolean picksCloud(String nickname, int cloudID){
 
         if(isLastRound){
             //display last round message
@@ -126,16 +130,16 @@ public class BaseActionController {
                         }
                         return true;
                     }else{
-                        //display cloud is empty error message
+                        match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().emptyCloudError));
                     }
                 }else{
-                    //error message for invalid cloud id will be displayed
+                    match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().invalidCloudIDError));
                 }
             } else {
-                //view will show error message
+                match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().turnFlowError));
             }
         }else{
-            //view will display not current player error message
+            match.sendErrorTo(nickname, new BaseServerMessage(new CustomMessage().notYourTurnError));
         }
         return false;
     }
@@ -143,7 +147,7 @@ public class BaseActionController {
     /* --------------- PRIVATE UTILITY METHODS ---------------- */
 
     /* general checks for students moved to either dining room or an island */
-    private boolean checkStudents(PawnDiscColor color, String nickname){
+    private synchronized boolean checkStudents(PawnDiscColor color, String nickname){
 
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(roundManager.getCurrentState().equals(TurnFlow.CARD_PICKED)){
@@ -172,7 +176,7 @@ public class BaseActionController {
 
     /* private method that invokes model's methods to move mother nature and
     * attempt to conquer an island if the current player has moved three students */
-    private void actionPhaseCurrentPlayer(String nickname){
+    private synchronized void actionPhaseCurrentPlayer(String nickname){
         if(roundManager.threeStudentsMoved(nickname)){
             /* moves mn according to card movements */
             model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
@@ -194,7 +198,7 @@ public class BaseActionController {
 
     /* this method starts a new round once all players have picked
     * a cloud tile*/
-    private void startNewRound(){
+    private synchronized void startNewRound(){
         isLastRound = model.getBoard().isLastRound();
         roundManager.startRound();
         model.getBoard().roundSetup();
@@ -203,6 +207,10 @@ public class BaseActionController {
         if(model.getBoard().getDecks().get(0).size() == 1){
             isLastRound = true;
         }
+    }
+
+    public void setMatch(Match match){
+        this.match = match;
     }
 
 }

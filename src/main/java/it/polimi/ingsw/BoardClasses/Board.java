@@ -65,6 +65,7 @@ public class Board {
 
     public void roundSetup(){
         studentsOnClouds();
+        messageWrapper.sendRoundSetup(this);
     }
 
     /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
@@ -414,6 +415,8 @@ public class Board {
     public void setLastRound(){ lastRound = true; }
 
     public boolean isGameOver(){ return isGameOver;}
+
+    public int getNumberOfClouds(){return numberOfClouds;}
 
     public void setMessageWrapper(ViewUpdateMessageWrapper messageWrapper){
         this.messageWrapper = messageWrapper;
