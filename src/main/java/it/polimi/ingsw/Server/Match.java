@@ -15,11 +15,13 @@ public class Match {
     private int numberOfPlayers;
     private GameMode gameMode;
     private ArrayList<VirtualView> matchPlayersViews;
+    private final int matchID;
 
-    public Match(Server server, int numberOfPlayers, GameMode gameMode){
+    public Match(Server server, int numberOfPlayers, GameMode gameMode, int matchID){
         this.server = server;
         this.numberOfPlayers = numberOfPlayers;
         this.gameMode = gameMode;
+        this.matchID = matchID;
     }
 
     /* TO BE CHECKED */
@@ -38,4 +40,11 @@ public class Match {
         }
     }
 
+    public int getMatchID() {
+        return matchID;
+    }
+
+    public ArrayList<VirtualView> getMatchPlayersViews(){
+        return matchPlayersViews;
+    }
 }

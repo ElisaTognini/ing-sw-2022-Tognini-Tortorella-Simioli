@@ -16,6 +16,7 @@ public class ClientConnection extends Observable implements Runnable {
     private ObjectOutputStream out;
     private boolean active;
     private String nickname;
+    private int matchID;
 
     public ClientConnection(Socket socket, Server server){
         this.socket = socket;
@@ -83,7 +84,7 @@ public class ClientConnection extends Observable implements Runnable {
     private void close(){
         closeConnection();
         System.out.println("Deregistering client");
-        //server.deregisterConnection(this);
+        server.deregisterConnection(this);
         System.out.println("Client deregistered successfully!");
     }
 
@@ -149,5 +150,13 @@ public class ClientConnection extends Observable implements Runnable {
                 System.err.println("Input stream error\n");
             }
         }
+    }
+
+    public void setMatchID(int matchID){
+        this.matchID = matchID;
+    }
+
+    public int getMatchID(){
+        return matchID;
     }
 }

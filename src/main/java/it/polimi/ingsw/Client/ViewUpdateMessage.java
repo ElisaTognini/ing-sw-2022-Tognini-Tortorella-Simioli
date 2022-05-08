@@ -1,10 +1,14 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Enums.ActionType;
+import it.polimi.ingsw.Server.ServerMessage;
 
 import java.util.ArrayList;
 
-public class ViewUpdateMessage {
+/* every time the model updates itself, it sends a message of this type towards the
+* virtualView, so that the virtualView can send it to the client and the client
+* can view the update. */
+public class ViewUpdateMessage implements ServerMessage {
     private String actionPerformer;
     private ActionType actionType;
     private ArrayList<String> schoolBoards;

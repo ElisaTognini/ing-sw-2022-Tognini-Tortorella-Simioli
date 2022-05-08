@@ -110,5 +110,24 @@ public class Island {
     }
     public void setIgnoredInfluencetoZero(){ignoredInfluence = 0;}
     public int getNumberOfNEtiles(){return noEntryTile;}
+
+    @Override
+    /* FORMAT id BLUE GREEN YELLOW PINK RED Owner numberOfTowers NumberOfNE*/
+    public String toString(){
+        String toRet = islandID + " " + container.getInfluence(PawnDiscColor.BLUE) + " " +
+                container.getInfluence(PawnDiscColor.GREEN) + " " +
+                container.getInfluence(PawnDiscColor.YELLOW) + " " +
+                container.getInfluence(PawnDiscColor.PINK) + " " +
+                container.getInfluence(PawnDiscColor.RED);
+
+        if(conqueredIsland){
+            toRet += " " + owner.getNickname() + " " + numberOfTowers;
+        }
+        if(noEntryTile > 0){
+            toRet += " " + noEntryTile;
+        }
+
+        return toRet;
+    }
 }
 

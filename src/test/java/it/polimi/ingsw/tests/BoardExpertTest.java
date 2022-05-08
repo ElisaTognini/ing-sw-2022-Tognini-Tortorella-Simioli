@@ -4,6 +4,7 @@ import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Expert.Parameter;
+import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
 import static org.junit.Assert.*;
 
@@ -16,6 +17,7 @@ public class BoardExpertTest {
 
     private BoardExpert board;
     private ArrayList<Player> players = new ArrayList<Player>();
+    Model model;
 
     @Test
     /* following the execution of the method with the debugger;

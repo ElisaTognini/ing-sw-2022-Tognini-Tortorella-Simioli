@@ -4,6 +4,7 @@ import it.polimi.ingsw.BasicElements.*;
 import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
 
 import java.util.*;
 
@@ -24,6 +25,7 @@ public class Board {
     protected final int studentsInEntrance;
     protected boolean lastRound;
     protected boolean isGameOver;
+    protected ViewUpdateMessageWrapper messageWrapper;
 
     /* numberOfClouds and numberOfTowers will be computed by the Model class
     *  based on the number of players in the lobby */
@@ -57,6 +59,8 @@ public class Board {
         initializeProfessors();
         initializeSchoolBoards();
         initializeDecks();
+        /* send all players the setup board via the MessageWrapper */
+        messageWrapper.sendSetUpBoard(this);
     }
 
     public void roundSetup(){
@@ -410,6 +414,10 @@ public class Board {
     public void setLastRound(){ lastRound = true; }
 
     public boolean isGameOver(){ return isGameOver;}
+
+    public void setMessageWrapper(ViewUpdateMessageWrapper messageWrapper){
+        this.messageWrapper = messageWrapper;
+    }
 
     /* END OF GETTER METHODS */
 

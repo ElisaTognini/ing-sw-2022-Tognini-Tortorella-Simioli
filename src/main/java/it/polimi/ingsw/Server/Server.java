@@ -42,7 +42,7 @@ public class Server {
             c.send(new SetupServerMessage(CustomMessage.askNickname));
             c.setNickname(c.parseNickname());
             /* Now creating match*/
-            matches.add(new Match(this, matchPlayers, gameMode));
+            matches.add(new Match(this, matchPlayers, gameMode, matches.size()));
         }
         else if(waitingClients.size() == matchPlayers){
             do {
@@ -83,8 +83,11 @@ public class Server {
             virtualViews.add(new VirtualView(c));
             i++;
         }
-        model = new Model(matches.get(matches.size()-1).getGameMode(), nicknames, matchPlayers);
+        model = new Model(matches.get(matches.size()-1).getGameMode(), nicknames, matchPlayers, virtualViews);
         controller = new Controller(model);
+        for(VirtualView v : virtualViews){
+            v.addControllerAsObserver(controller);
+        }
         matches.get(matches.size()-1).instantiateMVC(model, controller, virtualViews);
 
         /* addObserver to model --> virtualViews are its observers */
@@ -108,4 +111,24 @@ public class Server {
         }
     }
 
+    /* everytime someone disconnects, the match is over. */
+    public void deregisterConnection(ClientConnection clientConnection) {
+        ArrayList<VirtualView> match = getMatchByID(clientConnection.getMatchID()).getMatchPlayersViews();
+        int id = clientConnection.getMatchID();
+        for(VirtualView v : match){
+            if(v.getClientConnection() != null){
+                v.getClientConnection().closeConnection();
+            }
+        }
+        matches.remove(getMatchByID(id));
+        System.out.println("now playing " + matches.size() + " concurrent matches");
+    }
+
+    private Match getMatchByID(int matchID) throws IllegalArgumentException{
+        for(Match m : matches){
+            if(m.getMatchID() == matchID)
+                return m;
+        }
+        throw new IllegalArgumentException();
+    }
 }

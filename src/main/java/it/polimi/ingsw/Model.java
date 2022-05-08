@@ -4,10 +4,11 @@ import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
+import it.polimi.ingsw.Server.VirtualView;
 
 import java.util.*;
 
-/* will implement Observable */
 public class Model {
     private Board board;
     private RoundManager roundManager;
@@ -19,14 +20,17 @@ public class Model {
     private int numberOfClouds;
     private int studentsInEntrance;
     private String[] playerNames;
+    private ViewUpdateMessageWrapper messageWrapper;
 
-    public Model(GameMode mode, String[] nicknames, int numberOfPlayers){
+    public Model(GameMode mode, String[] nicknames, int numberOfPlayers, ArrayList<VirtualView> views){
         this.mode = mode;
         this.numberOfPlayers = numberOfPlayers;
         playerNames = nicknames;
         playerList = new ArrayList<>();
         setupBoard();
         roundManager = new RoundManager(playerList);
+        messageWrapper = new ViewUpdateMessageWrapper(views);
+        board.setMessageWrapper(messageWrapper);
     }
 
     public Board getBoard(){

@@ -3,6 +3,7 @@ import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ public class BoardTest {
 
     ArrayList<Player> players = new ArrayList<>();
     Board boardToTest;
+    Model model;
 
     @Test
     public void playAssistantCardTest(){

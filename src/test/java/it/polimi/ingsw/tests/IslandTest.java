@@ -20,6 +20,7 @@ public class IslandTest {
         }
         influence = islandToTest.getInfluenceByColor(PawnDiscColor.RED);
         System.out.println(influence);
+        System.out.println(islandToTest);
     }
 
     @Test

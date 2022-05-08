@@ -7,6 +7,7 @@ import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.CoinCounter;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Model;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
