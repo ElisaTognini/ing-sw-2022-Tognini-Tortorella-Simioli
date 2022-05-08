@@ -22,7 +22,9 @@ public class BoardTest {
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
                 3, 7, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         AssistantCard card = new AssistantCard(1, 1, players.get(0));
         card = boardToTest.playAssistantCard(1, "player1");
         assertEquals(1, card.getAssistantCardID());
@@ -36,7 +38,9 @@ public class BoardTest {
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
                 3, 7, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         if(boardToTest.colorAvailableInEntrance("player2", PawnDiscColor.BLUE)){
             boardToTest.moveStudent(PawnDiscColor.BLUE, "player2");
         }
@@ -48,7 +52,9 @@ public class BoardTest {
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
                 3, 7, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         if(boardToTest.colorAvailableInEntrance("player1", PawnDiscColor.GREEN)){
             boardToTest.moveStudent(PawnDiscColor.GREEN, players.get(0).getNickname(), 4);
         }
@@ -61,7 +67,9 @@ public class BoardTest {
         players.add(new Player("player3"));
         boardToTest = new Board(players, 3, 6,
                 4, 9, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         for(PawnDiscColor c : PawnDiscColor.values()){
             if(boardToTest.colorAvailableInEntrance("player3", c))
                 boardToTest.moveStudent(c, "player3");
@@ -79,7 +87,9 @@ public class BoardTest {
         players.add(new Player("player3"));
         boardToTest = new Board(players, 3, 6,
                 4, 9, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         initial_pos = boardToTest.getMotherNaturePosition();
         boardToTest.moveMotherNature(4);
         final_pos = (4+initial_pos)%boardToTest.getIslandList().size();
@@ -94,7 +104,9 @@ public class BoardTest {
         players.add(new Player("player3"));
         boardToTest = new Board(players, 3, 6,
                 4, 6, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         for (PawnDiscColor c : PawnDiscColor.values()) {
             if (boardToTest.colorAvailableInEntrance("player2", c)) {
                 boardToTest.moveStudent(c, "player2");
@@ -118,7 +130,9 @@ public class BoardTest {
         players.add(new Player("player3"));
         boardToTest = new Board(players, 3, 6,
                 4, 9, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
 
         /* simulated turn (partial)*/
         int ip = 0;
@@ -149,7 +163,9 @@ public class BoardTest {
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
                 3, 30, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
         boardToTest.getMotherNature().setPosition(11);
         int ip = 0;
         for (int i = 0; i < 3; i++) {
@@ -182,7 +198,9 @@ public class BoardTest {
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
                 3, 30, GameMode.SIMPLE);
-        boardToTest.setup();
+        try {
+            boardToTest.setup();
+        }catch (Exception e){}
 
         /* tests the conquering of empty islands */
         boardToTest.getMotherNature().setPosition((boardToTest.getMotherNaturePosition() + 6) % 12);
