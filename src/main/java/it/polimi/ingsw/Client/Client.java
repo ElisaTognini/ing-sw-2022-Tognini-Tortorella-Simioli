@@ -78,8 +78,14 @@ public class Client {
                 try{
                     while (isActive()){
                         Object input = socketIn.readObject();
-                        if(input instanceof BaseServerMessage){
+                        if(input instanceof BaseUserMessage){
                             /* notify() to the view, so the view will update all changes and show them to the user*/
+                            if(nickname == null){
+                                if(((BaseUserMessage)input).getNickname() != null){
+                                    nickname = ((BaseUserMessage)input).getNickname();
+                                    parser = new Parser(nickname);
+                                }
+                            }
                         } else if (input instanceof ViewUpdateMessage){
                             /* notify() to the view, containing a different type of message from the one above*/
                         } else {
