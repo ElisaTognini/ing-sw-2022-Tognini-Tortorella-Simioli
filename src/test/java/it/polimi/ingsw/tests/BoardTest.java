@@ -259,7 +259,11 @@ public class BoardTest {
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
-        System.out.println("conqueror is " + boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname());
+        try {
+            System.out.println("conqueror is " + boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).getOwner().getNickname());
+        }catch(Exception e){
+            System.out.println("island not conquered!\n");
+        }
     }
 
 }
