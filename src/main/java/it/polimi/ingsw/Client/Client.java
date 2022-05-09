@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Server.BaseServerMessage;
 import it.polimi.ingsw.Server.BaseUserMessage;
 import it.polimi.ingsw.Server.UserMessage;
 
@@ -14,6 +15,7 @@ public class Client {
     private Parser parser;
     private String ip;
     private int port;
+    private String nickname;
     private boolean active = true;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
 
@@ -76,7 +78,7 @@ public class Client {
                 try{
                     while (isActive()){
                         Object input = socketIn.readObject();
-                        if(input instanceof BaseUserMessage){
+                        if(input instanceof BaseServerMessage){
                             /* notify() to the view, so the view will update all changes and show them to the user*/
                         } else if (input instanceof ViewUpdateMessage){
                             /* notify() to the view, containing a different type of message from the one above*/

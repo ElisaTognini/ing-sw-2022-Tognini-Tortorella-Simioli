@@ -36,4 +36,10 @@ public class CoinCounter {
             return false;
         }
     }
+
+    @Override
+    /*FORMAT Owner numberOfCoins*/
+    public String toString(){
+        return owner.getNickname() + " " + counter;
+    }
 }

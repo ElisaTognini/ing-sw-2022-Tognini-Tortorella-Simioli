@@ -23,6 +23,7 @@ public class ViewUpdateMessage implements ServerMessage {
     private String choosesWizard;
     private Integer choosesCharCard;
 
+    /* to fix changes to schoolboard which is now a single string per schoolboard */
     public void setActionPerformer(String performer){ this.actionPerformer = performer;}
     public void setPlayerInTurn(String playerInTurn){this.playerInTurn = playerInTurn;}
     public void setActionType(ActionType actionType) { this.actionType = actionType; }

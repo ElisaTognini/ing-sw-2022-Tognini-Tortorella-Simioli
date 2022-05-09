@@ -73,4 +73,17 @@ public class AssistantCardDeck {
     public int size(){
         return cards.size();
     }
+
+    @Override
+    /*FORMAT list of present cardIDs separated by a blank space*/
+    public String toString(){
+        StringBuilder stringbuilder = new StringBuilder();
+
+        stringbuilder.append(owner.getNickname() + " ");
+        for(AssistantCard card : cards){
+            stringbuilder.append(card.getAssistantCardID() + " ");
+        }
+
+        return stringbuilder.toString();
+    }
 }

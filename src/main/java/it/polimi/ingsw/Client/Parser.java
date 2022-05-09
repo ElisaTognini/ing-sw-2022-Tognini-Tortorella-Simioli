@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Enums.ActionType;
+import it.polimi.ingsw.Enums.TurnFlow;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -12,8 +13,10 @@ import java.util.Observer;
 will come from the model) and the format of these messages is known: action will
    only be requested if FORMAT is valid*/
 
+/* c'è da mandargli il nickname, da capire come fargli arrivare il turnFlow per sapere cosa
+* si aspetta, e infine da decidere il formato dei messaggi.*/
 public class Parser implements Observer {
-    private ActionType actionType;
+    private TurnFlow stage;
     private String actionPerformer;
 
     public Parser(String nickname){

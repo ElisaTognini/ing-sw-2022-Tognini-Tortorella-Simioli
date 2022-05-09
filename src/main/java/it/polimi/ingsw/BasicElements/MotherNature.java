@@ -11,4 +11,9 @@ public class MotherNature {
     public void setPosition(int position) {
         this.position = position;
     }
+
+    @Override
+    public String toString(){
+        return String.valueOf(position);
+    }
 }

@@ -48,4 +48,18 @@ public class SchoolBoard {
     public void resetModifiedTable(){modifiedTable = false;}
 
     public boolean getModifiedTable(){return modifiedTable;}
+
+    @Override
+    /* FORMAT owner
+    * entrance
+    * dining room
+    * professor table
+    * tower section*/
+    public String toString(){
+        return owner.getNickname() + "\n" +
+                entrance.toString() + "\n" +
+                diningRoom.toString() + "\n" +
+                professorTable.toString() + "\n" +
+                towerSection.toString();
+    }
 }

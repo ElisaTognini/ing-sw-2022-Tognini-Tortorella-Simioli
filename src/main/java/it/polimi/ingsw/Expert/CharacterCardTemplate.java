@@ -31,4 +31,9 @@ public abstract class CharacterCardTemplate {
 
     public abstract boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException;
 
+    @Override
+    /* FORMAT cardId */
+    public String toString(){
+        return String.valueOf(cardID);
+    }
 }

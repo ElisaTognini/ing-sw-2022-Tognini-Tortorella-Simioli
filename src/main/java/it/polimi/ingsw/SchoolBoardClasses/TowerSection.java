@@ -41,4 +41,10 @@ public class TowerSection {
     public int getNumberOfTowers(){
         return numberOfTowers;
     }
+
+    @Override
+    /*FORMAT numberoftowers towercolor*/
+    public String toString(){
+        return color.toString() + " " + numberOfTowers;
+    }
 }

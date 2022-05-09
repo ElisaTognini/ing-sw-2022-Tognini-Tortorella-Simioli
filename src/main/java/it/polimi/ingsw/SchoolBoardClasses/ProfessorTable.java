@@ -61,13 +61,16 @@ public class ProfessorTable {
     }
 
     @Override
+    /* FORMAT only PawnDiscColor of owned professors */
     public String toString() {
-        String ret = "";
-        for (Professor p : professors) {
-            ret += p.getColor() + "  " + p.isOwnedByPlayer() + "\n";
-        }
+        StringBuilder toRet = new StringBuilder();
 
-        return ret;
+        for(Professor professor : professors){
+            if(professor.isOwnedByPlayer()){
+                toRet.append(professor.getColor()).append(" ");
+            }
+        }
+        return toRet.toString();
     }
 
     /* this method keeps track of the professors the player had before playing card 2 */

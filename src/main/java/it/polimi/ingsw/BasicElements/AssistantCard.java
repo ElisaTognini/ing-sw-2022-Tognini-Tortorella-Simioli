@@ -36,11 +36,13 @@ public final class AssistantCard implements Comparable{
     }
 
     @Override
+    /* FORMAT owner id MNmovements */
     public String toString(){
-        return "power factor : " + cardValue + " deck owned by " + owner.getNickname() + "\n";
+        return owner.getNickname() + " " + cardValue + " " + motherNatureMovements;
     }
 
     public Player getOwner(){
         return owner;
     }
+
 }

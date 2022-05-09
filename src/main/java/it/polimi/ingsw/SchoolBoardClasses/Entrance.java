@@ -48,12 +48,12 @@ public class Entrance {
     public int getColorAvailability(PawnDiscColor color){return studentsInEntrance.getInfluence(color);}
 
     @Override
+    /* FORMAT pink yellow blue green red */
     public String toString(){
-        return "In entrance" +
-                "\nYELLOW " + studentsInEntrance.getInfluence(PawnDiscColor.YELLOW) +
-                "\nPINK " + studentsInEntrance.getInfluence(PawnDiscColor.PINK) +
-                "\nGREEN " + studentsInEntrance.getInfluence(PawnDiscColor.GREEN) +
-                "\nBLUE " + studentsInEntrance.getInfluence(PawnDiscColor.BLUE) +
-                "\nRED " + studentsInEntrance.getInfluence(PawnDiscColor.RED);
+        return studentsInEntrance.getInfluence(PawnDiscColor.PINK) + " " +
+                studentsInEntrance.getInfluence(PawnDiscColor.YELLOW) + " " +
+                studentsInEntrance.getInfluence(PawnDiscColor.BLUE) + " " +
+                studentsInEntrance.getInfluence(PawnDiscColor.GREEN) + " " +
+                studentsInEntrance.getInfluence(PawnDiscColor.RED);
     }
 }

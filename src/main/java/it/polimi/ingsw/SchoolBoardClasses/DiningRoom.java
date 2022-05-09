@@ -40,12 +40,12 @@ public class DiningRoom {
     }
 
     @Override
+    /* FORMAT pink yellow blue green red */
     public String toString(){
-        return "in dining room: \n"+
-                "\nPINK " + container.getInfluence(PawnDiscColor.PINK) +
-                "\nYELLOW " + container.getInfluence(PawnDiscColor.YELLOW) +
-                "\nBLUE " + container.getInfluence(PawnDiscColor.BLUE) +
-                "\nGREEN " + container.getInfluence(PawnDiscColor.GREEN) +
-                "\nRED " + container.getInfluence(PawnDiscColor.RED);
+        return container.getInfluence(PawnDiscColor.PINK) + " " +
+               container.getInfluence(PawnDiscColor.YELLOW) + " " +
+               container.getInfluence(PawnDiscColor.BLUE) + " " +
+               container.getInfluence(PawnDiscColor.GREEN) + " " +
+               container.getInfluence(PawnDiscColor.RED);
     }
 }

@@ -60,12 +60,12 @@ public class Board {
         initializeSchoolBoards();
         initializeDecks();
         /* send all players the setup board via the MessageWrapper */
-        //messageWrapper.sendSetUpBoard(this);
+        if(!(messageWrapper == null))messageWrapper.sendSetUpBoard(this);
     }
 
     public void roundSetup(){
         studentsOnClouds();
-        //messageWrapper.sendRoundSetup(this);
+        if(! (messageWrapper == null))messageWrapper.sendRoundSetup(this);
     }
 
     /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
