@@ -17,8 +17,7 @@
     <sonar.language>java</sonar.language>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <sonar.coverage.exclusions>**/Server/**/*, **/Client/**/*, **/LobbyTest.java, **/BoardExpertTest.java,
-    **/BoardTest.java</sonar.coverage.exclusions>
+    <sonar.coverage.exclusions>**/Server/**/*, **/Client/**/*</sonar.coverage.exclusions>
   </properties>
 
   <dependencies>
