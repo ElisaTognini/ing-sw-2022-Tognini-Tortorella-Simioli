@@ -55,7 +55,7 @@ public class Client {
     /* metodo chiamato da un'altra classe, presumibilmente il Parser,
      dopo che sono stati fatti i controlli per la validità dell'azione dell'utente */
 
-    public void asyncWriteToSocket(ObjectOutputStream socketOut, UserMessage input) {
+    public synchronized void asyncWriteToSocket(ObjectOutputStream socketOut, UserMessage input) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
