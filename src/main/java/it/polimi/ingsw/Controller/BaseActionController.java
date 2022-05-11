@@ -2,15 +2,19 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.BoardClasses.RoundManager;
 import it.polimi.ingsw.Enums.ActionType;
+import it.polimi.ingsw.Enums.NotifyType;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
+import it.polimi.ingsw.NotifyArgsController;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.Server.BaseServerMessage;
 import it.polimi.ingsw.Server.CustomMessage;
 import it.polimi.ingsw.Server.Match;
 
-public class BaseActionController {
+import java.util.Observable;
+
+public class BaseActionController extends Observable {
     private Model model;
     private RoundManager roundManager;
     private boolean isLastRound;
@@ -60,24 +64,27 @@ public class BaseActionController {
                             return true;
                         } else {
                             /* the view will display that the card has already been played */
-                            match.sendErrorTo(nickname,
-                                    new BaseServerMessage(CustomMessage.cardAlreadyPlayedError));
+                            notifyObservers(new NotifyArgsController(nickname,
+                                    new BaseServerMessage(CustomMessage.cardAlreadyPlayedError), NotifyType.SEND_ERROR));
                         }
                     }
                 }
                 else{
                     /* the view will display that the card is not present inside the deck */
-                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.cardNotPresentError));
+                    notifyObservers(new NotifyArgsController(nickname,
+                            new BaseServerMessage(CustomMessage.cardNotPresentError), NotifyType.SEND_ERROR));
                 }
             }
             else{
                 /* the view will display that the action cannot be performed at this point of the turn */
-                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
+                notifyObservers(new NotifyArgsController(nickname,
+                        new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }
         else{
             /* the view will display that it's not this player's turn */
-            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
+            notifyObservers(new NotifyArgsController(nickname,
+                    new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
         }
         return false;
     }
@@ -94,7 +101,8 @@ public class BaseActionController {
                 return true;
             }else{
                 /* view will display that dining room has no more available spaces for desired color */
-                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.fullDRError));
+                notifyObservers(new NotifyArgsController(nickname,
+                        new BaseServerMessage(CustomMessage.fullDRError), NotifyType.SEND_ERROR));
             }
         }
         return false;
@@ -120,7 +128,8 @@ public class BaseActionController {
 
         if(isLastRound){
             //display last round message
-            match.sendAll(new BaseServerMessage(CustomMessage.lastRound));
+            notifyObservers(new NotifyArgsController(nickname,
+                    new BaseServerMessage(CustomMessage.lastRound), NotifyType.SEND_ALL));
             return true;
         }
 
@@ -139,16 +148,20 @@ public class BaseActionController {
                         }
                         return true;
                     }else{
-                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.emptyCloudError));
+                        notifyObservers(new NotifyArgsController(nickname,
+                                new BaseServerMessage(CustomMessage.emptyCloudError), NotifyType.SEND_ERROR));
                     }
                 }else{
-                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.invalidCloudIDError));
+                    notifyObservers(new NotifyArgsController(nickname,
+                            new BaseServerMessage(CustomMessage.invalidCloudIDError), NotifyType.SEND_ERROR));
                 }
             } else {
-                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
+                notifyObservers(new NotifyArgsController(nickname,
+                        new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }else{
-            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
+            notifyObservers(new NotifyArgsController(nickname,
+                    new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
         }
         return false;
     }
@@ -166,22 +179,26 @@ public class BaseActionController {
                     }
                     else{
                         /* the view will display that the color is not available in the entrance */
-                        match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.colorNotAvailableError));
+                        notifyObservers(new NotifyArgsController(nickname,
+                                new BaseServerMessage(CustomMessage.colorNotAvailableError), NotifyType.SEND_ERROR));
                     }
                 }
                 else{
                     /* the view will display that three students have already been moved */
-                    match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.allStudentsMovedError));
+                    notifyObservers(new NotifyArgsController(nickname,
+                            new BaseServerMessage(CustomMessage.allStudentsMovedError), NotifyType.SEND_ERROR));
                 }
             }
             else{
                 /* the view will display that the action cannot be performed at this point of the turn */
-                match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.turnFlowError));
+                notifyObservers(new NotifyArgsController(nickname,
+                        new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }
         else{
             /* the view will display that it's not this player's turn */
-            match.sendErrorTo(nickname, new BaseServerMessage(CustomMessage.notYourTurnError));
+            notifyObservers(new NotifyArgsController(nickname,
+                    new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
         }
 
         return false;
@@ -220,10 +237,7 @@ public class BaseActionController {
         if(model.getBoard().getDecks().get(0).size() == 1){
             isLastRound = true;
         }
+        notifyObservers(new NotifyArgsController(null,
+                new BaseServerMessage(CustomMessage.startNewRound), NotifyType.SEND_ALL));
     }
-
-    public void setMatch(Match match){
-        this.match = match;
-    }
-
 }

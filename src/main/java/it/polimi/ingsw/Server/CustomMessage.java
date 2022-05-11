@@ -13,20 +13,21 @@ public class CustomMessage {
     public static String chooseWizard = "Choose your wizard.\n";
     public static String duplicatedWizard = "This wizard has already been chosen. Please choose another one.\n";
     public static String matchStarting = "Match is starting...\n";
-    public static String emptyCloudError = "The cloud you picked is empty!\n";
-    public static String invalidCloudIDError = "The cloud ID you provided is not valid!\n";
+    public static String emptyCloudError = "The cloud you picked is empty.\n";
+    public static String invalidCloudIDError = "The cloud ID you provided is not valid.\n";
     public static String turnFlowError = "You cannot perform this action at this time in your turn.\n";
-    public static String notYourTurnError = "You are not the player currently in turn!\n";
+    public static String notYourTurnError = "You are not the player currently in turn.\n";
     public static String cardAlreadyPlayedError = "You cannot play an assistant card that has already been chosen in" +
-            " this round by another player\n";
-    public static String cardNotPresentError = "The card you chose is not in your deck, please choose another one\n";
-    public static String fullDRError = "Your dining room is full for the color chosen\n";
-    public static String lastRound = "Now playing your last round for this match\n";
-    public static String colorNotAvailableError = "No student of the color you choose are available in your entrance\n";
-    public static String allStudentsMovedError = "You already moved three students\n";
-    public static String wrongFormat = "The parameter sent was of incorrect format\n";
-    public static String notEnoughCoinsError = "You do not have enough coins for this character card\n";
+            " this round by another player.\n";
+    public static String cardNotPresentError = "The card you chose is not in your deck, please choose another one.\n";
+    public static String fullDRError = "Your dining room is full for the color chosen.\n";
+    public static String lastRound = "Now playing your last round for this match!\n";
+    public static String colorNotAvailableError = "No student of the color you choose are available in your entrance.\n";
+    public static String allStudentsMovedError = "You already moved three students.\n";
+    public static String wrongFormat = "The parameter sent was of incorrect format.\n";
+    public static String notEnoughCoinsError = "You do not have enough coins for this character card.\n";
 
-    public static String charCardNotExtractedError = "This character card does not appear to have been extracted\n";
+    public static String charCardNotExtractedError = "This character card does not appear to have been extracted.\n";
     public static String isLastRound = "This is the last round for this match!\n";
+    public static String startNewRound = "A new round is starting!\n";
 }

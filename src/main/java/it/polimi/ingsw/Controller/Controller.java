@@ -11,7 +11,6 @@ public class Controller implements Observer {
     private BaseActionController baseActionController;
     private ExpertModeController expertModeController;
     private Model model;
-    private Match match;
 
     public Controller(Model model){
         this.model = model;
@@ -22,11 +21,10 @@ public class Controller implements Observer {
         }
     }
 
-    public void setMatch(Match match){
-        this.match = match;
-        baseActionController.setMatch(match);
+    public void addMatchAsObserver(Match match){
+        baseActionController.addObserver(match);
         if(expertModeController != null){
-            expertModeController.setMatch(match);
+            expertModeController.addObserver(match);
         }
     }
 

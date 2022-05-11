@@ -5,8 +5,10 @@ import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Match {
+public class Match implements Observer {
 
     private Server server;
     private Controller controller;
@@ -16,7 +18,7 @@ public class Match {
     private ArrayList<VirtualView> matchPlayersViews;
     private final int matchID;
 
-    public Match(Server server, int numberOfPlayers, GameMode gameMode, int matchID){
+    public Match (Server server, int numberOfPlayers, GameMode gameMode, int matchID){
         this.server = server;
         this.numberOfPlayers = numberOfPlayers;
         this.gameMode = gameMode;
@@ -28,7 +30,7 @@ public class Match {
         this.model = model;
         this.controller = controller;
         this.matchPlayersViews = views;
-        controller.setMatch(this);
+        controller.addMatchAsObserver(this);
     }
 
     public GameMode getGameMode(){return gameMode;}
@@ -53,5 +55,10 @@ public class Match {
                 v.sendMessage(message);
             }
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
