@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.BoardClasses.RoundManager;
+import it.polimi.ingsw.Enums.ActionType;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
@@ -54,6 +55,7 @@ public class BaseActionController {
                         if (!roundManager.checkForDupe(cardID)) {
                             roundManager.storeCards(model.getBoard().playAssistantCard(cardID, nickname));
                             model.getBoard().getPlayersDeck(nickname).removeCard(cardID);
+                            model.getBoard().notifyObservers(ActionType.CHOOSE_ASSISTANT_CARD);
                             roundManager.refreshCurrentPlayer();
                             return true;
                         } else {

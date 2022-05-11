@@ -8,7 +8,7 @@ import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
 
 import java.util.*;
 
-public class Board {
+public class Board extends Observable{
 
     protected ArrayList<Player> players;
     protected ArrayList<SchoolBoard> schoolBoards;
@@ -25,7 +25,6 @@ public class Board {
     protected final int studentsInEntrance;
     protected boolean lastRound;
     protected boolean isGameOver;
-    protected ViewUpdateMessageWrapper messageWrapper;
 
     /* numberOfClouds and numberOfTowers will be computed by the Model class
     *  based on the number of players in the lobby */
@@ -60,12 +59,14 @@ public class Board {
         initializeSchoolBoards();
         initializeDecks();
         /* send all players the setup board via the MessageWrapper */
-        if(!(messageWrapper == null))messageWrapper.sendSetUpBoard(this);
+        if(mode.equals(GameMode.SIMPLE))
+            notifyObservers(ActionType.SETUP);
     }
 
     public void roundSetup(){
         studentsOnClouds();
-        if(! (messageWrapper == null))messageWrapper.sendRoundSetup(this);
+        if(mode.equals(GameMode.SIMPLE))
+            notifyObservers(ActionType.ROUND_SETUP);
     }
 
     /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
@@ -85,6 +86,7 @@ public class Board {
         for(SchoolBoard sb : schoolBoards){
             if(sb.getOwner().getNickname().equals(nickname)){
                 islands.get(islandID).addStudent(sb.getEntrance().removeStudent(color));
+                notifyObservers(ActionType.ADD_STUDENT_ISLAND);
                 break;
             }
         }
@@ -95,6 +97,7 @@ public class Board {
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
                 sb.getDiningRoom().addStudent(sb.getEntrance().removeStudent(color));
+                notifyObservers(ActionType.ADD_STUDENT_DR);
             }
         }
     }
@@ -109,6 +112,7 @@ public class Board {
                 }
             }
         }
+        notifyObservers(ActionType.EMPTY_CLOUD);
     }
 
     /* END OF PLAYER-ACTION METHODS */
@@ -121,6 +125,7 @@ public class Board {
         islands.get(position).setHostsToFalse();
         motherNature.setPosition((motherNature.getPosition() + movements) % islands.size());
         islands.get(motherNature.getPosition()).setHostsToTrue();
+        notifyObservers(ActionType.MOVE_MN);
     }
 
 
@@ -151,6 +156,7 @@ public class Board {
                     sb.getProfessorTable().addProfessor(c);
             }
         }
+        notifyObservers(ActionType.ASSIGN_PROFESSORS);
     }
 
     /*  if two players have the same influence over an unconquered island, the island will not be
@@ -204,6 +210,7 @@ public class Board {
             //returning towers to old owner
             getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
                     islands.get(motherNature.getPosition()).getNumberOfTowers());
+                    notifyObservers(ActionType.REMOVE_TOWER);
             //retrieving towers from conqueror's schoolboard
             if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
                 islands.get(motherNature.getPosition()).getNumberOfTowers())) {
@@ -220,6 +227,7 @@ public class Board {
         }
 
         islands.get(motherNature.getPosition()).getsConquered(conqueror);
+        notifyObservers(ActionType.CONQUER_ISLAND);
     }
 
     /* this method checks whether the adjacent islands are also conquered by the current players. It handles
@@ -268,6 +276,7 @@ public class Board {
         toKeep = islands.get(index1);
         islands.remove(index2);
         motherNature.setPosition(islands.indexOf(toKeep));
+        notifyObservers(ActionType.MERGE_ISLANDS);
     }
 
     protected void merge(int index1, int index2, int index3){
@@ -322,7 +331,9 @@ public class Board {
             for(int i = 0; i < studentsOnClouds; i++){
                 if(!studentBag.checkIfStudentBagEmpty()) {
                     students[i] = studentBag.drawStudent();
-                } else lastRound = true;
+                } else {
+                    lastRound = true;
+                }
             }
             if(lastRound) return;
             c.fillCloud(students);
@@ -419,7 +430,7 @@ public class Board {
     public int getNumberOfClouds(){return numberOfClouds;}
 
     public void setMessageWrapper(ViewUpdateMessageWrapper messageWrapper){
-        this.messageWrapper = messageWrapper;
+        addObserver(messageWrapper);
     }
 
     /* END OF GETTER METHODS */

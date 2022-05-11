@@ -28,4 +28,5 @@ public class CustomMessage {
     public static String notEnoughCoinsError = "You do not have enough coins for this character card\n";
 
     public static String charCardNotExtractedError = "This character card does not appear to have been extracted\n";
+    public static String isLastRound = "This is the last round for this match!\n";
 }

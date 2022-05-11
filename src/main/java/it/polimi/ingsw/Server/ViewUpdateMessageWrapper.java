@@ -2,13 +2,15 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.BasicElements.Island;
 import it.polimi.ingsw.BoardClasses.Board;
+import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Client.ViewUpdateMessage;
 import it.polimi.ingsw.Enums.ActionType;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 
-public class ViewUpdateMessageWrapper extends Observable {
+public class ViewUpdateMessageWrapper extends Observable implements Observer {
 
     public ViewUpdateMessageWrapper(ArrayList<VirtualView> views){
         for(VirtualView v : views){
@@ -17,7 +19,7 @@ public class ViewUpdateMessageWrapper extends Observable {
     }
 
     /* sending initial message for setupBoard */
-    public void sendSetUpBoard(Board board){
+    private void sendSetUpBoard(Board board){
         ViewUpdateMessage message = new ViewUpdateMessage();
         ArrayList<String> islands = new ArrayList<>();
         for(Island i :  board.getIslandList()){
@@ -30,7 +32,10 @@ public class ViewUpdateMessageWrapper extends Observable {
         notifyObservers(message);
     }
 
-    public void sendRoundSetup(Board board){
+    private void sendSetupBoardExpert(BoardExpert o) {
+    }
+
+    private void sendRoundSetup(Board board){
         ViewUpdateMessage message = new ViewUpdateMessage();
         ArrayList<String> clouds = new ArrayList<>();
 
@@ -43,4 +48,20 @@ public class ViewUpdateMessageWrapper extends Observable {
         notifyObservers(message);
 
     }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        switch ((ActionType)arg){
+            case SETUP:
+                if(o instanceof Board){
+                    sendSetUpBoard((Board)o);
+                }else if (o instanceof BoardExpert){
+                    sendSetupBoardExpert((BoardExpert)o);
+                }
+                break;
+        }
+    }
+
 }
