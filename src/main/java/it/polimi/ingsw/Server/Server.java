@@ -83,7 +83,7 @@ public class Server {
             virtualViews.add(new VirtualView(c));
             i++;
         }
-        model = new Model(matches.get(matches.size()-1).getGameMode(), nicknames, matchPlayers, virtualViews);
+        model = new Model(matches.get(matches.size()-1).getGameMode(), nicknames, matchPlayers);
         controller = new Controller(model);
         for(VirtualView v : virtualViews){
             v.addControllerAsObserver(controller);

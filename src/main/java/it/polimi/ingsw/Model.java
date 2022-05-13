@@ -22,15 +22,25 @@ public class Model {
     private String[] playerNames;
     private ViewUpdateMessageWrapper messageWrapper;
 
-    public Model(GameMode mode, String[] nicknames, int numberOfPlayers, ArrayList<VirtualView> views){
+    /* internal class which processes the messages sent by the notify() of the RoundManager */
+    public class TurnUpdates extends Observable implements Observer{
+        public TurnUpdates(){
+            addObserver(messageWrapper);
+        }
+
+        @Override
+        public void update(Observable o, Object arg) {
+            /* in base ai messaggi che gli arrivano, TurnUpdates invia una diversa notify() al match */
+        }
+    }
+
+    public Model(GameMode mode, String[] nicknames, int numberOfPlayers){
         this.mode = mode;
         this.numberOfPlayers = numberOfPlayers;
         playerNames = nicknames;
         playerList = new ArrayList<>();
         setupBoard();
         roundManager = new RoundManager(playerList);
-        messageWrapper = new ViewUpdateMessageWrapper(views);
-        board.setMessageWrapper(messageWrapper);
     }
 
     public Board getBoard(){
