@@ -36,6 +36,9 @@ public class RoundManager {
         return currentPlayer;
     }
 
+    /* returns the number of students moved by the current player */
+    public int getMovedStudents(){return movedStudents;}
+
     /* a step forwards in the turn */
     public void changeState(TurnFlow state){
         currentState = state;
