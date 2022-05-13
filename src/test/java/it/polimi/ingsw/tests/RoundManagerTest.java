@@ -17,13 +17,6 @@ public class RoundManagerTest {
     ArrayList<Player> players = new ArrayList<>();
     Board boardTest;
 
-    /* missing tests:
-    *   - checkForDupe
-    *   - refreshCurrentPlayerAction
-    *   - getCurrentPlayersCard
-    *   - ThreeStudentsMoved
-    *   - increaseMovedStudents */
-
     @Test
     public void getterSetterTest(){
         players.add(new Player("player1"));

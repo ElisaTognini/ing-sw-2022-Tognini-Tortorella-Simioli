@@ -30,7 +30,9 @@ public class ClientConnection extends Observable implements Runnable {
         Object read;
         System.out.println("clientconnection run method has been called");
         try {
+            System.out.println("try-catch entered");
             in = new ObjectInputStream(socket.getInputStream());
+            System.out.println("input stream gained");
             out = new ObjectOutputStream(socket.getOutputStream());
             send(new BaseServerMessage(CustomMessage.welcomeMessage));
             server.lobby(this);

@@ -34,11 +34,12 @@ public class Client {
         try{
             Socket socket = new Socket(ip, port);
             System.out.println("Connection to server established.");
-            ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 
             try {
                 Thread t0 = asyncReadFromSocket(socketIn);
+                t0.start();
                 t0.join();
             } catch (InterruptedException e){
                 System.err.println("Thread issue.");
@@ -75,29 +76,30 @@ public class Client {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    while (isActive()){
+                try {
+                    while(active) {
                         Object input = socketIn.readObject();
-                        if(input instanceof BaseUserMessage){
+                        System.out.println(input.toString());
+                        if (input instanceof BaseServerMessage) {
                             /* notify() to the view, so the view will update all changes and show them to the user*/
-                            if(nickname == null){
-                                if(((BaseUserMessage)input).getNickname() != null){
-                                    nickname = ((BaseUserMessage)input).getNickname();
+                            if (nickname == null) {
+                                if (((BaseUserMessage) input).getNickname() != null) {
+                                    nickname = ((BaseUserMessage) input).getNickname();
                                     parser = new Parser(nickname);
                                 }
                             }
-                        } else if (input instanceof ViewUpdateMessage){
+                        } else if (input instanceof ViewUpdateMessage) {
                             /* notify() to the view, containing a different type of message from the one above*/
                         } else {
                             throw new IllegalArgumentException();
                         }
                     }
-                } catch (Exception e){
-                    setActive(false);
+                } catch (Exception e) {
+                    //setActive(false);
                 }
             }
         });
-        t.start();
+        //t.start();
         return t;
     }
 }
