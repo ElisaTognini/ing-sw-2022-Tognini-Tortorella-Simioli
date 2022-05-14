@@ -1,13 +1,11 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.BoardClasses.RoundManager;
-import it.polimi.ingsw.Enums.ActionType;
-import it.polimi.ingsw.Enums.NotifyType;
-import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.Enums.TurnFlow;
+import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.NotifyArgsController;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Server.BaseServerMessage;
 import it.polimi.ingsw.Server.CustomMessage;
 import it.polimi.ingsw.Server.Match;
@@ -23,6 +21,9 @@ public class BaseActionController extends Observable {
 
     /* model and roundManager will be given as parameters when the lobby is created
     * in the network classes */
+
+    //CHECK DRAFT FOR ASSIGN WIZARDS (LINE 167)
+
     public BaseActionController(Model model){
         this.model = model;
         this.roundManager = model.getRoundManager();
@@ -139,11 +140,11 @@ public class BaseActionController extends Observable {
                     if(!model.getBoard().getCloud(cloudID).isCloudEmpty()){
                         model.getBoard().chooseCloudTile(nickname, cloudID);
                         roundManager.refreshCurrentPlayerAction();
-                        roundManager.changeState(TurnFlow.PICKED_CLOUD);
                         if(model.isGameOver()){
                             endGame();
                         }
                         if(model.getBoard().allCloudsPicked()){
+                            roundManager.changeState(TurnFlow.PICKED_CLOUD);
                             startNewRound();
                         }
                         return true;
@@ -165,6 +166,16 @@ public class BaseActionController extends Observable {
         }
         return false;
     }
+
+    /* draft for assignWizards - to be checked
+    public synchronized boolean assignWizards(Wizards wizard){
+        for(Player p : model.getRoundManager().getPlayerList()){
+            if(p.getWizard().equals(wizard)){
+                return false;
+            }
+        }
+        return true;
+    }*/
 
     /* --------------- PRIVATE UTILITY METHODS ---------------- */
 

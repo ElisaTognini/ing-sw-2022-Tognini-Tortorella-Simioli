@@ -1,0 +1,161 @@
+package it.polimi.ingsw.tests;
+
+import it.polimi.ingsw.BasicElements.AssistantCard;
+import it.polimi.ingsw.Controller.BaseActionController;
+import it.polimi.ingsw.Enums.GameMode;
+import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Enums.TurnFlow;
+import it.polimi.ingsw.Model;
+import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
+public class BaseActionControllerTest {
+
+    BaseActionController controller;
+    Model model;
+
+    @Test
+    public void initTest() {
+        String[] nicknames = new String[2];
+        nicknames[0] = "player1";
+        nicknames[1] = "player2";
+        model = new Model(GameMode.SIMPLE, nicknames, 2);
+        controller = new BaseActionController(model);
+    }
+
+    @Test
+    public void startGameTest() {
+        initTest();
+        controller.startGame();
+    }
+
+    @RepeatedTest(5)
+    public void chooseAssistantCardTest() {
+        initTest();
+        controller.startGame();
+        if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+            //System.out.println("if");
+            //System.out.println(model.getRoundManager().getCurrentState());
+            assertTrue(controller.chooseAssistantCard(1, "player1"));
+            assertFalse(controller.chooseAssistantCard(12, "player2"));
+            assertTrue(controller.chooseAssistantCard(2, "player2"));
+            //System.out.println(model.getRoundManager().getCurrentState());
+        } else {
+            //System.out.println("else");
+            //System.out.println(model.getRoundManager().getCurrentState());
+            assertFalse(controller.chooseAssistantCard(12, "player2"));
+            assertTrue(controller.chooseAssistantCard(2, "player2"));
+            assertTrue(controller.chooseAssistantCard(1, "player1"));
+            //System.out.println(model.getRoundManager().getCurrentState());
+        }
+    }
+
+    @RepeatedTest(5)
+    public void moveStudentToDRTest() {
+        AssistantCard card1;
+        AssistantCard card2;
+
+        initTest();
+        controller.startGame();
+
+        if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
+            if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+                card1 = model.getBoard().playAssistantCard(1, "player1");
+                card2 = model.getBoard().playAssistantCard(2, "player2");
+            } else {
+                card1 = model.getBoard().playAssistantCard(2, "player2");
+                card2 = model.getBoard().playAssistantCard(1, "player1");
+            }
+            model.getRoundManager().storeCards(card1);
+            model.getRoundManager().storeCards(card2);
+        }
+        if (model.getRoundManager().getCurrentState().equals(TurnFlow.CARD_PICKED)) {
+            if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+                if (model.getBoard().getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK))
+                    assertTrue(controller.moveStudentToDR(PawnDiscColor.PINK, "player1"));
+                else assertFalse(controller.moveStudentToDR(PawnDiscColor.PINK, "player1"));
+            } else {
+                if (model.getBoard().getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE))
+                    assertTrue(controller.moveStudentToDR(PawnDiscColor.BLUE, "player2"));
+                else assertFalse(controller.moveStudentToDR(PawnDiscColor.BLUE, "player2"));
+            }
+        }
+    }
+
+    @RepeatedTest(5)
+    public void moveStudentToIslandTest(){
+        AssistantCard card1;
+        AssistantCard card2;
+
+        initTest();
+        controller.startGame();
+
+        if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
+            if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+                card1 = model.getBoard().playAssistantCard(1, "player1");
+                card2 = model.getBoard().playAssistantCard(2, "player2");
+            } else {
+                card1 = model.getBoard().playAssistantCard(2, "player2");
+                card2 = model.getBoard().playAssistantCard(1, "player1");
+            }
+            model.getRoundManager().storeCards(card1);
+            model.getRoundManager().storeCards(card2);
+        }
+
+        /* Increased manually for the purpose of this test only */
+        model.getRoundManager().increaseMovedStudents();
+        model.getRoundManager().increaseMovedStudents();
+
+        if (model.getRoundManager().getCurrentState().equals(TurnFlow.CARD_PICKED)) {
+            if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+                if (model.getBoard().getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK)) {
+                    assertTrue(controller.moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
+                }
+                else assertFalse(controller.moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
+            } else {
+                if (model.getBoard().getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
+                    assertTrue(controller.moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
+                }
+                else assertFalse(controller.moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
+            }
+        }
+    }
+
+    @RepeatedTest(5)
+    public void picksCloudTest() {
+
+        AssistantCard card1;
+        AssistantCard card2;
+
+        initTest();
+        controller.startGame();
+
+        if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
+            if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+                card1 = model.getBoard().playAssistantCard(1, "player1");
+                card2 = model.getBoard().playAssistantCard(2, "player2");
+            } else {
+                card1 = model.getBoard().playAssistantCard(2, "player2");
+                card2 = model.getBoard().playAssistantCard(1, "player1");
+            }
+            model.getRoundManager().storeCards(card1);
+            model.getRoundManager().storeCards(card2);
+        }
+
+        /* Turn flow manually set to MOVED_STUDENTS from the start just for the purpose of this test */
+        model.getRoundManager().changeState(TurnFlow.MOVED_STUDENTS);
+
+        if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
+            assertTrue(controller.picksCloud("player1", 1));
+            assertFalse(controller.picksCloud("player2", 1));
+            assertTrue(controller.picksCloud("player2", 0));
+        } else {
+            assertTrue(controller.picksCloud("player2", 1));
+            assertFalse(controller.picksCloud("player1", 1));
+            assertTrue(controller.picksCloud("player1", 0));
+        }
+
+    }
+}

@@ -5,7 +5,7 @@ public enum TowerColor {
     BLACK,
     GREY;
 
-    public TowerColor convert(int index){
+    /*public TowerColor convert(int index){
         switch(index){
             case 0:
                 return WHITE;
@@ -14,6 +14,6 @@ public enum TowerColor {
             default:
                 return GREY;
         }
-    }
+    }*/
 
 }

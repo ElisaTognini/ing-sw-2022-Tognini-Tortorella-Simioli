@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Controller implements Observer {
+
     private BaseActionController baseActionController;
     private ExpertModeController expertModeController;
     private Model model;

@@ -144,4 +144,6 @@ public class RoundManager {
         movedStudents++;
     }
 
+    public ArrayList<Player> getPlayerList(){ return players;}
+
 }
