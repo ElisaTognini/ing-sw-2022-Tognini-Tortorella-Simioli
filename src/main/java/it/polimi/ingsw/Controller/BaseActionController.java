@@ -5,7 +5,6 @@ import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.NotifyArgsController;
 import it.polimi.ingsw.Player;
-import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Server.BaseServerMessage;
 import it.polimi.ingsw.Server.CustomMessage;
 import it.polimi.ingsw.Server.Match;
@@ -45,6 +44,7 @@ public class BaseActionController extends Observable {
     public void endGame(){
         winner = model.getWinner();
         winner.setWinner();
+        model.getRoundManager().notifyObservers(ActionType.END_GAME);
         /* view will display that winner won the game, net will close connections etc... */
     }
 
@@ -184,7 +184,7 @@ public class BaseActionController extends Observable {
 
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(roundManager.getCurrentState().equals(TurnFlow.CARD_PICKED)){
-                if(!roundManager.threeStudentsMoved(nickname)){
+                if(!roundManager.threeStudentsMoved()){
                     if(model.getBoard().getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(color)){
                         return true;
                     }
@@ -218,7 +218,7 @@ public class BaseActionController extends Observable {
     /* private method that invokes model's methods to move mother nature and
     * attempt to conquer an island if the current player has moved three students */
     private synchronized void actionPhaseCurrentPlayer(String nickname){
-        if(roundManager.threeStudentsMoved(nickname)){
+        if(roundManager.threeStudentsMoved()){
             /* moves mn according to card movements */
             model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
             /* attempts to conquer an island */

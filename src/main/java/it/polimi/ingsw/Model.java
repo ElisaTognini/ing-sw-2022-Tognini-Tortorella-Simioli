@@ -4,12 +4,14 @@ import it.polimi.ingsw.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.BoardClasses.*;
 import it.polimi.ingsw.Enums.*;
 import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Server.Match;
 import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
 import it.polimi.ingsw.Server.VirtualView;
 
+import javax.swing.text.View;
 import java.util.*;
 
-public class Model {
+public class Model extends Observable implements Observer{
     private Board board;
     private RoundManager roundManager;
     private ArrayList<Player> playerList;
@@ -21,16 +23,25 @@ public class Model {
     private int studentsInEntrance;
     private String[] playerNames;
     private ViewUpdateMessageWrapper messageWrapper;
+    private TurnUpdates turnUpdates;
 
     /* internal class which processes the messages sent by the notify() of the RoundManager */
     public class TurnUpdates extends Observable implements Observer{
-        public TurnUpdates(){
-            addObserver(messageWrapper);
-        }
 
         @Override
         public void update(Observable o, Object arg) {
             /* in base ai messaggi che gli arrivano, TurnUpdates invia una diversa notify() al match */
+            ActionType argument = (ActionType)arg;
+            switch (argument){
+                case PLAYER_CHANGE:
+                    notifyObservers(messageWrapper.turnChangeMessage(roundManager.getCurrentPlayer().getNickname()));
+                    break;
+                case NEW_ROUND:
+                    notifyObservers(messageWrapper.newRoundMessage());
+                    break;
+                case END_GAME:
+                    notifyObservers(messageWrapper.endGameMessage());
+            }
         }
     }
 
@@ -41,6 +52,22 @@ public class Model {
         playerList = new ArrayList<>();
         setupBoard();
         roundManager = new RoundManager(playerList);
+        turnUpdates = new TurnUpdates();
+        roundManager.addObserver(turnUpdates);
+        board.addObserver(this);
+        messageWrapper = new ViewUpdateMessageWrapper();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        switch (mode){
+            case SIMPLE:
+                notifyObservers(messageWrapper.boardUpdateSimple());
+                break;
+            case EXPERT:
+                notifyObservers(messageWrapper.boardUpdateExpert());
+                break;
+        }
     }
 
     public Board getBoard(){
@@ -157,4 +184,8 @@ public class Model {
     }
 
     public GameMode getMode(){return mode;}
+
+    public TurnUpdates getTurnUpdates(){
+        return turnUpdates;
+    }
 }

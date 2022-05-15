@@ -17,12 +17,14 @@ public class Match implements Observer {
     private GameMode gameMode;
     private ArrayList<VirtualView> matchPlayersViews;
     private final int matchID;
+    private ViewUpdateMessageWrapper messageWrapper;
 
     public Match (Server server, int numberOfPlayers, GameMode gameMode, int matchID){
         this.server = server;
         this.numberOfPlayers = numberOfPlayers;
         this.gameMode = gameMode;
         this.matchID = matchID;
+        messageWrapper = new ViewUpdateMessageWrapper();
     }
 
     /* TO BE CHECKED */
@@ -31,6 +33,8 @@ public class Match implements Observer {
         this.controller = controller;
         this.matchPlayersViews = views;
         controller.addMatchAsObserver(this);
+        model.addObserver(this);
+        model.getTurnUpdates().addObserver(this);
     }
 
     public GameMode getGameMode(){return gameMode;}

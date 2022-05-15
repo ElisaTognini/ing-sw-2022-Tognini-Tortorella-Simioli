@@ -8,4 +8,9 @@ public class SetupServerMessage implements ServerMessage{
     }
 
     public String getSetupServerMessage(){ return message; }
+
+    @Override
+    public String toString(){
+        return message;
+    }
 }

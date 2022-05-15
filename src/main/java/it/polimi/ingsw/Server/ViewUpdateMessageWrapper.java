@@ -12,11 +12,30 @@ import java.util.Observer;
 
 public class ViewUpdateMessageWrapper extends Observable implements Observer {
 
-    public ViewUpdateMessageWrapper(ArrayList<VirtualView> views){
-        for(VirtualView v : views){
-            addObserver(v);
-        }
+    public ViewUpdateMessageWrapper(){
+
     }
+
+    public TurnChangeMessage turnChangeMessage(String currentPlayer){
+        return new TurnChangeMessage();
+    }
+
+    public NewRoundMessage newRoundMessage(){
+        return new NewRoundMessage();
+    }
+
+    public EndGameMessage endGameMessage(){
+        return new EndGameMessage();
+    }
+
+    public ViewUpdateMessage boardUpdateSimple(){
+        return new ViewUpdateMessage();
+    }
+
+    public ViewUpdateMessage boardUpdateExpert(){
+        return new ViewUpdateMessage();
+    }
+
 
     /* sending initial message for setupBoard */
     private void sendSetUpBoard(Board board){

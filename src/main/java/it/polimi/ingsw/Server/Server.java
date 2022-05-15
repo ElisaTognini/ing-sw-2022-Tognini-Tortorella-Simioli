@@ -28,6 +28,8 @@ public class Server {
         } catch (IOException e){
             System.err.println("Error while creating server socket");
         }
+        waitingClients = new ArrayList<>();
+        matches = new ArrayList<>();
     }
 
     public synchronized void lobby(ClientConnection c){

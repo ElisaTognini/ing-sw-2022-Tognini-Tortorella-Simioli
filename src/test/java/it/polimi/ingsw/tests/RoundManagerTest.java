@@ -3,7 +3,6 @@ import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.RoundManager;
 import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Player;
 import org.junit.jupiter.api.Test;
@@ -160,9 +159,9 @@ public class RoundManagerTest {
         boardTest.setup();
 
         for(manager.getMovedStudents(); manager.getMovedStudents() < 3; manager.increaseMovedStudents()){
-            assertFalse(manager.threeStudentsMoved("player1"));
+            assertFalse(manager.threeStudentsMoved());
         }
-        assertTrue(manager.threeStudentsMoved("player1"));
+        assertTrue(manager.threeStudentsMoved());
     }
 
 }

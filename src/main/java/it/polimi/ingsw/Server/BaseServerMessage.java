@@ -11,4 +11,8 @@ public class BaseServerMessage implements ServerMessage, Serializable {
         this.message = message;
     }
 
+    @Override
+    public String toString(){
+        return message;
+    }
 }

@@ -2,7 +2,9 @@ package it.polimi.ingsw.Enums;
 
 public enum ActionType {
     SETUP,
+    SETUP_EXPERT,
     ROUND_SETUP,
+    ROUND_SETUP_EXPERT,
     DRAW_STUDENT,
     STUDENT_TO_BAG,
     ADD_STUDENT_ISLAND,
@@ -23,5 +25,9 @@ public enum ActionType {
     PLACE_NE_TILE,
     REMOVE_NE_TILE,
     ASSIGN_COIN,
-    PURCHASE_CARD;
+    PURCHASE_CARD,
+    PLAYER_CHANGE,
+    NEW_ROUND,
+    LAST_ROUND,
+    END_GAME;
 }

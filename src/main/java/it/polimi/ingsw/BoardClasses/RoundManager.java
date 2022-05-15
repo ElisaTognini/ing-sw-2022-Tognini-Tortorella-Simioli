@@ -1,13 +1,14 @@
 package it.polimi.ingsw.BoardClasses;
 
 import it.polimi.ingsw.BasicElements.AssistantCard;
+import it.polimi.ingsw.Enums.ActionType;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Player;
 import java.util.*;
 
 /* this class manages the turn/round flow for both the Planning and Action Phases, based on the cards played */
 
-public class RoundManager {
+public class RoundManager extends Observable{
     private TurnFlow currentState;
     private ArrayList<Player> players;
     private ArrayList<Player> sortedPlayers;
@@ -61,6 +62,7 @@ public class RoundManager {
             sortedPlayers.add(players.get(i));
         }
         currentPlayer = sortedPlayers.get(0);
+        notifyObservers(ActionType.PLAYER_CHANGE);
     }
 
     /* this method checks if two players have played the same card;
@@ -93,6 +95,7 @@ public class RoundManager {
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
         currentPlayer = cards.get(0).getOwner();
+        notifyObservers(ActionType.PLAYER_CHANGE);
         for(AssistantCard c: cards){
             sortedPlayerActions.add(c.getOwner());
         }
@@ -102,6 +105,7 @@ public class RoundManager {
     public void refreshCurrentPlayerAction(){
         if(sortedPlayerActions.indexOf(currentPlayer) < sortedPlayerActions.size()-1){
             currentPlayer = sortedPlayerActions.get(sortedPlayerActions.indexOf(currentPlayer) + 1);
+            notifyObservers(ActionType.PLAYER_CHANGE);
         }
     }
 
@@ -110,11 +114,13 @@ public class RoundManager {
         for(Player p : players) p.setCardPickedToFalse();
         changeState(TurnFlow.BEGINS_TURN);
         movedStudents = 0;
+        notifyObservers(ActionType.NEW_ROUND);
     }
 
     public void refreshCurrentPlayer(){
         if(sortedPlayers.indexOf(currentPlayer) < sortedPlayers.size()-1){
             currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
+            notifyObservers(ActionType.PLAYER_CHANGE);
         }
     }
 
@@ -132,7 +138,7 @@ public class RoundManager {
     }
 
     /* the following two methods are needed in order to limit the number of students moved to three */
-    public boolean threeStudentsMoved(String nickname){
+    public boolean threeStudentsMoved(){
         if(movedStudents == 3){
             movedStudents = 0;
             return true;
@@ -143,7 +149,5 @@ public class RoundManager {
     public void increaseMovedStudents(){
         movedStudents++;
     }
-
-    public ArrayList<Player> getPlayerList(){ return players;}
 
 }

@@ -60,13 +60,13 @@ public class Board extends Observable{
         initializeDecks();
         /* send all players the setup board via the MessageWrapper */
         if(mode.equals(GameMode.SIMPLE))
-            notifyObservers(ActionType.SETUP);
+            notifyObservers();
     }
 
     public void roundSetup(){
         studentsOnClouds();
         if(mode.equals(GameMode.SIMPLE))
-            notifyObservers(ActionType.ROUND_SETUP);
+            notifyObservers();
     }
 
     /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
@@ -86,7 +86,7 @@ public class Board extends Observable{
         for(SchoolBoard sb : schoolBoards){
             if(sb.getOwner().getNickname().equals(nickname)){
                 islands.get(islandID).addStudent(sb.getEntrance().removeStudent(color));
-                notifyObservers(ActionType.ADD_STUDENT_ISLAND);
+                notifyObservers();
                 break;
             }
         }
@@ -97,7 +97,7 @@ public class Board extends Observable{
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
                 sb.getDiningRoom().addStudent(sb.getEntrance().removeStudent(color));
-                notifyObservers(ActionType.ADD_STUDENT_DR);
+                notifyObservers();
             }
         }
     }
@@ -112,7 +112,7 @@ public class Board extends Observable{
                 }
             }
         }
-        notifyObservers(ActionType.EMPTY_CLOUD);
+        notifyObservers();
     }
 
     /* END OF PLAYER-ACTION METHODS */
@@ -125,7 +125,7 @@ public class Board extends Observable{
         islands.get(position).setHostsToFalse();
         motherNature.setPosition((motherNature.getPosition() + movements) % islands.size());
         islands.get(motherNature.getPosition()).setHostsToTrue();
-        notifyObservers(ActionType.MOVE_MN);
+        notifyObservers();
     }
 
 
@@ -156,7 +156,7 @@ public class Board extends Observable{
                     sb.getProfessorTable().addProfessor(c);
             }
         }
-        notifyObservers(ActionType.ASSIGN_PROFESSORS);
+        notifyObservers();
     }
 
     /*  if two players have the same influence over an unconquered island, the island will not be
@@ -210,7 +210,6 @@ public class Board extends Observable{
             //returning towers to old owner
             getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
                     islands.get(motherNature.getPosition()).getNumberOfTowers());
-                    notifyObservers(ActionType.REMOVE_TOWER);
             //retrieving towers from conqueror's schoolboard
             if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
                 islands.get(motherNature.getPosition()).getNumberOfTowers())) {
@@ -227,7 +226,7 @@ public class Board extends Observable{
         }
 
         islands.get(motherNature.getPosition()).getsConquered(conqueror);
-        notifyObservers(ActionType.CONQUER_ISLAND);
+        notifyObservers();
     }
 
     /* this method checks whether the adjacent islands are also conquered by the current players. It handles
@@ -276,7 +275,7 @@ public class Board extends Observable{
         toKeep = islands.get(index1);
         islands.remove(index2);
         motherNature.setPosition(islands.indexOf(toKeep));
-        notifyObservers(ActionType.MERGE_ISLANDS);
+        notifyObservers();
     }
 
     protected void merge(int index1, int index2, int index3){
@@ -423,15 +422,15 @@ public class Board extends Observable{
 
     public boolean isLastRound(){ return lastRound; }
 
-    public void setLastRound(){ lastRound = true; }
+    public void setLastRound(){
+        lastRound = true;
+        notifyObservers();
+    }
 
     public boolean isGameOver(){ return isGameOver;}
 
     public int getNumberOfClouds(){return numberOfClouds;}
 
-    public void setMessageWrapper(ViewUpdateMessageWrapper messageWrapper){
-        addObserver(messageWrapper);
-    }
 
     /* END OF GETTER METHODS */
 

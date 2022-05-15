@@ -18,6 +18,7 @@ public class Client {
     private String nickname;
     private boolean active = true;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
+    private ObjectOutputStream socketOut;
 
     public Client(String ip, int port){
         this.ip = ip;
@@ -34,7 +35,7 @@ public class Client {
         try{
             Socket socket = new Socket(ip, port);
             System.out.println("Connection to server established.");
-            ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
+            this.socketOut = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
 
             try {
@@ -56,7 +57,7 @@ public class Client {
     /* metodo chiamato da un'altra classe, presumibilmente il Parser,
      dopo che sono stati fatti i controlli per la validità dell'azione dell'utente */
 
-    public synchronized void asyncWriteToSocket(ObjectOutputStream socketOut, UserMessage input) {
+    public synchronized void asyncWriteToSocket(UserMessage input) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
@@ -79,27 +80,13 @@ public class Client {
                 try {
                     while(active) {
                         Object input = socketIn.readObject();
-                        System.out.println(input.toString());
-                        if (input instanceof BaseServerMessage) {
-                            /* notify() to the view, so the view will update all changes and show them to the user*/
-                            if (nickname == null) {
-                                if (((BaseUserMessage) input).getNickname() != null) {
-                                    nickname = ((BaseUserMessage) input).getNickname();
-                                    parser = new Parser(nickname);
-                                }
-                            }
-                        } else if (input instanceof ViewUpdateMessage) {
-                            /* notify() to the view, containing a different type of message from the one above*/
-                        } else {
-                            throw new IllegalArgumentException();
-                        }
+                        System.out.println(input);
                     }
-                } catch (Exception e) {
+                } catch (IOException | ClassNotFoundException e) {
                     //setActive(false);
                 }
             }
         });
-        //t.start();
         return t;
     }
 }

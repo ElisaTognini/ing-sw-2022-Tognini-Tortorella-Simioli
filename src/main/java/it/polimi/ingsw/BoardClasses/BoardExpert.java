@@ -2,6 +2,7 @@ package it.polimi.ingsw.BoardClasses;
 
 import it.polimi.ingsw.BasicElements.Island;
 import it.polimi.ingsw.BasicElements.Professor;
+import it.polimi.ingsw.Enums.ActionType;
 import it.polimi.ingsw.Expert.CardManager;
 import it.polimi.ingsw.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Expert.CoinCounter;
@@ -53,7 +54,7 @@ public class BoardExpert extends Board {
             }
             sb.resetModifiedTable();
         }
-
+        notifyObservers();
     }
 
     /* board class setup is overridden here to add the instantiation of all the expert game
@@ -75,6 +76,7 @@ public class BoardExpert extends Board {
             coins[i] = new CoinCounter(p);
             i++;
         }
+        notifyObservers();
     }
 
     @Override
@@ -162,6 +164,7 @@ public class BoardExpert extends Board {
             }
 
             islands.get(motherNature.getPosition()).getsConquered(conqueror);
+            notifyObservers();
 
         }
     }
@@ -171,15 +174,20 @@ public class BoardExpert extends Board {
         super.moveMotherNature(movements);
         motherNature.setPosition(motherNature.getPosition() + additional_moves);
         additional_moves = 0;
+        notifyObservers();
     }
 
     /* methods for the regular usages of noEntryTiles in the game
      * checks if valid action, sets and unsets noEntryTiles */
 
-    public void putBackNoEntryTile() { noEntryTiles++; }
+    public void putBackNoEntryTile() {
+        noEntryTiles++;
+        notifyObservers();
+    }
 
     public void useNoEntryTile() {
         noEntryTiles--;
+        notifyObservers();
     }
 
     /* called by the controller */
@@ -203,6 +211,7 @@ public class BoardExpert extends Board {
                 getPlayersCoinCounter(nickname).purchase(card.getCost());
             }
         }
+        notifyObservers();
     }
 
     public boolean checkIfCardPresent(int cardID) {
@@ -257,6 +266,7 @@ public class BoardExpert extends Board {
                     for (CoinCounter c : coins) {
                         if (c.getOwner().getNickname().equals(nickname)) {
                             c.addCoin();
+                            notifyObservers();
                         }
                     }
                 }
@@ -270,6 +280,7 @@ public class BoardExpert extends Board {
             if (c.getCardID() == cardID) {
                 c.useCard(o, nickname);
                 c.increaseCost();
+                notifyObservers();
             }
         }
     }
