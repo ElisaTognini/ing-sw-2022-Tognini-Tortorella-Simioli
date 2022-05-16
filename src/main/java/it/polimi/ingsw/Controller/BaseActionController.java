@@ -60,7 +60,7 @@ public class BaseActionController extends Observable {
                         if (!roundManager.checkForDupe(cardID)) {
                             roundManager.storeCards(model.getBoard().playAssistantCard(cardID, nickname));
                             model.getBoard().getPlayersDeck(nickname).removeCard(cardID);
-                            model.getBoard().notifyObservers(ActionType.CHOOSE_ASSISTANT_CARD);
+                            model.getBoard().notifyObservers();
                             roundManager.refreshCurrentPlayer();
                             return true;
                         } else {

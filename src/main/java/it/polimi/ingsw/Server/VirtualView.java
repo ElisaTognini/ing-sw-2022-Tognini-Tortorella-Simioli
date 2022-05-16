@@ -4,24 +4,17 @@ import it.polimi.ingsw.Controller.Controller;
 
 import java.util.*;
 
-/* virtualView class is observed by the Controller and is observes the model.
-* This makes it so that:
-* - each time something changes on the virtualView, the controller is notified
-* - each time the model updates itself, the view is notified. */
-
-public class VirtualView extends Observable{
+public class VirtualView extends Observable implements Observer{
     private ClientConnection clientConnection;
     private String nickname;
 
     public VirtualView (ClientConnection clientConnection){
         this.clientConnection = clientConnection;
         this.nickname = clientConnection.getNickname();
+        clientConnection.addObserver(this);
     }
 
-    /* after receiving a notifying call by the model, this method
-    * sends the viewUpdate to the client, so that the view on the client side can display it */
-
-    public void sendMessage(Object message){
+    public synchronized void sendMessage(Object message){
         clientConnection.asyncSend(message);
     }
 
@@ -29,4 +22,12 @@ public class VirtualView extends Observable{
 
     public String getNickname(){return nickname;}
 
+
+    /* based on the object received here (which is the message received by the
+    * clientConnection) the virtualView will notify the controller and have it
+    * call the necessary method. */
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }

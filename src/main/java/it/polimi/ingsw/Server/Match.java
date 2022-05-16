@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.ViewUpdateMessage;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Model;
+import it.polimi.ingsw.NotifyArgsController;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -57,9 +58,24 @@ public class Match implements Observer {
         return matchPlayersViews;
     }
 
+    private synchronized  VirtualView getPlayersVirtualView(String nickname){
+        VirtualView view = null;
+        for(VirtualView v : matchPlayersViews){
+            view = v;
+        }
+        return view;
+    }
+
+    public synchronized void sendTo(NotifyArgsController parameter){
+        getPlayersVirtualView(parameter.getNickname()).sendMessage(parameter.getMessage());
+    }
 
     @Override
     public void update(Observable o, Object arg) {
-        sendAll(arg);
+        if(arg instanceof NotifyArgsController){
+            sendTo((NotifyArgsController) arg);
+        }
+        else
+            sendAll(arg);
     }
 }
