@@ -34,4 +34,10 @@ public class Card4 extends CharacterCardTemplate{
         return false;
     }
 
+    @Override
+    public String toStringCard(){
+        return this.toString();
+    }
+
+
 }

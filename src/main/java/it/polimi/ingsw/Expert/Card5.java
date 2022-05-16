@@ -31,4 +31,10 @@ public class Card5 extends CharacterCardTemplate{
         return !board.checkIfEnoughNoEntryTiles();
     }
 
+    @Override
+    public String toStringCard(){
+        return this.toString();
+    }
+
+
 }
