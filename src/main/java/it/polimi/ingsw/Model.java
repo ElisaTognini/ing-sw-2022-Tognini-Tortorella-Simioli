@@ -40,7 +40,7 @@ public class Model extends Observable implements Observer{
                     notifyObservers(messageWrapper.newRoundMessage());
                     break;
                 case END_GAME:
-                    notifyObservers(messageWrapper.endGameMessage());
+                    notifyObservers(messageWrapper.endGameMessage(getWinner().getNickname()));
             }
         }
     }
@@ -62,10 +62,10 @@ public class Model extends Observable implements Observer{
     public void update(Observable o, Object arg) {
         switch (mode){
             case SIMPLE:
-                notifyObservers(messageWrapper.boardUpdateSimple());
+                notifyObservers(messageWrapper.boardUpdateSimple(this));
                 break;
             case EXPERT:
-                notifyObservers(messageWrapper.boardUpdateExpert());
+                notifyObservers(messageWrapper.boardUpdateExpert(this));
                 break;
         }
     }

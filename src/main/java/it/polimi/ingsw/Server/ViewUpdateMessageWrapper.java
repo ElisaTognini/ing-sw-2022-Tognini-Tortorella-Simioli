@@ -1,86 +1,90 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.BasicElements.AssistantCardDeck;
+import it.polimi.ingsw.BasicElements.CloudTile;
 import it.polimi.ingsw.BasicElements.Island;
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
+import it.polimi.ingsw.Client.ExpertViewUpdateMessage;
 import it.polimi.ingsw.Client.ViewUpdateMessage;
 import it.polimi.ingsw.Enums.ActionType;
+import it.polimi.ingsw.Expert.CharacterCardTemplate;
+import it.polimi.ingsw.Expert.CoinCounter;
+import it.polimi.ingsw.Model;
+import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ViewUpdateMessageWrapper extends Observable implements Observer {
-
-    public ViewUpdateMessageWrapper(){
-
-    }
+public class ViewUpdateMessageWrapper{
 
     public TurnChangeMessage turnChangeMessage(String currentPlayer){
-        return new TurnChangeMessage();
+        TurnChangeMessage message = new TurnChangeMessage();
+        message.setCurrentPlayer(currentPlayer);
+        return message;
     }
 
     public NewRoundMessage newRoundMessage(){
         return new NewRoundMessage();
     }
 
-    public EndGameMessage endGameMessage(){
-        return new EndGameMessage();
+    public EndGameMessage endGameMessage(String nickname){
+        EndGameMessage message = new EndGameMessage();
+        message.setWinner(nickname);
+        return message;
     }
 
-    public ViewUpdateMessage boardUpdateSimple(){
-        return new ViewUpdateMessage();
-    }
-
-    public ViewUpdateMessage boardUpdateExpert(){
-        return new ViewUpdateMessage();
-    }
-
-
-    /* sending initial message for setupBoard */
-    private void sendSetUpBoard(Board board){
+    public ViewUpdateMessage boardUpdateSimple(Model model){
         ViewUpdateMessage message = new ViewUpdateMessage();
-        ArrayList<String> islands = new ArrayList<>();
-        for(Island i :  board.getIslandList()){
+
+        ArrayList<String> islands = message.getIslands();
+        ArrayList<String> clouds = message.getClouds();
+        ArrayList<String> decks = message.getDecks();
+        ArrayList<String> schoolboards = message.getSchoolboards();
+
+        for(Island i : model.getBoard().getIslandList()){
             islands.add(i.toString());
         }
 
-        message.setActionType(ActionType.SETUP);
-        message.setChangedIsland(islands);
-
-        notifyObservers(message);
-    }
-
-    private void sendSetupBoardExpert(BoardExpert o) {
-    }
-
-    private void sendRoundSetup(Board board){
-        ViewUpdateMessage message = new ViewUpdateMessage();
-        ArrayList<String> clouds = new ArrayList<>();
-
-        for(int i = 0; i < board.getNumberOfClouds(); i++){
-            clouds.add(board.getCloud(i).toString());
+        for(int i = 0; i < model.getNumberOfClouds(); i++){
+            clouds.add(model.getBoard().getCloud(i).toString());
         }
-        message.setActionType(ActionType.ROUND_SETUP);
-        message.setChangesCloud(clouds);
 
-        notifyObservers(message);
+        for(AssistantCardDeck d : model.getBoard().getDecks()){
+            decks.add(d.toString());
+        }
+
+        for(SchoolBoard sb : model.getBoard().getSchoolBoards()){
+            schoolboards.add(sb.toString());
+        }
+
+        message.setCurrentPlayer(model.getRoundManager().getCurrentPlayer().getNickname());
+
+        return message;
 
     }
 
+    //da trovare modo intelligente di farlo: probabilmente con una classe che eredita da
+    // boardUpdate in modo da aggiungere roba e basta.
+    public ExpertViewUpdateMessage boardUpdateExpert(Model model){
+        BoardExpert board = (BoardExpert)model.getBoard();
 
-    @Override
-    public void update(Observable o, Object arg) {
+        ExpertViewUpdateMessage expertViewUpdateMessage = new ExpertViewUpdateMessage();
+        expertViewUpdateMessage.setViewUpdate_base(boardUpdateSimple(model));
 
-        switch ((ActionType)arg){
-            case SETUP:
-                if(o instanceof Board){
-                    sendSetUpBoard((Board)o);
-                }else if (o instanceof BoardExpert){
-                    sendSetupBoardExpert((BoardExpert)o);
-                }
-                break;
+        ArrayList<String> coinCounters = expertViewUpdateMessage.getCoinCounters();
+        ArrayList<String> extractedCards = expertViewUpdateMessage.getExtractedCharCards();
+
+        for(CoinCounter cc : board.getCoinCounters()){
+            coinCounters.add(cc.toString());
         }
+
+        for(CharacterCardTemplate c : board.getExtractedCards()){
+            extractedCards.add(c.toStringCard());
+        }
+
+        return expertViewUpdateMessage;
     }
 
 }

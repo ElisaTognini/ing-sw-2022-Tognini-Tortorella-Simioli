@@ -53,7 +53,7 @@ public class ClientConnection extends Observable implements Runnable {
     public synchronized void setNickname(String nickname) { this.nickname = nickname;}
     public synchronized String getNickname(){return nickname;}
 
-    public synchronized void send(ServerMessage message){
+    public synchronized void send(Object message){
         try{
             out.reset();
             out.writeObject(message);
@@ -63,7 +63,7 @@ public class ClientConnection extends Observable implements Runnable {
         }
     }
 
-    public void asyncSend(final ServerMessage message){
+    public void asyncSend(final Object message){
         new Thread(new Runnable() {
             @Override
             public void run() {
