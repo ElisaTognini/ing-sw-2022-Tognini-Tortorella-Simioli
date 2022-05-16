@@ -61,6 +61,7 @@ public class ExpertModeControllerTest {
         if (controller.getExpertModeController().useCharacterCard("player1", param, 1)) {
             if (!boardExpert.isActionForbidden(1, param, "player1"))
                 boardExpert.useCard(param, "player1", 1);
+
         }
     }
 }

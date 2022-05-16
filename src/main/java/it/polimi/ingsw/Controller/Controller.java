@@ -29,9 +29,9 @@ public class Controller implements Observer {
         }
     }
 
-    public BaseActionController getBaseActionController(){ return baseActionController;}
+    public BaseActionController getBaseActionController(){return baseActionController;}
 
-    public ExpertModeController getExpertModeController() { return expertModeController; }
+    public ExpertModeController getExpertModeController() {return expertModeController;}
 
     @Override
     public void update(Observable o, Object arg) {

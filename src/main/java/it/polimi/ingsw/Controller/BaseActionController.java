@@ -21,7 +21,7 @@ public class BaseActionController extends Observable {
     /* model and roundManager will be given as parameters when the lobby is created
     * in the network classes */
 
-    //CHECK DRAFT FOR ASSIGN WIZARDS (LINE 167)
+    //CHECK DRAFT FOR ASSIGN WIZARDS (LINE 167) - to do
 
     public BaseActionController(Model model){
         this.model = model;
