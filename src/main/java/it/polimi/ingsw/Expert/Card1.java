@@ -2,6 +2,7 @@ package it.polimi.ingsw.Expert;
 
 /* take one student from this card and place on an island of your choice */
 
+import it.polimi.ingsw.BasicElements.Student;
 import it.polimi.ingsw.BoardClasses.Board;
 import it.polimi.ingsw.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Enums.PawnDiscColor;
@@ -67,5 +68,16 @@ public class Card1 extends CharacterCardTemplate{
         for(int i=0; i<4; i++){
             students.addStudent(board.getStudentBag().drawStudent());
         }
+    }
+
+    @Override
+    /* FORMAT: cardID followed by the color and number of the students placed on the card */
+    public String toStringCard(){
+        StringBuilder toRet = new StringBuilder(cardID);
+
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            toRet.append(c).append(students.getInfluence(c));
+        }
+        return toRet.toString();
     }
 }
