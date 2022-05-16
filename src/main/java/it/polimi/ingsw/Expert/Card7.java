@@ -92,4 +92,10 @@ public class Card7 extends CharacterCardTemplate{
                 "\nRED " + students.getInfluence(PawnDiscColor.RED) + "\n\n";
     }
 
+    @Override
+    public String toStringCard(){
+        return this.toString();
+    }
+
+
 }

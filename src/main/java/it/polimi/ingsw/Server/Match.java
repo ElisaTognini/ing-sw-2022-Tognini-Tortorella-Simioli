@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Client.ExpertViewUpdateMessage;
+import it.polimi.ingsw.Client.ViewUpdateMessage;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Model;
@@ -7,6 +9,9 @@ import it.polimi.ingsw.Model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
+/* Match is a message gateway class that stores references to all components of
+* the MVC (including virtualViews) on server side. */
 
 public class Match implements Observer {
 
@@ -27,7 +32,6 @@ public class Match implements Observer {
         messageWrapper = new ViewUpdateMessageWrapper();
     }
 
-    /* TO BE CHECKED */
     public void instantiateMVC(Model model, Controller controller, ArrayList<VirtualView> views){
         this.model = model;
         this.controller = controller;
@@ -39,7 +43,7 @@ public class Match implements Observer {
 
     public GameMode getGameMode(){return gameMode;}
 
-    public synchronized void sendAll(BaseServerMessage message){
+    public synchronized void sendAll(Object message){
         for(VirtualView v : matchPlayersViews){
             v.sendMessage(message);
         }
@@ -53,16 +57,9 @@ public class Match implements Observer {
         return matchPlayersViews;
     }
 
-    public void sendErrorTo(String nickname, BaseServerMessage message){
-        for(VirtualView v : matchPlayersViews){
-            if(v.getNickname().equals(nickname)){
-                v.sendMessage(message);
-            }
-        }
-    }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        sendAll(arg);
     }
 }

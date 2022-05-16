@@ -69,4 +69,10 @@ public class Card11 extends CharacterCardTemplate{
         return true;
     }
 
+    @Override
+    public String toStringCard(){
+        return this.toString();
+    }
+
+
 }

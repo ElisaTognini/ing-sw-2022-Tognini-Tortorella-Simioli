@@ -18,7 +18,7 @@ public class Server {
     private final int PORT = 12345;
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
-    private ArrayList<ClientConnection> waitingClients;
+    private ArrayList<ClientConnection> waitingClients = new ArrayList<>();
     private ArrayList<Match> matches;
     private int matchPlayers;
 
@@ -88,12 +88,12 @@ public class Server {
         model = new Model(matches.get(matches.size()-1).getGameMode(), nicknames, matchPlayers);
         controller = new Controller(model);
         for(VirtualView v : virtualViews){
-            v.addControllerAsObserver(controller);
+            v.addObserver(controller);
         }
         matches.get(matches.size()-1).instantiateMVC(model, controller, virtualViews);
 
-        /* addObserver to model --> virtualViews are its observers */
-
+        /* azioni fatte sul controller devono essere notificate dal messageReceiver
+        * (a lui arrivano i messaggi e poi vengono chiamati i metodi del controller. */
         for(VirtualView v: virtualViews){
             v.addObserver(controller);
         }

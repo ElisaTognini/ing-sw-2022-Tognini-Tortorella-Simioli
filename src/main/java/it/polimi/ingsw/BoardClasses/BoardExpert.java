@@ -304,4 +304,8 @@ public class BoardExpert extends Board {
     public void setExtractedCards(CharacterCardTemplate[] cards) {
         extractedCards = cards;
     }
+
+    public CoinCounter[] getCoinCounters(){
+        return coins;
+    }
 }

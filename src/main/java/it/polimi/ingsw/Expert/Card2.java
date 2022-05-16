@@ -40,4 +40,9 @@ public class Card2 extends CharacterCardTemplate{
         return false;
     }
 
+    @Override
+    public String toStringCard(){
+        return this.toString();
+    }
+
 }
