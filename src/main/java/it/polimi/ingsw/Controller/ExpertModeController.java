@@ -6,7 +6,6 @@ import it.polimi.ingsw.Enums.NotifyType;
 import it.polimi.ingsw.Enums.TurnFlow;
 import it.polimi.ingsw.Model;
 import it.polimi.ingsw.NotifyArgsController;
-import it.polimi.ingsw.Player;
 import it.polimi.ingsw.Server.BaseServerMessage;
 import it.polimi.ingsw.Server.CustomMessage;
 import it.polimi.ingsw.Server.Match;

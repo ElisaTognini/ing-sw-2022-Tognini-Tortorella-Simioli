@@ -2,6 +2,7 @@ package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.BasicElements.AssistantCard;
 import it.polimi.ingsw.Controller.BaseActionController;
+import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Enums.GameMode;
 import it.polimi.ingsw.Enums.PawnDiscColor;
 import it.polimi.ingsw.Enums.TurnFlow;
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public class BaseActionControllerTest {
 
-    BaseActionController controller;
+    Controller controller;
     Model model;
 
     @Test
@@ -22,32 +23,32 @@ public class BaseActionControllerTest {
         nicknames[0] = "player1";
         nicknames[1] = "player2";
         model = new Model(GameMode.SIMPLE, nicknames, 2);
-        controller = new BaseActionController(model);
+        controller = new Controller(model);
     }
 
     @Test
     public void startGameTest() {
         initTest();
-        controller.startGame();
+        controller.getBaseActionController().startGame();
     }
 
     @RepeatedTest(5)
     public void chooseAssistantCardTest() {
         initTest();
-        controller.startGame();
+        controller.getBaseActionController().startGame();
         if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
             //System.out.println("if");
             //System.out.println(model.getRoundManager().getCurrentState());
-            assertTrue(controller.chooseAssistantCard(1, "player1"));
-            assertFalse(controller.chooseAssistantCard(12, "player2"));
-            assertTrue(controller.chooseAssistantCard(2, "player2"));
+            assertTrue(controller.getBaseActionController().chooseAssistantCard(1, "player1"));
+            assertFalse(controller.getBaseActionController().chooseAssistantCard(12, "player2"));
+            assertTrue(controller.getBaseActionController().chooseAssistantCard(2, "player2"));
             //System.out.println(model.getRoundManager().getCurrentState());
         } else {
             //System.out.println("else");
             //System.out.println(model.getRoundManager().getCurrentState());
-            assertFalse(controller.chooseAssistantCard(12, "player2"));
-            assertTrue(controller.chooseAssistantCard(2, "player2"));
-            assertTrue(controller.chooseAssistantCard(1, "player1"));
+            assertFalse(controller.getBaseActionController().chooseAssistantCard(12, "player2"));
+            assertTrue(controller.getBaseActionController().chooseAssistantCard(2, "player2"));
+            assertTrue(controller.getBaseActionController().chooseAssistantCard(1, "player1"));
             //System.out.println(model.getRoundManager().getCurrentState());
         }
     }
@@ -58,7 +59,7 @@ public class BaseActionControllerTest {
         AssistantCard card2;
 
         initTest();
-        controller.startGame();
+        controller.getBaseActionController().startGame();
 
         if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
             if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
@@ -74,12 +75,12 @@ public class BaseActionControllerTest {
         if (model.getRoundManager().getCurrentState().equals(TurnFlow.CARD_PICKED)) {
             if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
                 if (model.getBoard().getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK))
-                    assertTrue(controller.moveStudentToDR(PawnDiscColor.PINK, "player1"));
-                else assertFalse(controller.moveStudentToDR(PawnDiscColor.PINK, "player1"));
+                    assertTrue(controller.getBaseActionController().moveStudentToDR(PawnDiscColor.PINK, "player1"));
+                else assertFalse(controller.getBaseActionController().moveStudentToDR(PawnDiscColor.PINK, "player1"));
             } else {
                 if (model.getBoard().getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE))
-                    assertTrue(controller.moveStudentToDR(PawnDiscColor.BLUE, "player2"));
-                else assertFalse(controller.moveStudentToDR(PawnDiscColor.BLUE, "player2"));
+                    assertTrue(controller.getBaseActionController().moveStudentToDR(PawnDiscColor.BLUE, "player2"));
+                else assertFalse(controller.getBaseActionController().moveStudentToDR(PawnDiscColor.BLUE, "player2"));
             }
         }
     }
@@ -90,7 +91,7 @@ public class BaseActionControllerTest {
         AssistantCard card2;
 
         initTest();
-        controller.startGame();
+        controller.getBaseActionController().startGame();
 
         if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
             if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
@@ -111,14 +112,14 @@ public class BaseActionControllerTest {
         if (model.getRoundManager().getCurrentState().equals(TurnFlow.CARD_PICKED)) {
             if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
                 if (model.getBoard().getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK)) {
-                    assertTrue(controller.moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
+                    assertTrue(controller.getBaseActionController().moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
                 }
-                else assertFalse(controller.moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
+                else assertFalse(controller.getBaseActionController().moveStudentToIsland(PawnDiscColor.PINK, "player1", model.getBoard().getMotherNaturePosition()));
             } else {
                 if (model.getBoard().getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
-                    assertTrue(controller.moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
+                    assertTrue(controller.getBaseActionController().moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
                 }
-                else assertFalse(controller.moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
+                else assertFalse(controller.getBaseActionController().moveStudentToIsland(PawnDiscColor.BLUE, "player2", model.getBoard().getMotherNaturePosition()));
             }
         }
     }
@@ -130,7 +131,7 @@ public class BaseActionControllerTest {
         AssistantCard card2;
 
         initTest();
-        controller.startGame();
+        controller.getBaseActionController().startGame();
 
         if (model.getRoundManager().getCurrentState().equals(TurnFlow.BEGINS_TURN)) {
             if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
@@ -148,13 +149,13 @@ public class BaseActionControllerTest {
         model.getRoundManager().changeState(TurnFlow.MOVED_STUDENTS);
 
         if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
-            assertTrue(controller.picksCloud("player1", 1));
-            assertFalse(controller.picksCloud("player2", 1));
-            assertTrue(controller.picksCloud("player2", 0));
+            assertTrue(controller.getBaseActionController().picksCloud("player1", 1));
+            assertFalse(controller.getBaseActionController().picksCloud("player2", 1));
+            assertTrue(controller.getBaseActionController().picksCloud("player2", 0));
         } else {
-            assertTrue(controller.picksCloud("player2", 1));
-            assertFalse(controller.picksCloud("player1", 1));
-            assertTrue(controller.picksCloud("player1", 0));
+            assertTrue(controller.getBaseActionController().picksCloud("player2", 1));
+            assertFalse(controller.getBaseActionController().picksCloud("player1", 1));
+            assertTrue(controller.getBaseActionController().picksCloud("player1", 0));
         }
 
     }

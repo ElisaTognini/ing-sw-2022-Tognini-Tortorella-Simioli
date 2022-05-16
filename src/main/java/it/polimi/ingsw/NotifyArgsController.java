@@ -1,10 +1,9 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Controller.BaseActionController;
 import it.polimi.ingsw.Enums.NotifyType;
 import it.polimi.ingsw.Server.BaseServerMessage;
 
-public class NotifyArgsController implements NotifyArgs{
+public class NotifyArgsController {
 
     private String nickname;
     private BaseServerMessage message;
