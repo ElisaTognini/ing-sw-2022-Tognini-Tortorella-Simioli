@@ -1,8 +1,8 @@
 package it.polimi.ingsw.tests;
 
-import it.polimi.ingsw.BasicElements.AssistantCard;
-import it.polimi.ingsw.BasicElements.AssistantCardDeck;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Model.BasicElements.AssistantCard;
+import it.polimi.ingsw.Model.BasicElements.AssistantCardDeck;
+import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 

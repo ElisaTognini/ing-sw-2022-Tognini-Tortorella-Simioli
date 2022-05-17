@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.ExpertViewUpdateMessage;
-import it.polimi.ingsw.Client.ViewUpdateMessage;
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Model;
-import it.polimi.ingsw.NotifyArgsController;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
 
 import java.util.ArrayList;
 import java.util.Observable;

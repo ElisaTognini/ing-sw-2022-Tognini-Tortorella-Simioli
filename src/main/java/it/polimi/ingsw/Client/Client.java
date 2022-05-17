@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Server.BaseServerMessage;
-import it.polimi.ingsw.Server.BaseUserMessage;
-import it.polimi.ingsw.Server.UserMessage;
+import it.polimi.ingsw.Utils.NetMessages.UserMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

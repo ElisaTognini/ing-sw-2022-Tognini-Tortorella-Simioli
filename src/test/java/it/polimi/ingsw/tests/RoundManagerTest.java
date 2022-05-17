@@ -1,10 +1,10 @@
 package it.polimi.ingsw.tests;
-import it.polimi.ingsw.BasicElements.AssistantCard;
-import it.polimi.ingsw.BoardClasses.Board;
-import it.polimi.ingsw.BoardClasses.RoundManager;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.TurnFlow;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Model.BasicElements.AssistantCard;
+import it.polimi.ingsw.Model.BoardClasses.Board;
+import it.polimi.ingsw.Model.BoardClasses.RoundManager;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.TurnFlow;
+import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;

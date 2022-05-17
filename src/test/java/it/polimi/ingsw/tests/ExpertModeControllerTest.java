@@ -1,21 +1,15 @@
 package it.polimi.ingsw.tests;
 
-import it.polimi.ingsw.BoardClasses.Board;
-import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.Controller.BaseActionController;
+import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Controller.ExpertModeController;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.Expert.CardManager;
-import it.polimi.ingsw.Expert.CharacterCardTemplate;
-import it.polimi.ingsw.Expert.Parameter;
-import it.polimi.ingsw.Model;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Model.Expert.CardManager;
+import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
+import it.polimi.ingsw.Model.Expert.Parameter;
+import it.polimi.ingsw.Model.Model;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 public class ExpertModeControllerTest {
 
@@ -39,7 +33,6 @@ public class ExpertModeControllerTest {
         BoardExpert boardExpert = (BoardExpert) model.getBoard();
         CardManager manager = new CardManager(boardExpert);
         Parameter param = new Parameter();
-
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(1);
         cards[1] = manager.returnCard(2);
@@ -54,7 +47,6 @@ public class ExpertModeControllerTest {
 
         boardExpert.assignCoin("player1", PawnDiscColor.PINK);
 
-        boardExpert.purchaseCharacterCard("player1", 1);
         param.setColor(PawnDiscColor.YELLOW);
         param.setIslandID(2);
 

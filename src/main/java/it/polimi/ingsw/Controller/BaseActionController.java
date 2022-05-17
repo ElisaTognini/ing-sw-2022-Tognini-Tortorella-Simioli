@@ -1,12 +1,15 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.BoardClasses.RoundManager;
-import it.polimi.ingsw.Enums.*;
-import it.polimi.ingsw.Model;
-import it.polimi.ingsw.NotifyArgsController;
-import it.polimi.ingsw.Player;
-import it.polimi.ingsw.Server.BaseServerMessage;
-import it.polimi.ingsw.Server.CustomMessage;
+import it.polimi.ingsw.Model.BoardClasses.RoundManager;
+import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Utils.Enums.ActionType;
+import it.polimi.ingsw.Utils.Enums.NotifyType;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Utils.Enums.TurnFlow;
+import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
+import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
 import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
@@ -16,7 +19,6 @@ public class BaseActionController extends Observable {
     private RoundManager roundManager;
     private boolean isLastRound;
     private Player winner;
-    private Match match;
 
     /* model and roundManager will be given as parameters when the lobby is created
     * in the network classes */

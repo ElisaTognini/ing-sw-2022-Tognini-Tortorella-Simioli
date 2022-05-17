@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.BoardClasses.RoundManager;
-import it.polimi.ingsw.Enums.NotifyType;
-import it.polimi.ingsw.Enums.TurnFlow;
-import it.polimi.ingsw.Model;
-import it.polimi.ingsw.NotifyArgsController;
-import it.polimi.ingsw.Server.BaseServerMessage;
-import it.polimi.ingsw.Server.CustomMessage;
+import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
+import it.polimi.ingsw.Model.BoardClasses.RoundManager;
+import it.polimi.ingsw.Utils.Enums.NotifyType;
+import it.polimi.ingsw.Utils.Enums.TurnFlow;
+import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
+import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
 import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
@@ -21,14 +21,11 @@ public class ExpertModeController extends Observable {
 
     private Model model;
     private RoundManager roundManager;
-    private Match match;
 
     public ExpertModeController(Model model){
         this.model = model;
         this.roundManager = model.getRoundManager();
     }
-
-    public void setMatch(Match m){ this.match = m;}
 
     /* this class handles expert mode functionalities:
     * - using the character card */

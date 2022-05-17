@@ -4,13 +4,13 @@ package it.polimi.ingsw.tests;
  *  from their dining room to the bag. If any player has fewer than 3 students of that type,
  *  return as many students as they have */
 
-import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.Expert.CardManager;
-import it.polimi.ingsw.Expert.CharacterCardTemplate;
-import it.polimi.ingsw.Expert.Parameter;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Model.Expert.CardManager;
+import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
+import it.polimi.ingsw.Model.Expert.Parameter;
+import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

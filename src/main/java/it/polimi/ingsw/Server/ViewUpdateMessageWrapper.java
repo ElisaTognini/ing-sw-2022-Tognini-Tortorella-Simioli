@@ -1,21 +1,19 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.BasicElements.AssistantCardDeck;
-import it.polimi.ingsw.BasicElements.CloudTile;
-import it.polimi.ingsw.BasicElements.Island;
-import it.polimi.ingsw.BoardClasses.Board;
-import it.polimi.ingsw.BoardClasses.BoardExpert;
-import it.polimi.ingsw.Client.ExpertViewUpdateMessage;
-import it.polimi.ingsw.Client.ViewUpdateMessage;
-import it.polimi.ingsw.Enums.ActionType;
-import it.polimi.ingsw.Expert.CharacterCardTemplate;
-import it.polimi.ingsw.Expert.CoinCounter;
-import it.polimi.ingsw.Model;
-import it.polimi.ingsw.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Model.BasicElements.AssistantCardDeck;
+import it.polimi.ingsw.Model.BasicElements.Island;
+import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
+import it.polimi.ingsw.Utils.NetMessages.ExpertViewUpdateMessage;
+import it.polimi.ingsw.Utils.NetMessages.ViewUpdateMessage;
+import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
+import it.polimi.ingsw.Model.Expert.CoinCounter;
+import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Utils.NetMessages.EndGameMessage;
+import it.polimi.ingsw.Utils.NetMessages.NewRoundMessage;
+import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 public class ViewUpdateMessageWrapper{
 

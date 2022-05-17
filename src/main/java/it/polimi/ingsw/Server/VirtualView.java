@@ -1,6 +1,4 @@
 package it.polimi.ingsw.Server;
-import it.polimi.ingsw.Client.ViewUpdateMessage;
-import it.polimi.ingsw.Controller.Controller;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Model;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Model.Model;
 import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;

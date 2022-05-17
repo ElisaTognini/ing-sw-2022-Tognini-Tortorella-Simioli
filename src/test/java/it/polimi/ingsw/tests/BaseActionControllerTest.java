@@ -1,12 +1,11 @@
 package it.polimi.ingsw.tests;
 
-import it.polimi.ingsw.BasicElements.AssistantCard;
-import it.polimi.ingsw.Controller.BaseActionController;
+import it.polimi.ingsw.Model.BasicElements.AssistantCard;
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Enums.PawnDiscColor;
-import it.polimi.ingsw.Enums.TurnFlow;
-import it.polimi.ingsw.Model;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Utils.Enums.TurnFlow;
+import it.polimi.ingsw.Model.Model;
 import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.RepeatedTest;

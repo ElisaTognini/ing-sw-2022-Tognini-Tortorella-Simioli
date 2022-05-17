@@ -1,7 +1,7 @@
 package it.polimi.ingsw.tests;
 
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Model;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Model.Model;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 

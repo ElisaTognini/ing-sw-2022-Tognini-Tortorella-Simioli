@@ -1,7 +1,8 @@
 package it.polimi.ingsw.tests;
 
-import it.polimi.ingsw.BasicElements.*;
-import it.polimi.ingsw.Enums.PawnDiscColor;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Model.BasicElements.Island;
+import it.polimi.ingsw.Model.BasicElements.Student;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 

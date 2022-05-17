@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
+import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
+
 import java.util.Observable;
 
 import java.io.IOException;
@@ -10,6 +14,9 @@ import java.net.Socket;
 
 @Deprecated
 public class ClientConnection extends Observable implements Runnable {
+
+    /* inputStream è da salvare come attributo o regge il get nei metodi
+    * per il numero di giocatori ecc...? */
 
     private Socket socket;
     private Server server;
@@ -88,10 +95,6 @@ public class ClientConnection extends Observable implements Runnable {
         System.out.println("Deregistering client");
         server.deregisterConnection(this);
         System.out.println("Client deregistered successfully!");
-    }
-
-    public Socket getSocket(){
-        return socket;
     }
 
     public synchronized int parseNumberOfPlayers() {

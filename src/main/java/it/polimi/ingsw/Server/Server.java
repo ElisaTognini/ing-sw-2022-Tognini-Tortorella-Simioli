@@ -1,14 +1,15 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Enums.GameMode;
-import it.polimi.ingsw.Model;
+import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
+import it.polimi.ingsw.Utils.NetMessages.SetupServerMessage;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
