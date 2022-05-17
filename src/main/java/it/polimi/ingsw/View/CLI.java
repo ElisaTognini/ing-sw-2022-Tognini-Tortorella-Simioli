@@ -9,12 +9,13 @@ public class CLI extends View implements Observer {
 
     public CLI(){
         /* will print cool title!! */
+        System.out.println(AnsiColors.MAGENTA + AnsiColors.COOL_TITLE + AnsiColors.ANSI_RESET);
     }
 
     @Override
     public void displaySetupMessage(SetupServerMessage message){
         if (message.getSetupServerMessage().equals(CustomMessage.welcomeMessage)) {
-            System.out.println(AnsiColors.ANSI_PURPLE + message.getSetupServerMessage() + AnsiColors.ANSI_RESET);
+            System.out.println(AnsiColors.BLUE + message.getSetupServerMessage() + AnsiColors.ANSI_RESET);
         }
         else if(message.getSetupServerMessage().equals(CustomMessage.requestNumberOfPlayers)){
             System.out.println(message.getSetupServerMessage());
