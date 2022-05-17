@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Model.Model;
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
 import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
 import it.polimi.ingsw.Utils.NetMessages.SetupServerMessage;
 
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -107,7 +110,6 @@ public class Server {
                 System.out.println("Connection established.");
                 ClientConnection clientConnection = new ClientConnection(newSocket, this);
                 executor.submit(clientConnection);
-                System.out.println("ClientConnection submitted to executor");
             } catch (IOException e){
                 System.err.println("Connection error!");
             }
@@ -134,4 +136,5 @@ public class Server {
         }
         throw new IllegalArgumentException();
     }
+
 }

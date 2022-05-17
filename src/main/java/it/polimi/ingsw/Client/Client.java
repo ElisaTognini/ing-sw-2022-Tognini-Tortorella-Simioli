@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Client {
-    private Parser parser;
+public class Client extends Observable {
+    private NetworkHandler networkHandler;
     private String ip;
     private int port;
-    private String nickname;
     private boolean active = true;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private ObjectOutputStream socketOut;
@@ -21,6 +21,7 @@ public class Client {
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
+        networkHandler = new NetworkHandler(this);
     }
 
     public synchronized boolean isActive(){return active;}
@@ -55,7 +56,7 @@ public class Client {
     /* metodo chiamato da un'altra classe, presumibilmente il Parser,
      dopo che sono stati fatti i controlli per la validità dell'azione dell'utente */
 
-    public synchronized void asyncWriteToSocket(UserMessage input) {
+    public synchronized void asyncWriteToSocket(Object input) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +79,8 @@ public class Client {
                 try {
                     while(active) {
                         Object input = socketIn.readObject();
-                        System.out.println(input);
+                        setChanged();
+                        notifyObservers(input);
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     //setActive(false);
@@ -86,5 +88,9 @@ public class Client {
             }
         });
         return t;
+    }
+
+    public NetworkHandler getNetworkHandler() {
+        return networkHandler;
     }
 }

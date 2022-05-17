@@ -4,6 +4,7 @@ import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
 import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
+import it.polimi.ingsw.Utils.NetMessages.SetupServerMessage;
 
 import java.util.Observable;
 
@@ -41,15 +42,16 @@ public class ClientConnection extends Observable implements Runnable {
             in = new ObjectInputStream(socket.getInputStream());
             System.out.println("input stream gained");
             out = new ObjectOutputStream(socket.getOutputStream());
-            send(new BaseServerMessage(CustomMessage.welcomeMessage));
+            send(new SetupServerMessage(CustomMessage.welcomeMessage));
             server.lobby(this);
             while(isActive()){
                 read = in.readObject();
+                setChanged();
                 notifyObservers(read);
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println("Something went wrong!");
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         } finally {
             close();
         }
@@ -79,7 +81,6 @@ public class ClientConnection extends Observable implements Runnable {
         }).start();
     }
 
-    /*CLOSECONNECTION AND CLOSE TO BE FINISHED*/
     public synchronized void closeConnection(){
         send(new BaseServerMessage(CustomMessage.closingConnection));
         try{
@@ -100,8 +101,11 @@ public class ClientConnection extends Observable implements Runnable {
     public synchronized int parseNumberOfPlayers() {
         Object read;
         ObjectInputStream in;
+        ObjectOutputStream out;
         while(true){
             try {
+                out = new ObjectOutputStream(socket.getOutputStream());
+                out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
                 read = in.readObject();
                 if (read instanceof BaseUserMessage){
@@ -112,7 +116,8 @@ public class ClientConnection extends Observable implements Runnable {
                     else send(new BaseServerMessage(CustomMessage.errorNumberOfPlayers));
                 }
             } catch (IOException | ClassNotFoundException  e) {
-                System.err.println("Input stream error\n");
+                System.err.println(e.getMessage());
+                server.deregisterConnection(this);
             }
         }
     }

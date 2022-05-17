@@ -9,14 +9,16 @@ import java.util.Observer;
 * When the update is received, simple checks are performed client side and then the message is made so that it
 * is the correct format to be read server side. */
 
-public class Parser implements Observer {
-    private TurnFlow stage;
-    private String actionPerformer;
+public class NetworkHandler implements Observer {
 
-    public Parser(){}
+    private Client client;
+
+    public NetworkHandler(Client client) {
+        this.client = client;
+    }
 
     @Override
-    public void update(Observable o, Object arg) {
-
+    public synchronized void update(Observable o, Object arg) {
+        client.asyncWriteToSocket(arg);
     }
 }

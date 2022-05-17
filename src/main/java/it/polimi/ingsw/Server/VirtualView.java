@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
+
 import java.util.*;
 
 public class VirtualView extends Observable implements Observer{
@@ -26,6 +28,8 @@ public class VirtualView extends Observable implements Observer{
     * call the necessary method. */
     @Override
     public void update(Observable o, Object arg) {
+        if(arg instanceof BaseUserMessage){
 
+        }
     }
 }
