@@ -12,8 +12,6 @@ import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
 
-/* CHECK CAST TO BOARDEXPERT*/
-
 public class ExpertModeController extends Observable {
     /* controller class that handles expert game mode -
     * is only instantiated in the controller if expert mode has
