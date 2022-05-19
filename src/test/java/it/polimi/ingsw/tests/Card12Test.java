@@ -62,4 +62,10 @@ public class Card12Test {
 
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
 }

@@ -107,4 +107,10 @@ public class Card10Test {
         assertTrue(board.isActionForbidden(10, param, "player1"));
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
 }

@@ -94,7 +94,12 @@ public class Card7 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        return this.toString();
+        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
+
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
+        }
+        return toRet.toString();
     }
 
 

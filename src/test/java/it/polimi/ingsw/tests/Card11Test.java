@@ -55,6 +55,12 @@ public class Card11Test {
         }
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
     /*to test: last three students remaining with an empty bag.*/
 
 }

@@ -65,4 +65,10 @@ public class Card4Test {
         assertTrue(board.isActionForbidden(4, param, "player2"));
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
 }

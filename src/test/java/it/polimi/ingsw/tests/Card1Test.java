@@ -52,4 +52,10 @@ public class Card1Test {
             System.out.println("No pink students on card");
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
 }

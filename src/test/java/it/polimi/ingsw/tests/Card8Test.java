@@ -44,4 +44,10 @@ public class Card8Test {
             board.roundSetup();
         }
     }
+
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
 }

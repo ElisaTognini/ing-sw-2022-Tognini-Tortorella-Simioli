@@ -96,4 +96,10 @@ public class Card2Test {
         assertFalse(board.isActionForbidden(2, param, "player2"));
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
+
 }

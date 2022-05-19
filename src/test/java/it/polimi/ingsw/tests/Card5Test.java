@@ -81,4 +81,10 @@ public class Card5Test {
         assertEquals(2, board.getIslandList().get(2).getNumberOfNEtiles());
     }
 
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[2].toStringCard());
+    }
+
 }

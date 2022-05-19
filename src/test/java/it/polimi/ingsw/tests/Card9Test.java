@@ -59,4 +59,10 @@ public class Card9Test {
 
         assertEquals(null, board.getIslandList().get(5).getOwner());
     }
+
+    @Test
+    public void toStringCardTest(){
+        initTest();
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+    }
 }

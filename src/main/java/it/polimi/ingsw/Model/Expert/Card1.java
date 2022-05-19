@@ -71,10 +71,10 @@ public class Card1 extends CharacterCardTemplate{
     @Override
     /* FORMAT: cardID followed by the color and number of the students placed on the card */
     public String toStringCard(){
-        StringBuilder toRet = new StringBuilder(cardID);
+        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
 
         for(PawnDiscColor c : PawnDiscColor.values()){
-            toRet.append(c).append(students.getInfluence(c));
+            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
         }
         return toRet.toString();
     }

@@ -44,7 +44,8 @@ public class Card12 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        return this.toString();
+        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
+        return toRet;
     }
 
 }

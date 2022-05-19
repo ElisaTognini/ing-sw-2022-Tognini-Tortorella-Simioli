@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.Expert;
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Model.StudentContainer;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 /* in setup, draw 4 students and place them on this card
 *  take 1 student from this card and place it in your dining room.
@@ -66,7 +67,12 @@ public class Card11 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        return this.toString();
+        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
+
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
+        }
+        return toRet.toString();
     }
 
 
