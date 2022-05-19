@@ -38,6 +38,12 @@ public class Match implements Observer {
         controller.addMatchAsObserver(this);
         model.addObserver(this);
         model.getTurnUpdates().addObserver(this);
+        for(VirtualView v : views){
+            v.addObserver(controller);
+        }
+        for(VirtualView v : views){
+            v.getClientConnection().startMatch();
+        }
     }
 
     public GameMode getGameMode(){return gameMode;}

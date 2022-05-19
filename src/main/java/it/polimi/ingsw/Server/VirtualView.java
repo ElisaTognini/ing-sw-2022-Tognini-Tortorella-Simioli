@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
+import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
 
 import java.util.*;
 
@@ -28,8 +28,6 @@ public class VirtualView extends Observable implements Observer{
     * call the necessary method. */
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof BaseUserMessage){
-
-        }
+        notifyObservers(arg);
     }
 }

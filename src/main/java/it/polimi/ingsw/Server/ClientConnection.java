@@ -22,9 +22,11 @@ public class ClientConnection extends Observable implements Runnable {
     private Socket socket;
     private Server server;
     private ObjectOutputStream out;
+    private ObjectInputStream in;
     private boolean active;
     private String nickname;
     private int matchID;
+    private boolean matchHasStarted = false;
 
     public ClientConnection(Socket socket, Server server){
         this.socket = socket;
@@ -34,7 +36,6 @@ public class ClientConnection extends Observable implements Runnable {
 
     @Override
     public void run() {
-        ObjectInputStream in;
         Object read;
         System.out.println("clientconnection run method has been called");
         try {
@@ -100,13 +101,8 @@ public class ClientConnection extends Observable implements Runnable {
 
     public synchronized int parseNumberOfPlayers() {
         Object read;
-        ObjectInputStream in;
-        ObjectOutputStream out;
         while(true){
             try {
-                out = new ObjectOutputStream(socket.getOutputStream());
-                out.flush();
-                in = new ObjectInputStream(socket.getInputStream());
                 read = in.readObject();
                 if (read instanceof BaseUserMessage){
                     if(((BaseUserMessage) read).getNumberOfPlayers() == 2 ||
@@ -124,11 +120,9 @@ public class ClientConnection extends Observable implements Runnable {
 
     public synchronized GameMode parseGameMode(){
         Object read;
-        ObjectInputStream in;
         String gameMode;
         while(true){
             try {
-                in = new ObjectInputStream(socket.getInputStream());
                 read = in.readObject();
                 if (read instanceof BaseUserMessage){
                     gameMode = ((BaseUserMessage) read).getGameMode().toUpperCase();
@@ -146,11 +140,9 @@ public class ClientConnection extends Observable implements Runnable {
     * that will call this method again if the inserted nickname has already been chosen. */
     public synchronized String parseNickname(){
         Object read;
-        ObjectInputStream in;
         String nickname;
         while(true){
             try {
-                in = new ObjectInputStream(socket.getInputStream());
                 read = in.readObject();
                 if (read instanceof BaseUserMessage){
                     return ((BaseUserMessage) read).getNickname();
@@ -170,4 +162,7 @@ public class ClientConnection extends Observable implements Runnable {
         return matchID;
     }
 
+    public void startMatch() {
+        matchHasStarted = true;
+    }
 }
