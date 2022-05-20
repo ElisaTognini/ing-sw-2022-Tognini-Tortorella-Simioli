@@ -62,9 +62,11 @@ public class Model extends Observable implements Observer{
     public void update(Observable o, Object arg) {
         switch (mode){
             case SIMPLE:
+                setChanged();
                 notifyObservers(messageWrapper.boardUpdateSimple(this));
                 break;
             case EXPERT:
+                setChanged();
                 notifyObservers(messageWrapper.boardUpdateExpert(this));
                 break;
         }

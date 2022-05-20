@@ -38,7 +38,9 @@ public class View extends Observable implements Observer {
 
     private void updateGameBoardExpert(ExpertViewUpdateMessage message) {}
     public void displaySetupMessage(SetupServerMessage message){}
-    public void updateGameBoard(ViewUpdateMessage message){}
+    public void updateGameBoard(ViewUpdateMessage message){
+        System.out.println(message);
+    }
     public void displayError(BaseServerMessage message){}
     public void displayNewRoundMessage(NewRoundMessage message){}
     public void displayTurnChange(TurnChangeMessage message){}

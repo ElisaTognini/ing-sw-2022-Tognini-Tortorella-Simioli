@@ -83,7 +83,7 @@ public class Client extends Observable {
                         notifyObservers(input);
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    //setActive(false);
+                    setActive(false);
                 }
             }
         });

@@ -35,11 +35,9 @@ public class BaseActionController extends Observable {
 
     public void startGame(){
         /* first player of the game is picked and stored */
-        model.getBoard().setup();
         roundManager.computeTurnOrder(roundManager.pickFirstPlayerIndex());
+        model.getBoard().setup();
         roundManager.changeState(TurnFlow.BEGINS_TURN);
-
-       // assignWizards();
 
     }
 

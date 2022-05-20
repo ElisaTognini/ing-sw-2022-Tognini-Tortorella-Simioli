@@ -16,6 +16,7 @@ public class ModelTest {
         nicknames[1] = "player2";
 
         model = new Model(GameMode.SIMPLE, nicknames, 2);
+        model.getRoundManager().computeTurnOrder(model.getRoundManager().pickFirstPlayerIndex());
         model.getBoard().setup();
         assertFalse(model.isGameOver());
     }
@@ -29,6 +30,7 @@ public class ModelTest {
         int n;
 
         model = new Model(GameMode.EXPERT, nicknames, 2);
+        model.getRoundManager().computeTurnOrder(model.getRoundManager().pickFirstPlayerIndex());
         model.getBoard().setup();
 
         m = model.getMode();
@@ -42,6 +44,7 @@ public class ModelTest {
         nicknames[1] = "player2";
 
         model = new Model(GameMode.SIMPLE, nicknames, 2);
+        model.getRoundManager().computeTurnOrder(model.getRoundManager().pickFirstPlayerIndex());
         model.getBoard().setup();
 
         model.getWinner();

@@ -44,6 +44,11 @@ public class Match implements Observer {
         for(VirtualView v : views){
             v.getClientConnection().startMatch();
         }
+
+    }
+
+    public void startGame(){
+        controller.getBaseActionController().startGame();
     }
 
     public GameMode getGameMode(){return gameMode;}

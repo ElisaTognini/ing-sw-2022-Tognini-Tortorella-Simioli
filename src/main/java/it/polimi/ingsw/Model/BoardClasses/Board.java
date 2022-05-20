@@ -61,14 +61,18 @@ public class Board extends Observable{
         initializeSchoolBoards();
         initializeDecks();
         /* send all players the setup board via the MessageWrapper */
-        if(mode.equals(GameMode.SIMPLE))
+        if(mode.equals(GameMode.SIMPLE)) {
+            setChanged();
             notifyObservers();
+        }
     }
 
     public void roundSetup(){
         studentsOnClouds();
-        if(mode.equals(GameMode.SIMPLE))
+        if(mode.equals(GameMode.SIMPLE)) {
+            setChanged();
             notifyObservers();
+        }
     }
 
     /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
@@ -88,6 +92,7 @@ public class Board extends Observable{
         for(SchoolBoard sb : schoolBoards){
             if(sb.getOwner().getNickname().equals(nickname)){
                 islands.get(islandID).addStudent(sb.getEntrance().removeStudent(color));
+                setChanged();
                 notifyObservers();
                 break;
             }
@@ -99,6 +104,7 @@ public class Board extends Observable{
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
                 sb.getDiningRoom().addStudent(sb.getEntrance().removeStudent(color));
+                setChanged();
                 notifyObservers();
             }
         }
@@ -114,6 +120,7 @@ public class Board extends Observable{
                 }
             }
         }
+        setChanged();
         notifyObservers();
     }
 
@@ -127,6 +134,7 @@ public class Board extends Observable{
         islands.get(position).setHostsToFalse();
         motherNature.setPosition((motherNature.getPosition() + movements) % islands.size());
         islands.get(motherNature.getPosition()).setHostsToTrue();
+        setChanged();
         notifyObservers();
     }
 
@@ -158,6 +166,7 @@ public class Board extends Observable{
                     sb.getProfessorTable().addProfessor(c);
             }
         }
+        setChanged();
         notifyObservers();
     }
 
@@ -228,6 +237,7 @@ public class Board extends Observable{
         }
 
         islands.get(motherNature.getPosition()).getsConquered(conqueror);
+        setChanged();
         notifyObservers();
     }
 
@@ -277,6 +287,7 @@ public class Board extends Observable{
         toKeep = islands.get(index1);
         islands.remove(index2);
         motherNature.setPosition(islands.indexOf(toKeep));
+        setChanged();
         notifyObservers();
     }
 
@@ -426,6 +437,7 @@ public class Board extends Observable{
 
     public void setLastRound(){
         lastRound = true;
+        setChanged();
         notifyObservers();
     }
 

@@ -57,7 +57,6 @@ public class Server {
             }while(isNicknameDuplicated(nickChecker, c));
             matchInitializer();
             waitingClients.clear();
-            matches.get(matches.size()-1).sendAll(new BaseServerMessage(CustomMessage.matchStarting));
         }
         else if(1 < waitingClients.size() && waitingClients.size() < matchPlayers){
             do {
@@ -101,6 +100,9 @@ public class Server {
         for(VirtualView v: virtualViews){
             v.addObserver(controller);
         }
+
+        matches.get(matches.size()-1).sendAll(new BaseServerMessage(CustomMessage.matchStarting));
+        matches.get(matches.size()-1).startGame();
     }
 
     public void run(){
