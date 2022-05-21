@@ -44,11 +44,14 @@ public class ClientConnection extends Observable implements Runnable {
             System.out.println("input stream gained");
             out = new ObjectOutputStream(socket.getOutputStream());
             send(new SetupServerMessage(CustomMessage.welcomeMessage));
+            out.flush();
             server.lobby(this);
             while(isActive()){
-                read = in.readObject();
-                setChanged();
-                notifyObservers(read);
+                if (matchHasStarted) {
+                    read = in.readObject();
+                    setChanged();
+                    notifyObservers(read);
+                }
             }
         } catch (Exception e) {
             System.err.println("Something went wrong!");

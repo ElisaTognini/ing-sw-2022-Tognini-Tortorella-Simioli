@@ -49,7 +49,7 @@ public class RoundManager extends Observable{
     public int pickFirstPlayerIndex(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(players.size());
-        return randomIndex;
+        return 1;
     }
 
     /* starting from the player with the lowest assistant card value, places the players
@@ -62,6 +62,7 @@ public class RoundManager extends Observable{
             sortedPlayers.add(players.get(i));
         }
         currentPlayer = sortedPlayers.get(0);
+        setChanged();
         notifyObservers(ActionType.PLAYER_CHANGE);
     }
 
@@ -95,6 +96,7 @@ public class RoundManager extends Observable{
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
         currentPlayer = cards.get(0).getOwner();
+        setChanged();
         notifyObservers(ActionType.PLAYER_CHANGE);
         for(AssistantCard c: cards){
             sortedPlayerActions.add(c.getOwner());
@@ -105,6 +107,7 @@ public class RoundManager extends Observable{
     public void refreshCurrentPlayerAction(){
         if(sortedPlayerActions.indexOf(currentPlayer) < sortedPlayerActions.size()-1){
             currentPlayer = sortedPlayerActions.get(sortedPlayerActions.indexOf(currentPlayer) + 1);
+            setChanged();
             notifyObservers(ActionType.PLAYER_CHANGE);
         }
     }
@@ -114,12 +117,14 @@ public class RoundManager extends Observable{
         for(Player p : players) p.setCardPickedToFalse();
         changeState(TurnFlow.BEGINS_TURN);
         movedStudents = 0;
+        setChanged();
         notifyObservers(ActionType.NEW_ROUND);
     }
 
     public void refreshCurrentPlayer(){
         if(sortedPlayers.indexOf(currentPlayer) < sortedPlayers.size()-1){
             currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
+            setChanged();
             notifyObservers(ActionType.PLAYER_CHANGE);
         }
     }

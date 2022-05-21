@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Utils.NetMessages.GameModeMessage;
 import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
 
 import java.util.ArrayList;
@@ -40,10 +41,13 @@ public class Match implements Observer {
         model.getTurnUpdates().addObserver(this);
         for(VirtualView v : views){
             v.addObserver(controller);
+            v.getClientConnection().setMatchID(matchID);
         }
         for(VirtualView v : views){
             v.getClientConnection().startMatch();
         }
+
+        sendAll(new GameModeMessage(gameMode));
 
     }
 

@@ -38,7 +38,6 @@ public class Server {
 
     public synchronized void lobby(ClientConnection c){
         GameMode gameMode;
-        String nickChecker;
         waitingClients.add(c);
         if(waitingClients.size() == 1 ){
             c.send(new SetupServerMessage(CustomMessage.requestNumberOfPlayers));
@@ -51,6 +50,7 @@ public class Server {
             matches.add(new Match(this, matchPlayers, gameMode, matches.size()));
         }
         else if(waitingClients.size() == matchPlayers){
+            String nickChecker;
             do {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
@@ -59,6 +59,7 @@ public class Server {
             waitingClients.clear();
         }
         else if(1 < waitingClients.size() && waitingClients.size() < matchPlayers){
+            String nickChecker;
             do {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();

@@ -1,4 +1,5 @@
 package it.polimi.ingsw.View;
+import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -34,6 +35,9 @@ public class View extends Observable implements Observer {
             /* view will display winner and game will close*/
             displayEndOfGame((EndGameMessage)arg);
         }
+        else if(arg instanceof GameModeMessage){
+            setMode((GameModeMessage)arg);
+        }
     }
 
     private void updateGameBoardExpert(ExpertViewUpdateMessage message) {}
@@ -45,5 +49,5 @@ public class View extends Observable implements Observer {
     public void displayNewRoundMessage(NewRoundMessage message){}
     public void displayTurnChange(TurnChangeMessage message){}
     public void displayEndOfGame(EndGameMessage message){}
-
+    public void setMode(GameModeMessage mode){}
 }

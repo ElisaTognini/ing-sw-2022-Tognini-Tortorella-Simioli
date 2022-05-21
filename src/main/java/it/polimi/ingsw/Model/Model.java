@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
 import it.polimi.ingsw.Utils.Enums.ActionType;
 import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
 
 import java.util.*;
 
@@ -34,12 +35,16 @@ public class Model extends Observable implements Observer{
             ActionType argument = (ActionType)arg;
             switch (argument){
                 case PLAYER_CHANGE:
-                    notifyObservers(messageWrapper.turnChangeMessage(roundManager.getCurrentPlayer().getNickname()));
+                    TurnChangeMessage message = messageWrapper.turnChangeMessage(roundManager.getCurrentPlayer().getNickname());
+                    setChanged();
+                    notifyObservers(message);
                     break;
                 case NEW_ROUND:
+                    setChanged();
                     notifyObservers(messageWrapper.newRoundMessage());
                     break;
                 case END_GAME:
+                    setChanged();
                     notifyObservers(messageWrapper.endGameMessage(getWinner().getNickname()));
             }
         }
@@ -73,9 +78,8 @@ public class Model extends Observable implements Observer{
     }
 
     public Board getBoard(){
-        if(board instanceof Board)
+            setChanged();
             return board;
-        else return (BoardExpert)board;
     }
 
     public RoundManager getRoundManager() {

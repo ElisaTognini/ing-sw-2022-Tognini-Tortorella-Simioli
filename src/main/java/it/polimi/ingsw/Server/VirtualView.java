@@ -28,6 +28,7 @@ public class VirtualView extends Observable implements Observer{
     * call the necessary method. */
     @Override
     public void update(Observable o, Object arg) {
+        setChanged();
         notifyObservers(arg);
     }
 }

@@ -61,7 +61,7 @@ public class Client extends Observable {
             @Override
             public void run() {
                 try {
-                    socketOut.writeObject(input);
+                    socketOut.writeUnshared(input);
                     socketOut.flush();
                     socketOut.reset();
                 } catch (IOException e) {

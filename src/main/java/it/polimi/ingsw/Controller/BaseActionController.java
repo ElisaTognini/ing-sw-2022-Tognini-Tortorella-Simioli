@@ -44,6 +44,7 @@ public class BaseActionController extends Observable {
     public void endGame(){
         winner = model.getWinner();
         winner.setWinner();
+        setChanged();
         model.getRoundManager().notifyObservers(ActionType.END_GAME);
         /* view will display that winner won the game, net will close connections etc... */
     }
@@ -65,6 +66,7 @@ public class BaseActionController extends Observable {
                             return true;
                         } else {
                             /* the view will display that the card has already been played */
+                            setChanged();
                             notifyObservers(new NotifyArgsController(nickname,
                                     new BaseServerMessage(CustomMessage.cardAlreadyPlayedError), NotifyType.SEND_ERROR));
                         }
@@ -72,18 +74,21 @@ public class BaseActionController extends Observable {
                 }
                 else{
                     /* the view will display that the card is not present inside the deck */
+                    setChanged();
                     notifyObservers(new NotifyArgsController(nickname,
                             new BaseServerMessage(CustomMessage.cardNotPresentError), NotifyType.SEND_ERROR));
                 }
             }
             else{
                 /* the view will display that the action cannot be performed at this point of the turn */
+                setChanged();
                 notifyObservers(new NotifyArgsController(nickname,
                         new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }
         else{
             /* the view will display that it's not this player's turn */
+            setChanged();
             notifyObservers(new NotifyArgsController(nickname,
                     new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
         }
@@ -102,6 +107,7 @@ public class BaseActionController extends Observable {
                 return true;
             }else{
                 /* view will display that dining room has no more available spaces for desired color */
+                setChanged();
                 notifyObservers(new NotifyArgsController(nickname,
                         new BaseServerMessage(CustomMessage.fullDRError), NotifyType.SEND_ERROR));
             }
@@ -129,6 +135,7 @@ public class BaseActionController extends Observable {
 
         if(isLastRound){
             //display last round message
+            setChanged();
             notifyObservers(new NotifyArgsController(nickname,
                     new BaseServerMessage(CustomMessage.lastRound), NotifyType.SEND_ALL));
             return true;
@@ -149,33 +156,27 @@ public class BaseActionController extends Observable {
                         }
                         return true;
                     }else{
+                        setChanged();
                         notifyObservers(new NotifyArgsController(nickname,
                                 new BaseServerMessage(CustomMessage.emptyCloudError), NotifyType.SEND_ERROR));
                     }
                 }else{
+                    setChanged();
                     notifyObservers(new NotifyArgsController(nickname,
                             new BaseServerMessage(CustomMessage.invalidCloudIDError), NotifyType.SEND_ERROR));
                 }
             } else {
+                setChanged();
                 notifyObservers(new NotifyArgsController(nickname,
                         new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }else{
+            setChanged();
             notifyObservers(new NotifyArgsController(nickname,
                     new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
         }
         return false;
     }
-
-    /* draft for assignWizards - to be checked
-    public synchronized boolean assignWizards(Wizards wizard){
-        for(Player p : model.getRoundManager().getPlayerList()){
-            if(p.getWizard().equals(wizard)){
-                return false;
-            }
-        }
-        return true;
-    }*/
 
     /* --------------- PRIVATE UTILITY METHODS ---------------- */
 
@@ -190,23 +191,27 @@ public class BaseActionController extends Observable {
                     }
                     else{
                         /* the view will display that the color is not available in the entrance */
+                        setChanged();
                         notifyObservers(new NotifyArgsController(nickname,
                                 new BaseServerMessage(CustomMessage.colorNotAvailableError), NotifyType.SEND_ERROR));
                     }
                 }
                 else{
+                    setChanged();
                     /* the view will display that three students have already been moved */
                     notifyObservers(new NotifyArgsController(nickname,
                             new BaseServerMessage(CustomMessage.allStudentsMovedError), NotifyType.SEND_ERROR));
                 }
             }
             else{
+                setChanged();
                 /* the view will display that the action cannot be performed at this point of the turn */
                 notifyObservers(new NotifyArgsController(nickname,
                         new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
             }
         }
         else{
+            setChanged();
             /* the view will display that it's not this player's turn */
             notifyObservers(new NotifyArgsController(nickname,
                     new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
@@ -248,6 +253,7 @@ public class BaseActionController extends Observable {
         if(model.getBoard().getDecks().get(0).size() == 1){
             isLastRound = true;
         }
+        setChanged();
         notifyObservers(new NotifyArgsController(null,
                 new BaseServerMessage(CustomMessage.startNewRound), NotifyType.SEND_ALL));
     }
