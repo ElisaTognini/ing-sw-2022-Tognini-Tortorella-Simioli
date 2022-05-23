@@ -81,6 +81,7 @@ public class Board extends Observable{
         for(AssistantCardDeck d : decks){
             if(d.getOwner().getNickname().equals(nickname)){
                 d.getOwner().setCardPickedToTrue();
+                setChanged();
                 return d.drawCard(cardID);
             }
         }

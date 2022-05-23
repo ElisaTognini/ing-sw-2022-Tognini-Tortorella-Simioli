@@ -49,7 +49,7 @@ public class RoundManager extends Observable{
     public int pickFirstPlayerIndex(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(players.size());
-        return 1;
+        return randomIndex;
     }
 
     /* starting from the player with the lowest assistant card value, places the players

@@ -78,7 +78,6 @@ public class Model extends Observable implements Observer{
     }
 
     public Board getBoard(){
-            setChanged();
             return board;
     }
 

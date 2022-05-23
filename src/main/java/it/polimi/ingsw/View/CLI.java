@@ -23,7 +23,7 @@ public class CLI extends View implements Observer {
     public CLI(){
         parser = new Parser();
         thread = new Thread(parser);
-        //System.out.println(AnsiColors.MAGENTA + AnsiColors.COOL_TITLE + AnsiColors.ANSI_RESET);
+        System.out.println(AnsiColors.MAGENTA + AnsiColors.COOL_TITLE + AnsiColors.ANSI_RESET);
     }
 
     @Override
@@ -157,6 +157,11 @@ public class CLI extends View implements Observer {
     @Override
     public void displayEndOfGame(EndGameMessage message){
         System.out.println("Game over! Congrats to " + message.getWinner() + " who won the game");
+    }
+
+    @Override
+    public void updateGameBoard(ViewUpdateMessage message){
+        buildNewBoard();
     }
 
     @Override

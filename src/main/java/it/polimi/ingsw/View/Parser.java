@@ -125,7 +125,7 @@ public class Parser extends Observable implements Runnable{
                 System.out.println("enter a valid color!");
                 flag = true;
             }
-        }while(!flag);
+        }while(flag);
 
         setChanged();
         notifyObservers(new MoveStudentToDRMessage(PawnDiscColor.valueOf(read)));
@@ -145,7 +145,7 @@ public class Parser extends Observable implements Runnable{
                 flag = true;
                 System.out.println(AnsiColors.ANSI_RED + "choose a valid IslandID\n" + AnsiColors.ANSI_RESET);
             }
-        }while(flag == false);
+        }while(flag == true);
 
         System.out.println("now enter the color of the student you would like to move.");
         do{
@@ -156,7 +156,7 @@ public class Parser extends Observable implements Runnable{
                 System.out.println("enter a valid color!");
                 flag = true;
             }
-        }while(!flag);
+        }while(flag);
 
         setChanged();
         notifyObservers(new MoveStudentToIslandMessage(i, PawnDiscColor.valueOf(read)));
@@ -175,7 +175,7 @@ public class Parser extends Observable implements Runnable{
                 flag = true;
                 System.out.println(AnsiColors.ANSI_RED + "choose a valid cloud number!\n" + AnsiColors.ANSI_RESET);
             }
-        }while(flag == false);
+        }while(flag == true);
 
         setChanged();
         notifyObservers(new PickCloudMessage(i));

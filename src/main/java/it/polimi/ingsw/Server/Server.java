@@ -55,6 +55,7 @@ public class Server {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
             }while(isNicknameDuplicated(nickChecker, c));
+            c.setNickname(nickChecker);
             matchInitializer();
             waitingClients.clear();
         }

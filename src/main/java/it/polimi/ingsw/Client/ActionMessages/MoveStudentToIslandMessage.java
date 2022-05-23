@@ -2,7 +2,9 @@ package it.polimi.ingsw.Client.ActionMessages;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
-public class MoveStudentToIslandMessage {
+import java.io.Serializable;
+
+public class MoveStudentToIslandMessage implements Serializable {
 
     int islandID;
     PawnDiscColor color;

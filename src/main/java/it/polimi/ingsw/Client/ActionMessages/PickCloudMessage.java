@@ -1,13 +1,15 @@
 package it.polimi.ingsw.Client.ActionMessages;
 
-public class PickCloudMessage {
+import java.io.Serializable;
+
+public class PickCloudMessage implements Serializable {
 
     private int cloudID;
     public PickCloudMessage(int cloudID){
         this.cloudID = cloudID;
     }
 
-    public int getCloudID() {
+    public int getCloudID(){
         return cloudID;
     }
 }
