@@ -3,10 +3,7 @@ package it.polimi.ingsw.Server;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Model.Model;
-import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
-import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
-import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
-import it.polimi.ingsw.Utils.NetMessages.SetupServerMessage;
+import it.polimi.ingsw.Utils.NetMessages.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -45,7 +42,9 @@ public class Server {
             c.send(new SetupServerMessage(CustomMessage.requestGameMode));
             gameMode = c.parseGameMode();
             c.send(new SetupServerMessage(CustomMessage.askNickname));
-            c.setNickname(c.parseNickname());
+            String nick = c.parseNickname();
+            c.send(new NicknameMessage(nick));
+            c.setNickname(nick);
             /* Now creating match*/
             matches.add(new Match(this, matchPlayers, gameMode, matches.size()));
         }
@@ -55,6 +54,7 @@ public class Server {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
             }while(isNicknameDuplicated(nickChecker, c));
+            c.send(new NicknameMessage(nickChecker));
             c.setNickname(nickChecker);
             matchInitializer();
             waitingClients.clear();
@@ -65,6 +65,8 @@ public class Server {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
             }while(isNicknameDuplicated(nickChecker, c));
+            c.send(new NicknameMessage(nickChecker));
+            c.setNickname(nickChecker);
         }
     }
 

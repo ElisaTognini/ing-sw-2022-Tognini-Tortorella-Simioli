@@ -75,15 +75,17 @@ public class AssistantCardDeck {
     }
 
     @Override
-    /*FORMAT list of present cardIDs separated by a blank space*/
+    /*FORMAT owner and list of present cardIDs and their power factor separated by a blank space */
     public String toString(){
         StringBuilder stringbuilder = new StringBuilder();
 
         stringbuilder.append(owner.getNickname() + " ");
+
         for(AssistantCard card : cards){
             stringbuilder.append(card.getAssistantCardID() + " ");
+            stringbuilder.append(card.getMotherNatureMovements() + " ");
         }
-
+        stringbuilder.deleteCharAt(stringbuilder.lastIndexOf(stringbuilder.toString()));
         return stringbuilder.toString();
     }
 }

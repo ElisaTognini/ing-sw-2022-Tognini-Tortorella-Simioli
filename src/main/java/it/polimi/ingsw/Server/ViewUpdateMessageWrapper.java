@@ -41,6 +41,8 @@ public class ViewUpdateMessageWrapper{
         ArrayList<String> decks = message.getDecks();
         ArrayList<String> schoolboards = message.getSchoolboards();
 
+        message.setMnPosition(model.getBoard().getMotherNaturePosition());
+
         for(Island i : model.getBoard().getIslandList()){
             islands.add(i.toString());
         }

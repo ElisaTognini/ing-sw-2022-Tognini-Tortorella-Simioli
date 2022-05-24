@@ -38,6 +38,9 @@ public class View extends Observable implements Observer {
         else if(arg instanceof GameModeMessage){
             setMode((GameModeMessage)arg);
         }
+        else if(arg instanceof NicknameMessage) {
+            setNickname((NicknameMessage) arg);
+        }
     }
 
     private void updateGameBoardExpert(ExpertViewUpdateMessage message) {}
@@ -48,4 +51,5 @@ public class View extends Observable implements Observer {
     public void displayTurnChange(TurnChangeMessage message){}
     public void displayEndOfGame(EndGameMessage message){}
     public void setMode(GameModeMessage mode){}
+    public void setNickname(NicknameMessage nick){}
 }

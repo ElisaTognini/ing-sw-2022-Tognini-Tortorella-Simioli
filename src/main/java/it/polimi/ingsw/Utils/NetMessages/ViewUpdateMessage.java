@@ -19,6 +19,7 @@ public class ViewUpdateMessage implements ServerMessage, Serializable {
     private ArrayList<String> clouds = new ArrayList<>();
     private ArrayList<String> schoolboards = new ArrayList<>();
     private ArrayList<String> decks = new ArrayList<>();
+    private int mnPosition;
     private String currentPlayer;
 
     public ArrayList<String> getIslands() {
@@ -41,9 +42,13 @@ public class ViewUpdateMessage implements ServerMessage, Serializable {
         return currentPlayer;
     }
 
+    public int getMnPosition(){ return mnPosition; }
+
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
+
+    public void setMnPosition(int pos) { this.mnPosition = pos; }
 }
 
 

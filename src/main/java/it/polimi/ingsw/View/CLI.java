@@ -10,6 +10,7 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.NetMessages.*;
 
 import java.rmi.ServerError;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class CLI extends View implements Observer {
@@ -17,8 +18,7 @@ public class CLI extends View implements Observer {
     private Parser parser;
     private Thread thread;
     private String[][] board;
-    private final int columns = 9;
-    private int rows;
+    private String nickname;
 
     public CLI(){
         parser = new Parser();
@@ -48,8 +48,6 @@ public class CLI extends View implements Observer {
     private void parseNumberOfPlayers() {
         Scanner scanner = new Scanner(System.in);
         int i = scanner.nextInt();
-        if(i == 2) rows = 24;
-        else rows = 25;
         BaseUserMessage message = new BaseUserMessage();
         message.setNumberOfPlayers(i);
         setChanged();
@@ -80,10 +78,7 @@ public class CLI extends View implements Observer {
 
 
     public void buildNewBoard(ViewUpdateMessage message) {
-        rows = 24;
-        int clouds = 2;
-        if (rows > 26) clouds = 3;
-        String header = "BOARD\n";
+        String header = "ISLANDS\n";
         header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----b---------b--------c\n");
         header += AnsiColors.formatRow("|  ID  | BLUE | GREEN | YELLOW | PINK | RED |  OWNER  | TOWERS |\n");
         header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----e---------e--------f\n");
@@ -102,55 +97,48 @@ public class CLI extends View implements Observer {
             System.out.print(String.format(str1) + "\n");
         }
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
-        //board[0][4] = "BOARD";
-        //board[1][4] = "ISLANDS";
-        /*for (int i = 2; i < 20; i = i + 15) {
-            for (int j = 0; j < columns; j++) {
-                if (j == 4) board[i][j] = "STUDENTS";
-            }
-            board[i + 1][0] = "ID";
-            board[i + 1][1] = "BLUE";
-            board[i + 1][2] = "GREEN";
-            board[i + 1][3] = "YELLOW";
-            board[i + 1][4] = "PINK";
-            board[i + 1][5] = "RED";
+
+        header = "CLOUDS\n";
+        header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----c\n");
+        header += AnsiColors.formatRow("|  ID  | BLUE | GREEN | YELLOW | PINK | RED |\n");
+        header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----f\n");
+        System.out.print(header);
+
+        for (String cloud : message.getClouds()) {
+            String[] x = cloud.split(" ");
+            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s |", x[0], x[1], x[2], x[3], x[4], x[5]);
+            System.out.print(String.format(str1) + "\n");
         }
-        board[3][6] = "OWNER";
-        board[3][7] = "TOWERS";
-        board[3][8] = "NO-ENTRY-TILES";
-        for (int i = 4; i < 16; i++) {
-            board[i][0] = String.valueOf(i - 4);
-            for (int j = 1; j < columns; j++) {
-                if (j == 6) board[i][j] = "none";
-                else board[i][j] = String.valueOf(0);
-            }
+        System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----i"));
+
+        System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
         }
-        /*board[16][4] = "CLOUDS";
-        int k = 18 + clouds;
-        for (int i = 19; i <= (k + clouds); i++) {
-            board[i][0] = String.valueOf(i - 19);
-            for (int j = 1; j < 5; j++) {
-                board[i][j] = String.valueOf(0);
+
+        public void printDeck(ArrayList<String> decks){
+            System.out.println("Assistant cards in your deck:\n");
+            for(String deck: decks){
+                String[] d = deck.split(" ");
+                if(d[0].equals(nickname)){
+                    StringBuilder stringBuilder1 = new StringBuilder();
+                    StringBuilder stringBuilder2 = new StringBuilder();
+                    stringBuilder1.append("card ID: " );
+                    stringBuilder2.append("Mother Nature movements: ");
+
+                    for(int i = 1; i<d.length; i++){
+                        if(i%2==0) stringBuilder2.append("| ").append(d[i]).append(" ");
+                        else stringBuilder1.append("| ").append(d[i]).append(" ");
+                    }
+                    stringBuilder1.append("| \n");
+                    stringBuilder2.append("| \n");
+                    stringBuilder1.append(stringBuilder2);
+                    System.out.println(stringBuilder1);
+                }
             }
+
         }
-        for (int i = k + 1; i < rows; i++){
-            for (int j = 0; j < columns; j++) {
-                if (i == k + 1 && j == 4) board[i][j] = "MOTHER NATURE";
-                else if (i == k + 2 && j == 4) board[i][j] = "POSITION";
-                else if (i == k + 3 && j == 4) board[i][j] = String.valueOf(0);
-                else board[i][j] = null;
-            }
-        }
-        for(int f = 0; f<rows; f++){
-            for (int j = 0; j<columns; j++){
-                //if(board[f][j] == null) System.out.print(String.format("%-5s%-15s|", "", " "));
-                //else System.out.print(String.format("%-5s%-15s|", "", board[f][j]));
-                if(board[f][j] == null) System.out.print(String.format(" "));
-                else System.out.print(String.format(board[f][j]));
-            }
-            System.out.print("\n");
-        }*/
-    }
+
+
+
 
 
 
@@ -187,5 +175,10 @@ public class CLI extends View implements Observer {
     public void setMode(GameModeMessage mode){
         parser.setMode(mode.getMode());
         thread.start();
+    }
+
+    @Override
+    public void setNickname(NicknameMessage nick){
+        this.nickname = nick.getNickname();
     }
 }
