@@ -97,7 +97,7 @@ public class CLI extends View implements Observer {
             System.out.print(String.format(str1) + "\n");
         }
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
-        System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
+        System.out.println("\nMother Nature is currently on island: " + message.getMnPosition());
 
         printClouds(message);
 
@@ -140,27 +140,53 @@ public class CLI extends View implements Observer {
             }
     }
 
-    public void printSchoolboard(ViewUpdateMessage message){
-        String header = "SCHOOLBOARD\n";
-        header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----b---------b--------c\n");
-        header += AnsiColors.formatRow("|      | BLUE | GREEN | YELLOW | PINK | RED |  OWNER  | TOWERS |\n");
-        header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----e---------e--------f\n");
-        System.out.print(header);
+    public void printSchoolboard(ViewUpdateMessage message) {
+        for (String sb : message.getSchoolboards()) {
 
-        for (String island : message.getIslands()) {
-            String owner;
-            String towers = String.valueOf(0);
-            String[] y = island.split(" ");
-            if(y.length < 7) owner = "none";
-            else{
-                owner = y[6];
-                towers = y[7];
-            }
-            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", y[0], y[1], y[2], y[3], y[4], y[5], owner, towers);
+            String[] s = sb.split("\n");
+
+            System.out.println(s[0] + "'S SCHOOLBOARD");
+
+            String header = "ENTRANCE\n";
+            header += AnsiColors.formatDiv("a------b-------b--------b------b-----c\n");
+            header += AnsiColors.formatRow("| BLUE | GREEN | YELLOW | PINK | RED |\n");
+            header += AnsiColors.formatDiv("d------e-------e--------e------e-----f\n");
+            System.out.print(header);
+
+            String[] e = s[1].split(" ");
+            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", e[2], e[3], e[1], e[0], e[4]);
             System.out.print(String.format(str1) + "\n");
+            System.out.println(AnsiColors.formatDiv("g------h-------h--------h------h-----i"));
+
+            header = "DINING ROOM\n";
+            header += AnsiColors.formatDiv("a------b-------b--------b------b-----c\n");
+            header += AnsiColors.formatRow("| BLUE | GREEN | YELLOW | PINK | RED |\n");
+            header += AnsiColors.formatDiv("d------e-------e--------e------e-----f\n");
+            System.out.print(header);
+
+            e = s[2].split(" ");
+            str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", e[2], e[3], e[1], e[0], e[4]);
+            System.out.print(String.format(str1) + "\n");
+            System.out.println(AnsiColors.formatDiv("g------h-------h--------h------h-----i"));
+
+            System.out.println("PROFESSORS: ");
+            StringBuilder stringBuilder = new StringBuilder();
+            e = s[3].split(" ");
+            for (String value : e) {
+                stringBuilder.append("| ").append(value).append(" ");
+            }
+            stringBuilder.append("| ");
+            System.out.println(stringBuilder);
+
+            System.out.println("TOWER SECTION: ");
+            e = s[4].split(" ");
+            for (String value : e) {
+                stringBuilder.append("| ").append(value).append(" ");
+            }
         }
-        System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
+
     }
+
 
 
 

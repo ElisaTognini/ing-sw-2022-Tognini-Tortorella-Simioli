@@ -43,7 +43,7 @@ public class TowerSection {
     }
 
     @Override
-    /*FORMAT numberoftowers towercolor*/
+    /*FORMAT towercolor numberoftowers*/
     public String toString(){
         return color.toString() + " " + numberOfTowers;
     }
