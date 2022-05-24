@@ -99,6 +99,9 @@ public class CLI extends View implements Observer {
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
         System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
 
+        printClouds(message);
+
+        printDeck(message.getDecks());
 
         }
 
