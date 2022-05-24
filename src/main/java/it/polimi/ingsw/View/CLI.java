@@ -133,6 +133,7 @@ public class CLI extends View implements Observer {
     }
 
     public void printSchoolboard(ViewUpdateMessage message) {
+
         for (String sb : message.getSchoolboards()) {
 
             String[] s = sb.split("\n");
@@ -178,6 +179,8 @@ public class CLI extends View implements Observer {
             stringBuilder.append("| ");
             System.out.println(stringBuilder);
         }
+
+        System.out.println("\n");
     }
 
     public void buildNewBoardExpert(ExpertViewUpdateMessage message){
