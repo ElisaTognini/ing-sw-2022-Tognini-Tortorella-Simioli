@@ -146,7 +146,7 @@ public class CLI extends View implements Observer {
             System.out.print(header);
 
             String[] e = s[1].split(" ");
-            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", e[2], e[3], e[1], e[0], e[4]);
+            String str1 = String.format("| %4s | %5s | %6s | %4s | %3s |", e[2], e[3], e[1], e[0], e[4]);
             System.out.print(String.format(str1) + "\n");
             System.out.println(AnsiColors.formatDiv("g------h-------h--------h------h-----i"));
 
@@ -157,7 +157,7 @@ public class CLI extends View implements Observer {
             System.out.print(header);
 
             e = s[2].split(" ");
-            str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", e[2], e[3], e[1], e[0], e[4]);
+            str1 = String.format("| %4s | %5s | %6s | %4s | %3s |", e[2], e[3], e[1], e[0], e[4]);
             System.out.print(String.format(str1) + "\n");
             System.out.println(AnsiColors.formatDiv("g------h-------h--------h------h-----i"));
 
