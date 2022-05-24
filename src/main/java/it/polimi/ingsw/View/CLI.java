@@ -175,6 +175,8 @@ public class CLI extends View implements Observer {
             for (String value : e) {
                 stringBuilder.append("| ").append(value).append(" ");
             }
+            stringBuilder.append("| ");
+            System.out.println(stringBuilder);
         }
     }
 
