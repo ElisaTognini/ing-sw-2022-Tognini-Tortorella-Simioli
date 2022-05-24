@@ -103,6 +103,8 @@ public class CLI extends View implements Observer {
 
         printDeck(message.getDecks());
 
+        printSchoolboard(message);
+
         }
 
         public void printClouds(ViewUpdateMessage message){
@@ -186,12 +188,6 @@ public class CLI extends View implements Observer {
         }
 
     }
-
-
-
-
-
-
 
     /* this method prints errors in red, basing off the corresponding type of BaseServerMessage received */
     @Override
