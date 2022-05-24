@@ -97,25 +97,26 @@ public class CLI extends View implements Observer {
             System.out.print(String.format(str1) + "\n");
         }
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
-
-        header = "CLOUDS\n";
-        header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----c\n");
-        header += AnsiColors.formatRow("|  ID  | BLUE | GREEN | YELLOW | PINK | RED |\n");
-        header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----f\n");
-        System.out.print(header);
-
-        for (String cloud : message.getClouds()) {
-            String[] x = cloud.split(" ");
-            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s |", x[0], x[1], x[2], x[3], x[4], x[5]);
-            System.out.print(String.format(str1) + "\n");
-        }
-        System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----i"));
-
         System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
+
+
+        }
+
+        public void printClouds(ViewUpdateMessage message){
+            System.out.println("CLOUDS: ");
+            for(String cloud: message.getClouds()){
+                StringBuilder stringBuilder = new StringBuilder();
+                String[] c = cloud.split(" ");
+                for(int i = 0; i<c.length; i++){
+                    stringBuilder.append("| ").append(c[i]).append(" ");
+                }
+                stringBuilder.append("| ");
+                System.out.println(stringBuilder);
+            }
         }
 
         public void printDeck(ArrayList<String> decks){
-            System.out.println("Assistant cards in your deck:\n");
+            System.out.println("Assistant cards in your deck:");
             for(String deck: decks){
                 String[] d = deck.split(" ");
                 if(d[0].equals(nickname)){
@@ -134,8 +135,29 @@ public class CLI extends View implements Observer {
                     System.out.println(stringBuilder1);
                 }
             }
+    }
 
+    public void printSchoolboard(ViewUpdateMessage message){
+        String header = "SCHOOLBOARD\n";
+        header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----b---------b--------c\n");
+        header += AnsiColors.formatRow("|      | BLUE | GREEN | YELLOW | PINK | RED |  OWNER  | TOWERS |\n");
+        header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----e---------e--------f\n");
+        System.out.print(header);
+
+        for (String island : message.getIslands()) {
+            String owner;
+            String towers = String.valueOf(0);
+            String[] y = island.split(" ");
+            if(y.length < 7) owner = "none";
+            else{
+                owner = y[6];
+                towers = y[7];
+            }
+            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", y[0], y[1], y[2], y[3], y[4], y[5], owner, towers);
+            System.out.print(String.format(str1) + "\n");
         }
+        System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
+    }
 
 
 
