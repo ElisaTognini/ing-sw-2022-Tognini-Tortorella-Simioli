@@ -79,14 +79,32 @@ public class CLI extends View implements Observer {
     }
 
 
-    public void buildNewBoard() {
+    public void buildNewBoard(ViewUpdateMessage message) {
         rows = 24;
         int clouds = 2;
         if (rows > 26) clouds = 3;
-        board = new String[rows][columns];
-        board[0][4] = "BOARD";
-        board[1][4] = "ISLANDS";
-        for (int i = 2; i < 20; i = i + 15) {
+        String header = "BOARD\n";
+        header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----b---------b--------c\n");
+        header += AnsiColors.formatRow("|  ID  | BLUE | GREEN | YELLOW | PINK | RED |  OWNER  | TOWERS |\n");
+        header += AnsiColors.formatDiv("d------e------e-------e--------e------e-----e---------e--------f\n");
+        System.out.print(header);
+
+        for (String island : message.getIslands()) {
+            String owner;
+            String towers = String.valueOf(0);
+            String[] y = island.split(" ");
+            if(y.length < 7) owner = "none";
+            else{
+                owner = y[6];
+                towers = y[7];
+            }
+            String str1 = String.format("| %4s | %4s | %5s | %6s | %4s | %3s | %7s | %6s |", y[0], y[1], y[2], y[3], y[4], y[5], owner, towers);
+            System.out.print(String.format(str1) + "\n");
+        }
+        System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
+        //board[0][4] = "BOARD";
+        //board[1][4] = "ISLANDS";
+        /*for (int i = 2; i < 20; i = i + 15) {
             for (int j = 0; j < columns; j++) {
                 if (j == 4) board[i][j] = "STUDENTS";
             }
@@ -107,7 +125,7 @@ public class CLI extends View implements Observer {
                 else board[i][j] = String.valueOf(0);
             }
         }
-        board[16][4] = "CLOUDS";
+        /*board[16][4] = "CLOUDS";
         int k = 18 + clouds;
         for (int i = 19; i <= (k + clouds); i++) {
             board[i][0] = String.valueOf(i - 19);
@@ -117,7 +135,7 @@ public class CLI extends View implements Observer {
         }
         for (int i = k + 1; i < rows; i++){
             for (int j = 0; j < columns; j++) {
-                if (i == k + 1 && j == 4) board[i][j] = "MOTHER-NATURE";
+                if (i == k + 1 && j == 4) board[i][j] = "MOTHER NATURE";
                 else if (i == k + 2 && j == 4) board[i][j] = "POSITION";
                 else if (i == k + 3 && j == 4) board[i][j] = String.valueOf(0);
                 else board[i][j] = null;
@@ -125,12 +143,13 @@ public class CLI extends View implements Observer {
         }
         for(int f = 0; f<rows; f++){
             for (int j = 0; j<columns; j++){
-                if(board[f][j] == null) System.out.print(String.format("%-5s%-15s|", "", "--"));
-                else System.out.print(String.format("%-5s%-15s|", "", board[f][j]));
-
+                //if(board[f][j] == null) System.out.print(String.format("%-5s%-15s|", "", " "));
+                //else System.out.print(String.format("%-5s%-15s|", "", board[f][j]));
+                if(board[f][j] == null) System.out.print(String.format(" "));
+                else System.out.print(String.format(board[f][j]));
             }
             System.out.print("\n");
-        }
+        }*/
     }
 
 
@@ -161,7 +180,7 @@ public class CLI extends View implements Observer {
 
     @Override
     public void updateGameBoard(ViewUpdateMessage message){
-        buildNewBoard();
+        buildNewBoard(message);
     }
 
     @Override
