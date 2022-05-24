@@ -79,13 +79,13 @@ public class AssistantCardDeck {
     public String toString(){
         StringBuilder stringbuilder = new StringBuilder();
 
-        stringbuilder.append(owner.getNickname() + " ");
+        stringbuilder.append(owner.getNickname()).append(" ");
 
         for(AssistantCard card : cards){
-            stringbuilder.append(card.getAssistantCardID() + " ");
-            stringbuilder.append(card.getMotherNatureMovements() + " ");
+            stringbuilder.append(String.valueOf(card.getAssistantCardID())).append(" ");
+            stringbuilder.append(String.valueOf(card.getMotherNatureMovements())).append(" ");
         }
-        stringbuilder.deleteCharAt(stringbuilder.lastIndexOf(stringbuilder.toString()));
+        stringbuilder.deleteCharAt(stringbuilder.toString().length() - 1);
         return stringbuilder.toString();
     }
 }

@@ -13,6 +13,9 @@ public class CLITest {
     @Test
     public void printBoardTest(){
         ArrayList<String> islands = message.getIslands();
+        ArrayList<String> clouds = message.getClouds();
+        clouds.add("0 BLUE RED YELLOW");
+        clouds.add("1 PINK PINK GREEN");
         islands.add("1 1 0 5 4 2");
         islands.add("3 2 5 7 6 1 player1 1");
         islands.add("6 4 1 2 3 5 player2 2");

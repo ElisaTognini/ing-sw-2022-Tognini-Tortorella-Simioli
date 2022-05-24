@@ -56,20 +56,24 @@ public class Parser extends Observable implements Runnable{
         Scanner scanner = new Scanner(System.in);
         int i;
         boolean flag;
-        do {
-            flag = false;
-            System.out.println("\n time to choose an action!\n" +
-                    "enter 1 if you would like to pick an assistant card\n" +
-                    "enter 2 if you would like to move a student from your entrance to the dining room\n" +
-                    "enter 3 if you would like to move a student from your entrance to an island\n" +
-                    "enter 4 if you would like to pick a cloud tile\n");
-            i = scanner.nextInt();
-            if(i <= 0 || i > 4){
-                flag = true;
-                System.out.println(AnsiColors.ANSI_RED + "invalid action type.\n" + AnsiColors.ANSI_RESET);
-            }
-        }while(flag == true);
-        selectAction(i);
+        try {
+            do {
+                flag = false;
+                System.out.println("\n time to choose an action!\n" +
+                        "enter 1 if you would like to pick an assistant card\n" +
+                        "enter 2 if you would like to move a student from your entrance to the dining room\n" +
+                        "enter 3 if you would like to move a student from your entrance to an island\n" +
+                        "enter 4 if you would like to pick a cloud tile\n");
+                i = scanner.nextInt();
+                if (i <= 0 || i > 4) {
+                    flag = true;
+                    System.out.println(AnsiColors.ANSI_RED + "invalid action type.\n" + AnsiColors.ANSI_RESET);
+                }
+            } while (flag == true);
+            selectAction(i);
+        }catch(Exception e){
+            System.err.println("please use a valid format!\n");
+        }
     }
 
 
@@ -138,18 +142,24 @@ public class Parser extends Observable implements Runnable{
         boolean flag;
 
         System.out.println("\nenter the id of the island you would like to move your student to.");
-        do{
-            flag = false;
-            i = scanner.nextInt();
-            if(i < 0 || i > 12){
-                flag = true;
-                System.out.println(AnsiColors.ANSI_RED + "choose a valid IslandID\n" + AnsiColors.ANSI_RESET);
-            }
-        }while(flag == true);
+        try {
+            do {
+                flag = false;
+                i = scanner.nextInt();
+                if (i < 0 || i > 12) {
+                    flag = true;
+                    System.out.println(AnsiColors.ANSI_RED + "choose a valid IslandID\n" + AnsiColors.ANSI_RESET);
+                }
+            } while (flag == true);
+        }catch(Exception e){
+            System.err.println("please write a correct island identifier!\n");
+            return;
+        }
 
         System.out.println("now enter the color of the student you would like to move.");
         do{
             flag = false;
+            scanner = new Scanner(System.in);
             read = scanner.nextLine();
             read = read.toUpperCase();
             if(!checkValidColor(read)){
@@ -168,17 +178,21 @@ public class Parser extends Observable implements Runnable{
         boolean flag;
         System.out.println("enter the number of the cloud you would like to pick: ");
 
-        do{
-            flag = false;
-            i = scanner.nextInt();
-            if(i < 0 || i > 4){
-                flag = true;
-                System.out.println(AnsiColors.ANSI_RED + "choose a valid cloud number!\n" + AnsiColors.ANSI_RESET);
-            }
-        }while(flag == true);
+        try {
+            do {
+                flag = false;
+                i = scanner.nextInt();
+                if (i < 0 || i > 4) {
+                    flag = true;
+                    System.out.println(AnsiColors.ANSI_RED + "choose a valid cloud number!\n" + AnsiColors.ANSI_RESET);
+                }
+            } while (flag == true);
 
-        setChanged();
-        notifyObservers(new PickCloudMessage(i));
+            setChanged();
+            notifyObservers(new PickCloudMessage(i));
+        }catch(Exception e){
+            System.err.println("enter validly formatted cloud identifier!");
+        }
     }
 
     public synchronized void pickCharacterCard(){

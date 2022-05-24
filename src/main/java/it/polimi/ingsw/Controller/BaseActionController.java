@@ -61,7 +61,14 @@ public class BaseActionController extends Observable {
                             roundManager.storeCards(model.getBoard().playAssistantCard(cardID, nickname));
                             model.getBoard().getPlayersDeck(nickname).removeCard(cardID);
                             model.getBoard().notifyObservers();
-                            roundManager.refreshCurrentPlayer();
+                            if(roundManager.isPlanningPhase())
+                                roundManager.refreshCurrentPlayer();
+                            for(Player p : model.getPlayerList()){
+                                if(!p.getCardPicked()){
+                                    return true;
+                                }
+                            }
+                            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
                             return true;
                         } else {
                             /* the view will display that the card has already been played */
@@ -118,6 +125,10 @@ public class BaseActionController extends Observable {
      * player's entrance */
     public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
 
+        if(roundManager.getMovedStudents() == 0){
+
+        }
+
         if(checkStudents(color, nickname)){
             model.getBoard().moveStudent(color, nickname, islandID);
             roundManager.increaseMovedStudents();
@@ -146,6 +157,7 @@ public class BaseActionController extends Observable {
                     if(!model.getBoard().getCloud(cloudID).isCloudEmpty()){
                         model.getBoard().chooseCloudTile(nickname, cloudID);
                         roundManager.refreshCurrentPlayerAction();
+                        model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
                         if(model.isGameOver()){
                             endGame();
                         }
@@ -223,8 +235,6 @@ public class BaseActionController extends Observable {
     * attempt to conquer an island if the current player has moved three students */
     private synchronized void actionPhaseCurrentPlayer(String nickname){
         if(roundManager.threeStudentsMoved()){
-            /* moves mn according to card movements */
-            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
             /* attempts to conquer an island */
             model.getBoard().assignProfessors();
             /*checks if player has enough towers: if not, current player is the winner.*/

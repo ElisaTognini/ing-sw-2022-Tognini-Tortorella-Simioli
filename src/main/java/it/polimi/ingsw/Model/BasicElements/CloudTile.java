@@ -56,7 +56,7 @@ public class CloudTile {
     /* FORMAT cloudID student1 student2 student3  - only ID if cloud is empty*/
     public String toString(){
         StringBuilder toRet;
-        toRet = new StringBuilder(cloudID);
+        toRet = new StringBuilder(String.valueOf(cloudID));
         if(!isCloudEmpty()){
             for(Student s : studentsOnCloud){
                 toRet.append(" ").append(s.getColor());

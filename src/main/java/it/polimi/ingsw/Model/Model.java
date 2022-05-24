@@ -195,4 +195,8 @@ public class Model extends Observable implements Observer{
     public TurnUpdates getTurnUpdates(){
         return turnUpdates;
     }
+
+    public ArrayList<Player> getPlayerList(){
+        return playerList;
+    }
 }

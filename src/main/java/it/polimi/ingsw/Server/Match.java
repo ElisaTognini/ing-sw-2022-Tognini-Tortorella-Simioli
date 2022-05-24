@@ -74,7 +74,8 @@ public class Match implements Observer {
     private synchronized  VirtualView getPlayersVirtualView(String nickname){
         VirtualView view = null;
         for(VirtualView v : matchPlayersViews){
-            view = v;
+            if(v.getNickname().equals(nickname))
+                view = v;
         }
         return view;
     }
@@ -85,7 +86,8 @@ public class Match implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof NotifyArgsController){
+        if(arg instanceof NotifyArgsController &&
+                ((NotifyArgsController)arg).getNickname() != null){
             sendTo((NotifyArgsController) arg);
         }
         else

@@ -15,6 +15,7 @@ public class RoundManager extends Observable{
     private Player currentPlayer;
     private ArrayList<AssistantCard> cards;
     private int movedStudents;
+    private boolean isPlanningPhase;
     private ArrayList<Player> sortedPlayerActions;
 
     /* playerList is based on the order in which each player enters the lobby */
@@ -25,6 +26,7 @@ public class RoundManager extends Observable{
         cards = new ArrayList<>();
         movedStudents = 0;
         sortedPlayerActions = new ArrayList<>();
+        isPlanningPhase = true;
     }
 
     /* returns the current state of the turn */
@@ -93,6 +95,7 @@ public class RoundManager extends Observable{
     /* so it's possible to compute the order in which every player enters the Action Phase */
     /* and passes the first player of the next planning phase to the computeTurnOrder method */
     public void sortActionPhase(){
+        isPlanningPhase = false;
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
         currentPlayer = cards.get(0).getOwner();
@@ -108,12 +111,14 @@ public class RoundManager extends Observable{
         if(sortedPlayerActions.indexOf(currentPlayer) < sortedPlayerActions.size()-1){
             currentPlayer = sortedPlayerActions.get(sortedPlayerActions.indexOf(currentPlayer) + 1);
             setChanged();
+            changeState(TurnFlow.CARD_PICKED);
             notifyObservers(ActionType.PLAYER_CHANGE);
         }
     }
 
 
     public void startRound(){
+        isPlanningPhase = true;
         for(Player p : players) p.setCardPickedToFalse();
         changeState(TurnFlow.BEGINS_TURN);
         movedStudents = 0;
@@ -155,4 +160,7 @@ public class RoundManager extends Observable{
         movedStudents++;
     }
 
+    public boolean isPlanningPhase() {
+        return isPlanningPhase;
+    }
 }

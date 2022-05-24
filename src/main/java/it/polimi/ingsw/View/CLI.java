@@ -117,7 +117,7 @@ public class CLI extends View implements Observer {
                 if(d[0].equals(nickname)){
                     StringBuilder stringBuilder1 = new StringBuilder();
                     StringBuilder stringBuilder2 = new StringBuilder();
-                    stringBuilder1.append("card ID: " );
+                    stringBuilder1.append("card ID:                 ");
                     stringBuilder2.append("Mother Nature movements: ");
 
                     for(int i = 1; i<d.length; i++){

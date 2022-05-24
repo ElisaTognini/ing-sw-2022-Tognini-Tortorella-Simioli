@@ -56,6 +56,7 @@ public class ClientConnection extends Observable implements Runnable {
         } catch (Exception e) {
             System.err.println("Something went wrong!");
             System.err.println(e.getMessage());
+            e.printStackTrace();
         } finally {
             close();
         }

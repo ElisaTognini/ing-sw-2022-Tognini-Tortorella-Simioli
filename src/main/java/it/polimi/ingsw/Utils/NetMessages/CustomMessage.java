@@ -20,7 +20,7 @@ public class CustomMessage {
     public static String cardNotPresentError = "The card you chose is not in your deck, please choose another one.\n";
     public static String fullDRError = "Your dining room is full for the color chosen.\n";
     public static String lastRound = "Now playing your last round for this match!\n";
-    public static String colorNotAvailableError = "No student of the color you choose are available in your entrance.\n";
+    public static String colorNotAvailableError = "No student of the color you chose are available in your entrance.\n";
     public static String allStudentsMovedError = "You already moved three students.\n";
     public static String wrongFormat = "The parameter sent was of incorrect format.\n";
     public static String notEnoughCoinsError = "You do not have enough coins for this character card.\n";
