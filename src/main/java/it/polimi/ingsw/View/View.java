@@ -43,7 +43,7 @@ public class View extends Observable implements Observer {
         }
     }
 
-    private void updateGameBoardExpert(ExpertViewUpdateMessage message) {}
+    public void updateGameBoardExpert(ExpertViewUpdateMessage message) {}
     public void displaySetupMessage(SetupServerMessage message){}
     public void updateGameBoard(ViewUpdateMessage message){}
     public void displayError(BaseServerMessage message){}

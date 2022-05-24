@@ -1,16 +1,6 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToDRMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
-import it.polimi.ingsw.Client.ActionMessages.PickCloudMessage;
-import it.polimi.ingsw.Client.Client;
-import it.polimi.ingsw.Model.BasicElements.AssistantCard;
-import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.NetMessages.*;
-
-import java.rmi.ServerError;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class CLI extends View implements Observer {
@@ -186,7 +176,29 @@ public class CLI extends View implements Observer {
                 stringBuilder.append("| ").append(value).append(" ");
             }
         }
+    }
 
+    public void buildNewBoardExpert(ExpertViewUpdateMessage message){
+        System.out.println("EXPERT FEATURES:\n");
+        System.out.println(" - Islands with no entry tiles: ");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String island : message.getViewUpdate_base().getIslands()) {
+            String[] i = island.split(" ");
+            if(i.length == 8) stringBuilder.append("| ").append(i[7]).append(" ");
+        }
+        printCoinCounter(message.getCoinCounters());
+
+        buildNewBoard(message.getViewUpdate_base());
+
+    }
+
+    public void printCoinCounter(ArrayList<String> coinCounters){
+        System.out.println(" - Coins: ");
+        for(String counter : coinCounters){
+            String[] c = counter.split(" ");
+            if(Objects.equals(c[1], String.valueOf(1))) System.out.println(c[0] + " has " + c[1] + "coin");
+            else System.out.println(c[0] + " has " + c[1] + "coins");
+        }
     }
 
     /* this method prints errors in red, basing off the corresponding type of BaseServerMessage received */
@@ -216,6 +228,11 @@ public class CLI extends View implements Observer {
     @Override
     public void updateGameBoard(ViewUpdateMessage message){
         buildNewBoard(message);
+    }
+
+    @Override
+    public void updateGameBoardExpert(ExpertViewUpdateMessage message){
+        buildNewBoardExpert(message);
     }
 
     @Override
