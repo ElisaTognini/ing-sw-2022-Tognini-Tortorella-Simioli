@@ -73,6 +73,7 @@ public class BoardExpert extends Board {
             coins[i] = new CoinCounter(p);
             i++;
         }
+        setChanged();
         notifyObservers();
     }
 
@@ -161,6 +162,7 @@ public class BoardExpert extends Board {
             }
 
             islands.get(motherNature.getPosition()).getsConquered(conqueror);
+            setChanged();
             notifyObservers();
 
         }
@@ -171,6 +173,7 @@ public class BoardExpert extends Board {
         super.moveMotherNature(movements);
         motherNature.setPosition(motherNature.getPosition() + additional_moves);
         additional_moves = 0;
+        setChanged();
         notifyObservers();
     }
 
@@ -179,11 +182,13 @@ public class BoardExpert extends Board {
 
     public void putBackNoEntryTile() {
         noEntryTiles++;
+        setChanged();
         notifyObservers();
     }
 
     public void useNoEntryTile() {
         noEntryTiles--;
+        setChanged();
         notifyObservers();
     }
 
@@ -208,6 +213,7 @@ public class BoardExpert extends Board {
                 getPlayersCoinCounter(nickname).purchase(card.getCost());
             }
         }
+        setChanged();
         notifyObservers();
     }
 
@@ -263,6 +269,7 @@ public class BoardExpert extends Board {
                     for (CoinCounter c : coins) {
                         if (c.getOwner().getNickname().equals(nickname)) {
                             c.addCoin();
+                            setChanged();
                             notifyObservers();
                         }
                     }
@@ -277,6 +284,7 @@ public class BoardExpert extends Board {
             if (c.getCardID() == cardID) {
                 c.useCard(o, nickname);
                 c.increaseCost();
+                setChanged();
                 notifyObservers();
             }
         }
