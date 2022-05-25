@@ -2,7 +2,9 @@ package it.polimi.ingsw.Utils.NetMessages;
 
 import it.polimi.ingsw.Utils.Enums.NotifyType;
 
-public class NotifyArgsController {
+import java.io.Serializable;
+
+public class NotifyArgsController implements Serializable {
 
     private String nickname;
     private BaseServerMessage message;

@@ -74,6 +74,8 @@ public class ClientConnection extends Observable implements Runnable {
             out.flush();
         } catch (IOException e) {
             System.err.println("Error while sending message\n");
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

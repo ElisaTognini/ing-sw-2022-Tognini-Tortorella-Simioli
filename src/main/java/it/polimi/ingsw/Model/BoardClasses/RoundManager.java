@@ -71,6 +71,11 @@ public class RoundManager extends Observable{
     * the corner case when the player has only one card left is already handled by sortActionPhase because
     * sort does not reorder equal elements */
     public boolean checkForDupe(int cardID){
+
+        if(cards.size() == players.size()){
+            cards.clear();
+        }
+
         for(AssistantCard c: cards) {
             if (c.getAssistantCardID() == cardID) return true;
         }
@@ -80,6 +85,7 @@ public class RoundManager extends Observable{
 
     /*when this method is called, the round moves forward (if all players have picked a card) */
     public void storeCards(AssistantCard card){
+
         cards.add(card);
         currentPlayer.setCardPickedToTrue();
 
@@ -164,5 +170,13 @@ public class RoundManager extends Observable{
 
     public boolean isPlanningPhase() {
         return isPlanningPhase;
+    }
+
+    public Player getFirstPlanningPhase(){
+        return sortedPlayers.get(0);
+    }
+
+    public void setCurrentPlayer(Player player){
+        currentPlayer = player;
     }
 }
