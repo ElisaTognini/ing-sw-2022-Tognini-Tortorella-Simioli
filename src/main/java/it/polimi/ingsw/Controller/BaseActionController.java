@@ -35,6 +35,7 @@ public class BaseActionController extends Observable {
     public void startGame(){
         /* first player of the game is picked and stored */
         roundManager.computeTurnOrder(roundManager.pickFirstPlayerIndex());
+        model.getRoundManager().notifyObservers(ActionType.PLAYER_CHANGE);
         model.getBoard().setup();
         roundManager.changeState(TurnFlow.BEGINS_TURN);
 
@@ -265,5 +266,8 @@ public class BaseActionController extends Observable {
         setChanged();
         notifyObservers(new NotifyArgsController(null,
                 new BaseServerMessage(CustomMessage.startNewRound), NotifyType.SEND_ALL));
+
+        model.getRoundManager().change();
+        model.getRoundManager().notifyObservers(ActionType.PLAYER_CHANGE);
     }
 }

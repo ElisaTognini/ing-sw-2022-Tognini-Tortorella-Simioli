@@ -65,7 +65,6 @@ public class RoundManager extends Observable{
         }
         currentPlayer = sortedPlayers.get(0);
         setChanged();
-        notifyObservers(ActionType.PLAYER_CHANGE);
     }
 
     /* this method checks if two players have played the same card;
@@ -88,7 +87,6 @@ public class RoundManager extends Observable{
             changeState(TurnFlow.CARD_PICKED);
             sortActionPhase();
         }
-
     }
 
     /* this method reorders the cards in "cards" ArrayList in ascending order */
@@ -158,6 +156,10 @@ public class RoundManager extends Observable{
 
     public void increaseMovedStudents(){
         movedStudents++;
+    }
+
+    public void change(){
+        setChanged();
     }
 
     public boolean isPlanningPhase() {
