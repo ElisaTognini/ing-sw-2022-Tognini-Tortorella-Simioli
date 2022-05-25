@@ -106,7 +106,7 @@ public class Parser extends Observable implements Runnable{
         do{
             flag = false;
             i = scanner.nextInt();
-            if(i < 0 || i > 12){
+            if(i < 0 || i > 10){
                 flag = true;
                 System.out.println(AnsiColors.ANSI_RED + "choose a valid card number!\n" + AnsiColors.ANSI_RESET);
             }
@@ -146,7 +146,7 @@ public class Parser extends Observable implements Runnable{
             do {
                 flag = false;
                 i = scanner.nextInt();
-                if (i < 0 || i > 12) {
+                if (i < 0 || i > 11) {
                     flag = true;
                     System.out.println(AnsiColors.ANSI_RED + "choose a valid IslandID\n" + AnsiColors.ANSI_RESET);
                 }
@@ -182,7 +182,7 @@ public class Parser extends Observable implements Runnable{
             do {
                 flag = false;
                 i = scanner.nextInt();
-                if (i < 0 || i > 4) {
+                if (i < 0 || i > 2) {
                     flag = true;
                     System.out.println(AnsiColors.ANSI_RED + "choose a valid cloud number!\n" + AnsiColors.ANSI_RESET);
                 }
