@@ -1,8 +1,11 @@
 package it.polimi.ingsw.tests;
+import it.polimi.ingsw.Controller.BaseActionController;
 import it.polimi.ingsw.Model.BasicElements.AssistantCard;
 import it.polimi.ingsw.Model.BoardClasses.Board;
 import it.polimi.ingsw.Model.BoardClasses.RoundManager;
+import it.polimi.ingsw.Model.Model;
 import it.polimi.ingsw.Utils.Enums.GameMode;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TurnFlow;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
@@ -164,4 +167,47 @@ public class RoundManagerTest {
         assertTrue(manager.threeStudentsMoved());
     }
 
+
+    @Test
+    public void multiRoundTest(){
+
+        String[] names = new String[2];
+
+        names[0] = "player1";
+        names[1] = "player2";
+
+        Model model = new Model(GameMode.SIMPLE, names, 2);
+        BaseActionController controller = new BaseActionController(model);
+
+        controller.startGame();
+        controller.chooseAssistantCard(1, "player1");
+        controller.chooseAssistantCard(8, "player2");
+
+        controller.moveStudentToDR(PawnDiscColor.BLUE, "player1");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player1");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player1");
+
+        controller.picksCloud("player1", 0);
+
+        controller.moveStudentToDR(PawnDiscColor.BLUE, "player2");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player2");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player2");
+
+        controller.picksCloud("player2", 1);
+
+        controller.chooseAssistantCard(2, "player1");
+        controller.chooseAssistantCard(9, "player2");
+
+        controller.moveStudentToDR(PawnDiscColor.BLUE, "player1");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player1");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player1");
+
+        controller.picksCloud("player1", 0);
+
+        controller.moveStudentToDR(PawnDiscColor.BLUE, "player2");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player2");
+        controller.moveStudentToDR(PawnDiscColor.YELLOW, "player2");
+
+        controller.picksCloud("player2", 1);
+    }
 }

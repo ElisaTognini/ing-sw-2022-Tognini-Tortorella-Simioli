@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.CLI;
 
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.*;
@@ -192,6 +192,8 @@ public class CLI extends View implements Observer {
             if(i.length == 8) stringBuilder.append("| ").append(i[7]).append(" ");
         }
         printCoinCounter(message.getCoinCounters());
+
+        System.out.println("Extracted cards: ");
 
         buildNewBoard(message.getViewUpdate_base());
 

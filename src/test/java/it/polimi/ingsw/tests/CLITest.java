@@ -1,7 +1,7 @@
 package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.Utils.NetMessages.ViewUpdateMessage;
-import it.polimi.ingsw.View.CLI;
+import it.polimi.ingsw.View.CLI.CLI;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

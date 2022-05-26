@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToDRMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
-import it.polimi.ingsw.Client.ActionMessages.PickCloudMessage;
+import it.polimi.ingsw.Client.ActionMessages.*;
 import it.polimi.ingsw.Server.VirtualView;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Model.Model;
@@ -55,6 +52,10 @@ public class Controller implements Observer {
         else if(arg instanceof PickCloudMessage){
             baseActionController.picksCloud(((VirtualView)o).getNickname(),
                     ((PickCloudMessage)arg).getCloudID());
+        }
+        else if(arg instanceof CharacterCardMessage){
+            expertModeController.useCharacterCard(((VirtualView)o).getNickname(),
+                    ((CharacterCardMessage)arg).getParam(), ((CharacterCardMessage)arg).getCardID());
         }
     }
 }
