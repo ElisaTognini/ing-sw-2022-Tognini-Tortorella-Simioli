@@ -18,10 +18,10 @@ public class ExpertParameterParser {
                 param.setColor(parseNewColor());
                 break;
             case 2:
-                //?
+
                 break;
             case 3:
-                //non succede nulla
+                /*no effects caused by parameter*/
                 break;
             case 4:
                 System.out.println("enter a number of positions (1 or 2) you would like to Mother Nature's path: ");
@@ -32,7 +32,7 @@ public class ExpertParameterParser {
                 param.setMoves(parseNewInt());
                 break;
             case 6:
-                //non succede nullaaa
+                /*no effects caused by parameter*/
                 break;
             case 7:
                 ArrayList<PawnDiscColor> studentsOnEntrance = new ArrayList<>();
@@ -49,14 +49,25 @@ public class ExpertParameterParser {
                 param.setColorArrayList(studentsOnCard);
                 break;
             case 8:
-                //non succede nullasss
+                /*no effects caused by parameter*/
                 break;
             case 9:
                 System.out.println("choose a color!");
                 param.setColor(parseNewColor());
                 break;
             case 10:
-                //?
+                ArrayList<PawnDiscColor> studentsOnEntr = new ArrayList<>();
+                ArrayList<PawnDiscColor> studentsOnDR = new ArrayList<>();
+                System.out.println("enter the color of the three students on your entrance you would like to switch: ");
+                for(int i = 0; i < 3; i++){
+                    studentsOnEntr.add(parseNewColor());
+                }
+                System.out.println("now for the students on your dining room you would like on your entrance - choose wisely!");
+                for(int i = 0; i < 3; i++){
+                    studentsOnDR.add(parseNewColor());
+                }
+                param.setColorArrayList(studentsOnEntr);
+                param.setColorArrayList(studentsOnDR);
                 break;
             case 11:
                 System.out.println("enter the color of the student you would like on your dining room");
@@ -113,4 +124,5 @@ public class ExpertParameterParser {
 
         return PawnDiscColor.valueOf(read.toUpperCase());
     }
+
 }
