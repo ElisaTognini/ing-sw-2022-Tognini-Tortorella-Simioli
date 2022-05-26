@@ -172,6 +172,7 @@ public class CLI extends View implements Observer {
             System.out.println(stringBuilder);
 
             System.out.println("TOWER SECTION: ");
+            stringBuilder.setLength(0);
             e = s[4].split(" ");
             for (String value : e) {
                 stringBuilder.append("| ").append(value).append(" ");
