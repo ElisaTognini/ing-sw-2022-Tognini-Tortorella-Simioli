@@ -9,7 +9,7 @@ import it.polimi.ingsw.Model.StudentContainer;
 public class Island {
 
     private Player owner;
-    private final int islandID;
+    private int islandID;
     private boolean hostsMotherNature;
     private boolean conqueredIsland;
     private StudentContainer container;
@@ -107,6 +107,7 @@ public class Island {
     }
     public void setIgnoredInfluencetoZero(){ignoredInfluence = 0;}
     public int getNumberOfNEtiles(){return noEntryTile;}
+    public void setIslandID(int id){this.islandID = id;}
 
     @Override
     /* FORMAT id BLUE GREEN YELLOW PINK RED Owner numberOfTowers NumberOfNE*/

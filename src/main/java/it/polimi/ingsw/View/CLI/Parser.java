@@ -213,7 +213,11 @@ public class Parser extends Observable implements Runnable{
         }
 
         message.setCardID(i);
-        cardParamParser.parseParameter(i);
+        message.setParam(cardParamParser.parseParameter(i));
+
+        setChanged();
+        notifyObservers(message);
+
     }
 
     /*utility methods*/

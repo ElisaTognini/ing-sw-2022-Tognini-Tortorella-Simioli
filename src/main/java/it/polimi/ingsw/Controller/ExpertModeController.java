@@ -35,13 +35,18 @@ public class ExpertModeController extends Observable {
                 if (board.checkIfCardPresent(cardID)) {
                     if (board.getPlayersCoinCounter(nickname).checkIfEnoughCoins(
                             board.getCardsCost(cardID))) {
-                        board.purchaseCharacterCard(nickname, cardID);
-                        try {
-                            board.useCard(o, nickname, cardID);
-                        } catch (IllegalArgumentException e) {
-                            //prints wrong param format error
+                        if(board.isActionForbidden(cardID, o, nickname)) {
+                            board.purchaseCharacterCard(nickname, cardID);
+                            try {
+                                board.useCard(o, nickname, cardID);
+                            } catch (IllegalArgumentException e) {
+                                //prints wrong param format error
+                                notifyObservers(new NotifyArgsController(nickname,
+                                        new BaseServerMessage(CustomMessage.wrongFormat), NotifyType.SEND_ERROR));
+                            }
+                        }else{
                             notifyObservers(new NotifyArgsController(nickname,
-                                    new BaseServerMessage(CustomMessage.wrongFormat), NotifyType.SEND_ERROR));
+                                    new BaseServerMessage(CustomMessage.actionForbiddenError), NotifyType.SEND_ERROR));
                         }
                     } else {
                         //player doesn't have enough coins

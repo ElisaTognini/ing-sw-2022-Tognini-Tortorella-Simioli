@@ -255,9 +255,9 @@ public class BaseActionController extends Observable {
     /* this method starts a new round once all players have picked
     * a cloud tile*/
     private synchronized void startNewRound(){
-        isLastRound = model.getBoard().isLastRound();
         roundManager.startRound();
         model.getBoard().roundSetup();
+        isLastRound = model.getBoard().isLastRound();
         /*checks if studentBag is empty or if decks only
           have one card left ; if any of those conditions is true current round will be last round*/
         if(model.getBoard().getDecks().get(0).size() == 1){

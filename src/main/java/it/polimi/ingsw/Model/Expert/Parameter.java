@@ -2,9 +2,10 @@ package it.polimi.ingsw.Model.Expert;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /* utility class for useCard method in the character cards */
-public class Parameter {
+public class Parameter implements Serializable {
     private int islandID;
     private PawnDiscColor color;
     private ArrayList<PawnDiscColor> colorArrayList;

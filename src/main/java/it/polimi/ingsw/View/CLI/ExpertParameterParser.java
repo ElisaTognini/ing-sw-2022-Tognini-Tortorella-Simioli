@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ExpertParameterParser {
@@ -104,10 +105,9 @@ public class ExpertParameterParser {
                     flag = false;
 
                     read = scanner.nextLine();
+                    read = read.toUpperCase();
 
-                    if (!(read.equalsIgnoreCase("PINK") || read.equalsIgnoreCase("RED")) ||
-                            read.equalsIgnoreCase("YELLOW") || read.equalsIgnoreCase("GREEN") ||
-                            read.equalsIgnoreCase("BLUE")) {
+                    if (!(checkColorValidity(read))){
                         System.err.println("enter a valid color!");
                         flag = true;
                     }
@@ -118,7 +118,15 @@ public class ExpertParameterParser {
             }
         }
 
-        return PawnDiscColor.valueOf(read.toUpperCase());
+        return PawnDiscColor.valueOf(read);
+    }
+
+    private boolean checkColorValidity(String color){
+        if(color.equals("RED") || color.equals("BLUE") || color.equals("GREEN") ||
+                color.equals("PINK") || color.equals("YELLOW"))
+            return true;
+        else
+            return false;
     }
 
 }

@@ -151,9 +151,10 @@ public class Board extends Observable{
         String maxPlayer = "";
         for(PawnDiscColor c : PawnDiscColor.values()){
             maxPlayer = "";
-            maxInfluence = 0;
+            maxInfluence = influenceToCompare(c);
             for(SchoolBoard sb : schoolBoards){
                 temp = sb.getDiningRoom().influenceForProf(c);
+
                 if(temp > maxInfluence){
                     maxInfluence = temp;
                     maxPlayer = sb.getOwner().getNickname();
@@ -169,6 +170,14 @@ public class Board extends Observable{
         }
         setChanged();
         notifyObservers();
+    }
+
+    private int influenceToCompare(PawnDiscColor c){
+        for(SchoolBoard sb : schoolBoards){
+            if(sb.getProfessorTable().hasProfessor(c))
+                return sb.getDiningRoom().influenceForProf(c);
+        }
+        return 0;
     }
 
     /*  if two players have the same influence over an unconquered island, the island will not be
@@ -287,6 +296,9 @@ public class Board extends Observable{
         }
         toKeep = islands.get(index1);
         islands.remove(index2);
+        for(int i = islands.indexOf(toKeep); i < islands.size() ; i++){
+            islands.get(i).setIslandID(islands.indexOf(islands.get(i)));
+        }
         motherNature.setPosition(islands.indexOf(toKeep));
         setChanged();
         notifyObservers();
