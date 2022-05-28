@@ -198,7 +198,7 @@ public class Parser extends Observable implements Runnable{
         boolean flag;
         CharacterCardMessage message = new CharacterCardMessage();
         ExpertParameterParser cardParamParser = new ExpertParameterParser();
-
+        System.out.println("choose the character card you would like to use: ");
         try{
             do{
                 flag = false;

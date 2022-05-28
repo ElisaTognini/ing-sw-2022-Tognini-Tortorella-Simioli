@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.CLI;
 
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.*;

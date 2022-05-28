@@ -21,18 +21,17 @@ public class ExpertParameterParser {
 
                 break;
             case 3:
+            case 6:
+            case 8:
                 /*no effects caused by parameter*/
                 break;
             case 4:
-                System.out.println("enter a number of positions (1 or 2) you would like to Mother Nature's path: ");
+                System.out.println("enter a number of positions (1 or 2) you would like to add to Mother Nature's path: ");
                 param.setMoves(parseNewInt());
                 break;
             case 5:
                 System.out.println("enter the island you would like to place your no entry tile to: ");
                 param.setMoves(parseNewInt());
-                break;
-            case 6:
-                /*no effects caused by parameter*/
                 break;
             case 7:
                 ArrayList<PawnDiscColor> studentsOnEntrance = new ArrayList<>();
@@ -48,9 +47,6 @@ public class ExpertParameterParser {
                 param.setColorArrayList2(studentsOnEntrance);
                 param.setColorArrayList(studentsOnCard);
                 break;
-            case 8:
-                /*no effects caused by parameter*/
-                break;
             case 9:
                 System.out.println("choose a color!");
                 param.setColor(parseNewColor());
@@ -58,12 +54,12 @@ public class ExpertParameterParser {
             case 10:
                 ArrayList<PawnDiscColor> studentsOnEntr = new ArrayList<>();
                 ArrayList<PawnDiscColor> studentsOnDR = new ArrayList<>();
-                System.out.println("enter the color of the three students on your entrance you would like to switch: ");
-                for(int i = 0; i < 3; i++){
+                System.out.println("enter the color of the two students on your entrance you would like to switch: ");
+                for(int i = 0; i < 2; i++){
                     studentsOnEntr.add(parseNewColor());
                 }
                 System.out.println("now for the students on your dining room you would like on your entrance - choose wisely!");
-                for(int i = 0; i < 3; i++){
+                for(int i = 0; i < 2; i++){
                     studentsOnDR.add(parseNewColor());
                 }
                 param.setColorArrayList(studentsOnEntr);
@@ -109,9 +105,9 @@ public class ExpertParameterParser {
 
                     read = scanner.nextLine();
 
-                    if (!(read.toUpperCase().equals("PINK") || read.toUpperCase().equals("RED")) ||
-                            read.toUpperCase().equals("YELLOW") || read.toUpperCase().equals("GREEN") ||
-                            read.toUpperCase().equals("BLUE")) {
+                    if (!(read.equalsIgnoreCase("PINK") || read.equalsIgnoreCase("RED")) ||
+                            read.equalsIgnoreCase("YELLOW") || read.equalsIgnoreCase("GREEN") ||
+                            read.equalsIgnoreCase("BLUE")) {
                         System.err.println("enter a valid color!");
                         flag = true;
                     }
