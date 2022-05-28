@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card6 extends CharacterCardTemplate{
 
+    private final String description = "when resolving Conquering on an island, towers do not count towards influence";
+
     public Card6(BoardExpert board){
         super(board);
         cardID = 6;
@@ -32,9 +34,12 @@ public class Card6 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
     }
 
+    @Override
+    public String getDescription(){
+        return description;
+    }
 
 }

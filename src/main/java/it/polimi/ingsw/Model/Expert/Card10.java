@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class Card10 extends CharacterCardTemplate{
 
+    private final String description = "switch up to 2 students between entrance and dining room";
+
     public Card10(BoardExpert board){
         super(board);
         cardID = 10;
@@ -85,8 +87,12 @@ public class Card10 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 }

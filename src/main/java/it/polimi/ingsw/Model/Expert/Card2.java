@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 
 public class Card2 extends CharacterCardTemplate{
 
+    private final String description = "take control of any number of professors for the turn";
+
     public Card2(BoardExpert board){
         super(board);
         cardID = 2;
@@ -38,8 +40,12 @@ public class Card2 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription() ;
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 }

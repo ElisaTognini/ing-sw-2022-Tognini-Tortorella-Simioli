@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.StudentContainer;
 /* take one student from this card and place it on an island of your choice; then
 * draw another student and place it on this card */
 public class Card1 extends CharacterCardTemplate{
-
+    private String description = "take one student from this card and place on an island of your choice";
     private StudentContainer students;
 
     public Card1(BoardExpert board){
@@ -71,11 +71,17 @@ public class Card1 extends CharacterCardTemplate{
     @Override
     /* FORMAT: cardID followed by the color and number of the students placed on the card */
     public String toStringCard(){
-        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
+        StringBuilder toRet = new StringBuilder(cardID + "-" + cost + "-");
 
+        toRet.append(this.getDescription()).append("-");
         for(PawnDiscColor c : PawnDiscColor.values()){
-            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
+            toRet.append(c).append("-").append(students.getInfluence(c)).append("-");
         }
         return toRet.toString();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 }

@@ -7,6 +7,9 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card5 extends CharacterCardTemplate{
 
+    private final String description = "place no entry tiles on islands of choice in order to block" +
+            " influence calculation if mother nature ends there";
+
     public Card5(BoardExpert board){
         super(board);
         cardID = 5;
@@ -33,8 +36,12 @@ public class Card5 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 

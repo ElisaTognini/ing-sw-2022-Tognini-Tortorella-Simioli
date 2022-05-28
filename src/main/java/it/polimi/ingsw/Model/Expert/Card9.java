@@ -7,6 +7,9 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card9 extends CharacterCardTemplate{
 
+    private final String description = "choose a color of student that will add no influence" +
+            "during the influence calculation of the turn in which the card is played";
+
     public Card9(BoardExpert board){
         super(board);
         cardID = 9;
@@ -30,8 +33,12 @@ public class Card9 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 }

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class Card7 extends CharacterCardTemplate{
 
+    private final String description = "can choose up to three students on this card to switch with three in their entrance";
+
     private StudentContainer students;
 
     public Card7(BoardExpert board){
@@ -94,12 +96,18 @@ public class Card7 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
+        StringBuilder toRet = new StringBuilder(cardID + "-" + cost + "-");
 
+        toRet.append(this.getDescription()).append("-");
         for(PawnDiscColor c : PawnDiscColor.values()){
-            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
+            toRet.append(c).append("-").append(students.getInfluence(c)).append("-");
         }
         return toRet.toString();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 

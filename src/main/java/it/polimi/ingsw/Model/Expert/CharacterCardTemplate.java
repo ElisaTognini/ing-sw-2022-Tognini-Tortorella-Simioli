@@ -28,4 +28,7 @@ public abstract class CharacterCardTemplate {
     public abstract boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException;
 
     public abstract String toStringCard();
+
+    /* returns description and usage of the chosen card*/
+    public abstract String getDescription();
 }

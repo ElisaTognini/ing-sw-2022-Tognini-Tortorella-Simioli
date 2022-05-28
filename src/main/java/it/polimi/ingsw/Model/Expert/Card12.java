@@ -9,6 +9,10 @@ import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 
 public class Card12 extends CharacterCardTemplate{
 
+    private final String description = "choose a type of student: every player (including yourself) must return 3 students of that type" +
+            "  from their dining room to the bag.\n If any player has fewer than 3 students of that type," +
+            "  return as many students as they have";
+
     public Card12(BoardExpert board){
         super(board);
         cardID = 12;
@@ -44,8 +48,12 @@ public class Card12 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+    }
+
+    @Override
+    public String getDescription(){
+        return description;
     }
 
 }

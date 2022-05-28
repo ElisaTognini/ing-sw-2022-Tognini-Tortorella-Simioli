@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card8 extends CharacterCardTemplate{
 
+    private final String description = "adds 2 to the influence of the owner of this card";
+
     public Card8(BoardExpert board){
         super(board);
         cardID = 8;
@@ -30,9 +32,12 @@ public class Card8 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
     }
 
+    @Override
+    public String getDescription(){
+        return description;
+    }
 
 }

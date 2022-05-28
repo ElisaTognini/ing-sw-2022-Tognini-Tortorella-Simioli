@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card4 extends CharacterCardTemplate{
 
+    private final String description = "mother nature can be moved up to two additional islands";
+
     public Card4(BoardExpert board) {
         super(board);
         cardID = 4;
@@ -36,9 +38,12 @@ public class Card4 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        String toRet = String.valueOf(cardID) + " " + String.valueOf(cost);
-        return toRet;
+        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
     }
 
+    @Override
+    public String getDescription(){
+        return description;
+    }
 
 }

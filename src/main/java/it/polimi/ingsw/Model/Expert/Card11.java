@@ -11,6 +11,8 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 public class Card11 extends CharacterCardTemplate{
 
+    private final String description = "take 1 student from this card and place it in your dining room." +
+            "  Then, take a new student from the bag and place it on this card";
     private StudentContainer students;
 
     public Card11(BoardExpert board){
@@ -67,13 +69,18 @@ public class Card11 extends CharacterCardTemplate{
 
     @Override
     public String toStringCard(){
-        StringBuilder toRet = new StringBuilder(cardID + " " + cost + " ");
+        StringBuilder toRet = new StringBuilder(cardID + "-" + cost + "-");
 
+        toRet.append(this.getDescription()).append("-");
         for(PawnDiscColor c : PawnDiscColor.values()){
-            toRet.append(c).append(" ").append(students.getInfluence(c)).append(" ");
+            toRet.append(c).append("-").append(students.getInfluence(c)).append("-");
         }
         return toRet.toString();
     }
 
+    @Override
+    public String getDescription(){
+        return description;
+    }
 
 }

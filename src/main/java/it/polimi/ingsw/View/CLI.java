@@ -87,12 +87,13 @@ public class CLI extends View implements Observer {
             System.out.print(String.format(str1) + "\n");
         }
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
-        System.out.println("\nMother Nature is currently on island: " + message.getMnPosition());
-
+        System.out.println("\n");
+        System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
+        System.out.println("\n");
         printClouds(message);
-
+        System.out.println("\n");
         printDeck(message.getDecks());
-
+        System.out.println("\n");
         printSchoolboard(message);
 
         }
@@ -125,7 +126,7 @@ public class CLI extends View implements Observer {
                         else stringBuilder1.append("| ").append(d[i]).append(" ");
                     }
                     stringBuilder1.append("| \n");
-                    stringBuilder2.append("| \n");
+                    stringBuilder2.append(" | \n");
                     stringBuilder1.append(stringBuilder2);
                     System.out.println(stringBuilder1);
                 }
@@ -179,31 +180,59 @@ public class CLI extends View implements Observer {
             }
             stringBuilder.append("| ");
             System.out.println(stringBuilder);
-        }
 
-        System.out.println("\n");
+            System.out.println("\n");
+        }
     }
 
     public void buildNewBoardExpert(ExpertViewUpdateMessage message){
-        System.out.println("EXPERT FEATURES:\n");
-        System.out.println(" - Islands with no entry tiles: ");
+        System.out.println("------------EXPERT FEATURES------------");
+        System.out.print("ISLANDS WITH NO ENTRY TILES: ");
         StringBuilder stringBuilder = new StringBuilder();
         for (String island : message.getViewUpdate_base().getIslands()) {
             String[] i = island.split(" ");
             if(i.length == 8) stringBuilder.append("| ").append(i[7]).append(" ");
         }
+        System.out.println("\n");
         printCoinCounter(message.getCoinCounters());
-
+        System.out.println("\n");
+        printExtractedCards(message.getExtractedCharCards());
+        System.out.println("\n");
         buildNewBoard(message.getViewUpdate_base());
 
     }
 
+    public void printExtractedCards(ArrayList<String> extractedCards){
+        StringBuilder str = null;
+        ArrayList<String> descriptions = new ArrayList<>();
+        String header = "CHARACTER CARDS\n";
+        header += AnsiColors.formatDiv("a------b------b------------------------------------------c\n");
+        header += AnsiColors.formatRow("|  ID  | COST |      students on card (if required)      |\n");
+        header += AnsiColors.formatDiv("d------e------e------------------------------------------f\n");
+        System.out.print(header);
+        for(String card: extractedCards) {
+            String[] c = card.split("-");
+            descriptions.add(c[2]);
+            str = new StringBuilder();
+            if (c.length > 3) {
+                for (int i = 3; i < c.length; i++) str.append(c[i]).append(" ");
+            } else
+                str = new StringBuilder(" ");
+            String str1 = String.format("| %4s | %4s | %40s |", c[0], c[1], str);
+            System.out.print(String.format(str1) + "\n");
+            str.setLength(0);
+            }
+        System.out.println(AnsiColors.formatDiv("g------h------h------------------------------------------i\n"));
+        System.out.println("Descriptions: ");
+        for(String d : descriptions) System.out.println("- " + d);
+    }
+
     public void printCoinCounter(ArrayList<String> coinCounters){
-        System.out.println(" - Coins: ");
+        System.out.println("COINS ");
         for(String counter : coinCounters){
             String[] c = counter.split(" ");
-            if(Objects.equals(c[1], String.valueOf(1))) System.out.println(c[0] + " has " + c[1] + "coin");
-            else System.out.println(c[0] + " has " + c[1] + "coins");
+            if(Objects.equals(c[1], String.valueOf(1))) System.out.println(c[0] + " has " + c[1] + " coin");
+            else System.out.println(c[0] + " has " + c[1] + " coins");
         }
     }
 
