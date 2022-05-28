@@ -150,7 +150,7 @@ public class Board extends Observable{
         int temp = 0;
         String maxPlayer = "";
         for(PawnDiscColor c : PawnDiscColor.values()){
-            maxPlayer = "";
+            maxPlayer = ownerToCompare(c);
             maxInfluence = influenceToCompare(c);
             for(SchoolBoard sb : schoolBoards){
                 temp = sb.getDiningRoom().influenceForProf(c);
@@ -178,6 +178,15 @@ public class Board extends Observable{
                 return sb.getDiningRoom().influenceForProf(c);
         }
         return 0;
+    }
+
+    private String ownerToCompare(PawnDiscColor c){
+        for(SchoolBoard sb : schoolBoards){
+            if(sb.getProfessorTable().hasProfessor(c)){
+                return sb.getOwner().getNickname();
+            }
+        }
+        return "";
     }
 
     /*  if two players have the same influence over an unconquered island, the island will not be
