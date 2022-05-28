@@ -100,6 +100,7 @@ public class RoundManager extends Observable{
     /* and passes the first player of the next planning phase to the computeTurnOrder method */
     public void sortActionPhase(){
         isPlanningPhase = false;
+        sortedPlayerActions.clear();
         Collections.sort(cards);
         computeTurnOrder(players.indexOf(cards.get(0).getOwner()));
         currentPlayer = cards.get(0).getOwner();

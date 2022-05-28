@@ -1,7 +1,7 @@
 package it.polimi.ingsw.tests;
 
 import it.polimi.ingsw.Client.Client;
-import it.polimi.ingsw.View.CLI;
+import it.polimi.ingsw.View.CLI.CLI;
 
 public class ClientAppTest {
 

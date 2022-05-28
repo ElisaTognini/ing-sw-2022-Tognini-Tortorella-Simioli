@@ -1,9 +1,6 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.CLI;
 
-import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToDRMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
-import it.polimi.ingsw.Client.ActionMessages.PickCloudMessage;
+import it.polimi.ingsw.Client.ActionMessages.*;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
@@ -196,7 +193,27 @@ public class Parser extends Observable implements Runnable{
     }
 
     public synchronized void pickCharacterCard(){
+        Scanner scanner = new Scanner(System.in);
+        int i;
+        boolean flag;
+        CharacterCardMessage message = new CharacterCardMessage();
+        ExpertParameterParser cardParamParser = new ExpertParameterParser();
 
+        try{
+            do{
+                flag = false;
+                i = scanner.nextInt();
+                if(i < 1 || i > 12 )
+                    flag = true;
+
+            }while(flag == true);
+        }catch(Exception e){
+            System.err.println("enter a valid Character Card identifier!");
+            return;
+        }
+
+        message.setCardID(i);
+        cardParamParser.parseParameter(i);
     }
 
     /*utility methods*/

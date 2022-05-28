@@ -1,4 +1,4 @@
-package it.polimi.ingsw.View;
+package it.polimi.ingsw.View.CLI;
 
 public class AnsiColors {
     public static final String ANSI_PURPLE = "\u001B[35m";
