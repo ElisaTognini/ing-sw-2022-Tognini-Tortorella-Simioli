@@ -157,8 +157,14 @@ public class BaseActionController extends Observable {
                 if(!(cloudID > model.getNumberOfClouds()-1 || cloudID < 0)){
                     if(!model.getBoard().getCloud(cloudID).isCloudEmpty()){
                         model.getBoard().chooseCloudTile(nickname, cloudID);
+                        roundManager.getCurrentPlayer().setCloudPicked(true);
                         roundManager.refreshCurrentPlayerAction();
-                        model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
+                        if(!(roundManager.getSortedPlayersAction().get(
+                                roundManager.getSortedPlayersAction().size() - 1
+                        ).isCloudPicked()))
+                        {
+                            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
+                        }
                         if(model.isGameOver()){
                             endGame();
                         }
@@ -255,6 +261,9 @@ public class BaseActionController extends Observable {
     /* this method starts a new round once all players have picked
     * a cloud tile*/
     private synchronized void startNewRound(){
+        for(Player p : model.getPlayerList()){
+            p.setCloudPicked(false);
+        }
         roundManager.startRound();
         model.getBoard().roundSetup();
         isLastRound = model.getBoard().isLastRound();

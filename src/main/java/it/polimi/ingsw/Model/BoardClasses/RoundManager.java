@@ -180,4 +180,8 @@ public class RoundManager extends Observable{
     public void setCurrentPlayer(Player player){
         currentPlayer = player;
     }
+
+    public ArrayList<Player> getSortedPlayersAction(){
+        return sortedPlayerActions;
+    }
 }

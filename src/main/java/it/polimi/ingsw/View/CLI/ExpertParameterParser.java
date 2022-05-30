@@ -53,8 +53,8 @@ public class ExpertParameterParser {
                 param.setColor(parseNewColor());
                 break;
             case 10:
-                ArrayList<PawnDiscColor> studentsOnEntr = new ArrayList<>();
                 ArrayList<PawnDiscColor> studentsOnDR = new ArrayList<>();
+                ArrayList<PawnDiscColor> studentsOnEntr = new ArrayList<>();
                 System.out.println("enter the color of the two students on your entrance you would like to switch: ");
                 for(int i = 0; i < 2; i++){
                     studentsOnEntr.add(parseNewColor());

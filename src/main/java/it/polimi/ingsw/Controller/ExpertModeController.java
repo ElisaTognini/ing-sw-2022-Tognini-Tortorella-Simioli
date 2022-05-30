@@ -35,7 +35,7 @@ public class ExpertModeController extends Observable {
                 if (board.checkIfCardPresent(cardID)) {
                     if (board.getPlayersCoinCounter(nickname).checkIfEnoughCoins(
                             board.getCardsCost(cardID))) {
-                        if(board.isActionForbidden(cardID, o, nickname)) {
+                        if(!board.isActionForbidden(cardID, o, nickname)) {
                             board.purchaseCharacterCard(nickname, cardID);
                             try {
                                 board.useCard(o, nickname, cardID);
