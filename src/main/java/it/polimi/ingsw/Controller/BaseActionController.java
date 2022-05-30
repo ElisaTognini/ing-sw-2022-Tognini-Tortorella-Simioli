@@ -10,7 +10,6 @@ import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
-import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
 
@@ -250,7 +249,7 @@ public class BaseActionController extends Observable {
             }
             model.getBoard().conquerIsland();
             /*attempts to merge islands*/
-            model.getBoard().checkForMerge(nickname);
+            model.getBoard().checkForMerge();
             if(model.isGameOver()){
                 endGame();
             }

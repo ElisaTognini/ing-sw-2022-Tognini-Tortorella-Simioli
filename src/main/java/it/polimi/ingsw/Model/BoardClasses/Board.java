@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.BoardClasses;
 
 import it.polimi.ingsw.Model.BasicElements.*;
-import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
@@ -263,30 +262,36 @@ public class Board extends Observable{
     /* this method checks whether the adjacent islands are also conquered by the current players. It handles
     * the case in which the nearing island's owner is null. This method, if islands need merging,
     * calls the merge method which handles the moving of students and towers basing on indexes (using an arraylist)*/
-    public void checkForMerge(String nickname){
+    public void checkForMerge(){
         boolean notNull1 = false;
         boolean notNullMinus1 = false;
-        if(!(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner() == null))
+        String owner1 = null;
+        String owner2 = null;
+
+        if(!(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner() == null)) {
             notNull1 = true;
-        if(!(islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner() == null))
+            owner1 = islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname();
+        }
+        if(!(islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner() == null)) {
             notNullMinus1 = true;
+            owner2 = islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname();
+        }
 
         if(notNull1 && notNullMinus1){
-            if (islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname().equals(nickname)) {
-                if (islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
-                    merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size(),
-                            (motherNature.getPosition() + 1) % islands.size());
-                }
+            if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2) &&
+                    islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1)) {
+                merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size(),
+                        (motherNature.getPosition() + 1) % islands.size());
             }
         }
-        if(notNull1){
-            if (islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner().getNickname().equals(nickname)) {
+        else if(notNull1){
+            if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1)) {
                 merge(motherNature.getPosition(), (motherNature.getPosition() + 1) % islands.size());
             }
         }
 
-        if(notNullMinus1){
-            if(islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname().equals(nickname)){
+        else if(notNullMinus1){
+            if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2)){
                 merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size());
             }
         }

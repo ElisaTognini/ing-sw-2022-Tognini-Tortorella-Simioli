@@ -186,7 +186,7 @@ public class BoardTest {
             if (boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered())
                 System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
 
-            boardToTest.checkForMerge("player2");
+            boardToTest.checkForMerge();
             boardToTest.moveMotherNature(1);
         }
     }
