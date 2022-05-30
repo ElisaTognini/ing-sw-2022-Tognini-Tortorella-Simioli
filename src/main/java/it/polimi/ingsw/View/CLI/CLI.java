@@ -189,9 +189,9 @@ public class CLI extends View implements Observer {
         System.out.println("------------EXPERT FEATURES------------");
         System.out.print("ISLANDS WITH NO ENTRY TILES: ");
         StringBuilder stringBuilder = new StringBuilder();
-        for (String island : message.getViewUpdate_base().getIslands()) {
-            String[] i = island.split(" ");
-            if(i.length == 8) stringBuilder.append("| ").append(i[7]).append(" ");
+        for (Integer islandID : message.getIslandsNETiles()) {
+            stringBuilder.append(islandID);
+            stringBuilder.append(" ");
         }
         System.out.println("\n");
         printCoinCounter(message.getCoinCounters());

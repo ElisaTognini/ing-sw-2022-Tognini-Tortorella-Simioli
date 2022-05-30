@@ -7,6 +7,7 @@ public class ExpertViewUpdateMessage implements ServerMessage, Serializable {
     private ViewUpdateMessage viewUpdate_base;
     private ArrayList<String> coinCounters = new ArrayList<>();
     private ArrayList<String> extractedCharCards = new ArrayList<>();
+    private ArrayList<Integer> islandsNETiles = new ArrayList<>();
 
     public ViewUpdateMessage getViewUpdate_base() {
         return viewUpdate_base;
@@ -23,4 +24,6 @@ public class ExpertViewUpdateMessage implements ServerMessage, Serializable {
     public ArrayList<String> getExtractedCharCards() {
         return extractedCharCards;
     }
+
+    public ArrayList<Integer> getIslandsNETiles(){return islandsNETiles;}
 }

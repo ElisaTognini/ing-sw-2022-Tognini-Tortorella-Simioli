@@ -75,6 +75,7 @@ public class ViewUpdateMessageWrapper{
 
         ArrayList<String> coinCounters = expertViewUpdateMessage.getCoinCounters();
         ArrayList<String> extractedCards = expertViewUpdateMessage.getExtractedCharCards();
+        ArrayList<Integer> islandsNEtiles = expertViewUpdateMessage.getIslandsNETiles();
 
         for(CoinCounter cc : board.getCoinCounters()){
             coinCounters.add(cc.toString());
@@ -82,6 +83,12 @@ public class ViewUpdateMessageWrapper{
 
         for(CharacterCardTemplate c : board.getExtractedCards()){
             extractedCards.add(c.toStringCard());
+        }
+
+        for(Island i :board.getIslandList()){
+            if(i.hasANoEntryTile()){
+                islandsNEtiles.add(i.getIslandID());
+            }
         }
 
         return expertViewUpdateMessage;

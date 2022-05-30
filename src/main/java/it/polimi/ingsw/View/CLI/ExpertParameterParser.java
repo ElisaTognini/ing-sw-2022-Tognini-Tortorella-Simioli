@@ -22,6 +22,9 @@ public class ExpertParameterParser {
 
                 break;
             case 3:
+                System.out.println("enter the island you would like to resolve: ");
+                param.setIslandID(parseNewInt());
+                break;
             case 6:
             case 8:
                 /*no effects caused by parameter*/
@@ -82,14 +85,17 @@ public class ExpertParameterParser {
     public int parseNewInt(){
         Scanner scanner = new Scanner(System.in);
         int i = 0;
-
         while(true) {
-            try {
-                i = scanner.nextInt();
-                break;
-            } catch (Exception e) {
-                System.err.println("enter validly formatted integer!");
+            while (true) {
+                try {
+                    i = scanner.nextInt();
+                    break;
+                } catch (Exception e) {
+                    System.err.println("enter validly formatted integer!");
+                    break;
+                }
             }
+            break;
         }
         return i;
     }
