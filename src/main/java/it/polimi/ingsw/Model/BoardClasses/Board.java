@@ -277,23 +277,18 @@ public class Board extends Observable{
             owner2 = islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname();
         }
 
-        if(notNull1 && notNullMinus1){
-            if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2) &&
-                    islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1)) {
+        if((notNull1 && notNullMinus1) && owner1.equals(owner2)){
+            if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2)) {
                 merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size(),
                         (motherNature.getPosition() + 1) % islands.size());
             }
         }
-        else if(notNull1){
-            if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1)) {
+        else if(notNull1 && (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1))){
                 merge(motherNature.getPosition(), (motherNature.getPosition() + 1) % islands.size());
-            }
         }
 
-        else if(notNullMinus1){
-            if(islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2)){
+        else if(notNullMinus1 && (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2))){
                 merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size());
-            }
         }
     }
 
