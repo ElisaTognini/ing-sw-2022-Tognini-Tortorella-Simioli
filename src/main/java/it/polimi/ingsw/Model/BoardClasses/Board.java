@@ -214,8 +214,8 @@ public class Board extends Observable{
         }
 
         /* decides who conquers the island */
-        i = 0;
         maxInfluence = 0;
+        i = 0;
         for(SchoolBoard sb : schoolBoards){
             if(sum[i] > maxInfluence){
                 maxInfluence = sum[i];
@@ -249,7 +249,7 @@ public class Board extends Observable{
             }
             }
 
-        if(!islands.get(motherNature.getPosition()).checkIfConquered()){
+        if(!(islands.get(motherNature.getPosition()).checkIfConquered())){
             getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(1);
             islands.get(motherNature.getPosition()).increaseNumberOfTowers(1);
         }
@@ -265,8 +265,8 @@ public class Board extends Observable{
     public void checkForMerge(){
         boolean notNull1 = false;
         boolean notNullMinus1 = false;
-        String owner1 = null;
-        String owner2 = null;
+        String owner1 = " ";
+        String owner2 = " ";
 
         if(!(islands.get((motherNature.getPosition() + 1) % islands.size()).getOwner() == null)) {
             notNull1 = true;
@@ -315,7 +315,7 @@ public class Board extends Observable{
 
     protected void merge(int index1, int index2, int index3){
         merge(index1, index2);
-        merge(motherNature.getPosition(), index3);
+        merge(motherNature.getPosition(), (index3 - 1));
     }
 
     /* this method is only used in Expert mode, it is declared here for overriding*/
