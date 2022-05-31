@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Model.BoardClasses.RoundManager;
 import it.polimi.ingsw.Model.Model;
+import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.ActionType;
 import it.polimi.ingsw.Utils.Enums.NotifyType;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -260,6 +261,7 @@ public class BaseActionController extends Observable {
     /* this method starts a new round once all players have picked
     * a cloud tile*/
     private synchronized void startNewRound(){
+
         for(Player p : model.getPlayerList()){
             p.setCloudPicked(false);
         }
@@ -269,6 +271,9 @@ public class BaseActionController extends Observable {
         /*checks if studentBag is empty or if decks only
           have one card left ; if any of those conditions is true current round will be last round*/
         if(model.getBoard().getDecks().get(0).size() == 1){
+            isLastRound = true;
+        }
+        if(model.getBoard().getStudentBag().checkIfStudentBagEmpty()){
             isLastRound = true;
         }
         setChanged();

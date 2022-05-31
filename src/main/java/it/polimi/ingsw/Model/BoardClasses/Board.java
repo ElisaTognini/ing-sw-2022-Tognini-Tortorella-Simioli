@@ -206,8 +206,7 @@ public class Board extends Observable{
                     sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                 }
             }
-        }
-        for (i = 0; i < sum.length; i++) {
+
             if (islands.get(motherNature.getPosition()).checkIfConquered()) {
                 if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(schoolBoards.get(i).getOwner().getNickname())) {
                     sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
