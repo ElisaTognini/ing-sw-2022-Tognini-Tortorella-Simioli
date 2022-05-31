@@ -252,7 +252,7 @@ public class CLI extends View implements Observer {
 
     @Override
     public void displayTurnChange(TurnChangeMessage message){
-        System.out.println("Your turn is over. Now playing " + message.getCurrentPlayer() );
+        System.out.println("Now playing " + message.getCurrentPlayer() );
     }
 
     @Override

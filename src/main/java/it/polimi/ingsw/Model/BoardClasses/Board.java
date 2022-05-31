@@ -194,38 +194,38 @@ public class Board extends Observable{
     public void conquerIsland() {
         int[] sum = new int[players.size()];
         int i = 0;
-        int maxInfluence;
+        int maxInfluence = 0;
         boolean deuce = false;
         Player conqueror = null;
         /*if at the end of the method the conqueror is still null, nobody conquers*/
-        for (SchoolBoard sb : schoolBoards) {
+
+        for (i = 0; i < sum.length; i++) {
             sum[i] = 0;
             for (PawnDiscColor color : PawnDiscColor.values()) {
-                if (sb.getProfessorTable().hasProfessor(color)) {
+                if (schoolBoards.get(i).getProfessorTable().hasProfessor(color)) {
                     sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                 }
-                if (islands.get(motherNature.getPosition()).checkIfConquered()) {
-                    if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(sb.getOwner().getNickname())) {
-                        sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
-                    }
+            }
+        }
+        for (i = 0; i < sum.length; i++) {
+            if (islands.get(motherNature.getPosition()).checkIfConquered()) {
+                if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(schoolBoards.get(i).getOwner().getNickname())) {
+                    sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
+                    maxInfluence = sum[i];
+                    conqueror = schoolBoards.get(i).getOwner();
                 }
             }
-            i++;
         }
 
         /* decides who conquers the island */
-        maxInfluence = 0;
-        i = 0;
-        for(SchoolBoard sb : schoolBoards){
-            if(sum[i] > maxInfluence){
+        for (i = 0; i < sum.length; i++ ){
+            if (sum[i] > maxInfluence) {
                 maxInfluence = sum[i];
-                conqueror = sb.getOwner();
+                conqueror = schoolBoards.get(i).getOwner();
                 deuce = false;
-            }
-            else if(sum[i] == maxInfluence && maxInfluence != 0 ){
+            } else if (sum[i] == maxInfluence && maxInfluence != 0) {
                 deuce = true;
             }
-            i++;
         }
 
         if(deuce || conqueror == null){
@@ -243,10 +243,10 @@ public class Board extends Observable{
             if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
                 islands.get(motherNature.getPosition()).getNumberOfTowers())) {
                 getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
-            }else{
+            } else {
                 isGameOver = true;
                 return;
-            }
+                }
             }
 
         if(!(islands.get(motherNature.getPosition()).checkIfConquered())){
@@ -283,11 +283,13 @@ public class Board extends Observable{
                         (motherNature.getPosition() + 1) % islands.size());
             }
         }
-        else if(notNull1 && (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1))){
+        else if(notNull1 && (islands.get(motherNature.getPosition()).getOwner() != null) &&
+                (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner1))){
                 merge(motherNature.getPosition(), (motherNature.getPosition() + 1) % islands.size());
         }
 
-        else if(notNullMinus1 && (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2))){
+        else if(notNullMinus1 && (islands.get(motherNature.getPosition()).getOwner() != null) &&
+                (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2))){
                 merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size());
         }
     }

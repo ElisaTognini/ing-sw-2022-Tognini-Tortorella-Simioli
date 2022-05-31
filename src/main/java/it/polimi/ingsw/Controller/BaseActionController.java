@@ -275,9 +275,7 @@ public class BaseActionController extends Observable {
         notifyObservers(new NotifyArgsController(null,
                 new BaseServerMessage(CustomMessage.startNewRound), NotifyType.SEND_ALL));
 
-        model.getRoundManager().setCurrentPlayer(
-                model.getRoundManager().getFirstPlanningPhase()
-        );
+        model.getRoundManager().setCurrentPlayer(model.getRoundManager().getFirstPlanningPhase());
         model.getRoundManager().change();
         model.getRoundManager().notifyObservers(ActionType.PLAYER_CHANGE);
     }
