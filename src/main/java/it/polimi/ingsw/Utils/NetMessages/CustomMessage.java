@@ -29,4 +29,5 @@ public class CustomMessage {
     public static String isLastRound = "This is the last round for this match!\n";
     public static String startNewRound = "A new round is starting!\n";
     public static String actionForbiddenError = "The action you requested cannot be performed!\n";
+    public static String cardPlayed = " Card played: ";
 }

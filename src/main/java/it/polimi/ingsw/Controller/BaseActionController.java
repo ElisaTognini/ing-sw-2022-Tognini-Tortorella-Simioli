@@ -11,6 +11,7 @@ import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
+import it.polimi.ingsw.Utils.NetMessages.PlayedCardMessage;
 
 import java.util.Observable;
 
@@ -53,13 +54,20 @@ public class BaseActionController extends Observable {
 
     /* this method will receive cardID and nickname as a network message */
     public synchronized boolean chooseAssistantCard(int cardID, String nickname){
+        PlayedCardMessage playedCard = new PlayedCardMessage();
 
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)){
                 if(model.getBoard().isCardInDeck(nickname, cardID)) {
                     if (!isLastRound) {
                         if (!roundManager.checkForDupe(cardID)) {
+                            playedCard.setCardID(String.valueOf(cardID));
+                            playedCard.setOwner(nickname);
+                            playedCard.setPowerFactor(
+                                    String.valueOf(model.getBoard().getPlayersDeck(nickname).drawCard(cardID).getMotherNatureMovements()));
                             roundManager.storeCards(model.getBoard().playAssistantCard(cardID, nickname));
+                            setChanged();
+                            notifyObservers(playedCard);
                             model.getBoard().getPlayersDeck(nickname).removeCard(cardID);
                             model.getBoard().notifyObservers();
                             if(roundManager.isPlanningPhase())
@@ -69,7 +77,6 @@ public class BaseActionController extends Observable {
                                     return true;
                                 }
                             }
-                            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
                             return true;
                         } else {
                             /* the view will display that the card has already been played */
@@ -126,10 +133,6 @@ public class BaseActionController extends Observable {
      * player's entrance */
     public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
 
-        if(roundManager.getMovedStudents() == 0){
-
-        }
-
         if(checkStudents(color, nickname)){
             model.getBoard().moveStudent(color, nickname, islandID);
             roundManager.increaseMovedStudents();
@@ -159,12 +162,6 @@ public class BaseActionController extends Observable {
                         model.getBoard().chooseCloudTile(nickname, cloudID);
                         roundManager.getCurrentPlayer().setCloudPicked(true);
                         roundManager.refreshCurrentPlayerAction();
-                        if(!(roundManager.getSortedPlayersAction().get(
-                                roundManager.getSortedPlayersAction().size() - 1
-                        ).isCloudPicked()))
-                        {
-                            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
-                        }
                         if(model.isGameOver()){
                             endGame();
                         }
@@ -243,6 +240,7 @@ public class BaseActionController extends Observable {
     private synchronized void actionPhaseCurrentPlayer(String nickname){
         if(roundManager.threeStudentsMoved()){
             /* attempts to conquer an island */
+            model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
             model.getBoard().assignProfessors();
             /*checks if player has enough towers: if not, current player is the winner.*/
             if(model.getBoard().isGameOver()){

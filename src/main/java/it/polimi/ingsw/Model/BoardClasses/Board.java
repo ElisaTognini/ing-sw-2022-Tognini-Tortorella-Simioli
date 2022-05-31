@@ -193,7 +193,7 @@ public class Board extends Observable{
     * will not change its owner.*/
     public void conquerIsland() {
         int[] sum = new int[players.size()];
-        int i = 0;
+        int i;
         int maxInfluence = 0;
         boolean deuce = false;
         Player conqueror = null;
@@ -306,8 +306,8 @@ public class Board extends Observable{
         }
         toKeep = islands.get(index1);
         islands.remove(index2);
-        for(int i = islands.indexOf(toKeep); i < islands.size() ; i++){
-            islands.get(i).setIslandID(islands.indexOf(islands.get(i)));
+        for(int i = 0; i < islands.size() ; i++){
+            islands.get(i).setIslandID(i);
         }
         motherNature.setPosition(islands.indexOf(toKeep));
         setChanged();

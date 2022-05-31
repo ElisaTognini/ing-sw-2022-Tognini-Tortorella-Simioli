@@ -87,6 +87,7 @@ public class RoundManager extends Observable{
     public void storeCards(AssistantCard card){
 
         cards.add(card);
+
         currentPlayer.setCardPickedToTrue();
 
         if(cards.size() == players.size()){

@@ -9,6 +9,8 @@ public class CLI extends View implements Observer {
     private Thread thread;
     private String[][] board;
     private String nickname;
+    private String currentPlayer;
+    private ArrayList<String> cardsPlayed = new ArrayList<>();
 
     public CLI(){
         parser = new Parser();
@@ -87,16 +89,21 @@ public class CLI extends View implements Observer {
             System.out.print(String.format(str1) + "\n");
         }
         System.out.println(AnsiColors.formatDiv("g------h------h-------h--------h------h-----h---------h--------i"));
-        System.out.println("\n");
+        System.out.print("\n");
         System.out.println("Mother Nature is currently on island: " + message.getMnPosition());
-        System.out.println("\n");
+        System.out.print("\n");
         printClouds(message);
-        System.out.println("\n");
+        System.out.print("\n");
         printDeck(message.getDecks());
-        System.out.println("\n");
+        System.out.print("\n");
         printSchoolboard(message);
-
+        System.out.print("\n");
+        System.out.println("ASSISTANT CARD PLAYED: ");
+        for(String s : cardsPlayed){
+            System.out.print(s);
         }
+        System.out.print("\n");
+    }
 
         public void printClouds(ViewUpdateMessage message){
             System.out.println("CLOUDS: ");
@@ -131,6 +138,7 @@ public class CLI extends View implements Observer {
                     System.out.println(stringBuilder1);
                 }
             }
+            System.out.println("current player: " + currentPlayer);
     }
 
     public void printSchoolboard(ViewUpdateMessage message) {
@@ -180,8 +188,7 @@ public class CLI extends View implements Observer {
             }
             stringBuilder.append("| ");
             System.out.println(stringBuilder);
-
-            System.out.println("\n");
+            System.out.print("\n");
         }
     }
 
@@ -248,12 +255,14 @@ public class CLI extends View implements Observer {
 
     @Override
     public void displayNewRoundMessage(NewRoundMessage message){
+        cardsPlayed.clear();
         System.out.println(CustomMessage.startNewRound);
     }
 
     @Override
     public void displayTurnChange(TurnChangeMessage message){
-        System.out.println("Now playing " + message.getCurrentPlayer() );
+        System.out.println("Now playing " + message.getCurrentPlayer());
+        currentPlayer = message.getCurrentPlayer();
     }
 
     @Override
@@ -280,5 +289,16 @@ public class CLI extends View implements Observer {
     @Override
     public void setNickname(NicknameMessage nick){
         this.nickname = nick.getNickname();
+    }
+
+    @Override
+    public void setPlayedCard(PlayedCardMessage message){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(message.getOwner()).append(" ");
+        stringBuilder.append("played card ").append(message.getCardID());
+        stringBuilder.append(" which has power factor ").append(message.getPowerFactor());
+        stringBuilder.append("\n");
+
+        cardsPlayed.add(stringBuilder.toString());
     }
 }

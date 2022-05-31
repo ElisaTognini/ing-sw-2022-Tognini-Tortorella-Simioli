@@ -99,7 +99,7 @@ public class Model extends Observable implements Observer{
     }
 /* according to the choices of mode and number of players, this method computes those values for the board*/
     private void computeSettings(){
-        studentsOnCloud = numberOfPlayers + 1; //to change if teams
+        studentsOnCloud = numberOfPlayers + 1;
         numberOfClouds = numberOfPlayers;
 
         switch (numberOfPlayers){
