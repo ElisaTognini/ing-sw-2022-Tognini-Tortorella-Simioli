@@ -190,9 +190,10 @@ public class CLI extends View implements Observer {
         System.out.print("ISLANDS WITH NO ENTRY TILES: ");
         StringBuilder stringBuilder = new StringBuilder();
         for (Integer islandID : message.getIslandsNETiles()) {
-            stringBuilder.append(islandID);
+            stringBuilder.append(String.valueOf(islandID));
             stringBuilder.append(" ");
         }
+        System.out.println(stringBuilder);
         System.out.println("\n");
         printCoinCounter(message.getCoinCounters());
         System.out.println("\n");
