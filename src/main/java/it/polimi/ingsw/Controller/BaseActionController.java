@@ -59,8 +59,7 @@ public class BaseActionController extends Observable {
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
             if(roundManager.getCurrentState().equals(TurnFlow.BEGINS_TURN)){
                 if(model.getBoard().isCardInDeck(nickname, cardID)) {
-                    if (!isLastRound) {
-                        if (!roundManager.checkForDupe(cardID)) {
+                        if (!roundManager.checkForDupe(cardID) || model.getBoard().getPlayersDeck(nickname).size() == 1) {
                             playedCard.setCardID(String.valueOf(cardID));
                             playedCard.setOwner(nickname);
                             playedCard.setPowerFactor(
@@ -84,7 +83,6 @@ public class BaseActionController extends Observable {
                             notifyObservers(new NotifyArgsController(nickname,
                                     new BaseServerMessage(CustomMessage.cardAlreadyPlayedError), NotifyType.SEND_ERROR));
                         }
-                    }
                 }
                 else{
                     /* the view will display that the card is not present inside the deck */
