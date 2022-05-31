@@ -45,27 +45,32 @@ public class ExpertModeController extends Observable {
                                         new BaseServerMessage(CustomMessage.wrongFormat), NotifyType.SEND_ERROR));
                             }
                         }else{
+                            setChanged();
                             notifyObservers(new NotifyArgsController(nickname,
                                     new BaseServerMessage(CustomMessage.actionForbiddenError), NotifyType.SEND_ERROR));
                         }
                     } else {
                         //player doesn't have enough coins
+                        setChanged();
                         notifyObservers(new NotifyArgsController(nickname,
                                 new BaseServerMessage(CustomMessage.notEnoughCoinsError), NotifyType.SEND_ERROR));
 
                     }
                 } else{
                         //card has not been extracted
+                    setChanged();
                     notifyObservers(new NotifyArgsController(nickname,
                             new BaseServerMessage(CustomMessage.charCardNotExtractedError), NotifyType.SEND_ERROR));
                     }
                 } else {
                     //not the right moment in the turn
+                setChanged();
                 notifyObservers(new NotifyArgsController(nickname,
                         new BaseServerMessage(CustomMessage.turnFlowError), NotifyType.SEND_ERROR));
                 }
             } else {
                 //error message: not your turn
+            setChanged();
             notifyObservers(new NotifyArgsController(nickname,
                     new BaseServerMessage(CustomMessage.notYourTurnError), NotifyType.SEND_ERROR));
             }

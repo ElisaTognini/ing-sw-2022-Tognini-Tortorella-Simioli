@@ -64,8 +64,10 @@ public class Island {
     /*returns true if island hosts mother nature*/
     public boolean checkForMotherNature(){ return hostsMotherNature; }
 
-    /* sets to true if an island has got a no entry tile */
-    public void addNoEntryTile(){ noEntryTile ++; }
+    /* adds 1 to NEtiles if card 5 is used */
+    public void addNoEntryTile(){
+        noEntryTile = noEntryTile + 1;
+    }
 
     /* sets to false if an island hasn't got a no entry tile on it */
     public void removeNoEntryTile(){ noEntryTile --; }

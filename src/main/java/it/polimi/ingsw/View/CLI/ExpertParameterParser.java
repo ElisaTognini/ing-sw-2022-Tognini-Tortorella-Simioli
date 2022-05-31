@@ -19,7 +19,9 @@ public class ExpertParameterParser {
                 param.setColor(parseNewColor());
                 break;
             case 2:
-
+                System.out.println("enter the colors of the professors you'd like to control, " +
+                        "separated by a SPACE.");
+                param.setColorArrayList(parseCard2());
                 break;
             case 3:
                 System.out.println("enter the island you would like to resolve: ");
@@ -35,7 +37,7 @@ public class ExpertParameterParser {
                 break;
             case 5:
                 System.out.println("enter the island you would like to place your no entry tile to: ");
-                param.setMoves(parseNewInt());
+                param.setIslandID(parseNewInt());
                 break;
             case 7:
                 ArrayList<PawnDiscColor> studentsOnEntrance = new ArrayList<>();
@@ -84,20 +86,25 @@ public class ExpertParameterParser {
 
     public int parseNewInt(){
         Scanner scanner = new Scanner(System.in);
-        int i = 0;
-        while(true) {
-            while (true) {
-                try {
-                    i = scanner.nextInt();
-                    break;
-                } catch (Exception e) {
-                    System.err.println("enter validly formatted integer!");
-                    break;
+        char i = '0';
+        int toRet;
+        boolean flag = false;
+        do{
+            try{
+                flag = false;
+                i = scanner.next().charAt(0);
+                if(!(Character.isDigit(i))){
+                    System.out.println("enter a valid integer!");
+                    flag = true;
                 }
             }
-            break;
-        }
-        return i;
+            catch (Exception e) {
+                System.err.println("enter validly formatted integer!");
+            }
+        }while(flag);
+
+        toRet = Character.getNumericValue(i);
+        return toRet;
     }
 
     public PawnDiscColor parseNewColor(){
@@ -125,6 +132,37 @@ public class ExpertParameterParser {
         }
 
         return PawnDiscColor.valueOf(read);
+    }
+
+    private ArrayList<PawnDiscColor> parseCard2(){
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<PawnDiscColor> colors = new ArrayList<>();
+        String read;
+        String[] splitRead;
+        boolean flag = false;
+
+        do{
+            try {
+                flag = false;
+                read = scanner.nextLine();
+                splitRead = read.split(" ");
+                for(String s : splitRead){
+                    if(checkColorValidity(s.toUpperCase())){
+                        colors.add(PawnDiscColor.valueOf(s.toUpperCase()));
+                    }
+                    else{
+                        flag = true;
+                        System.err.println("enter valid colors!");
+                    }
+                }
+
+            }catch (Exception e){
+                System.err.println("use a valid format!");
+            }
+
+        }while(flag);
+
+        return colors;
     }
 
     private boolean checkColorValidity(String color){
