@@ -45,7 +45,7 @@ public class BaseActionController extends Observable {
     public void endGame(){
         winner = model.getWinner();
         winner.setWinner();
-        setChanged();
+        model.getRoundManager().change();
         model.getRoundManager().notifyObservers(ActionType.END_GAME);
         /* view will display that winner won the game, net will close connections etc... */
     }
@@ -131,11 +131,17 @@ public class BaseActionController extends Observable {
      * player's entrance */
     public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
 
-        if(checkStudents(color, nickname)){
-            model.getBoard().moveStudent(color, nickname, islandID);
-            roundManager.increaseMovedStudents();
-            actionPhaseCurrentPlayer(nickname);
-            return true;
+        if(checkStudents(color, nickname)) {
+            if (islandID < model.getBoard().getIslandList().size()) {
+                model.getBoard().moveStudent(color, nickname, islandID);
+                roundManager.increaseMovedStudents();
+                actionPhaseCurrentPlayer(nickname);
+                return true;
+            } else {
+                setChanged();
+                notifyObservers(new NotifyArgsController(nickname,
+                        new BaseServerMessage(CustomMessage.invalidIslandIDError), NotifyType.SEND_ERROR));
+            }
         }
 
         return false;
@@ -243,12 +249,14 @@ public class BaseActionController extends Observable {
             /*checks if player has enough towers: if not, current player is the winner.*/
             if(model.getBoard().isGameOver()){
                 endGame();
+                return;
             }
             model.getBoard().conquerIsland();
             /*attempts to merge islands*/
             model.getBoard().checkForMerge();
             if(model.isGameOver()){
                 endGame();
+                return;
             }
             roundManager.changeState(TurnFlow.MOVED_STUDENTS);
         }

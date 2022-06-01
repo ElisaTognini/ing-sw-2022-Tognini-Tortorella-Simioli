@@ -276,10 +276,10 @@ public class Board extends Observable{
             owner2 = islands.get((motherNature.getPosition() - 1 + islands.size()) % islands.size()).getOwner().getNickname();
         }
 
-        if((notNull1 && notNullMinus1) && (owner1.equals(owner2)) && (islands.get(motherNature.getPosition()).getOwner().getNickname() != null)){
+        if((notNull1 && notNullMinus1) && (owner1.equals(owner2)) && (!((islands.get(motherNature.getPosition()).getOwner().getNickname()) == null))){
             if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(owner2)) {
-                merge(motherNature.getPosition(), (motherNature.getPosition() - 1 + islands.size()) % islands.size(),
-                        (motherNature.getPosition() + 1) % islands.size());
+                merge(motherNature.getPosition(), (motherNature.getPosition() + 1) % islands.size(),
+                        (motherNature.getPosition() - 1 + islands.size()) % islands.size());
             }
         }
         else if(notNull1 && (islands.get(motherNature.getPosition()).getOwner() != null) &&
@@ -316,7 +316,7 @@ public class Board extends Observable{
 
     protected void merge(int index1, int index2, int index3){
         merge(index1, index2);
-        merge(motherNature.getPosition(), ((index3 - 1) + islands.size()) % islands.size());
+        merge(motherNature.getPosition(), (((index3 - 1) + islands.size()) % islands.size()));
     }
 
     /* this method is only used in Expert mode, it is declared here for overriding*/

@@ -293,12 +293,11 @@ public class CLI extends View implements Observer {
 
     @Override
     public void setPlayedCard(PlayedCardMessage message){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(message.getOwner()).append(" ");
-        stringBuilder.append("played card ").append(message.getCardID());
-        stringBuilder.append(" which has power factor ").append(message.getPowerFactor());
-        stringBuilder.append("\n");
+        String stringBuilder = message.getOwner() + " " +
+                "played card " + message.getCardID() +
+                " which has power factor " + message.getPowerFactor() +
+                "\n";
 
-        cardsPlayed.add(stringBuilder.toString());
+        cardsPlayed.add(stringBuilder);
     }
 }
