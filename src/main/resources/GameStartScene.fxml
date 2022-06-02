@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="outsidePane" maxHeight="500.0" maxWidth="700.0" minHeight="500.0" minWidth="700.0" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIControllerInitialPhase">
+   <top>
+      <ImageView fitHeight="135.0" fitWidth="341.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@eriantys_text_logo.png" />
+         </image>
+      </ImageView>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="ipaddresslabel" text="Insert server IP address:">
+               <font>
+                  <Font name="Ink Free" size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ipTextField" onKeyPressed="#getIPAddress" onKeyTyped="#getIPAddress">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </TextField>
+         </children>
+         <padding>
+            <Insets bottom="220.0" left="220.0" right="220.0" top="100.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
