@@ -315,8 +315,9 @@ public class Board extends Observable{
     }
 
     protected void merge(int index1, int index2, int index3){
+        Island third = islands.get(index3);
         merge(index1, index2);
-        merge(motherNature.getPosition(), (((index3 - 1) + islands.size()) % islands.size()));
+        merge(motherNature.getPosition(), islands.indexOf(third));
     }
 
     /* this method is only used in Expert mode, it is declared here for overriding*/
