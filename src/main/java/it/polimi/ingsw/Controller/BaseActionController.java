@@ -154,8 +154,7 @@ public class BaseActionController extends Observable {
         if(isLastRound){
             //display last round message
             setChanged();
-            notifyObservers(new NotifyArgsController(nickname,
-                    new BaseServerMessage(CustomMessage.lastRound), NotifyType.SEND_ALL));
+            notifyObservers(new BaseServerMessage(CustomMessage.lastRound));
             return true;
         }
 
@@ -274,12 +273,12 @@ public class BaseActionController extends Observable {
         isLastRound = model.getBoard().isLastRound();
         /*checks if studentBag is empty or if decks only
           have one card left ; if any of those conditions is true current round will be last round*/
-        if(model.getBoard().getDecks().get(0).size() == 1){
+        if((model.getBoard().getDecks().get(0).size() == 1) || (model.getBoard().getStudentBag().checkIfStudentBagEmpty())){
             isLastRound = true;
+            setChanged();
+            notifyObservers( new BaseServerMessage(CustomMessage.lastRound));
         }
-        if(model.getBoard().getStudentBag().checkIfStudentBagEmpty()){
-            isLastRound = true;
-        }
+
         setChanged();
         notifyObservers(new NotifyArgsController(null,
                 new BaseServerMessage(CustomMessage.startNewRound), NotifyType.SEND_ALL));
