@@ -4,7 +4,6 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ExpertParameterParser {
@@ -27,7 +26,6 @@ public class ExpertParameterParser {
                 System.out.println("enter the island you would like to resolve: ");
                 param.setIslandID(parseNewInt());
                 break;
-            case 6:
             case 8:
                 /*no effects caused by parameter*/
                 break;
@@ -37,6 +35,10 @@ public class ExpertParameterParser {
                 break;
             case 5:
                 System.out.println("enter the island you would like to place your no entry tile to: ");
+                param.setIslandID(parseNewInt());
+                break;
+            case 6:
+                System.out.println("enter the island that will have no tower influence: ");
                 param.setIslandID(parseNewInt());
                 break;
             case 7:
@@ -86,14 +88,14 @@ public class ExpertParameterParser {
 
     public int parseNewInt(){
         Scanner scanner = new Scanner(System.in);
-        char i = '0';
+        String i = "0";
         int toRet;
         boolean flag = false;
         do{
             try{
                 flag = false;
-                i = scanner.next().charAt(0);
-                if(!(Character.isDigit(i))){
+                i = scanner.nextLine();
+                if(!(i.matches("\\d+"))){
                     System.out.println("enter a valid integer!");
                     flag = true;
                 }
@@ -103,7 +105,7 @@ public class ExpertParameterParser {
             }
         }while(flag);
 
-        toRet = Character.getNumericValue(i);
+        toRet = Integer.parseInt(i);
         return toRet;
     }
 

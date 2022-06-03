@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 public class Card9 extends CharacterCardTemplate{
 
     private final String description = "choose a color of student that will add no influence" +
-            "during the influence calculation of the turn in which the card is played";
+            " during the influence calculation of the turn in which the card is played";
 
     public Card9(BoardExpert board){
         super(board);

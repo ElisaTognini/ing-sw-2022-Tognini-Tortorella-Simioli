@@ -53,6 +53,7 @@ public class Server {
             do {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
+                if(isNicknameDuplicated(nickChecker, c)) c.send(new BaseServerMessage(CustomMessage.duplicatedNickname));
             }while(isNicknameDuplicated(nickChecker, c));
             c.send(new NicknameMessage(nickChecker));
             c.setNickname(nickChecker);

@@ -38,6 +38,16 @@ public class Card3 extends CharacterCardTemplate{
 
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        if(parameters.getIslandID() < 0 || parameters.getIslandID() > (board.getIslandList().size() - 1))
+        return true;
+
         return false;
     }
 

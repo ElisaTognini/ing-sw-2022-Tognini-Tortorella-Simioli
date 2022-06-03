@@ -2,12 +2,12 @@ package it.polimi.ingsw.Model.Expert;
 
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
-/* this character card places no entry tiles on islands of choice in order to block
+/* this character card places no entry tiles on island of choice in order to block
 * influence calculation if mother nature ends there */
 
 public class Card5 extends CharacterCardTemplate{
 
-    private final String description = "place no entry tiles on islands of choice in order to block" +
+    private final String description = "place no entry tiles on island of choice in order to block" +
             " influence calculation if mother nature ends there";
 
     public Card5(BoardExpert board){
@@ -31,6 +31,16 @@ public class Card5 extends CharacterCardTemplate{
 
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
+        Parameter parameters;
+
+        if(o instanceof Parameter){
+            parameters = (Parameter)o;
+        }
+        else throw new IllegalArgumentException();
+
+        if(parameters.getIslandID() < 0 || parameters.getIslandID() > (board.getIslandList().size() - 1))
+            return true;
+
         return !board.checkIfEnoughNoEntryTiles();
     }
 

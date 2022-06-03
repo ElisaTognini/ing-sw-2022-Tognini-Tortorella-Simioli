@@ -58,6 +58,9 @@ public class Card1 extends CharacterCardTemplate{
             if(students.size() > 0){
                 return false;
             }
+
+        if (parameters.getIslandID() < 0 || parameters.getIslandID() > board.getIslandList().size() - 1)
+            return false;
         }
         return true;
     }
