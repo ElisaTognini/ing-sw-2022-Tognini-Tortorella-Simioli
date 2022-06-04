@@ -7,8 +7,7 @@ import javafx.scene.input.*;
 
 import java.util.Observable;
 
-
-public class GUIControllerInitialPhase{
+public class GUIControllerInitialPhase extends Observable {
 
     String ipAddress;
     Storage storage = new Storage();
@@ -17,16 +16,13 @@ public class GUIControllerInitialPhase{
     @FXML private BorderPane outsidePane = new BorderPane();
     @FXML private TextField ipTextField = new TextField();
 
-
-   /* public GUIControllerInitialPhase(GUI gui){
-        this.gui = gui;
-        storage.addObserver(gui);
-    }*/
-
     public void getIPAddress(KeyEvent ke){
         if(ke.getCode().equals(KeyCode.ENTER)){
             ipAddress = ipTextField.getText();
             storage.setIpAddress(ipAddress);
+            setChanged();
+            notifyObservers(ipAddress);
+            //System.out.println(ipAddress);
         }
     }
 }

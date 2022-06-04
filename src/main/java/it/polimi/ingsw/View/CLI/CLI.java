@@ -249,7 +249,7 @@ public class CLI extends View implements Observer {
     public void displayError(BaseServerMessage message){
         System.out.println(AnsiColors.ANSI_RED + "\n" + message.getMessage() + AnsiColors.ANSI_RESET);
         if(message.getMessage().equals(CustomMessage.closingConnection)){
-            //socket gets closed
+            System.out.println("thank you for playing!");
         }
     }
 

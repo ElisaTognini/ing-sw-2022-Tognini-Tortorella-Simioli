@@ -83,9 +83,6 @@ public class Client extends Observable {
                         notifyObservers(input);
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    System.err.println("error with reading thread");
-                    System.err.println(e.getMessage());
-                    e.printStackTrace();
                     setActive(false);
                 }
             }

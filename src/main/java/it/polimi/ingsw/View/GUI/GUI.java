@@ -27,7 +27,6 @@ public class GUI extends Application implements Observer{
     public void start(Stage stage){
 
         storage = new Storage();
-        initialController = new GUIControllerInitialPhase();
         primaryStage = stage;
 
         try {
@@ -41,12 +40,15 @@ public class GUI extends Application implements Observer{
     }
 
     private void setupStartingScene() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/GameStartScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameStartScene.fxml"));
+        Parent root = loader.load();
         Scene startingScene = new Scene(root);
         startingScene.getStylesheets().add(getClass().getResource("/stylesheetScene1.css").toExternalForm());
         primaryStage.setScene(startingScene);
         primaryStage.getIcons().add(new Image("/icon.png"));
         primaryStage.setTitle("Eriantys");
+        initialController = (GUIControllerInitialPhase)loader.getController();
+        initialController.addObserver(this);
         primaryStage.show();
     }
 
