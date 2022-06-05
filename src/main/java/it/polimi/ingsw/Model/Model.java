@@ -172,7 +172,7 @@ public class Model extends Observable implements Observer{
         * To determine the actual winner we need to find the player we are tying with and confront the
         * number of professors that is controlled */
         if(tie){
-            int count = 0;
+            tiedPlayers.add(playerList.get(0));
             int max = -1;
             int temp;
             for(Player p : tiedPlayers){

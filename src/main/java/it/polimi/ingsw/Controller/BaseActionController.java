@@ -153,8 +153,9 @@ public class BaseActionController extends Observable {
 
         if(isLastRound){
             //display last round message
-            setChanged();
-            notifyObservers(new BaseServerMessage(CustomMessage.lastRound));
+            /* setChanged();
+            notifyObservers(new BaseServerMessage(CustomMessage.lastRound)); */
+            roundManager.refreshCurrentPlayerAction();
             return true;
         }
 
