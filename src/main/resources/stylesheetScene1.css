@@ -7,3 +7,35 @@
     -fx-font-weight: bold;
 
 }
+
+.button{
+    -fx-font-family: "Ink Free";
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+}
+
+.button:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #BBCDDE 0%, #909EAB 100%);
+}
+
+.button:pressed{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #909EAB 0%, #7E8896 100%);
+}
+
+#errorLabel{
+    -fx-font-family: "Ink Free";
+    -fx-text-fill: #B40A02;
+    -fx-font-size: 1.1em;
+}
+
+.text-field{
+    -fx-font-family: "Ink Free";
+    -fx-font-size: 1.1em;
+}

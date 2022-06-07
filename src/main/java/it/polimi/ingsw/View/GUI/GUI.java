@@ -23,6 +23,8 @@ public class GUI extends Application implements Observer{
     Client client;
     GameMode mode;
     String nick;
+    ViewUpdateMessage baseView;
+    ExpertViewUpdateMessage expertView;
 
     private class InternalGUI extends View {
 
@@ -46,6 +48,20 @@ public class GUI extends Application implements Observer{
         public void displayError(BaseServerMessage message){
             if(message.getMessage().equals(CustomMessage.duplicatedNickname)){
                 Platform.runLater(() -> initialController.displayDuplicatedNickname(message));
+            }
+        }
+
+        @Override
+        public void updateGameBoard(ViewUpdateMessage message){
+            if(baseView == null){
+                baseView = message;
+                Platform.runLater(() -> {
+                    try {
+                        setupMainGameScene(message);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
             }
         }
 
@@ -93,6 +109,14 @@ public class GUI extends Application implements Observer{
         initialController = (GUIControllerInitialPhase)loader.getController();
         initialController.addObserver(this);
         primaryStage.show();
+    }
+
+    public void setupMainGameScene(ViewUpdateMessage message) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainGameScene.fxml"));
+        Parent root = loader.load();
+        Scene gameScene = new Scene(root);
+        primaryStage.setScene(gameScene);
+        primaryStage.setFullScreen(true);
     }
 
     public void initClient(String ip){

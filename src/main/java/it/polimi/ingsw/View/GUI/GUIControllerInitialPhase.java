@@ -81,6 +81,7 @@ public class GUIControllerInitialPhase extends Observable {
     }
 
     public void displayDuplicatedNickname(BaseServerMessage message) {
+        errorLabel.setId("errorLabel");
         errorLabel.setText(message.getMessage());
         vBox.getChildren().add(errorLabel);
     }
