@@ -41,7 +41,7 @@ public class Client extends Observable {
                 Thread t0 = asyncReadFromSocket(socketIn);
                 t0.start();
                 t0.join();
-            } catch (InterruptedException e){
+            } catch (Exception e){
                 System.err.println("Thread issue.");
             }finally {
                 socketIn.close();

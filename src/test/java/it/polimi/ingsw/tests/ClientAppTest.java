@@ -12,6 +12,5 @@ public static void main(String[] args) {
         client.addObserver(cli);
         cli.getParser().addObserver(client.getNetworkHandler());
         client.run();
-
-    }
+        }
 }

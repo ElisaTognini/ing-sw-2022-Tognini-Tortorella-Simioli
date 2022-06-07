@@ -2,7 +2,7 @@
     -fx-background-image: url("clouds_small.jpg");
 }
 
-#ipaddresslabel{
+#initialSceneLabel{
     -fx-text-fill: #C3EAEE;
     -fx-font-weight: bold;
 

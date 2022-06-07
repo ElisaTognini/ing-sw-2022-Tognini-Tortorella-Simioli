@@ -19,9 +19,9 @@
       </ImageView>
    </top>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="ipaddresslabel" text="Insert server IP address:">
+            <Label fx:id="initialSceneLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="281.0" text="Insert server IP address:">
                <font>
                   <Font name="Ink Free" size="19.0" />
                </font>
