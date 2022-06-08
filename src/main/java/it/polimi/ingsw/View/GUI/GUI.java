@@ -20,6 +20,7 @@ public class GUI extends Application implements Observer{
 
     Stage primaryStage;
     GUIControllerInitialPhase initialController;
+    MainGUIController mainController;
     Client client;
     GameMode mode;
     String nick;
@@ -63,6 +64,7 @@ public class GUI extends Application implements Observer{
                     }
                 });
             }
+            Platform.runLater(() -> mainController.drawIslands(message.getIslands()));
         }
 
         @Override
@@ -115,7 +117,9 @@ public class GUI extends Application implements Observer{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainGameScene.fxml"));
         Parent root = loader.load();
         Scene gameScene = new Scene(root);
+        gameScene.getStylesheets().add(getClass().getResource("/stylesheetMainScene.css").toExternalForm());
         primaryStage.setScene(gameScene);
+        mainController = (MainGUIController)loader.getController();
         primaryStage.setFullScreen(true);
     }
 

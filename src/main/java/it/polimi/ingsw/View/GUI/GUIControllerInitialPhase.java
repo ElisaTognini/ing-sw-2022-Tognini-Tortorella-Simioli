@@ -62,7 +62,7 @@ public class GUIControllerInitialPhase extends Observable {
             makeModeMessage("SIMPLE");
             vBox.getChildren().removeAll(simpleMode, expertMode);
         });
-        threePlayers.setOnAction(actionEvent -> {
+        expertMode.setOnAction(actionEvent -> {
             makeModeMessage("EXPERT");
             vBox.getChildren().removeAll(simpleMode, expertMode);
         });
