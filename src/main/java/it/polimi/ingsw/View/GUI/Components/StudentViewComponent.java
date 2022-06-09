@@ -15,6 +15,7 @@ public class StudentViewComponent extends ImageView {
     }
 
     private void colorSetter(PawnDiscColor color){
+        this.setStyle("-fx-border-color: #FFFFFF");
         switch(color){
             case YELLOW:
                 this.setImage(new Image("/student_yellow.png"));
@@ -32,8 +33,8 @@ public class StudentViewComponent extends ImageView {
                 this.setImage(new Image("/student_blue.png"));
                 break;
         }
-        this.setFitHeight(25);
-        this.setFitWidth(25);
+        this.setFitHeight(15);
+        this.setFitWidth(15);
         this.setStyle("-fx-border-color: #FFFFFF");
     }
 }

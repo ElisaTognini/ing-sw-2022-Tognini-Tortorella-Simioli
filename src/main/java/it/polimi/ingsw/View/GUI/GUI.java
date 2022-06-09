@@ -64,7 +64,7 @@ public class GUI extends Application implements Observer{
                     }
                 });
             }
-            Platform.runLater(() -> mainController.drawIslands(message.getIslands()));
+            Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
         }
 
         @Override
