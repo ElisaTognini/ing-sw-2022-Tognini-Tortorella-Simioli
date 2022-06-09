@@ -1,6 +1,11 @@
 .root{
     -fx-background-image: url("clouds.jpg");
 }
-.island {
-    -fx-background-image: url("island2.png");
+
+.islandviewcomponent{
+    -fx-background-image: url("island2.jpg");
+}
+
+.studentviewcomponent{
+    -fx-border-color: #FFFFFF;
 }

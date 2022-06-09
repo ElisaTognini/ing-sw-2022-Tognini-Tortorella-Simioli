@@ -2,13 +2,14 @@ package it.polimi.ingsw.View.GUI.Components;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
-public class Student extends Circle {
+public class StudentViewComponent extends ImageView {
     private PawnDiscColor color;
 
-    public Student(PawnDiscColor studentColor){
+    public StudentViewComponent(PawnDiscColor studentColor){
         this.color = studentColor;
         colorSetter(color);
     }
@@ -16,21 +17,23 @@ public class Student extends Circle {
     private void colorSetter(PawnDiscColor color){
         switch(color){
             case YELLOW:
-                this.setFill(new ImagePattern(new Image("/student_yellow.png")));
+                this.setImage(new Image("/student_yellow.png"));
                 break;
             case GREEN:
-                this.setFill(new ImagePattern(new Image("/student_green.png")));
+                this.setImage(new Image("/student_green.png"));
                 break;
             case RED:
-                this.setFill(new ImagePattern(new Image("/student_red.png")));
+                this.setImage(new Image("/student_red.png"));
                 break;
             case PINK:
-                this.setFill(new ImagePattern(new Image("/student_pink.png")));
+                this.setImage(new Image("/student_pink.png"));
                 break;
             case BLUE:
-                this.setFill(new ImagePattern(new Image("/student_blue.png")));
+                this.setImage(new Image("/student_blue.png"));
                 break;
         }
-
+        this.setFitHeight(25);
+        this.setFitWidth(25);
+        this.setStyle("-fx-border-color: #FFFFFF");
     }
 }
