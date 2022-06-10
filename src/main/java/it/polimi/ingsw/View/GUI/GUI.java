@@ -59,12 +59,17 @@ public class GUI extends Application implements Observer{
                 Platform.runLater(() -> {
                     try {
                         setupMainGameScene(message);
+                        Platform.runLater(() -> mainController.drawClouds(message.getClouds()));
+                        Platform.runLater(() -> mainController.drawSchoolBoards(message.getSchoolboards()));
+                        Platform.runLater(() -> mainController.drawDeck(message.getDecks()));
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
                 });
             }
             Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+            Platform.runLater(() -> mainController.studentsOnClouds(message.getClouds()));
+            //Platform.runLater(() -> mainController.refreshDeck(message.getDecks()));
         }
 
         @Override

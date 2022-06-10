@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.Utils.Enums.TowerColor;
 import it.polimi.ingsw.View.GUI.Components.IslandViewComponent;
 import it.polimi.ingsw.View.GUI.Components.MNViewComponent;
 import it.polimi.ingsw.View.GUI.Components.StudentViewComponent;
@@ -12,12 +13,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainGUIController {
 
     @FXML private AnchorPane anchorPane;
+    @FXML private HBox cloudHBox;
+    @FXML private ImageView mainPlayerSB;
+
+    private GridPane deckHolder = new GridPane();
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
+    ArrayList<GridPane> cloudGrids = new ArrayList<>();
+    HashMap<String, TowerColor> towerColors = new HashMap<>();
 
     public void drawIslands(ArrayList<String> islands, int mnPosition){
 
@@ -48,6 +56,47 @@ public class MainGUIController {
             anchorPane.getChildren().add(island);
         }
         addMotherNature(mnPosition);
+    }
+
+    public void drawSchoolBoards(ArrayList<String> schoolBoards){
+
+        mainPlayerSB.setLayoutY(550);
+        mainPlayerSB.setLayoutX(13);
+        mainPlayerSB.setFitWidth(500);
+        mainPlayerSB.setFitHeight(230);
+
+
+    }
+
+    public void drawClouds(ArrayList<String> clouds){
+
+        cloudHBox.setLayoutX(anchorPane.getWidth()/2 + 120);
+        cloudHBox.setLayoutY(anchorPane.getHeight()/2 - 120);
+
+        if(clouds.size() == 3)
+            cloudHBox.setLayoutX(anchorPane.getWidth()/2 + 60);
+
+        for(String c : clouds){
+            ImageView cloud = new ImageView(new Image("/cloud_card.png"));
+            StackPane sp = new StackPane();
+            cloud.setFitWidth(120);
+            cloud.setFitHeight(120);
+            GridPane cloudGrid = new GridPane();
+            cloudHBox.setAlignment(Pos.TOP_CENTER);
+            cloudGrid.setHgap(5);
+            cloudGrid.setVgap(5);
+            cloudGrids.add(cloudGrid);
+            sp.getChildren().addAll(cloud,cloudGrid);
+            cloudHBox.getChildren().add(sp);
+        }
+    }
+
+    public void drawDeck(ArrayList<String> decks){
+        deckHolder.setLayoutX(13);
+        deckHolder.setLayoutY(20);
+
+        deckHolder.setHgap(5);
+        deckHolder.setVgap(5);
     }
 
     public void addStudents(String c, IslandViewComponent island){
@@ -84,8 +133,24 @@ public class MainGUIController {
         if(data.length < 7)
             return;
 
+       TowerColor color = towerColors.get(6);
+
         for(int i = 0; i < Integer.valueOf(data[7]); i++){
-            island.add(new TowerViewComponent(), i, 0);
+            island.add(new TowerViewComponent(color), i, 0);
+        }
+    }
+
+    public void studentsOnClouds(ArrayList<String> clouds){
+        for(int i = 0; i < clouds.size(); i++){
+            cloudGrids.get(i).getChildren().clear();
+            String[] students = clouds.get(i).split(" ");
+
+            if(students.length == 1)
+                continue;
+
+            for(int j = 1; j < students.length ; j++){
+                cloudGrids.get(i).add(new StudentViewComponent(PawnDiscColor.valueOf(students[j])), j, 0);
+            }
         }
     }
 
