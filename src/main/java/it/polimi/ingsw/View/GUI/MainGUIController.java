@@ -2,10 +2,7 @@ package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
-import it.polimi.ingsw.View.GUI.Components.IslandViewComponent;
-import it.polimi.ingsw.View.GUI.Components.MNViewComponent;
-import it.polimi.ingsw.View.GUI.Components.StudentViewComponent;
-import it.polimi.ingsw.View.GUI.Components.TowerViewComponent;
+import it.polimi.ingsw.View.GUI.Components.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -83,20 +80,34 @@ public class MainGUIController {
             cloud.setFitHeight(120);
             GridPane cloudGrid = new GridPane();
             cloudHBox.setAlignment(Pos.TOP_CENTER);
-            cloudGrid.setHgap(5);
-            cloudGrid.setVgap(5);
+            cloudGrid.setHgap(7);
+            cloudGrid.setVgap(17);
             cloudGrids.add(cloudGrid);
             sp.getChildren().addAll(cloud,cloudGrid);
             cloudHBox.getChildren().add(sp);
         }
+
+        studentsOnClouds(clouds);
+
     }
 
     public void drawDeck(ArrayList<String> decks){
+
         deckHolder.setLayoutX(13);
         deckHolder.setLayoutY(20);
 
         deckHolder.setHgap(5);
         deckHolder.setVgap(5);
+
+        for(String d : decks){
+
+            String[] deck = d.split(" ");
+
+            if(deck[0].equals(GUI.getNickname())) {
+                refreshDeck(d);
+                return;
+            }
+        }
     }
 
     public void addStudents(String c, IslandViewComponent island){
@@ -149,8 +160,16 @@ public class MainGUIController {
                 continue;
 
             for(int j = 1; j < students.length ; j++){
-                cloudGrids.get(i).add(new StudentViewComponent(PawnDiscColor.valueOf(students[j])), j, 0);
+                cloudGrids.get(i).add(new StudentViewComponent(PawnDiscColor.valueOf(students[j])), j + 1, 3);
             }
+        }
+    }
+
+    public void refreshDeck(String deck){
+        deckHolder.getChildren().clear();
+        String[] cards = deck.split(" ");
+        for(int i = 1; i < cards.length; i = i + 2){
+            deckHolder.add(new AssistantCardViewComponent(Integer.valueOf(cards[i])), i%5, i%2);
         }
     }
 
