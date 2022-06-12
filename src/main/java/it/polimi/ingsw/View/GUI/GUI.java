@@ -23,7 +23,7 @@ public class GUI extends Application implements Observer{
     MainGUIController mainController;
     Client client;
     GameMode mode;
-    String nick;
+    static String nick;
     ViewUpdateMessage baseView;
     ExpertViewUpdateMessage expertView;
 
@@ -62,14 +62,18 @@ public class GUI extends Application implements Observer{
                         Platform.runLater(() -> mainController.drawClouds(message.getClouds()));
                         Platform.runLater(() -> mainController.drawSchoolBoards(message.getSchoolboards()));
                         Platform.runLater(() -> mainController.drawDeck(message.getDecks()));
+                        Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+                        Platform.runLater(() -> mainController.refreshSchoolBoards(message.getSchoolboards()));
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
                 });
             }
-            Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
-            Platform.runLater(() -> mainController.studentsOnClouds(message.getClouds()));
-            //Platform.runLater(() -> mainController.refreshDeck(message.getDecks()));
+            else {
+                Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+                Platform.runLater(() -> mainController.studentsOnClouds(message.getClouds()));
+                //Platform.runLater(() -> mainController.refreshDeck(message.getDecks()));
+            }
         }
 
         @Override
@@ -145,6 +149,10 @@ public class GUI extends Application implements Observer{
     public void update(Observable o, Object arg) {
             initClient((String) arg);
             initialController.deleteObserver(this);
+    }
+
+    public static String getNickname(){
+        return nick;
     }
 
 }

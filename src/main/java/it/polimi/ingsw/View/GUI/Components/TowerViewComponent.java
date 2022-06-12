@@ -12,8 +12,8 @@ public class TowerViewComponent extends ImageView {
         //add tower image & resize
         this.color = color;
         setTowerImage(color);
-        this.setFitHeight(20);
-        this.setFitWidth(15);
+        this.setFitHeight(40);
+        this.setFitWidth(30);
     }
 
     private void setTowerImage(TowerColor color){
