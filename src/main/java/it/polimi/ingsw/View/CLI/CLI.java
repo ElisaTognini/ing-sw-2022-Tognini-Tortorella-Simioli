@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.CLI;
 
+import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.*;
 

@@ -1,46 +1,56 @@
 package it.polimi.ingsw.Model.BasicElements;
 
+/* Class CloudTile contains references to an array of students present on the cloud; at the beginning of the game, the
+ * array is initialised with null values to indicate that no students have been added yet, since they will be
+ * added and replaced at the beginning and at the end of each round. The number of students on each island is variable,
+ * based on the number of players currently playing the game, as well as the number of the clouds present in the game.
+ * Each cloud has an ID, given by the Board class when it instances the clouds. */
+
+import java.util.Arrays;
+
 public class CloudTile {
 
-    /*the array stores the three students currently on the cloud
-     * the ID is given when the board class instances the cloud*/
     private Student[] studentsOnCloud;
     private final int cloudID;
     private final int numberOfStudents;
 
-    /*the array is initialized with null values to indicate that no students
-     * have been added yet*/
+
     public CloudTile(int cloudID, int numberOfStudents) {
         this.cloudID = cloudID;
         this.numberOfStudents = numberOfStudents;
 
         studentsOnCloud = new Student[numberOfStudents];
-        for (int i = 0; i < studentsOnCloud.length; i++) {
-            studentsOnCloud[i] = null;
-        }
+        Arrays.fill(studentsOnCloud, null);
     }
 
-    /*checks if cloud has students on it - if all positions of the array are NULL, the
-     * cloud tile is empty*/
+
+    /* Method isCloudEmpty checks if the cloud has students on it by iterating through the array of students on the
+    * cloud: if all the cells of the array are null, the cloud is indeed empty.
+    *
+    * @return boolean - the result of the iteration: true if the cloud is empty, false otherwise */
     public boolean isCloudEmpty() {
-        for (int i = 0; i < studentsOnCloud.length; i++) {
-            if (studentsOnCloud[i] != null)
+        for (Student student : studentsOnCloud) {
+            if (student != null)
                 return false;
         }
         return true;
     }
 
-    /*assigns the references to the students entered as a parameter
-     * to the class attribute (this.studentsOnCloud)*/
-    public void fillCloud(Student studentsToAdd[]) {
 
-        for (int i = 0; i < studentsOnCloud.length; i++) {
-            studentsOnCloud[i] = studentsToAdd[i];
-        }
+    /* Method fillCloud loads the array of students declared on the cloud with references to the actual student
+    * extracted from the student bag
+    *
+    * @param Student[] - array of students to be added to the cloud */
+    public void fillCloud(Student[] studentsToAdd) {
+        System.arraycopy(studentsToAdd, 0, studentsOnCloud, 0, studentsOnCloud.length);
     }
 
-    /*copies the current state of the students into a local array that is then
-     * returned, and resets the attribute array to null*/
+
+    /* Method retrieveFromCloud copies the current state of the students into a local array to be returned, in order
+    * to have the students removed from the cloud and then added (with another method) to the entrance of the player
+    * who chose the cloud. The cloud is now empty, ready to be refilled with students at the beginning of a new round.
+    *
+    * @return Student[] - array of students to be removed from the island*/
     public Student[] retrieveFromCloud() {
         Student toReturn[] = new Student[numberOfStudents];
 
@@ -52,8 +62,12 @@ public class CloudTile {
         return toReturn;
     }
 
+
+    /* Method toString builds a String containing all the info stored in this class
+     *
+     * @return String - FORMAT: cloudID, student1, student2 and student3, each separated by a blank space if
+     * there are students on the cloud, otherwise String will contain only the cloud ID. */
     @Override
-    /* FORMAT cloudID student1 student2 student3  - only ID if cloud is empty*/
     public String toString(){
         StringBuilder toRet;
         toRet = new StringBuilder(String.valueOf(cloudID));

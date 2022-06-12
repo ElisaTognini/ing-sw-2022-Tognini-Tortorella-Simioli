@@ -4,7 +4,12 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.StudentContainer;
 
-//students are contained in five hash sets, separated by color
+/* Island contains references to the player who conquered the island (null if it has not been conquered yet), whether
+* if mother nature is present on the island or not, if the island is conquered or not, the number of towers present on
+* the island and a reference to a custom data structure called Student Container, where the students are divived in
+* five hash set, separated by color.
+* Moreover, class Island has a few references to variables used by methods called in Expert Mode, which work with
+* the character cards. */
 
 public class Island {
 
@@ -19,7 +24,6 @@ public class Island {
     private int influence;
     private int ignoredInfluence;
 
-    /*student container data structure is used*/
     public Island(int islandID) {
         this.islandID = islandID;
         hostsMotherNature = false;
@@ -32,76 +36,145 @@ public class Island {
         ignoredInfluence = 0;
     }
 
-    /* checks if the island is empty*/
+
+    /* Method checkIfIslandIsEmpty checks if island is empty by computing the size of the container associated to
+     * the island: if the five hash map of the container are all size 0, then the island is actually empty .
+     *
+     * @return boolean - the result of the iteration: true if the island is empty, false otherwise */
     public boolean checkIfIslandIsEmpty(){
-        if(container.size() == 0) return true;
-        else return false;
+        return container.size() == 0;
     }
 
-    /*adds student into each set by color*/
+
+    /* Method addStudent, called when a player moves a student from the entrance to an island of choice,
+     * adds a student to the hash set of the student's color in the container of the said island.
+     *
+     * @param Student - the student selected by the player */
     public void addStudent(Student myStudent){
         container.addStudent(myStudent);
     }
+
+
+    /* Method removeStudent retrieves a student from the island by removing it from the hash set of the corresponding
+    * color of the container on the island. As per rules, students can be moved from islands only in Expert Mode
+    * when provided by a character card, but it is used by the Board class during merges.
+    *
+    * @param PawnDiscColor - the color of the student to be removed
+    * @return Student - the reference to the actual Student removed by the entrance */
     public Student removeStudent(PawnDiscColor color){
         return container.retrieveStudent(color);
     }
 
-    //this method returns the number of students of the color given as parameter that are on the island
-    //the color taken as parameter is given by the board and is the color of a professor
-    /*adding 1 to the influence if the island is conquered by the current player: to be implemented*/
+
+    /* Method getInfluenceByColor returns the number of students of the color given that are on the island, in
+    * order to calculate the influence the player has on the island for that color. Influence is calculated if
+    * the player actually has the professor of corresponding color.
+    * Variable ignoredInfluence is 0 by default: it changes only when Character Card 9 is played.
+    *
+    * @param PawnDiscColor - the color the influence has to be calculated of
+    * @return Integer - the number of student of the color given, present on the island*/
     public int getInfluenceByColor(PawnDiscColor color){
             influence = container.getInfluence(color) + ignoredInfluence;
             ignoredInfluence = 0;
             return influence;
     }
 
-    /*sets to true if mother nature is on island to know if island
-    * can be conquered*/
+
+    /* setter method - sets true if mother nature is on the island; if so, the island can be conquered and
+    * methods to resolve influence and conquering will be called on said island. Otherwise, those methods
+    * won't be called and the island cannot be conquered in that turn*/
     public void setHostsToTrue(){ hostsMotherNature = true; }
     public void setHostsToFalse(){ hostsMotherNature = false; }
+
+    /* getter method - getHost checks if mother nature is on the island7
+    *
+    * @return boolean - true if mother nature is on this island, false otherwise*/
     public boolean getHost(){ return hostsMotherNature; }
 
-    /*returns true if island hosts mother nature*/
-    public boolean checkForMotherNature(){ return hostsMotherNature; }
 
-    /* adds 1 to NEtiles if card 5 is used */
+    /* Method addNoEntryTile, only called in Expert Method if character card 5 has been played, increases the
+    * number of No Entry Tiles on island.*/
     public void addNoEntryTile(){
         noEntryTile = noEntryTile + 1;
     }
 
-    /* sets to false if an island hasn't got a no entry tile on it */
+
+    /* Method removeNoEntryTile, only called in Expert Method if character card 5 has been played, removes a no
+     * Entry Tile from an island after mother nature ended up there. */
     public void removeNoEntryTile(){ noEntryTile --; }
 
-    /* returns true if an island is blocked by a No Entry Tile (Expert Mode) */
+
+    /* Method hasNoEntryTile, only called in Expert Method if character card 5 has been played, checks if an
+    * island has one (or more, corner case) no Entry Tiles placed on it.
+    * Variable noEntryTile is set by default to 0.
+    *
+    * @return boolean - true if there is one or more no Entry Islands, false otherwise */
     public boolean hasANoEntryTile(){
-        if(noEntryTile != 0 ) return true;
-        else return false;
+        return noEntryTile != 0;
     }
 
+
+    /*getter method - getOwner returns the Player who owns the island
+     *
+     * @return Player - the owner of the island */
     public Player getOwner(){
         return owner;
     }
 
-    //board assigns owner
+
+    /* Method getsConquered is used by the Board to assign a Player owner to an island after it has been conquered
+    *
+    * @param Player - the player who has the most influence on the island*/
     public void getsConquered(Player owner){
         this.owner = owner;
         conqueredIsland = true;
     }
 
+
+    /* getter method - getIslandID returns the island ID
+    *
+    * @return Integer - island ID */
     public int getIslandID(){
         return islandID;
     }
 
+
+    /* Method checkIfConquered checks if the island is conquered, therefore if the island has an owner.
+    *
+    * @return boolean - true if it is conquered, false otherwise */
     public boolean checkIfConquered(){ return conqueredIsland;}
 
+
+    /* Method increaseNumberOfTowers increases the number of towers on an island.
+     * This method is called in case of merge among adiacent islands, where one of the islands stay and increases
+     * towers and number of students, while the other(s) are removed from the array list of islands referenced in the
+     * Board class.
+     *
+     * @param Integer - the number the tower(s) on the island must be increased by */
     public void increaseNumberOfTowers(int number){
         numberOfTowers += number;
     }
 
+
+    /* getter method - getNumberOfTowers returns the number of tower(s) present on the island
+    *
+    * @return Integer - number of towers */
     public int getNumberOfTowers(){
         return numberOfTowers;
     }
+
+    /* getter method - getTowersOnHold returns the number of towers must be ignored during the calculation of the
+     * influence on island. Variable towersOnHold is set to 0 by default, can only be modified in Expert Mode when
+     * Character Card 6 has been played.
+     *
+     * @param Integer - number of towers which do not count for influence */
     public int getTowersOnHold(){ return towersOnHold; }
+
+
+    /* setter method - setTowersOnHold, only called in Expert Mode when Character Card 6 has been played, sets
+     * the number the variable must have for the resolving of the influence in that turn.
+     *
+     * @param Integer - number of towers on the island */
     public void setTowersOnHold(int n) { towersOnHold = n; }
 
     public void ignoreInfluence(PawnDiscColor color){

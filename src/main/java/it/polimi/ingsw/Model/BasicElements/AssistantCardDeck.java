@@ -3,19 +3,24 @@ import it.polimi.ingsw.Model.Player;
 
 import java.util.*;
 
+/*AssistantCardDeck contains all the ten assistant card needed to play the game and a reference to the player
+* who owns said cards. */
+
 public class AssistantCardDeck {
     private Player owner;
     private ArrayList<AssistantCard> cards;
-    private final int cardNumber = 10;
 
     public AssistantCardDeck(Player owner){
         this.owner = owner;
-        cards = new ArrayList<AssistantCard>();
+        cards = new ArrayList<>();
         this.instantiateCards();
     }
 
-    /*the card IDs go from 1 to 10 for each wizard:
-    * the pattern for IDs and power factor is portrayed by the two loops*/
+
+    /* Private method instantiateCards sets up the deck for each player: it creates one new Assistant Card
+     * for each of card ID, from 1 to 10, for each player.
+     * The pattern for IDs and power factor is portrayed by the two loops : mother nature movements increase
+     * by one unit every two cards */
     private void instantiateCards(){
         int k = 1;
         int g = 0;
@@ -28,10 +33,13 @@ public class AssistantCardDeck {
         }
     }
 
-    /*this method is called when player in turn picks an assistant card
-    * it removes the card from the deck and returns a reference to the chosen card;
-    * it throws an InvalidCardActionException if the loop ever ends, which means either the card was not found or the
-    * given ID is invalid*/
+
+    /* Method drawCard, called when the player in turn picks an assistant card, checks if the card given in input
+     * is inside the deck and, if so, returns a reference to the selected card
+     *
+     * @param Integer - the card ID of the card chosen by the player
+     * @returns AssistantCard - the reference to the actual card with corresponding power factor; otherwise
+     *      it returns null if the card was not found or the given ID was invalid */
     public AssistantCard drawCard(int cardID){
         AssistantCard toRet;
         for(AssistantCard c : cards){
@@ -43,6 +51,11 @@ public class AssistantCardDeck {
         return null;
     }
 
+
+    /* Method removeCard removes the reference to the assistant card with the same power factor as the one given
+     * in input from the deck
+     *
+     * @param Integer - the card ID of the card picked by the player*/
     public void removeCard(int cardID){
         for(AssistantCard c : cards){
             if (c.getAssistantCardID() == cardID) {
@@ -52,12 +65,19 @@ public class AssistantCardDeck {
         }
     }
 
-    /*returns owner*/
+
+    /* getter method - getOwner returns the Player who owns the deck
+     *
+     * @return Player - the owner of the deck */
     public Player getOwner(){
         return owner;
     }
 
-    /* checks if a card the player wants to play is inside their deck*/
+
+    /* Method checkIfCardIsPresent checks if the card picked by a player is inside their deck
+    *
+    * @param Integer - the card ID of the card selected by the player
+    * @return boolean - the result of the check, true if the card is indeed present, otherwise false */
     public boolean checkIfCardIsPresent(int cardID) {
         for (AssistantCard c : cards) {
             if (c.getAssistantCardID() == cardID) return true;
@@ -65,25 +85,28 @@ public class AssistantCardDeck {
         return false;
     }
 
+
+    /* Method checkIfDeckIsEmpty checks if the ArrayList containing the assistant cards is empty
+    *
+    * @return boolean - the result of this check: true if the size is 0, false otherwise */
     public boolean checkIfDeckIsEmpty(){
-        if(cards.size() == 0) return true;
-        else return false;
+        return cards.size() == 0;
     }
 
-    public int size(){
-        return cards.size();
-    }
 
+    /*Method toString builds a String containing all the info stored in this class
+     *
+     * @return String - FORMAT owner and list of present cardIDs with their power factor,
+     * each separated by a blank space */
     @Override
-    /*FORMAT owner and list of present cardIDs and their power factor separated by a blank space */
     public String toString(){
         StringBuilder stringbuilder = new StringBuilder();
 
         stringbuilder.append(owner.getNickname()).append(" ");
 
         for(AssistantCard card : cards){
-            stringbuilder.append(String.valueOf(card.getAssistantCardID())).append(" ");
-            stringbuilder.append(String.valueOf(card.getMotherNatureMovements())).append(" ");
+            stringbuilder.append(card.getAssistantCardID()).append(" ");
+            stringbuilder.append(card.getMotherNatureMovements()).append(" ");
         }
         stringbuilder.deleteCharAt(stringbuilder.toString().length() - 1);
         return stringbuilder.toString();
