@@ -45,8 +45,9 @@ public class AssistantCardViewComponent extends ImageView {
                 this.setImage(new Image("/Assistente10.png"));
                 break;
         }
-        this.setFitHeight(70);
-        this.setFitWidth(35);
+
+        this.setFitHeight(110);
+        this.setFitWidth(75);
     }
 
 }

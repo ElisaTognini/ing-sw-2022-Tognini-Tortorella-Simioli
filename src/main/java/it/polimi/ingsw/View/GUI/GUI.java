@@ -63,6 +63,7 @@ public class GUI extends Application implements Observer{
                         Platform.runLater(() -> mainController.drawSchoolBoards(message.getSchoolboards()));
                         Platform.runLater(() -> mainController.drawDeck(message.getDecks()));
                         Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+                        Platform.runLater(() -> mainController.refreshSchoolBoards(message.getSchoolboards()));
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
@@ -128,7 +129,7 @@ public class GUI extends Application implements Observer{
         gameScene.getStylesheets().add(getClass().getResource("/stylesheetMainScene.css").toExternalForm());
         primaryStage.setScene(gameScene);
         mainController = (MainGUIController)loader.getController();
-        //primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(true);
     }
 
     public void initClient(String ip){

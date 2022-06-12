@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.GUI;
 
+import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
 import it.polimi.ingsw.View.GUI.Components.*;
@@ -17,8 +18,11 @@ public class MainGUIController {
     @FXML private AnchorPane anchorPane;
     @FXML private HBox cloudHBox;
     @FXML private ImageView mainPlayerSB;
-
-    private GridPane deckHolder = new GridPane();
+    @FXML private GridPane deckHolder;
+    @FXML private GridPane entranceGridPane;
+    @FXML private GridPane towersGridPane;
+    @FXML private GridPane diningRoomGridPane;
+    @FXML private GridPane professorGridPane;
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
@@ -61,7 +65,10 @@ public class MainGUIController {
         mainPlayerSB.setLayoutX(13);
         mainPlayerSB.setFitWidth(500);
         mainPlayerSB.setFitHeight(230);
-
+        entranceGridPane.setVgap(10);
+        entranceGridPane.setHgap(10);
+        towersGridPane.setHgap(15);
+        towersGridPane.setVgap(10);
 
     }
 
@@ -94,10 +101,10 @@ public class MainGUIController {
     public void drawDeck(ArrayList<String> decks){
 
         deckHolder.setLayoutX(13);
-        deckHolder.setLayoutY(20);
+        deckHolder.setLayoutY(100);
 
-        deckHolder.setHgap(5);
-        deckHolder.setVgap(5);
+        deckHolder.setHgap(15);
+        deckHolder.setVgap(15);
 
         for(String d : decks){
 
@@ -168,9 +175,97 @@ public class MainGUIController {
     public void refreshDeck(String deck){
         deckHolder.getChildren().clear();
         String[] cards = deck.split(" ");
+        int col = 0;
+        int row = -1;
         for(int i = 1; i < cards.length; i = i + 2){
-            deckHolder.add(new AssistantCardViewComponent(Integer.valueOf(cards[i])), i%5, i%2);
+            row ++;
+            if(row > 4) col = 1;
+            deckHolder.add(new AssistantCardViewComponent(Integer.valueOf(cards[i])), row%5 , col );
         }
     }
 
+    public void refreshSchoolBoards(ArrayList<String> schoolBoards){
+        for(String sb : schoolBoards){
+            String[] schoolboard = sb.split("\n");
+            if(schoolboard[0].equals(GUI.getNickname()))
+                refreshMainSB(schoolboard);
+            else
+                refreshOpponentSchoolboard(schoolboard);
+
+        }
+    }
+
+    private void refreshMainSB(String[] mySchoolBoard) {
+
+        int row = 0;
+        int col = 0;
+
+        entranceGridPane.getChildren().clear();
+        String val[] = mySchoolBoard[1].split(" ");
+        for(int i = 0; i < Integer.valueOf(val[0]); i++) {
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), col, row);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[1]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), col, row);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[2]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), col, row);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[3]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), col, row);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[4]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), col, row);
+            row++;
+            col++;
+        }
+
+        diningRoomGridPane.getChildren().clear();
+        val = mySchoolBoard[2].split(" ");
+        for(int i = 0; i < Integer.valueOf(val[0]); i++) {
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), i, 3);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[1]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), i, 2);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[2]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), i, 4);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[3]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), i, 0);
+            row++;
+            col++;
+        }
+        for(int i = 0; i < Integer.valueOf(val[4]); i++){
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), i, 2);
+            row++;
+            col++;
+        }
+
+        val = mySchoolBoard[4].split(" ");
+        for(int i = 0; i < Integer.valueOf(val[1]); i++){
+            towersGridPane.add(new TowerViewComponent(TowerColor.valueOf(val[0])), i%2, i%4);
+        }
+
+        val = mySchoolBoard[3].split(" ");
+        //add professors
+    }
+
+    private void refreshOpponentSchoolboard(String[] opponentSchoolBoard){
+
+    }
 }
