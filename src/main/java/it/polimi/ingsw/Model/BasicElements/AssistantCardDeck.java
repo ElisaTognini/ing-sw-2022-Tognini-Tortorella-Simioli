@@ -89,10 +89,21 @@ public class AssistantCardDeck {
     /* Method checkIfDeckIsEmpty checks if the ArrayList containing the assistant cards is empty
     *
     * @return boolean - the result of this check: true if the size is 0, false otherwise */
+
     public boolean checkIfDeckIsEmpty(){
-        return cards.size() == 0;
+        if(cards.size() == 0) return true;
+        else return false;
     }
 
+    /**
+     * Method size returns the size of the deck
+     *
+     * @return int - size of cards ArrayList
+     */
+
+    public int size(){
+        return cards.size();
+    }
 
     /*Method toString builds a String containing all the info stored in this class
      *
