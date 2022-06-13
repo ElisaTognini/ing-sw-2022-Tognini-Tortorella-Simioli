@@ -9,11 +9,26 @@ import it.polimi.ingsw.Server.Match;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class Controller is the main controller class, it calls the controllers of the game
+ * based on the mode in which the match is played, such as BaseActionController for
+ * simple mode and ExpertModeController for expert mode.
+ *
+ * @see java.util.Observer
+ */
+
 public class Controller implements Observer {
 
     private BaseActionController baseActionController;
     private ExpertModeController expertModeController;
     private Model model;
+
+    /**
+     * Constructor Controller creates a new Controller instance. A BaseActionController is always
+     * instantiated, in addition to an ExpertModeController in the case of a match in expert mode.
+     *
+     * @param model of type Model - model reference.
+     */
 
     public Controller(Model model){
         this.model = model;
@@ -24,6 +39,13 @@ public class Controller implements Observer {
         }
     }
 
+    /**
+     * Match class becomes observer of BaseActionController class,
+     * in addition to ExpertModeController in the case of a match in expert mode.
+     *
+     * @param match of type Match - match reference.
+     */
+
     public synchronized void addMatchAsObserver(Match match){
         baseActionController.addObserver(match);
         if(expertModeController != null){
@@ -31,9 +53,26 @@ public class Controller implements Observer {
         }
     }
 
+
+    /**
+     * Method getBaseActionController returns the baseActionController of this Controller object.
+     *
+     * @return the baseActionController (type BaseActionController) of this Controller object.
+     */
+
     public BaseActionController getBaseActionController(){return baseActionController;}
 
+    /**
+     * Method getExpertModeController returns the expertModeController of this Controller object.
+     *
+     * @return the expertModeController (type ExpertModeController) of this Controller object.
+     */
+
     public ExpertModeController getExpertModeController() {return expertModeController;}
+
+    /**
+     * @see Observer#update(Observable, Object)
+     * */
 
     @Override
     public synchronized void update(Observable o, Object arg) {

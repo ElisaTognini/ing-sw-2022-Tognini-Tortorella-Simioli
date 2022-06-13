@@ -12,21 +12,40 @@ import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
 
+/**
+ * Class ExpertModeController is the controller class that handles expert game mode.
+ * It is only instantiated in the controller if expert mode has been chosen for the game.
+ *
+ * @see java.util.Observable
+ * */
+
 public class ExpertModeController extends Observable {
-    /* controller class that handles expert game mode -
-    * is only instantiated in the controller if expert mode has
-    * been chosen for the game */
 
     private Model model;
     private RoundManager roundManager;
+
+    /**
+     * Constructor ExpertModeController creates a new ExpertModeController instance.
+     *
+     * @param model – of type Model - model reference.
+     * */
 
     public ExpertModeController(Model model){
         this.model = model;
         this.roundManager = model.getRoundManager();
     }
 
-    /* this class handles expert mode functionalities:
-    * - using the character card */
+    /**
+     * Method useCharacterCard allows the player to choose a Character Card to use, after checking
+     * if such move is legal for that player at that point of the turn.
+     *
+     * @param nickname - of type String - current player's nickname reference.
+     * @param o - of type Object - to be cast based on the chosen card.
+     * @param cardID - identifies a particular character card.
+     *
+     * @return boolean - true if action has been performed correctly, false otherwise.
+     * */
+
     public synchronized boolean useCharacterCard(String nickname, Object o, int cardID) {
         BoardExpert board;
         board = (BoardExpert) model.getBoard();

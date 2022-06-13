@@ -2,7 +2,6 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Model.BoardClasses.RoundManager;
 import it.polimi.ingsw.Model.Model;
-import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.ActionType;
 import it.polimi.ingsw.Utils.Enums.NotifyType;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -15,15 +14,23 @@ import it.polimi.ingsw.Utils.NetMessages.PlayedCardMessage;
 
 import java.util.Observable;
 
+/**
+ * BaseActionController class is the base controller class for both base and expert mode.
+ *
+ * @see java.util.Observable
+ * */
+
 public class BaseActionController extends Observable {
     private Model model;
     private RoundManager roundManager;
     private boolean isLastRound;
     private Player winner;
 
-    /* model and roundManager will be given as parameters when the lobby is created
-    * in the network classes */
-
+    /**
+     * Constructor BaseActionController creates a new BaseActionController instance.
+     *
+     * @param model of type Model - Model reference.
+     */
 
     public BaseActionController(Model model){
         this.model = model;
@@ -33,8 +40,11 @@ public class BaseActionController extends Observable {
         isLastRound = false;
     }
 
+    /**
+     * Method startGame picks and stores the first player of the game.
+     * */
+
     public void startGame(){
-        /* first player of the game is picked and stored */
         roundManager.computeTurnOrder(roundManager.pickFirstPlayerIndex());
         model.getRoundManager().notifyObservers(ActionType.PLAYER_CHANGE);
         model.getBoard().setup();
@@ -42,17 +52,31 @@ public class BaseActionController extends Observable {
 
     }
 
+    /**
+     * Method endGame sets the winner and notifies that the game has been won.
+     * */
+
     public void endGame(){
         winner = model.getWinner();
         winner.setWinner();
         model.getRoundManager().change();
         model.getRoundManager().notifyObservers(ActionType.END_GAME);
-        /* view will display that winner won the game, net will close connections etc... */
     }
 
     /* -------------- METHODS THAT CHECK AND ENACT PLAYER'S ACTIONS --------------- */
 
-    /* this method will receive cardID and nickname as a network message */
+
+    /**
+     * Method chooseAssistantCard checks that whoever's playing the card is in turn and it's the right point
+     * in their turn to play an assistant card. In that case, this method stores the card among the assistant
+     * cards played in the round and removes it from the player's deck.
+     *
+     * @param cardID - of type int - cardID reference.
+     * @param nickname - of type String - current player's nickname reference
+     *
+     * @return boolean - true if the action has been performed, false if not.
+     * */
+
     public synchronized boolean chooseAssistantCard(int cardID, String nickname){
         PlayedCardMessage playedCard = new PlayedCardMessage();
 
@@ -78,7 +102,7 @@ public class BaseActionController extends Observable {
                             }
                             return true;
                         } else {
-                            /* the view will display that the card has already been played */
+                            /* the view will display that the card has already been played by another player */
                             setChanged();
                             notifyObservers(new NotifyArgsController(nickname,
                                     new BaseServerMessage(CustomMessage.cardAlreadyPlayedError), NotifyType.SEND_ERROR));
@@ -107,15 +131,22 @@ public class BaseActionController extends Observable {
         return false;
     }
 
-    /* after checking if the move is legal, student is moved to dining room from current
-    * player's entrance */
+    /**
+     * Method moveStudentToDR, after checking if the move is legal, moves a student to dining room
+     * from current player's entrance.
+     *
+     * @param color - of type PawnDiscColor - references the color of the student.
+     * @param nickname - of type String - current player's nickname reference.
+     *
+     * @return boolean - true if the action has been performed, false if not.
+     * */
     public synchronized boolean moveStudentToDR(PawnDiscColor color, String nickname){
 
         if(checkStudents(color, nickname)){
             if(!model.getBoard().getPlayerSchoolBoard(nickname).getDiningRoom().checkIfDiningRoomIsFull(color)){
                 model.getBoard().moveStudent(color, nickname);
                 roundManager.increaseMovedStudents();
-                actionPhaseCurrentPlayer(nickname);
+                actionPhaseCurrentPlayer();
                 return true;
             }else{
                 /* view will display that dining room has no more available spaces for desired color */
@@ -127,6 +158,17 @@ public class BaseActionController extends Observable {
         return false;
     }
 
+
+    /**
+     * Method moveStudentToIsland, after checking if the move is legal, moves a student
+     * to selected island from current player's entrance.
+     *
+     * @param color - of type PawnDiscColor - references the color of the student.
+     * @param nickname - of type String - current player's nickname reference.
+     * @param islandID - of type int - identifies the island on which the student is moved.
+     *
+     * @return boolean - true if the action has been performed, false if not.
+     * */
     /* after checking if the move is legal, student is moved to selected island from current
      * player's entrance */
     public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
@@ -135,7 +177,7 @@ public class BaseActionController extends Observable {
             if (islandID < model.getBoard().getIslandList().size()) {
                 model.getBoard().moveStudent(color, nickname, islandID);
                 roundManager.increaseMovedStudents();
-                actionPhaseCurrentPlayer(nickname);
+                actionPhaseCurrentPlayer();
                 return true;
             } else {
                 setChanged();
@@ -147,6 +189,16 @@ public class BaseActionController extends Observable {
         return false;
     }
 
+
+    /**
+     * Method picksCloud allows current player to pick a cloud if the turn timing is right,
+     * if the supplied cloud id is valid and if the chosen cloud is not empty.
+     *
+     * @param nickname - of type String - current player's nickname reference.
+     * @param cloudID - of type int - identifies picked cloud.
+     *
+     * @return boolean - true if action has been correctly performed, false if not.
+     */
     /* method allows current player to pick a cloud if the turn timing is right,
     if the supplied cloud id is valid and if the chosen cloud is not empty  */
     public synchronized boolean picksCloud(String nickname, int cloudID){
@@ -199,7 +251,16 @@ public class BaseActionController extends Observable {
 
     /* --------------- PRIVATE UTILITY METHODS ---------------- */
 
-    /* general checks for students moved to either dining room or an island */
+    /**
+     * Method checkStudents makes general checks for students moved to either
+     * dining room or an island.
+     *
+     * @param color - of type PawnDiscColor - references the color of the student moved.
+     * @param nickname - of type String - current player's nickname reference.
+     *
+     * @return boolean - true if action has been correctly performed, false if not.
+     * */
+
     private synchronized boolean checkStudents(PawnDiscColor color, String nickname){
 
         if(roundManager.getCurrentPlayer().getNickname().equals(nickname)){
@@ -239,9 +300,12 @@ public class BaseActionController extends Observable {
         return false;
     }
 
-    /* private method that invokes model's methods to move mother nature and
-    * attempt to conquer an island if the current player has moved three students */
-    private synchronized void actionPhaseCurrentPlayer(String nickname){
+    /**
+     * Method actionPhaseCurrentPlayer invokes model's methods to move mother nature and
+     * attempt to conquer an island if the current player has moved three students.
+     */
+
+    private synchronized void actionPhaseCurrentPlayer(){
         if(roundManager.threeStudentsMoved()){
             /* attempts to conquer an island */
             model.getBoard().moveMotherNature(roundManager.getCurrentPlayersCard().getMotherNatureMovements());
@@ -262,8 +326,11 @@ public class BaseActionController extends Observable {
         }
     }
 
-    /* this method starts a new round once all players have picked
-    * a cloud tile*/
+
+    /**
+     * Method startNewRound starts a new round once all players have picked a cloud tile.
+     */
+
     private synchronized void startNewRound(){
 
         for(Player p : model.getPlayerList()){
