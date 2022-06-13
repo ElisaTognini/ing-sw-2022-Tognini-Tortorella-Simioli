@@ -23,6 +23,10 @@ public class Server {
     private ArrayList<Match> matches;
     private int matchPlayers;
 
+
+    /**
+     * constructor to Server class, creates a server socket listening on PORT
+     * */
     public Server(){
         try{
             this.serverSocket = new ServerSocket(PORT);
@@ -33,6 +37,14 @@ public class Server {
         matches = new ArrayList<>();
     }
 
+    /**
+     * method stores each new connected user in waitingClients. If waitingClients
+     * is empty when a new user joins, user is asked to provide the number of players and mode
+     * for the next match. Once enough users are connected and therefore stored in waitingClients, the list
+     * is cleared and a new match starts. The server can then resume waiting for a new first player,
+     * and the process repeats so that multiple parallel matches can be hosted.
+     * @param c of type ClientConnection represents the connected user
+     */
     public synchronized void lobby(ClientConnection c){
         GameMode gameMode;
         waitingClients.add(c);
@@ -71,6 +83,13 @@ public class Server {
         }
     }
 
+    /**
+     * method checks whether the nickname chosen by the currently handled user has already been
+     * picked.
+     * @return of type boolean - false if nickname is not duplicated, true otherwise.
+     * @param n of type String
+     * @param conn of type ClientConnection
+     * */
     private boolean isNicknameDuplicated(String n, ClientConnection conn){
         for(ClientConnection c: waitingClients){
             if(n.equals(c.getNickname())) {
@@ -81,6 +100,10 @@ public class Server {
         return false;
     }
 
+    /**
+     * this method instantiates and connects all of the necessary
+     * MVC components for a match
+     * */
     private void matchInitializer(){
         Model model;
         Controller controller;
@@ -100,8 +123,6 @@ public class Server {
         }
         matches.get(matches.size()-1).instantiateMVC(model, controller, virtualViews);
 
-        /* azioni fatte sul controller devono essere notificate dal messageReceiver
-        * (a lui arrivano i messaggi e poi vengono chiamati i metodi del controller. */
         for(VirtualView v: virtualViews){
             v.addObserver(controller);
         }
@@ -110,6 +131,9 @@ public class Server {
         matches.get(matches.size()-1).startGame();
     }
 
+    /**
+     * method run is responsible for listening for client connections and accepting
+     * them, creating a new object of type ClientConnection for each one*/
     public void run(){
         while(true){
             try{
@@ -123,7 +147,11 @@ public class Server {
         }
     }
 
-    /* everytime someone disconnects, the match is over. */
+    /**
+     * @param clientConnection of type ClientConnection - provides a reference
+     * for the user who has disconnected.
+     * This method resets the connection of all the users involved in the same match, effectively
+     * terminating it for all of them, without having influence on the other concurrent matches*/
     public void deregisterConnection(ClientConnection clientConnection) {
         ArrayList<VirtualView> match = getMatchByID(clientConnection.getMatchID()).getMatchPlayersViews();
         int id = clientConnection.getMatchID();
@@ -136,6 +164,13 @@ public class Server {
         System.out.println("now playing " + matches.size() + " concurrent matches");
     }
 
+    /**
+     * this method retrieves the match associated to the given ID from the
+     * match list where all concurrent and active games are stored
+     * @param matchID - represents the ID of the match that is looked to have a reference to
+     * @return of type Match - returns the match associated with the required ID
+     * @throws IllegalArgumentException when the id that is provided isn't valid
+     */
     private Match getMatchByID(int matchID) throws IllegalArgumentException{
         for(Match m : matches){
             if(m.getMatchID() == matchID)

@@ -3,13 +3,16 @@ package it.polimi.ingsw.View.GUI;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
+import it.polimi.ingsw.Utils.NetMessages.PlayedCardMessage;
 import it.polimi.ingsw.View.GUI.Components.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -23,10 +26,15 @@ public class MainGUIController {
     @FXML private GridPane deckHolder;
     @FXML private GridPane entranceGridPane;
     @FXML private GridPane towersGridPane;
-    @FXML private GridPane diningRoomGridPane;
     @FXML private GridPane professorGridPane;
+    @FXML private GridPane greenStudentsDRGridPane;
+    @FXML private GridPane blueStudentsDRGridPane;
+    @FXML private GridPane pinkStudentsDRGridPane;
+    @FXML private GridPane yellowStudentsDRGridPane;
+    @FXML private GridPane redStudentsDRGridPane;
     @FXML private Label myNickLabel;
     @FXML private HBox opponentSBHbox;
+    @FXML private HBox playedCardsHbox;
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
@@ -47,10 +55,16 @@ public class MainGUIController {
             islandList.add(island);
             island.setLayoutX(x + 50);
             island.setLayoutY(y + 40);
-            island.setMaxWidth(100);
-            island.setMaxHeight(100);
             island.setAlignment(Pos.BOTTOM_CENTER);
             ImageView img = new ImageView(new Image("/island2.png"));
+            img.setOnMouseEntered(mouseEvent -> {
+                img.setFitHeight(193);
+                img.setFitWidth(193);
+            });
+            img.setOnMouseExited(mouseEvent -> {
+                img.setFitHeight(190);
+                img.setFitWidth(190);
+            });
             img.setLayoutX(x);
             img.setLayoutY(y);
             img.setFitHeight(190);
@@ -60,6 +74,16 @@ public class MainGUIController {
             anchorPane.getChildren().add(img);
             anchorPane.getChildren().add(island);
         }
+        addMotherNature(mnPosition);
+    }
+
+    public void refreshIslands(ArrayList<String> islands, int mnPosition){
+        for(int i = 0; i < islands.size(); i++){
+            islandList.get(i).getChildren().clear();
+            addStudents(islands.get(i), islandList.get(i));
+            addTowers(islandList.get(i), islands.get(i));
+        }
+
         addMotherNature(mnPosition);
     }
 
@@ -127,6 +151,8 @@ public class MainGUIController {
                 refreshDeck(d);
                 return;
             }
+
+            playedCardsHbox.getChildren().add(new PlayedCardLabel(deck[0]));
         }
     }
 
@@ -246,32 +272,28 @@ public class MainGUIController {
                 col = 1;
         }
 
-        diningRoomGridPane.getChildren().clear();
+
         val = mySchoolBoard[2].split(" ");
+
+        pinkStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[0]); i++) {
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), i, 3);
-            col++;
-            tot++;
+            pinkStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), i, 0);
         }
+        yellowStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), i, 2);
-            col++;
-            tot++;
+            yellowStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), i, 0);
         }
+        blueStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[2]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), i, 4);
-            col++;
-            tot++;
+            blueStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), i, 0);
         }
+        greenStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[3]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), i, 0);
-            col++;
-            tot++;
+            greenStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), i, 0);
         }
+        redStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[4]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), i, 2);
-            col++;
-            tot++;
+            redStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.RED), i, 0);
         }
 
         val = mySchoolBoard[4].split(" ");
@@ -301,7 +323,26 @@ public class MainGUIController {
                 if(opponent.getNickname().equals(opponentSchoolBoard[0])){
                     opponent.showPinkStudents(opponentSchoolBoard[1].split(" ")[0],
                             opponentSchoolBoard[2].split(" ")[0]);
+                    opponent.showBlueStudents(opponentSchoolBoard[1].split(" ")[2],
+                            opponentSchoolBoard[2].split(" ")[2]);
+                    opponent.showGreenStudents(opponentSchoolBoard[1].split(" ")[3],
+                            opponentSchoolBoard[2].split(" ")[3]);
+                    opponent.showYellowStudents(opponentSchoolBoard[1].split(" ")[1],
+                            opponentSchoolBoard[2].split(" ")[1]);
+                    opponent.showRedStudents(opponentSchoolBoard[1].split(" ")[4],
+                            opponentSchoolBoard[2].split(" ")[4]);
                     opponent.showTowerNumber(opponentSchoolBoard[4].split(" ")[1]);
+                }
+            }
+        }
+    }
+
+    public void showOpponentplayedCard(PlayedCardMessage message){
+        for(Node n : opponentSBHbox.getChildren()){
+            if(n instanceof PlayedCardLabel){
+                PlayedCardLabel label = (PlayedCardLabel)n;
+                if(label.getOpponentNickname().equals(message.getOwner())){
+                    label.showPlayedCard(message.getCardID(), message.getPowerFactor());
                 }
             }
         }
