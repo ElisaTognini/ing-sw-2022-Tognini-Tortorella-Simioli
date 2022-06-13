@@ -10,6 +10,12 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class client represents a client.
+ *
+ * @see java.util.Observable
+ * */
+
 public class Client extends Observable {
     private NetworkHandler networkHandler;
     private String ip;
@@ -18,17 +24,32 @@ public class Client extends Observable {
     private ExecutorService executor = Executors.newFixedThreadPool(128);
     private ObjectOutputStream socketOut;
 
+    /**
+     * Constructor Client creates a new Client instance.
+     *
+     * @param ip - of type String - address of the server.
+     * @param port - of type int - port of the server.
+     * */
+
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
         networkHandler = new NetworkHandler(this);
     }
 
-    public synchronized boolean isActive(){return active;}
+    /**
+     * Method setActive sets this Client as active, based on the boolean parameter that is passed.
+     *
+     * @param active - of type boolean - indicates the status of the client (true if active).
+     * */
 
     public synchronized void setActive(boolean active) {
         this.active = active;
     }
+
+    /**
+     * Method run creates the client-side socket in order to connect this client to the server.
+     * */
 
     public void run(){
         try{
@@ -53,24 +74,33 @@ public class Client extends Observable {
             System.err.println("Something went wrong while creating socket");
         }
     }
-    /* metodo chiamato da un'altra classe, presumibilmente il Parser,
-     dopo che sono stati fatti i controlli per la validità dell'azione dell'utente */
+
+    /**
+     * Method asyncWriteToSocket sends an Object to the server.
+     *
+     * @param input - of type Object - references what is being sent.
+     * */
 
     public synchronized void asyncWriteToSocket(Object input) {
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socketOut.writeUnshared(input);
-                    socketOut.flush();
-                    socketOut.reset();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-
+        executor.submit(() -> {
+            try {
+                socketOut.writeUnshared(input);
+                socketOut.flush();
+                socketOut.reset();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
+
         });
     }
+
+    /**
+     * Method asyncReadFromSocket gets input from the server.
+     *
+     * @param socketIn - of type ObjectInputStream - references the input received.
+     *
+     * @return the Thread t that reads the object.
+     * */
 
     public Thread asyncReadFromSocket(ObjectInputStream socketIn) {
         Thread t = new Thread(new Runnable() {
@@ -89,6 +119,12 @@ public class Client extends Observable {
         });
         return t;
     }
+
+    /**
+     * Getter method getNetworkHandler returns the NetworkHandler that is handling the connection of this client to the server.
+     *
+     * @return the networkHandler (of type NetworkHandler) of this Client object.
+     * */
 
     public NetworkHandler getNetworkHandler() {
         return networkHandler;

@@ -71,6 +71,9 @@ public class Controller implements Observer {
     public ExpertModeController getExpertModeController() {return expertModeController;}
 
     /**
+     * Based on the type of action message that is received, a different method of baseActionController
+     * or expertModeController is called.
+     *
      * @see Observer#update(Observable, Object)
      * */
 
