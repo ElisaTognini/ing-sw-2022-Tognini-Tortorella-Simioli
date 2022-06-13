@@ -169,8 +169,7 @@ public class BaseActionController extends Observable {
      *
      * @return boolean - true if the action has been performed, false if not.
      * */
-    /* after checking if the move is legal, student is moved to selected island from current
-     * player's entrance */
+
     public synchronized boolean moveStudentToIsland(PawnDiscColor color, String nickname, int islandID){
 
         if(checkStudents(color, nickname)) {
@@ -199,14 +198,9 @@ public class BaseActionController extends Observable {
      *
      * @return boolean - true if action has been correctly performed, false if not.
      */
-    /* method allows current player to pick a cloud if the turn timing is right,
-    if the supplied cloud id is valid and if the chosen cloud is not empty  */
     public synchronized boolean picksCloud(String nickname, int cloudID){
 
         if(isLastRound){
-            //display last round message
-            /* setChanged();
-            notifyObservers(new BaseServerMessage(CustomMessage.lastRound)); */
             roundManager.refreshCurrentPlayerAction();
             return true;
         }

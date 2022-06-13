@@ -1,7 +1,11 @@
 package it.polimi.ingsw.View.GUI.Components;
 
+import javafx.event.EventHandler;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 
 public class AssistantCardViewComponent extends ImageView {
 
@@ -10,6 +14,21 @@ public class AssistantCardViewComponent extends ImageView {
     public AssistantCardViewComponent(int id){
         this.cardID = id;
         cardSetter(id);
+        this.setOnMouseEntered(mouseEvent -> {
+            setFitHeight(170);
+            setFitWidth(135);
+            toFront();
+        });
+        this.setOnMouseExited(mouseEvent -> {
+            setFitHeight(110);
+            setFitWidth(75);
+        });
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+
+            }
+        });
     }
 
     public void cardSetter(int id){

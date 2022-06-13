@@ -6,6 +6,8 @@ import it.polimi.ingsw.Utils.Enums.TowerColor;
 import it.polimi.ingsw.View.GUI.Components.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -23,6 +25,8 @@ public class MainGUIController {
     @FXML private GridPane towersGridPane;
     @FXML private GridPane diningRoomGridPane;
     @FXML private GridPane professorGridPane;
+    @FXML private Label myNickLabel;
+    @FXML private HBox opponentSBHbox;
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
@@ -61,14 +65,23 @@ public class MainGUIController {
 
     public void drawSchoolBoards(ArrayList<String> schoolBoards){
 
+        for(String sb : schoolBoards){
+            String[] vals = sb.split("\n");
+            towerColors.put(vals[0], TowerColor.valueOf(vals[4].split(" ")[0]));
+            if(!vals[0].equals(GUI.getNickname())){
+                opponentSBHbox.getChildren().add(new OpponentSchoolBoardViewComponent(vals[0]));
+            }
+            refreshSchoolBoards(schoolBoards);
+        }
+
         mainPlayerSB.setLayoutY(550);
         mainPlayerSB.setLayoutX(13);
         mainPlayerSB.setFitWidth(500);
         mainPlayerSB.setFitHeight(230);
-        entranceGridPane.setVgap(10);
-        entranceGridPane.setHgap(10);
-        towersGridPane.setHgap(15);
-        towersGridPane.setVgap(10);
+        entranceGridPane.setVgap(5);
+        entranceGridPane.setHgap(7);
+        towersGridPane.setHgap(7);
+        towersGridPane.setVgap(7);
 
     }
 
@@ -197,75 +210,104 @@ public class MainGUIController {
 
     private void refreshMainSB(String[] mySchoolBoard) {
 
-        int row = 0;
         int col = 0;
+        int tot = 0;
 
         entranceGridPane.getChildren().clear();
         String val[] = mySchoolBoard[1].split(" ");
         for(int i = 0; i < Integer.valueOf(val[0]); i++) {
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), col, row);
-            row++;
-            col++;
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), col, tot%5);
+            tot++;
+            if(tot > 4)
+                col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), col, row);
-            row++;
-            col++;
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), col, tot%5);
+            tot++;
+            if(tot > 4)
+                col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[2]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), col, row);
-            row++;
-            col++;
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), col, tot%5);
+            tot++;
+            if(tot > 4)
+                col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[3]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), col, row);
-            row++;
-            col++;
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), col, tot%5);
+            tot++;
+            if(tot > 4)
+                col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[4]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), col, row);
-            row++;
-            col++;
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), col, tot%5);
+            tot++;
+            if(tot > 4)
+                col = 1;
         }
 
         diningRoomGridPane.getChildren().clear();
         val = mySchoolBoard[2].split(" ");
         for(int i = 0; i < Integer.valueOf(val[0]); i++) {
             entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), i, 3);
-            row++;
             col++;
+            tot++;
         }
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
             entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), i, 2);
-            row++;
             col++;
+            tot++;
         }
         for(int i = 0; i < Integer.valueOf(val[2]); i++){
             entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), i, 4);
-            row++;
             col++;
+            tot++;
         }
         for(int i = 0; i < Integer.valueOf(val[3]); i++){
             entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), i, 0);
-            row++;
             col++;
+            tot++;
         }
         for(int i = 0; i < Integer.valueOf(val[4]); i++){
             entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), i, 2);
-            row++;
             col++;
+            tot++;
         }
 
         val = mySchoolBoard[4].split(" ");
+        col = 0;
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
-            towersGridPane.add(new TowerViewComponent(TowerColor.valueOf(val[0])), i%2, i%4);
+            if(i > 3)
+                col = 1;
+            towersGridPane.add(new TowerViewComponent(TowerColor.valueOf(val[0])), col, i%4);
         }
 
         val = mySchoolBoard[3].split(" ");
-        //add professors
+        int row = 0;
+
+        for(String prof : val){
+            //?
+            if(val.length <= 1)
+                break;
+            professorGridPane.add(new ProfessorViewComponent(PawnDiscColor.valueOf(prof)), 0, row);
+            row++;
+        }
     }
 
     private void refreshOpponentSchoolboard(String[] opponentSchoolBoard){
+        for(Node n : opponentSBHbox.getChildren()){
+            if(n instanceof OpponentSchoolBoardViewComponent){
+                OpponentSchoolBoardViewComponent opponent = (OpponentSchoolBoardViewComponent) n;
+                if(opponent.getNickname().equals(opponentSchoolBoard[0])){
+                    opponent.showPinkStudents(opponentSchoolBoard[1].split(" ")[0],
+                            opponentSchoolBoard[2].split(" ")[0]);
+                    opponent.showTowerNumber(opponentSchoolBoard[4].split(" ")[1]);
+                }
+            }
+        }
+    }
 
+    public void setMyNickLabel(String nickname){
+        myNickLabel.setText(nickname + " 's screen");
     }
 }

@@ -64,6 +64,7 @@ public class GUI extends Application implements Observer{
                         Platform.runLater(() -> mainController.drawDeck(message.getDecks()));
                         Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
                         Platform.runLater(() -> mainController.refreshSchoolBoards(message.getSchoolboards()));
+                        Platform.runLater(() -> mainController.setMyNickLabel(nick));
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
