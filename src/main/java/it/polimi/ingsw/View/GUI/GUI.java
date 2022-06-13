@@ -71,9 +71,29 @@ public class GUI extends Application implements Observer{
                 });
             }
             else {
-                Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+                if(message.getIslands().size() < baseView.getIslands().size())
+                    Platform.runLater(() -> mainController.drawIslands(message.getIslands(), message.getMnPosition()));
+                else
+                    Platform.runLater(() -> mainController.refreshIslands(message.getIslands(), message.getMnPosition()));
+
+                Platform.runLater(() -> mainController.refreshSchoolBoards(message.getSchoolboards()));
                 Platform.runLater(() -> mainController.studentsOnClouds(message.getClouds()));
-                //Platform.runLater(() -> mainController.refreshDeck(message.getDecks()));
+
+                for(String deck : message.getDecks()){
+                    if(deck.split(" ")[0].equals(nick))
+                        Platform.runLater(() -> mainController.refreshDeck(deck));
+                }
+
+                baseView = message;
+            }
+        }
+
+        @Override
+        public void updateGameBoardExpert(ExpertViewUpdateMessage message) {
+            if(expertView == null){
+                expertView = message;
+                updateGameBoard(message.getViewUpdate_base());
+                //showing additional components for expert mode
             }
         }
 
@@ -85,6 +105,11 @@ public class GUI extends Application implements Observer{
         @Override
         public void setNickname(NicknameMessage nickname){
             nick = nickname.getNickname();
+        }
+
+        @Override
+        public void setPlayedCard(PlayedCardMessage message){
+            Platform.runLater(() -> mainController.showOpponentplayedCard(message));
         }
     }
 

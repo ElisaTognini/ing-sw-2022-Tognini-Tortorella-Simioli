@@ -24,12 +24,18 @@ public class OpponentSchoolBoardViewComponent extends GridPane {
 
     public OpponentSchoolBoardViewComponent(String nickname){
         this.nickname = nickname;
-        setPadding(new Insets(5, 5, 5, 5));
-        setHgap(6);
-        setVgap(6);
+        setPadding(new Insets(5, 8, 5, 8));
+        setHgap(4);
+        setVgap(3);
         this.setBackground(new Background(new BackgroundFill(Color.rgb(122, 101, 230, 0.5), new CornerRadii(0), new Insets(0))));
         nickLabel.setText(nickname);
         nickLabel.setFont(Font.font("ink free", 20));
+        pinkStudents.setFont(Font.font("ink free", 13));
+        blueStudents.setFont(Font.font("ink free", 13));
+        redStudents.setFont(Font.font("ink free", 13));
+        yellowStudents.setFont(Font.font("ink free", 13));
+        greenStudents.setFont(Font.font("ink free", 13));
+        towerNumber.setFont(Font.font("ink free", 13));
         add(nickLabel, 0, 0);
         StudentViewComponent placeHolder = new StudentViewComponent(PawnDiscColor.PINK);
         placeHolder.setFitHeight(15);
@@ -59,6 +65,7 @@ public class OpponentSchoolBoardViewComponent extends GridPane {
         Label tower = new Label("Towers: ");
         tower.setFont(Font.font("ink free", 12));
         add(tower, 0, 6);
+        add(towerNumber, 1, 6);
     }
 
     public String getNickname() {

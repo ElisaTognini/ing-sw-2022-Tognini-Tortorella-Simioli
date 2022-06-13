@@ -16,9 +16,6 @@ import java.net.Socket;
 @Deprecated
 public class ClientConnection extends Observable implements Runnable {
 
-    /* inputStream è da salvare come attributo o regge il get nei metodi
-    * per il numero di giocatori ecc...? */
-
     private Socket socket;
     private Server server;
     private ObjectOutputStream out;
@@ -28,6 +25,11 @@ public class ClientConnection extends Observable implements Runnable {
     private int matchID;
     private boolean matchHasStarted = false;
 
+    /** constructor for ClientConnection class, saves references to both the
+     * client socket and the server that accepted it, and sets connection to active
+     * @param server of type Server
+     * @param socket of type Socket
+     * */
     public ClientConnection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
@@ -56,7 +58,6 @@ public class ClientConnection extends Observable implements Runnable {
         } catch (Exception e) {
             System.err.println("Something went wrong!");
             System.err.println(e.getMessage());
-            e.printStackTrace();
         } finally {
             close();
         }
@@ -75,7 +76,6 @@ public class ClientConnection extends Observable implements Runnable {
         } catch (IOException e) {
             System.err.println("Error while sending message\n");
             System.out.println(e.getMessage());
-            e.printStackTrace();
         }
     }
 
