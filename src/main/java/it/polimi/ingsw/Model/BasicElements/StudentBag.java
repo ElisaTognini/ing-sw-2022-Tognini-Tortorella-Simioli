@@ -4,13 +4,16 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 import java.util.*;
 
+/** Class StudentBag contains a list of all the students which can be used to play the game */
 
 public class StudentBag {
 
     protected List<Student> studentList;
     private int numStudents;
 
-    /*generates a list through adding same size arrays for each color*/
+    /** Constructor StudentBag generates a list through adding same size arrays for each color
+     *
+     * @param numStudents - of type int - number of students */
     public StudentBag(int numStudents){
         this.numStudents = numStudents;
         studentList = new ArrayList<>();
@@ -24,8 +27,9 @@ public class StudentBag {
 
     }
 
-    /* checks to see if there are any students left in the bag*/
-
+    /** checkIfStudentBagIsEmpty checks to see if there are any students left in the bag
+     *
+     * @return boolean - true if size is 0, false otherwise */
     public boolean checkIfStudentBagEmpty(){ return studentList.isEmpty(); }
 
     /*randomly draws a student*/
