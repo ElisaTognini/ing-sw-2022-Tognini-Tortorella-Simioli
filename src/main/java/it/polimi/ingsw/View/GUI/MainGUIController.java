@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
+import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -51,17 +52,23 @@ public class MainGUIController extends Observable {
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
     HashMap<String, TowerColor> towerColors = new HashMap<>();
 
+    private static PawnDiscColor color;
+    private static String studentSource;
+
     public void drawIslands(ArrayList<String> islands, int mnPosition){
 
         int distance = 300;
 
         for(int i = 0; i < islands.size(); i++){
+
+            String[] s = islands.get(i).split(" ");
+
             double angle = 2 * i * Math.PI / islands.size();
             double xOffset = distance * Math.cos(angle);
             double yOffset = distance * Math.sin(angle);
             double x = xOffset + 120 + anchorPane.getWidth()/2;
             double y = yOffset - 80 + anchorPane.getHeight()/2;
-            IslandViewComponent island = new IslandViewComponent();
+            IslandViewComponent island = new IslandViewComponent(Integer.valueOf(s[0]));
             island.setId(String.valueOf(i));
             islandList.add(island);
             island.setLayoutX(x + 50);
@@ -85,6 +92,7 @@ public class MainGUIController extends Observable {
             anchorPane.getChildren().add(img);
             anchorPane.getChildren().add(island);
         }
+        makeIslandsClickable();
         addMotherNature(mnPosition);
     }
 
@@ -174,22 +182,22 @@ public class MainGUIController extends Observable {
         int i = 0;
         String[] colors = c.split(" ");
         for(int j = 0; j < Integer.valueOf(colors[1]); j++){
-            island.add(new StudentViewComponent(PawnDiscColor.BLUE) ,j, 1);
+            island.add(new StudentViewComponent(PawnDiscColor.BLUE, "island") ,j, 1);
         }
         for(int j = 0; j < Integer.valueOf(colors[2]); j++){
-            island.add(new StudentViewComponent(PawnDiscColor.GREEN), j,2);
+            island.add(new StudentViewComponent(PawnDiscColor.GREEN, "island"), j,2);
             i++;
         }
         for(int j = 0; j < Integer.valueOf(colors[3]); j++){
-            island.add(new StudentViewComponent(PawnDiscColor.YELLOW), j,3);
+            island.add(new StudentViewComponent(PawnDiscColor.YELLOW, "island"), j,3);
             i++;
         }
         for(int j = 0; j < Integer.valueOf(colors[4]); j++){
-            island.add(new StudentViewComponent(PawnDiscColor.PINK), j,4);
+            island.add(new StudentViewComponent(PawnDiscColor.PINK, "island"), j,4);
             i++;
         }
         for(int j = 0; j < Integer.valueOf(colors[5]); j++){
-            island.add(new StudentViewComponent(PawnDiscColor.RED), j,5);
+            island.add(new StudentViewComponent(PawnDiscColor.RED, "island"), j,5);
             i++;
         }
     }
@@ -220,7 +228,7 @@ public class MainGUIController extends Observable {
                 continue;
 
             for(int j = 1; j < students.length ; j++){
-                cloudGrids.get(i).add(new StudentViewComponent(PawnDiscColor.valueOf(students[j])), j + 1, 3);
+                cloudGrids.get(i).add(new StudentViewComponent(PawnDiscColor.valueOf(students[j]), "cloud"), j + 1, 3);
             }
         }
     }
@@ -257,31 +265,31 @@ public class MainGUIController extends Observable {
         entranceGridPane.getChildren().clear();
         String val[] = mySchoolBoard[1].split(" ");
         for(int i = 0; i < Integer.valueOf(val[0]); i++) {
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), col, tot%5);
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.PINK, "entrance"), col, tot%5);
             tot++;
             if(tot > 4)
                 col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), col, tot%5);
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW, "entrance"), col, tot%5);
             tot++;
             if(tot > 4)
                 col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[2]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), col, tot%5);
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE, "entrance"), col, tot%5);
             tot++;
             if(tot > 4)
                 col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[3]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), col, tot%5);
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN, "entrance"), col, tot%5);
             tot++;
             if(tot > 4)
                 col = 1;
         }
         for(int i = 0; i < Integer.valueOf(val[4]); i++){
-            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED), col, tot%5);
+            entranceGridPane.add(new StudentViewComponent(PawnDiscColor.RED, "entrance"), col, tot%5);
             tot++;
             if(tot > 4)
                 col = 1;
@@ -292,23 +300,23 @@ public class MainGUIController extends Observable {
 
         pinkStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[0]); i++) {
-            pinkStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.PINK), i, 0);
+            pinkStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.PINK, "dr"), i, 0);
         }
         yellowStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
-            yellowStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW), i, 0);
+            yellowStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.YELLOW, "dr"), i, 0);
         }
         blueStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[2]); i++){
-            blueStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE), i, 0);
+            blueStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.BLUE, "dr"), i, 0);
         }
         greenStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[3]); i++){
-            greenStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN), i, 0);
+            greenStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.GREEN, "dr"), i, 0);
         }
         redStudentsDRGridPane.getChildren().clear();
         for(int i = 0; i < Integer.valueOf(val[4]); i++){
-            redStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.RED), i, 0);
+            redStudentsDRGridPane.add(new StudentViewComponent(PawnDiscColor.RED, "dr"), i, 0);
         }
 
         val = mySchoolBoard[4].split(" ");
@@ -409,5 +417,32 @@ public class MainGUIController extends Observable {
                 });
             }
         }
+    }
+
+    public void makeIslandsClickable(){
+        for(IslandViewComponent i : islandList){
+            i.setOnMouseClicked(mouseEvent -> {
+                if(studentSource.equals("entrance")) {
+                    setChanged();
+                    notifyObservers(new MoveStudentToIslandMessage(i.getIslandID(), color));
+                }
+            });
+        }
+    }
+
+    public static String getStudentSource(){
+        return studentSource;
+    }
+
+    public static PawnDiscColor getColor(){
+        return color;
+    }
+
+    public static void setColor(PawnDiscColor c){
+        color = c;
+    }
+
+    public static void setStudentSource(String source){
+        studentSource = source;
     }
 }

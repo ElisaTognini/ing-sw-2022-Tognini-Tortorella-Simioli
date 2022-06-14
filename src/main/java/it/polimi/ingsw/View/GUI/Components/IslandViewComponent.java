@@ -5,15 +5,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class IslandViewComponent extends GridPane {
-    public IslandViewComponent(){
+
+    private int islandID;
+
+    public IslandViewComponent(int islandID){
         this.setVgap(2);
         this.setHgap(2);
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+        this.islandID = islandID;
+    }
 
-            }
-        });
+    public int getIslandID(){
+        return islandID;
     }
 
 }

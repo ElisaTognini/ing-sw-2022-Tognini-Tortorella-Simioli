@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI.Components;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
+import it.polimi.ingsw.View.GUI.MainGUIController;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,9 +11,11 @@ import javafx.scene.shape.Circle;
 
 public class StudentViewComponent extends ImageView {
     private PawnDiscColor color;
+    private String source;
 
-    public StudentViewComponent(PawnDiscColor studentColor){
+    public StudentViewComponent(PawnDiscColor studentColor, String source){
         this.color = studentColor;
+        this.source = source;
         colorSetter(color);
         this.setOnMouseEntered(mouseEvent -> {
             setFitHeight(30);
@@ -23,11 +26,9 @@ public class StudentViewComponent extends ImageView {
             setFitHeight(15);
             setFitWidth(15);
         });
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-            }
+        this.setOnMouseClicked(mouseEvent -> {
+            MainGUIController.setColor(studentColor);
+            MainGUIController.setStudentSource(source);
         });
     }
 
