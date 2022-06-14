@@ -1,12 +1,17 @@
 package it.polimi.ingsw.View.GUI;
 
+import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
+import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
+import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.PlayedCardMessage;
+import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
 import it.polimi.ingsw.View.GUI.Components.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -14,11 +19,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
-public class MainGUIController {
+public class MainGUIController extends Observable {
 
     @FXML private AnchorPane anchorPane;
     @FXML private HBox cloudHBox;
@@ -35,6 +42,10 @@ public class MainGUIController {
     @FXML private Label myNickLabel;
     @FXML private HBox opponentSBHbox;
     @FXML private HBox playedCardsHbox;
+    @FXML private HBox expertCardsHBox;
+    @FXML private Label coinLabel;
+    @FXML private ImageView coinImg;
+
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
@@ -107,6 +118,10 @@ public class MainGUIController {
         towersGridPane.setHgap(7);
         towersGridPane.setVgap(7);
 
+        if(GUI.getMode().equals(GameMode.EXPERT)){
+            coinImg.setImage(new Image("/Moneta_base.png"));
+        }
+
     }
 
     public void drawClouds(ArrayList<String> clouds){
@@ -146,13 +161,12 @@ public class MainGUIController {
         for(String d : decks){
 
             String[] deck = d.split(" ");
-
+            playedCardsHbox.getChildren().add(new PlayedCardLabel(deck[0]));
             if(deck[0].equals(GUI.getNickname())) {
                 refreshDeck(d);
                 return;
             }
 
-            playedCardsHbox.getChildren().add(new PlayedCardLabel(deck[0]));
         }
     }
 
@@ -190,7 +204,7 @@ public class MainGUIController {
         if(data.length < 7)
             return;
 
-       TowerColor color = towerColors.get(6);
+       TowerColor color = towerColors.get(data[6]);
 
         for(int i = 0; i < Integer.valueOf(data[7]); i++){
             island.add(new TowerViewComponent(color), i, 0);
@@ -221,6 +235,7 @@ public class MainGUIController {
             if(row > 4) col = 1;
             deckHolder.add(new AssistantCardViewComponent(Integer.valueOf(cards[i])), row%5 , col );
         }
+        makeCardsClickable();
     }
 
     public void refreshSchoolBoards(ArrayList<String> schoolBoards){
@@ -337,6 +352,11 @@ public class MainGUIController {
         }
     }
 
+    public void showTurnChange(TurnChangeMessage message){
+        myNickLabel.setText("currently playing: " + message.getCurrentPlayer());
+        myNickLabel.setTextFill(new Color(0.5, 1, 0.97, 1));
+    }
+
     public void showOpponentplayedCard(PlayedCardMessage message){
         for(Node n : opponentSBHbox.getChildren()){
             if(n instanceof PlayedCardLabel){
@@ -350,5 +370,44 @@ public class MainGUIController {
 
     public void setMyNickLabel(String nickname){
         myNickLabel.setText(nickname + " 's screen");
+    }
+
+    public void refreshCoins(ArrayList<String> coinCounters){
+        for(String cc : coinCounters){
+            String[] counter = cc.split(" ");
+            if(counter[0].equals(GUI.getNickname())){
+                coinLabel.setText("You have " + counter[1] + " coins");
+            }
+        }
+    }
+
+    public void drawExpertCards(ArrayList<String> cards){
+
+        expertCardsHBox.setPadding(new Insets(7));
+        expertCardsHBox.setLayoutX(anchorPane.getWidth()/2 + 80 );
+        expertCardsHBox.setLayoutY(anchorPane.getHeight()/2 + 15);
+        expertCardsHBox.setSpacing(10);
+
+        for(String c : cards){
+            String[] card = c.split("-");
+            expertCardsHBox.getChildren().add(new CharacterCardViewComponent(Integer.valueOf(card[0])));
+        }
+    }
+
+    public void showError(BaseServerMessage message){
+        myNickLabel.setText(message.getMessage());
+        myNickLabel.setTextFill(new Color(1, 0, 0.15, 1));
+    }
+
+    public void makeCardsClickable(){
+        for(Node n : deckHolder.getChildren()){
+            if(n instanceof AssistantCardViewComponent){
+                AssistantCardViewComponent c = (AssistantCardViewComponent)n;
+                c.setOnMouseClicked(mouseEvent -> {
+                    setChanged();
+                    notifyObservers(new AssistantCardMessage(c.getCardID()));
+                });
+            }
+        }
     }
 }

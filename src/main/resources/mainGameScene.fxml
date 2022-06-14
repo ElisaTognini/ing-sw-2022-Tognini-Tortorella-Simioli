@@ -71,7 +71,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Label fx:id="myNickLabel" layoutX="39.0" layoutY="24.0" prefHeight="38.0" prefWidth="210.0" textFill="#b5fffe">
+            <Label fx:id="myNickLabel" layoutX="39.0" layoutY="24.0" prefHeight="38.0" prefWidth="701.0" textFill="#b5fffe">
                <font>
                   <Font name="Ink Free" size="23.0" />
                </font>
@@ -163,6 +163,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <HBox fx:id="expertCardsHBox" layoutX="544.0" layoutY="363.0" prefHeight="100.0" prefWidth="214.0" />
+            <ImageView fx:id="coinImg" fitHeight="80.0" fitWidth="86.0" layoutX="523.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="coinLabel" layoutX="518.0" layoutY="650.0" prefHeight="30.0" prefWidth="92.0">
+               <font>
+                  <Font name="Ink Free" size="13.0" />
+               </font></Label>
          </children></AnchorPane>
    </center>
 </BorderPane>

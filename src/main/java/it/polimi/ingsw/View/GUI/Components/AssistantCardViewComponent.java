@@ -69,4 +69,8 @@ public class AssistantCardViewComponent extends ImageView {
         this.setFitWidth(75);
     }
 
+    public int getCardID() {
+        return cardID;
+    }
+
 }

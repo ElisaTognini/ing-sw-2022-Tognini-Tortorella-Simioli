@@ -22,7 +22,7 @@ public class GUI extends Application implements Observer{
     GUIControllerInitialPhase initialController;
     MainGUIController mainController;
     Client client;
-    GameMode mode;
+    static GameMode mode;
     static String nick;
     ViewUpdateMessage baseView;
     ExpertViewUpdateMessage expertView;
@@ -49,6 +49,10 @@ public class GUI extends Application implements Observer{
         public void displayError(BaseServerMessage message){
             if(message.getMessage().equals(CustomMessage.duplicatedNickname)){
                 Platform.runLater(() -> initialController.displayDuplicatedNickname(message));
+            }
+            else {
+                if(mainController != null)
+                    Platform.runLater(() -> mainController.showError(message));
             }
         }
 
@@ -94,7 +98,9 @@ public class GUI extends Application implements Observer{
                 expertView = message;
                 updateGameBoard(message.getViewUpdate_base());
                 //showing additional components for expert mode
+                Platform.runLater(() -> mainController.drawExpertCards(message.getExtractedCharCards()));
             }
+            Platform.runLater(() -> mainController.refreshCoins(message.getCoinCounters()));
         }
 
         @Override
@@ -111,6 +117,14 @@ public class GUI extends Application implements Observer{
         public void setPlayedCard(PlayedCardMessage message){
             Platform.runLater(() -> mainController.showOpponentplayedCard(message));
         }
+
+        @Override
+        public void displayTurnChange(TurnChangeMessage message){
+            if(mainController != null) {
+                Platform.runLater(() -> mainController.showTurnChange(message));
+            }
+        }
+
     }
 
     private InternalGUI internalGUI;
@@ -155,6 +169,7 @@ public class GUI extends Application implements Observer{
         gameScene.getStylesheets().add(getClass().getResource("/stylesheetMainScene.css").toExternalForm());
         primaryStage.setScene(gameScene);
         mainController = (MainGUIController)loader.getController();
+        mainController.addObserver(client.getNetworkHandler());
         primaryStage.setFullScreen(true);
     }
 
@@ -179,6 +194,10 @@ public class GUI extends Application implements Observer{
 
     public static String getNickname(){
         return nick;
+    }
+
+    public static GameMode getMode(){
+        return mode;
     }
 
 }
