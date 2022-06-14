@@ -9,6 +9,10 @@ import it.polimi.ingsw.Utils.Enums.TowerColor;
 
 import java.util.*;
 
+/** Class Board controls most of the logic of the game model side, indeed it contains references to all the basic
+ * elements of the game (decks, clouds, islands, mother nature, student bag, students and professors), the players and
+ * their school boards, the mode the game is being played, also keeping track of the eventual winner. */
+
 public class Board extends Observable{
 
     protected ArrayList<Player> players;
@@ -27,8 +31,18 @@ public class Board extends Observable{
     protected boolean lastRound;
     protected boolean isGameOver;
 
-    /* numberOfClouds and numberOfTowers will be computed by the Model class
-    *  based on the number of players in the lobby */
+    /** Constructor Board creates new instance of the board. Parameters numberOfClouds, numberOfTowers and
+     * studentsInEntrance will be computed by the Model class based on the number of players in the lobby.
+     *
+     * @param players - of type ArrayList<Players> - the players currently playing the game.
+     * @param numberOfClouds - of type int - the number of clouds that will be added to the board.
+     * @param numberOfTowers - of type int - the number of towers to add in each player's tower section.
+     * @param studentsOnClouds - of type int - the number of students to add on each cloud at the beginning of every
+     *                         round
+     * @param studentsInEntrance - of type int - the number of towers to add in each player's entrance.
+     * @param mode - of type GameMode - the mode chosen by the players to play the game.
+     *
+     * */
     public Board(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                  int studentsInEntrance,GameMode mode){
         this.players = new ArrayList<>();
@@ -48,6 +62,10 @@ public class Board extends Observable{
         this.isGameOver = false;
     }
 
+
+    /** Method setup is responsible for the setup of the board for every new match: it places all the basic elements
+     * for the game, initialises professors, decks and players' school boards and sends all the player the setup
+     * board via MessageWrapper. */
     public void setup() {
         this.studentBag = new StudentBag(10);
         placeIslands();
@@ -59,13 +77,16 @@ public class Board extends Observable{
         initializeProfessors();
         initializeSchoolBoards();
         initializeDecks();
-        /* send all players the setup board via the MessageWrapper */
+
         if(mode.equals(GameMode.SIMPLE)) {
             setChanged();
             notifyObservers();
         }
     }
 
+
+    /** Method setup is responsible for the setup of the board for every new match: refills clouds with
+     * students from the student bag */
     public void roundSetup(){
         studentsOnClouds();
         if(mode.equals(GameMode.SIMPLE)) {
@@ -74,8 +95,15 @@ public class Board extends Observable{
         }
     }
 
-    /* THESE METHODS ARE CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
+    /* METHODS CALLED IN RESPONSE TO ACTIONS OF THE PLAYER */
 
+    /** playAssistantCard returns the assistant card chosen by the player during their planning phase
+     *
+     * @param cardID - of type int - the ID of the card chosen by the player
+     * @param nickname - of type String - the player who played the card
+     *
+     * @return AssistantCard - the card picked by the player
+     * */
     public AssistantCard playAssistantCard(int cardID, String nickname){
         for(AssistantCardDeck d : decks){
             if(d.getOwner().getNickname().equals(nickname)){
@@ -87,7 +115,13 @@ public class Board extends Observable{
         return null;
     }
 
-    /* this method moves a student from the entrance to a specified island */
+
+    /** Method moveStudent moves selected student from the player's entrance to a specified island
+     *
+     * @param color - of type PawnDiscColor - the color of the chosen student
+     * @param nickname - of type String - the player who is performing the action
+     * @param islandID - of type int - the ID of the island to which the student is being moved
+     * */
     public void moveStudent(PawnDiscColor color, String nickname, int islandID){
         for(SchoolBoard sb : schoolBoards){
             if(sb.getOwner().getNickname().equals(nickname)){
@@ -99,7 +133,13 @@ public class Board extends Observable{
         }
     }
 
-    /* this method moves a student from the entrance to the dining room */
+
+
+    /** Method moveStudent moves selected student from the player's entrance to their dining room
+     *
+     * @param color - of type PawnDiscColor - the color of the chosen student
+     * @param nickname - of type String - the player who is performing the action
+     * */
     public void moveStudent(PawnDiscColor color, String nickname){
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
@@ -110,6 +150,11 @@ public class Board extends Observable{
         }
     }
 
+
+    /** chooseCloudTile takes the students from the selected cloud and adds them to the player's entrance
+     *
+     * @param nickname of type String - the player performing the action
+     * @param cloudID of type int - cloud ID */
     public void chooseCloudTile(String nickname, int cloudID){
         Student[] students;
         students = clouds.get(cloudID).retrieveFromCloud();
@@ -123,11 +168,10 @@ public class Board extends Observable{
         setChanged();
         notifyObservers();
     }
-
     /* END OF PLAYER-ACTION METHODS */
 
 
-    /* THESE METHODS ACT ON THE CONSEQUENCES OF THE PLAYER'S ACTIONS */
+    /* METHODS ACTING ON THE CONSEQUENCES OF THE PLAYER'S ACTIONS */
 
     public void moveMotherNature(int movements){
         int position = motherNature.getPosition();

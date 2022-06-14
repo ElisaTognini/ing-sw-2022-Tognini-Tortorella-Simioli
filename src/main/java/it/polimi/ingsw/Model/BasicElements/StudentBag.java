@@ -27,12 +27,17 @@ public class StudentBag {
 
     }
 
+
     /** checkIfStudentBagIsEmpty checks to see if there are any students left in the bag
      *
      * @return boolean - true if size is 0, false otherwise */
     public boolean checkIfStudentBagEmpty(){ return studentList.isEmpty(); }
 
-    /*randomly draws a student*/
+
+    /** drawStudent randomly draws a student from the student bag using class Random.
+     *
+     * @return Student - student extracted
+     * */
     public Student drawStudent(){
         int bound = studentList.size();
         if(bound == 1){
@@ -48,9 +53,18 @@ public class StudentBag {
         return extracted;
     }
 
+    /** addStudentBack, only called in expert mode, puts a Student back into the student bag.
+     *
+     * @param student - of type Student - the student to add back
+     * */
     public void addStudentBack(Student student){
         studentList.add(student);
     }
+
+
+    /** availableStudents returns the number of students inside the bag.
+     *
+     * @return Integer - number of students inside the bag*/
     public int availableStudents(){
         return studentList.size();
     }
