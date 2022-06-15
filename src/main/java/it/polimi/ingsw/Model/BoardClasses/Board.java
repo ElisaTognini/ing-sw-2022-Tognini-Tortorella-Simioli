@@ -85,7 +85,7 @@ public class Board extends Observable{
     }
 
 
-    /** Method setup is responsible for the setup of the board for every new match: refills clouds with
+    /** Method roundSetup is responsible for the setup of the board for every new match: refills clouds with
      * students from the student bag */
     public void roundSetup(){
         studentsOnClouds();
@@ -151,7 +151,7 @@ public class Board extends Observable{
     }
 
 
-    /** chooseCloudTile takes the students from the selected cloud and adds them to the player's entrance
+    /** Method chooseCloudTile takes the students from the selected cloud and adds them to the player's entrance
      *
      * @param nickname of type String - the player performing the action
      * @param cloudID of type int - cloud ID */
@@ -173,6 +173,12 @@ public class Board extends Observable{
 
     /* METHODS ACTING ON THE CONSEQUENCES OF THE PLAYER'S ACTIONS */
 
+    /** Method moveMotherNature moves mother nature accordingly to the power factors of the assistant card played
+     * by the players during the planning phase, setting to false the boolean value of the flag hostsMotherNature
+     * on the island mother nature is leaving and then to true on the island mother nature has been moved to.
+     *
+     * @param movements of type int - the power factor of the assistant card
+     * */
     public void moveMotherNature(int movements){
         int position = motherNature.getPosition();
         islands.get(position).setHostsToFalse();
@@ -183,15 +189,16 @@ public class Board extends Observable{
     }
 
 
-    /* this method runs through the possible colors and
-    * - initializes player and influence to default values
-    *  - iterates schoolboards and finds the player with the max influence of the current color
-    *  - assigns the professor to the player with the maximum influence of said color
-    * corner case: if two players have the same influence for a color, who gets the professor? needs rule clarification */
+    /** Method assignProfessors runs through all the colors of enum PawnDiscColor and, for each of them,
+     * iterates players' school boards to find who has the most influence of the current color, saving their
+     * nickname and their influence as temporary values for attributes maxInfluence and maxPlayer, respectively.
+     * Finally, it assigns the professor to the player with the maximum influence of said color.
+     * If two (or more) players have the same influence over a color, the professor is not assigned to either
+     * of them (if not previously owned) or it remains property of its previous owner. */
     public void assignProfessors(){
-        int maxInfluence = 0;
-        int temp = 0;
-        String maxPlayer = "";
+        int maxInfluence;
+        int temp;
+        String maxPlayer;
         for(PawnDiscColor c : PawnDiscColor.values()){
             maxPlayer = ownerToCompare(c);
             maxInfluence = influenceToCompare(c);
@@ -215,6 +222,15 @@ public class Board extends Observable{
         notifyObservers();
     }
 
+    /** Private method influenceToCompare iterates through the players' school boards to find the influence
+     * of the owner of a professor over the color selected in order to use it to be compared  to the other
+     * player's current influence on said color to see if the professor needs to be re-assigned by method
+     *  assignProfessor in the current turn.
+     *
+     * @param c of type PawnDiscColor - color of the professor
+     *
+     * @return int - the influence of that player over that color
+     * */
     private int influenceToCompare(PawnDiscColor c){
         for(SchoolBoard sb : schoolBoards){
             if(sb.getProfessorTable().hasProfessor(c))
@@ -223,6 +239,15 @@ public class Board extends Observable{
         return 0;
     }
 
+
+    /** Private method ownerToCompare iterates through the players' school boards to find the owner of
+     * the professor of the color selected in order to compare it to the one temporary saved in maxPlayer
+     * in method assignProfessor to see if they match or if the professor needs to be re-assigned.
+     *
+     * @param c of type PawnDiscColor - color of the professor
+     *
+     * @return String - the owner of the professor of that color
+     * */
     private String ownerToCompare(PawnDiscColor c){
         for(SchoolBoard sb : schoolBoards){
             if(sb.getProfessorTable().hasProfessor(c)){
@@ -232,6 +257,7 @@ public class Board extends Observable{
         return "";
     }
 
+    /** Method conquerIsland */
     /*  if two players have the same influence over an unconquered island, the island will not be
     * conquered. If two players hold the same influence over a conquered island, the island
     * will not change its owner.*/
