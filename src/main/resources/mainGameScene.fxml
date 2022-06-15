@@ -171,7 +171,7 @@
                   <Font name="Ink Free" size="13.0" />
                </font></Label>
             <Rectangle fx:id="DRsurface" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="178.0" layoutX="94.0" layoutY="571.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0" />
-            <VBox fx:id="playedCardsHBox" layoutX="432.0" layoutY="26.0" prefHeight="51.0" prefWidth="265.0" />
+            <VBox fx:id="playedCardsVBox" layoutX="811.0" layoutY="203.0" prefHeight="51.0" prefWidth="265.0" />
          </children></AnchorPane>
    </center>
 </BorderPane>

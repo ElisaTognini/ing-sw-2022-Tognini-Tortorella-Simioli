@@ -46,7 +46,7 @@ public class MainGUIController extends Observable {
     @FXML private GridPane redStudentsDRGridPane;
     @FXML private Label myNickLabel;
     @FXML private HBox opponentSBHbox;
-    @FXML private HBox playedCardsVBox;
+    @FXML private VBox playedCardsVBox;
     @FXML private HBox expertCardsHBox;
     @FXML private Label coinLabel;
     @FXML private ImageView coinImg;
