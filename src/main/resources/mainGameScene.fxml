@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.MainGUIController">
@@ -169,6 +170,7 @@
                <font>
                   <Font name="Ink Free" size="13.0" />
                </font></Label>
+            <Rectangle fx:id="DRsurface" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="178.0" layoutX="94.0" layoutY="571.0" stroke="TRANSPARENT" strokeType="INSIDE" width="260.0" />
          </children></AnchorPane>
    </center>
 </BorderPane>

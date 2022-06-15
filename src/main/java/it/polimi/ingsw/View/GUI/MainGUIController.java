@@ -1,7 +1,9 @@
 package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
+import it.polimi.ingsw.Client.ActionMessages.MoveStudentToDRMessage;
 import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
+import it.polimi.ingsw.Client.ActionMessages.PickCloudMessage;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -21,7 +23,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -46,6 +50,7 @@ public class MainGUIController extends Observable {
     @FXML private HBox expertCardsHBox;
     @FXML private Label coinLabel;
     @FXML private ImageView coinImg;
+    @FXML private Rectangle DRsurface;
 
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
@@ -83,6 +88,13 @@ public class MainGUIController extends Observable {
                 img.setFitHeight(190);
                 img.setFitWidth(190);
             });
+            img.setOnMouseClicked(mouseEvent -> {
+                if(studentSource.equals("entrance") && color != null) {
+                    setChanged();
+                    notifyObservers(new MoveStudentToIslandMessage(island.getIslandID(), MainGUIController.color));
+                    color = null;
+                }
+            });
             img.setLayoutX(x);
             img.setLayoutY(y);
             img.setFitHeight(190);
@@ -92,7 +104,6 @@ public class MainGUIController extends Observable {
             anchorPane.getChildren().add(img);
             anchorPane.getChildren().add(island);
         }
-        makeIslandsClickable();
         addMotherNature(mnPosition);
     }
 
@@ -114,8 +125,11 @@ public class MainGUIController extends Observable {
             if(!vals[0].equals(GUI.getNickname())){
                 opponentSBHbox.getChildren().add(new OpponentSchoolBoardViewComponent(vals[0]));
             }
+            makeDRClickable();
             refreshSchoolBoards(schoolBoards);
         }
+
+
 
         mainPlayerSB.setLayoutY(550);
         mainPlayerSB.setLayoutX(13);
@@ -146,6 +160,10 @@ public class MainGUIController extends Observable {
             cloud.setFitWidth(120);
             cloud.setFitHeight(120);
             GridPane cloudGrid = new GridPane();
+            cloudGrid.setOnMouseClicked(mouseEvent -> {
+                setChanged();
+                notifyObservers(new PickCloudMessage(clouds.indexOf(c)));
+            });
             cloudHBox.setAlignment(Pos.TOP_CENTER);
             cloudGrid.setHgap(7);
             cloudGrid.setVgap(17);
@@ -327,13 +345,15 @@ public class MainGUIController extends Observable {
             towersGridPane.add(new TowerViewComponent(TowerColor.valueOf(val[0])), col, i%4);
         }
 
+        professorGridPane.getChildren().clear();
+
+        if(mySchoolBoard[3].length() == 0)
+            return;
+
         val = mySchoolBoard[3].split(" ");
         int row = 0;
 
         for(String prof : val){
-            //?
-            if(val.length <= 1)
-                break;
             professorGridPane.add(new ProfessorViewComponent(PawnDiscColor.valueOf(prof)), 0, row);
             row++;
         }
@@ -419,15 +439,14 @@ public class MainGUIController extends Observable {
         }
     }
 
-    public void makeIslandsClickable(){
-        for(IslandViewComponent i : islandList){
-            i.setOnMouseClicked(mouseEvent -> {
-                if(studentSource.equals("entrance")) {
-                    setChanged();
-                    notifyObservers(new MoveStudentToIslandMessage(i.getIslandID(), color));
-                }
-            });
-        }
+    private void makeDRClickable(){
+        DRsurface.setOnMouseClicked(mouseEvent -> {
+            if(studentSource.equals("entrance") && color != null){
+                setChanged();
+                notifyObservers(new MoveStudentToDRMessage(color));
+                color = null;
+            }
+        });
     }
 
     public static String getStudentSource(){
@@ -445,4 +464,5 @@ public class MainGUIController extends Observable {
     public static void setStudentSource(String source){
         studentSource = source;
     }
+
 }
