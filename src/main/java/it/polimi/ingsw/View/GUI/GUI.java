@@ -6,11 +6,13 @@ import it.polimi.ingsw.Utils.NetMessages.*;
 import it.polimi.ingsw.View.CLI.View;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -159,6 +161,7 @@ public class GUI extends Application implements Observer{
         primaryStage.setTitle("Eriantys");
         initialController = (GUIControllerInitialPhase)loader.getController();
         initialController.addObserver(this);
+        primaryStage.setOnCloseRequest(windowEvent -> Platform.exit());
         primaryStage.show();
     }
 
