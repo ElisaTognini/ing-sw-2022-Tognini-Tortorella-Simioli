@@ -46,7 +46,7 @@ public class MainGUIController extends Observable {
     @FXML private GridPane redStudentsDRGridPane;
     @FXML private Label myNickLabel;
     @FXML private HBox opponentSBHbox;
-    @FXML private HBox playedCardsHbox;
+    @FXML private HBox playedCardsVBox;
     @FXML private HBox expertCardsHBox;
     @FXML private Label coinLabel;
     @FXML private ImageView coinImg;
@@ -194,7 +194,7 @@ public class MainGUIController extends Observable {
         for(String d : decks){
 
             String[] deck = d.split(" ");
-            playedCardsHbox.getChildren().add(new PlayedCardLabel(deck[0]));
+            playedCardsVBox.getChildren().add(new PlayedCardLabel(deck[0]));
             if(deck[0].equals(GUI.getNickname())) {
                 refreshDeck(d);
                 return;
@@ -396,7 +396,7 @@ public class MainGUIController extends Observable {
     }
 
     public void showOpponentplayedCard(PlayedCardMessage message){
-        for(Node n : opponentSBHbox.getChildren()){
+        for(Node n : playedCardsVBox.getChildren()){
             if(n instanceof PlayedCardLabel){
                 PlayedCardLabel label = (PlayedCardLabel)n;
                 if(label.getOpponentNickname().equals(message.getOwner())){
