@@ -54,6 +54,7 @@ public class MainGUIController extends Observable {
 
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
+    ArrayList<ImageView> islandsImgs = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
     HashMap<String, TowerColor> towerColors = new HashMap<>();
 
@@ -63,6 +64,9 @@ public class MainGUIController extends Observable {
     public void drawIslands(ArrayList<String> islands, int mnPosition){
 
         int distance = 300;
+
+        anchorPane.getChildren().removeAll(islandList);
+        anchorPane.getChildren().removeAll(islandsImgs);
 
         for(int i = 0; i < islands.size(); i++){
 
@@ -80,6 +84,7 @@ public class MainGUIController extends Observable {
             island.setLayoutY(y + 40);
             island.setAlignment(Pos.BOTTOM_CENTER);
             ImageView img = new ImageView(new Image("/island2.png"));
+            islandsImgs.add(img);
             img.setOnMouseEntered(mouseEvent -> {
                 img.setFitHeight(193);
                 img.setFitWidth(193);
@@ -89,10 +94,12 @@ public class MainGUIController extends Observable {
                 img.setFitWidth(190);
             });
             img.setOnMouseClicked(mouseEvent -> {
-                if(studentSource.equals("entrance") && color != null) {
-                    setChanged();
-                    notifyObservers(new MoveStudentToIslandMessage(island.getIslandID(), MainGUIController.color));
-                    color = null;
+                if(studentSource != null) {
+                    if (studentSource.equals("entrance") && color != null) {
+                        setChanged();
+                        notifyObservers(new MoveStudentToIslandMessage(island.getIslandID(), MainGUIController.color));
+                        color = null;
+                    }
                 }
             });
             img.setLayoutX(x);
@@ -339,6 +346,9 @@ public class MainGUIController extends Observable {
 
         val = mySchoolBoard[4].split(" ");
         col = 0;
+
+        towersGridPane.getChildren().clear();
+
         for(int i = 0; i < Integer.valueOf(val[1]); i++){
             if(i > 3)
                 col = 1;
