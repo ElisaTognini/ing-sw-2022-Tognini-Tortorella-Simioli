@@ -257,17 +257,23 @@ public class Board extends Observable{
         return "";
     }
 
-    /** Method conquerIsland */
-    /*  if two players have the same influence over an unconquered island, the island will not be
-    * conquered. If two players hold the same influence over a conquered island, the island
-    * will not change its owner.*/
+    /** Method conquerIsland iterates through each of the players' school board to check who has the professor
+     * for each color in enum PawnDiscColor and calculates the influence that player has on the island mother
+     * nature is currently on. Then checks if the island had already been conquered: if so, it adds the influence
+     * of the tower(s) to the owner of the island's influence. Finally, it decides who conquers the island based
+     * on who has the most influence over it; if a player has more influence on the owner of the island,
+     * the former becomes the current owner of the island and the method replaces the towers of the previous
+     * owner with the current ones'.*/
+    /* Otherwise, if two players have the same influence over an unconquered island, the island will not be
+    * conquered, or if two players hold the same influence over a conquered island, the island
+    * will not change its owner.
+    * If conqueror is still null at hte end of the method, nobody conquers. */
     public void conquerIsland() {
         int[] sum = new int[players.size()];
         int i;
         int maxInfluence = 0;
         boolean deuce = false;
         Player conqueror = null;
-        /*if at the end of the method the conqueror is still null, nobody conquers*/
 
         for (i = 0; i < sum.length; i++) {
             sum[i] = 0;
@@ -286,7 +292,6 @@ public class Board extends Observable{
             }
         }
 
-        /* decides who conquers the island */
         for (i = 0; i < sum.length; i++ ){
             if (sum[i] > maxInfluence) {
                 maxInfluence = sum[i];
