@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public class MainGUIController extends Observable {
     }
 
     public void refreshIslands(ArrayList<String> islands, int mnPosition){
-        for(int i = 0; i < islands.size(); i++){
+        for(int i = 0; i < islands.size(); ++i){
             islandList.get(i).getChildren().clear();
             addStudents(islands.get(i), islandList.get(i));
             addTowers(islandList.get(i), islands.get(i));
@@ -460,6 +461,17 @@ public class MainGUIController extends Observable {
                 color = null;
             }
         });
+    }
+
+    public void winningScreen(String winner){
+        anchorPane.getChildren().clear();
+        Label winnerLabel = new Label("This game is over!" +
+                "\ncongratulations to " + winner + " who won the game!");
+        winnerLabel.setFont(Font.font("Ink Free", 35));
+        winnerLabel.setTextFill(new Color(0.5, 1, 0.97, 1));
+        winnerLabel.setLayoutX(anchorPane.getHeight()/2);
+        winnerLabel.setLayoutY(anchorPane.getWidth()/2-170);
+        anchorPane.getChildren().add(winnerLabel);
     }
 
     public static String getStudentSource(){
