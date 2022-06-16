@@ -267,7 +267,7 @@ public class Board extends Observable{
     /* Otherwise, if two players have the same influence over an unconquered island, the island will not be
     * conquered, or if two players hold the same influence over a conquered island, the island
     * will not change its owner.
-    * If conqueror is still null at hte end of the method, nobody conquers. */
+    * If conqueror is still null at the end of the method, nobody conquers. */
     public void conquerIsland() {
         int[] sum = new int[players.size()];
         int i;
@@ -310,10 +310,10 @@ public class Board extends Observable{
             if(islands.get(motherNature.getPosition()).getOwner().equals(conqueror)){
                 return;
             }
-            //returning towers to old owner
+
             getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
                     islands.get(motherNature.getPosition()).getNumberOfTowers());
-            //retrieving towers from conqueror's schoolboard
+
             if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
                 islands.get(motherNature.getPosition()).getNumberOfTowers())) {
                 getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
@@ -333,9 +333,10 @@ public class Board extends Observable{
         notifyObservers();
     }
 
-    /* this method checks whether the adjacent islands are also conquered by the current players. It handles
-    * the case in which the nearing island's owner is null. This method, if islands need merging,
-    * calls the merge method which handles the moving of students and towers basing on indexes (using an arraylist)*/
+
+    /** Method checkForMerge checks whether the adjacent islands are also conquered by the current player.
+     *  If so, it sets to true the internal variables notNull1 or notNullMinus1 (or both, in case of a
+     *  merge for three islands) and then calls the merge method to take care of the actual merging. */
     public void checkForMerge(){
         boolean notNull1 = false;
         boolean notNullMinus1 = false;
@@ -368,10 +369,18 @@ public class Board extends Observable{
         }
     }
 
-    /* it is not known at this time which of the two indexes is the greater */
+
+    /** Method merge takes care of merging of two island: it increases the number of towers on the island to
+     * keep, based on how many towers were on the other island. Then it iterates through the colors in the
+     * PawnDiscColor enum to get the number of students of that color that are currently on the island to
+     * remove and adds them on the island to keep. Finally, it removes the second island from the islands
+     * array list and reassigns the indexes to the islands accordingly.
+     *
+     * @param index1 of type int - the ID of the island to keep
+     * @param index2 of type int - the ID of the island to remove */
     protected void merge(int index1, int index2){
         islands.get(index1).increaseNumberOfTowers(islands.get(index2).getNumberOfTowers());
-        int k = 0;
+        int k;
         Island toKeep;
         for(PawnDiscColor c : PawnDiscColor.values()){
             k = islands.get(index2).getInfluenceByColor(c);
@@ -389,24 +398,42 @@ public class Board extends Observable{
         notifyObservers();
     }
 
+
+    /** Method merge handles merging when three islands are involved: first, it calls merge for the first two
+     * islands, then for the newly created merge and the third island.
+     *
+     * @param index1 of type int - the ID of the first island
+     * @param index2 of type int - the ID of the second island
+     * @param index3 of type int - the ID of the third island */
     protected void merge(int index1, int index2, int index3){
         Island third = islands.get(index3);
         merge(index1, index2);
         merge(motherNature.getPosition(), islands.indexOf(third));
     }
 
-    /* this method is only used in Expert mode, it is declared here for overriding*/
+
+    /** Method useCard is used in Expert mode only, but it is declared here for overriding purposes.
+    *
+    * @param o of type Object - the parameter required by the card to perform the action
+    * @param nickname of String - the player who purchased the card
+    * @param cardID of int - the ID of the character card purchased
+    * */
     public void useCard(Object o, String nickname, int cardID){}
+
     /* END OF METHODS FOLLOWING THE PLAYER'S ACTIONS */
 
     /* SERVICE METHODS FOR INITIALIZATION */
+
+    /** Method placeIslands adds all the islands in the islands array list during setup. */
     protected void placeIslands(){
         for(int i = 0; i < 12; i++){
             islands.add(new Island(i));
         }
     }
 
-    /* this method generates a random index indicating the island on which mother nature will be initially placed */
+
+    /** Method placeMotherNature generates a random index indicating the island on which mother nature will be
+     * initially placed. */
     protected void placeMotherNature(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(islands.size());
@@ -414,15 +441,18 @@ public class Board extends Observable{
         motherNature.setPosition(randomIndex);
     }
 
-    /* this method initializes the clouds ArrayList, the size of which is based on the number of players */
+
+    /** Method placeClouds initializes the clouds ArrayList and adds clouds in it, accordingly to the value
+     * of the attribute studentsOnCloud. */
     protected void placeClouds(){
         for(int i = 0; i < numberOfClouds; i++){
             clouds.add(new CloudTile(i, studentsOnClouds));
         }
     }
 
-    /* this method places the initial ten students on the available islands
-    *  (those that don't host mother nature or are opposite to the island that does) */
+
+    /** Method placeStudents places the initial ten students on the available islands, those that don't host
+     * mother nature or are opposite to the island that does. */
     protected void placeStudents(){
         int pos1, pos2;
         for(Island i : islands){
@@ -436,6 +466,9 @@ public class Board extends Observable{
         }
     }
 
+
+    /** Method studentsOnClouds places the students on each cloud, accordingly to the value of the attribute
+     * studentsOnClouds. */
     protected void studentsOnClouds(){
         Student[] students = new Student[studentsOnClouds];
         for(CloudTile c : clouds){
@@ -451,6 +484,10 @@ public class Board extends Observable{
         }
     }
 
+
+    /** Method initializeSchoolBoards creates a new school board for each player at the beginning of the match,
+     * assigning a different color for the towers in each player's tower section, then adding students in their
+     * entrance, according to the value of the attribute studentInEntrance. */
     protected void initializeSchoolBoards(){
         TowerColor c = TowerColor.BLACK;
         for(int i=0; i<players.size(); i++){
@@ -464,12 +501,17 @@ public class Board extends Observable{
         }
     }
 
+
+    /** Method initializeProfessors creates a new professor for each color in enum PawnDiscColor.*/
     protected void initializeProfessors(){
         for(PawnDiscColor c : PawnDiscColor.values()){
             professors.add(new Professor(c));
         }
     }
 
+
+    /** Method initializeDecks creates a new instance of AssistantCardDeck for each player at the beginning
+     * of the match.*/
     protected void initializeDecks(){
         for(Player p : players){
             decks.add(new AssistantCardDeck(p));
@@ -479,14 +521,28 @@ public class Board extends Observable{
     /* END OF SERVICE METHODS FOR INITIALIZATION */
 
     /* GETTER METHODS */
+
+    /** getter method - Method getStudentBag returns the student bag.
+     *
+     * @return StudentBag - reference to the student bag */
     public StudentBag getStudentBag(){
         return studentBag;
     }
 
+
+    /** getter method - Method getIslandList returns the array list containing all the islands
+     *
+     * @return ArrayList - the list of islands on the board */
     public ArrayList<Island> getIslandList(){
         return islands;
     }
 
+
+    /** getter method - Method getPlayerSchoolBoard returns the school board of the selected player
+     *
+     * @param nickname of type String - the nickname of the player who owns the school board
+     *
+     * @return SchoolBoard - the player's school board */
     public SchoolBoard getPlayerSchoolBoard(String nickname){
         for(SchoolBoard sb : schoolBoards){
             if(sb.getOwner().getNickname().equals(nickname)){
@@ -496,17 +552,34 @@ public class Board extends Observable{
         return null;
     }
 
+
+    /** getter method - Method getSchoolBoards returns all the players' school boards
+     *
+     * @return ArrayList - the players' school boards. */
     public ArrayList<SchoolBoard> getSchoolBoards(){
         return schoolBoards;
     }
+
+
+    /** getter method - Method getMotherNaturePosition returns the ID of the island currently hosting
+     * mother nature.
+     *
+     * @return int - mother nature's position */
     public int getMotherNaturePosition(){
         return motherNature.getPosition();
     }
 
+
+    /** getter method - Method getDecks returns all the players' decks
+     *
+     * @return ArrayList - array list with each of the players' decks*/
     public ArrayList<AssistantCardDeck> getDecks(){
         return decks;
     }
 
+    /** getter method - Method getMotherNature returns mother nature
+     *
+     * @return MotherNature - reference to mother nature*/
     public MotherNature getMotherNature(){
         return motherNature;
     }
