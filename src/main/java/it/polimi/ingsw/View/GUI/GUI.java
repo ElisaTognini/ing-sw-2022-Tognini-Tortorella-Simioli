@@ -127,6 +127,11 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        @Override
+        public void displayEndOfGame(EndGameMessage message){
+            Platform.runLater(() -> mainController.winningScreen(message.getWinner()));
+        }
+
     }
 
     private InternalGUI internalGUI;
@@ -161,7 +166,10 @@ public class GUI extends Application implements Observer{
         primaryStage.setTitle("Eriantys");
         initialController = (GUIControllerInitialPhase)loader.getController();
         initialController.addObserver(this);
-        primaryStage.setOnCloseRequest(windowEvent -> Platform.exit());
+        primaryStage.setOnCloseRequest(windowEvent ->{
+            Platform.exit();
+            System.exit(0);
+        });
         primaryStage.show();
     }
 
