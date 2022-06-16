@@ -68,6 +68,9 @@ public class MainGUIController extends Observable {
         anchorPane.getChildren().removeAll(islandList);
         anchorPane.getChildren().removeAll(islandsImgs);
 
+        islandsImgs.clear();
+        islandList.clear();
+
         for(int i = 0; i < islands.size(); i++){
 
             String[] s = islands.get(i).split(" ");
