@@ -102,7 +102,11 @@ public class GUI extends Application implements Observer{
                 //showing additional components for expert mode
                 Platform.runLater(() -> mainController.drawExpertCards(message.getExtractedCharCards()));
             }
-            Platform.runLater(() -> mainController.refreshCoins(message.getCoinCounters()));
+            else {
+                Platform.runLater(() -> mainController.refreshCoins(message.getCoinCounters()));
+                updateGameBoard(message.getViewUpdate_base());
+                expertView = message;
+            }
         }
 
         @Override

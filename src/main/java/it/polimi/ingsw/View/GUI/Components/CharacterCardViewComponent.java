@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 public class CharacterCardViewComponent extends ImageView {
 
     private int id;
+    private String description;
 
     public CharacterCardViewComponent(int id){
         this.id = id;
