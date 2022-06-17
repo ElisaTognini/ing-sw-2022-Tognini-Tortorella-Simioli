@@ -1,9 +1,6 @@
 package it.polimi.ingsw.View.GUI;
 
-import it.polimi.ingsw.Client.ActionMessages.AssistantCardMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToDRMessage;
-import it.polimi.ingsw.Client.ActionMessages.MoveStudentToIslandMessage;
-import it.polimi.ingsw.Client.ActionMessages.PickCloudMessage;
+import it.polimi.ingsw.Client.ActionMessages.*;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -444,9 +441,20 @@ public class MainGUIController extends Observable {
             CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
             character.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
             character.setOnMouseExited(mouseEvent -> expertCardTextArea.setText(""));
+            character.setOnMouseClicked(mouseEvent -> getParameter(character.getCardId()));
             expertCardsHBox.getChildren().add(character);
 
         }
+    }
+
+    private void getParameter(int cardId) {
+        CharacterCardMessage message = new CharacterCardMessage();
+        message.setCardID(cardId);
+
+        message.setParam(ExpertModeParameterCollector.getParam(cardId));
+
+        setChanged();
+        notifyObservers(message);
     }
 
     public void showError(BaseServerMessage message){
