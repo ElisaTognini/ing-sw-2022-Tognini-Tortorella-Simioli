@@ -198,6 +198,9 @@ public class MainGUIController extends Observable {
         deckHolder.setHgap(15);
         deckHolder.setVgap(15);
 
+        playedCardsVBox.setLayoutX(anchorPane.getWidth()/2 + 120);
+        playedCardsVBox.setLayoutY(anchorPane.getHeight()/2 - 190);
+
         for(String d : decks){
 
             String[] deck = d.split(" ");
@@ -433,6 +436,8 @@ public class MainGUIController extends Observable {
         expertCardsHBox.setLayoutY(anchorPane.getHeight()/2 + 15);
         expertCardsHBox.setSpacing(10);
         coinLabel.setTextFill(new Color(0.5, 1, 0.97, 1));
+        expertCardTextArea.setLayoutX(anchorPane.getWidth()/2 + 60);
+        expertCardTextArea.setLayoutY(anchorPane.getHeight()/2 + 150);
 
         for(String c : cards){
             String[] card = c.split("-");
