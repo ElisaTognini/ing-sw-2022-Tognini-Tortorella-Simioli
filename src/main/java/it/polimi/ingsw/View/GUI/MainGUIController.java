@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextFlow;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class MainGUIController extends Observable {
     @FXML private Label coinLabel;
     @FXML private ImageView coinImg;
     @FXML private Rectangle DRsurface;
+    @FXML private TextArea expertCardTextArea;
 
 
     ArrayList<IslandViewComponent> islandList = new ArrayList<>();
@@ -418,7 +421,7 @@ public class MainGUIController extends Observable {
         for(String cc : coinCounters){
             String[] counter = cc.split(" ");
             if(counter[0].equals(GUI.getNickname())){
-                coinLabel.setText("You have " + counter[1] + " coins");
+                coinLabel.setText("coins: " + counter[1]);
             }
         }
     }
@@ -429,10 +432,15 @@ public class MainGUIController extends Observable {
         expertCardsHBox.setLayoutX(anchorPane.getWidth()/2 + 80 );
         expertCardsHBox.setLayoutY(anchorPane.getHeight()/2 + 15);
         expertCardsHBox.setSpacing(10);
+        coinLabel.setTextFill(new Color(0.5, 1, 0.97, 1));
 
         for(String c : cards){
             String[] card = c.split("-");
-            expertCardsHBox.getChildren().add(new CharacterCardViewComponent(Integer.valueOf(card[0])));
+            CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
+            character.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
+            character.setOnMouseExited(mouseEvent -> expertCardTextArea.setText(""));
+            expertCardsHBox.getChildren().add(character);
+
         }
     }
 
