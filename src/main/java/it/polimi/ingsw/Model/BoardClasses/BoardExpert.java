@@ -242,13 +242,20 @@ public class BoardExpert extends Board {
             return true;
     }
 
-    /* methods which allows to set the additional moves for the effect of card 4*/
+    /** Method setAdditionalMoves sets the additional moves to attribute additional_moves (effect of character
+     * card 4)
+     *
+     * @param moves of type int - additional moves for mother nature*/
     public void setAdditionalMoves(int moves) {
         additional_moves = moves;
     }
 
-    /* method retrieves the current player's coinCounter and decrements its number by retrieving the
-     * desired character card's cost */
+
+    /** Method purchaseCharacterCard retrieves the current player's coinCounter and decrements its number of the same
+     * value as the cost of the character card they want to purchase if the selected car is one of the ones extracted.
+     *
+     * @param nickname of type String - the nickname of the player who purchased the card
+     * @param characterCardID of type int - the ID of the card purchased */
     public void purchaseCharacterCard(String nickname, int characterCardID) {
         for (CharacterCardTemplate card : extractedCards) {
             if (characterCardID == card.getCardID()) {
@@ -259,6 +266,13 @@ public class BoardExpert extends Board {
         notifyObservers();
     }
 
+
+    /** Method checkIfCardPresent if the card identified by the ID given in input is one of the card extracted
+     * stored in extractedCards
+     *
+     * @param cardID - the ID of the character card
+     *
+     * @return boolean - true if present, false otherwise */
     public boolean checkIfCardPresent(int cardID) {
         for (CharacterCardTemplate c : extractedCards) {
             if (c.getCardID() == cardID)
@@ -267,6 +281,14 @@ public class BoardExpert extends Board {
         return false;
     }
 
+
+    /** getter method - method getPlayersCoinCounter returns the coin counter of the player whose nickname is
+     * given in input.
+     *
+     * @param nickname of type String - the player's nickname
+     *
+     * @return CoinCounter - the selected player's coin counter
+     * */
     public CoinCounter getPlayersCoinCounter(String nickname) {
         for (CoinCounter c : coins) {
             if (c.getOwner().getNickname().equals(nickname)) {
@@ -276,6 +298,13 @@ public class BoardExpert extends Board {
         return null;
     }
 
+
+    /** getter method - method getCardsCost returns the cost of the character card identified by the ID
+     * given in input, only if it is one of the extracted cards stored in extractedCards
+     *
+     * @param cardID of type int - the ID of the character card
+     *
+     * @return int - the cost of the card */
     public int getCardsCost(int cardID) {
         for (CharacterCardTemplate c : extractedCards) {
             if (c.getCardID() == cardID)
@@ -284,9 +313,13 @@ public class BoardExpert extends Board {
         return 0;
     }
 
+    /** getter method - method getExtractedCards returns the three character cards extracted and stored in
+     * attribute extractedCards.
+     *
+     * @return CharacterCardTemplate[] - the array the character cards are stored into */
     public CharacterCardTemplate[] getExtractedCards() { return extractedCards; }
 
-    /* method that extracts the three random cards and stores them after calling the factory class */
+    /** Private method chooseCardIndexes extracts three random card indexes and stores them in the array cardIDs */
     private void chooseCardIndexes() {
         Random rand = new Random();
         int randomIndex;
@@ -304,6 +337,13 @@ public class BoardExpert extends Board {
         }
     }
 
+
+    /** Method assignCoin iterates through the player's school board and adds a coin to their coin counter if
+     * they have three or multiple students of the selected color in their dining room
+     *
+     * @param nickname of type String - the player's nickname
+     * @param color of type PawnDiscColor - color
+     **/
     public void assignCoin(String nickname, PawnDiscColor color) {
         for (SchoolBoard sb : schoolBoards) {
             if (sb.getOwner().getNickname().equals(nickname)) {
@@ -320,7 +360,12 @@ public class BoardExpert extends Board {
         }
     }
 
-    /* this method activates the effect of the character card purchased by the player */
+
+    /** Method useCard activates the effect of the character card purchased by the player
+     *
+     * @param o of type Object - the parameters required by the character card purchased
+     * @param nickname of type String - the nickname of the player who purchased the card
+     * @param cardID of type int - the ID of the characted card purchased */
     public void useCard(Object o, String nickname, int cardID) {
         for (CharacterCardTemplate c : extractedCards) {
             if (c.getCardID() == cardID) {
@@ -332,6 +377,13 @@ public class BoardExpert extends Board {
         }
     }
 
+
+    /** Method isActionForbidden calls method checkIfActionIsForbidden to check if the requirements of the three
+     * character card extracted are fulfilled by the action the player is trying to perform.
+     *
+     * @param cardID of type int - the ID of the card
+     * @param o of type Object - the parameters passed by the player in input
+     * @param nickname of type String - the nickname of the player performing the action */
     public boolean isActionForbidden(int cardID, Object o, String nickname){
         for(CharacterCardTemplate c : extractedCards){
             if(c.getCardID() == cardID){
@@ -341,17 +393,33 @@ public class BoardExpert extends Board {
         return true;
     }
 
+    /** setter method - method setMotherNaturePosition sets mother nature position according to the value passed
+     * in input
+     *
+     * @param pos of type int - mother nature's position */
     public void setMotherNaturePosition(int pos) {
         motherNature.setPosition(pos);
     }
 
+    /** setter method - method setExtra sets value of attribute extra as the nickname of the player passed as input
+     *
+     * @param nickname of type String - the nickname of the player who purchased character card 2 */
     public void setExtra(String nickname) {extra = nickname;}
 
-    /* METHOD FOR TEST PURPOSE ONLY - WON'T BE USED BY PLAYERS*/
+
+    /** setter method - method setExtractedCards set the cards passed in input as the extractedCard.
+     * This method is only used for test purposes, players cannot access to this method because the extraction
+     * of the card is completely random.
+     *
+     * @param cards of type CharacterCardTemplate[] - the character cards extracted */
     public void setExtractedCards(CharacterCardTemplate[] cards) {
         extractedCards = cards;
     }
 
+
+    /** getter method - method getCoinCounters returns each players' coin counter
+     *
+     * @return CoinCounter[] - array of coin counters */
     public CoinCounter[] getCoinCounters(){
         return coins;
     }
