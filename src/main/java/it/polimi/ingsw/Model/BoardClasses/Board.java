@@ -577,6 +577,7 @@ public class Board extends Observable{
         return decks;
     }
 
+
     /** getter method - Method getMotherNature returns mother nature
      *
      * @return MotherNature - reference to mother nature*/
@@ -584,10 +585,21 @@ public class Board extends Observable{
         return motherNature;
     }
 
+
+    /** getter method - Method getCloud returns the selected cloud, based on the cloud id
+     *
+     * @param cloudID of type int - the id of the cloud
+     *
+     * @return CloudTile - the cloud identified by the input id */
     public CloudTile getCloud(int cloudID){
         return clouds.get(cloudID);
     }
 
+
+    /** method allCloudsPicked iterates through each of the clouds present on the board and returns
+     * ture if all of them are empty, false otherwise.
+     *
+     * @return boolean - result of the check */
     public boolean allCloudsPicked(){
         for(CloudTile c : clouds){
             if(!c.isCloudEmpty()){
@@ -597,6 +609,12 @@ public class Board extends Observable{
         return true;
     }
 
+
+    /** getter method - method getPlayersDeck returns the selected player's deck of assistant cards
+     *
+     * @param nickname of type String - the player's nickname
+     *
+     * @return AssistantCardDeck - the player's deck */
     public AssistantCardDeck getPlayersDeck(String nickname){
         for(AssistantCardDeck deck : decks){
             if(deck.getOwner().getNickname().equals(nickname))
@@ -605,31 +623,37 @@ public class Board extends Observable{
         return null;
     }
 
+    /** getter method - method isLastRound returns the value of boolean attribute lastRound
+     *
+     * @return boolean - true if it's last round, false otherwise */
     public boolean isLastRound(){ return lastRound; }
 
+
+    /** setter method - method setLastRound sets boolean attribute lastRound to true */
     public void setLastRound(){
         lastRound = true;
         setChanged();
         notifyObservers();
     }
 
+
+    /** getter method - method isGameOver returns the value of the boolean attribute isGameOver.
+     * isGameOver is set by default to false and only changed if one of the players wins.
+     *
+     * @return boolean - true if someone won, false otherwise*/
     public boolean isGameOver(){ return isGameOver;}
-
-    public int getNumberOfClouds(){return numberOfClouds;}
-
 
     /* END OF GETTER METHODS */
 
-    /* METHODS FOR LEGAL ACTION CHECKS */
-    public boolean isDeckEmpty(String nickname){
-        for(AssistantCardDeck deck : decks){
-            if(nickname.equals(deck.getOwner().getNickname())){
-                return deck.checkIfDeckIsEmpty();
-            }
-        }
-        return false;
-    }
 
+    /* METHODS FOR LEGAL ACTION CHECKS */
+
+    /** Method isCardInDeck checks if a selected car is inside the player's deck.
+     *
+     * @param nickname of type String - the player's nickname
+     * @param cardID of type int - the ID of the card
+     *
+     * @return boolean - true if card is present, false otherwise */
     public boolean isCardInDeck(String nickname, int cardID){
         for(AssistantCardDeck deck: decks){
             if(nickname.equals(deck.getOwner().getNickname())){
@@ -639,6 +663,14 @@ public class Board extends Observable{
         return false;
     }
 
+
+    /** Method colorAvailableInEntrance checks if a student of a selected color is available in the
+     * entrance of the player
+     *
+     * @param nickname of type String - the player's nickname
+     * @param color of type PawnDiscColor - selected color
+     *
+     * @return boolean - true if there is at least one student of said color, false otherwise */
     public boolean colorAvailableInEntrance(String nickname, PawnDiscColor color){
         return getPlayerSchoolBoard(nickname).getEntrance().isColorAvailable(color);
     }
