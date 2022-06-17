@@ -12,6 +12,11 @@ import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import java.util.ArrayList;
 import java.util.Random;
 
+/** Class BoardExpert inherits all the methods from Board and adds those needed to handle expert features.
+ * To do so, BoardExpert contains new attributes for those features: coins keeeps track of the number of coins
+ * owned by each player, extractedCards contains the three extracted cards for the game, a reference to the
+ * factory class for the cards and a few parameters needed for the actions of the some character cards. */
+
 public class BoardExpert extends Board {
 
     private CoinCounter[] coins;
@@ -24,6 +29,13 @@ public class BoardExpert extends Board {
     private int additional_moves;
     private String extra;
 
+    /** Constructor BoardExpert creates a new instance of board expert
+     *
+     * @param players of type ArrayList - players how will play the game
+     * @param numberOfClouds of type int - number of clouds
+     * @param numberOfTowers of type int - number of towers in each player's tower section
+     * @param studentsInEntrance of type int - the number of students in each player's entrance
+     * @param mode of type GameMode - the mode chosen by the players to play the game */
     public BoardExpert(ArrayList<Player> players, int numberOfClouds, int numberOfTowers, int studentsOnClouds,
                        int studentsInEntrance, GameMode mode) {
         super(players, numberOfClouds, numberOfTowers, studentsOnClouds, studentsInEntrance, mode);
@@ -35,7 +47,14 @@ public class BoardExpert extends Board {
         extra = null;
     }
 
+
     @Override
+    /** Override of method roundSetup in Board: calls method from superclass and then sets value of attributes
+     * additional_moves, towersOnHold, ignoredInfluence, extra to default values and resets player's professor
+     * table to its previous values (only if character card 2 has been played).
+     * additional_moves is set to 0 by default and modified only if character card 4 1has been played;
+     * towersOnHold and ignoredInfluence are set to 0 by default and changed only if character card 6 has been played;
+     * extra is set to null by default and modified only if character card 8 has been played */
     public void roundSetup(){
         super.roundSetup();
         /* setting extras back to default values */
@@ -54,20 +73,20 @@ public class BoardExpert extends Board {
         notifyObservers();
     }
 
-    /* board class setup is overridden here to add the instantiation of all the expert game
-     * elements (cards, coins)
-     * the extracted card ids are stored in an array which is then iterated to
-     * instantiate the character cards, which will be stored in the extractedCards array*/
+
+    /** Override of method setup in Board: calls method from superclass and then randomly draws three character
+     * cards indexes, stored in array then iterated by cardManager, which contains a reference to the factory class,
+     * to instantiate the actual character cards.
+     * Finally, it initializes coin counters for each player. */
     @Override
     public void setup() {
         super.setup();
-        /* initialization for character cards */
+
         chooseCardIndexes();
         for (int i = 0; i < cardsToInstantiate; i++) {
             extractedCards[i] = cardManager.returnCard(cardIDs[i]);
         }
 
-        /* initializing coin counters for each player */
         int i = 0;
         for (Player p : players) {
             coins[i] = new CoinCounter(p);
@@ -77,12 +96,27 @@ public class BoardExpert extends Board {
         notifyObservers();
     }
 
+
+    /** Override o@f method moveStudent in Board: calls method from superclass and adds call to method
+     * assignCoin to see if the player has earned a new coin.
+     *
+     * @param color of type PawnDiscColor - the color of the student moved to the dining room
+     * @param nickname of type String - the nickname of the player who performed the action */
     @Override
     public void moveStudent(PawnDiscColor color, String nickname) {
         super.moveStudent(color, nickname);
         assignCoin(nickname, color);
     }
 
+
+
+    /** Override of method conquerIsland in Board: firstly, it checks if the island has a no entry tile and
+     * returns immediately if so, because it does not need to resolve the conquering. Then, while checking if
+     * the island was already conquered, it also checks if player has played character card which cancels the
+     * influence of the tower(s) on an island. Afterwards, if the player purchased card 8, his nickname has
+     * been saved in extra, therefore two extra points are added to their influence or, if someone played character
+     * card 2, it resets that player's professor table back to the previous state. Lastly, sets variables modified
+     * by character card affecting influence back to default and finally resolves the conquering of the island. */
     @Override
     public void conquerIsland() {
         int[] sum = new int[players.size()];
@@ -106,8 +140,7 @@ public class BoardExpert extends Board {
 
                 if (islands.get(motherNature.getPosition()).checkIfConquered()) {
                     if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(schoolBoards.get(i).getOwner().getNickname())){
-                        /*checks if player has played character card which cancels the influence of the tower(s) on a
-                         * island */
+
                         if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0)
                             sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
 
@@ -115,22 +148,19 @@ public class BoardExpert extends Board {
                         conqueror = schoolBoards.get(i).getOwner();
                     }
                 }
-                /* if the player purchased card 8, his nickname has been saved in extra, therefore
-                 * two extra points are added to the influence */
+
                 if(extra != null) {
                     if (extra.equals(schoolBoards.get(i).getOwner().getNickname())) sum[i] = sum[i] + 2;
                 }
-                /* only used if character card 2 has been played */
+
                 if (schoolBoards.get(i).getModifiedTable()) {
                     schoolBoards.get(i).getProfessorTable().resetPreviousProfessorTable();
                 }
             }
 
-            /* sets variables modified by character card affecting influence back to default */
             islands.get(motherNature.getPosition()).setTowersOnHold(0);
             extra = null;
 
-            /* decides who conquers the island */
             for (i = 0; i < sum.length; i++) {
                 if (sum[i] > maxInfluence) {
                     maxInfluence = sum[i];
@@ -149,10 +179,10 @@ public class BoardExpert extends Board {
                 if (islands.get(motherNature.getPosition()).getOwner().equals(conqueror)) {
                     return;
                 }
-                //returning towers to old owner
+
                 getPlayerSchoolBoard(islands.get(motherNature.getPosition()).getOwner().getNickname()).getTowerSection().returnTowers(
                         islands.get(motherNature.getPosition()).getNumberOfTowers());
-                //retrieving towers from conqueror's schoolboard
+
                 if(!(getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().getNumberOfTowers() <
                         islands.get(motherNature.getPosition()).getNumberOfTowers())) {
                     getPlayerSchoolBoard(conqueror.getNickname()).getTowerSection().towersToIsland(islands.get(motherNature.getPosition()).getNumberOfTowers());
@@ -170,10 +200,14 @@ public class BoardExpert extends Board {
             islands.get(motherNature.getPosition()).getsConquered(conqueror);
             setChanged();
             notifyObservers();
-
         }
     }
 
+
+    /** Override of method moveMotherNature in Board: calls the method of the superclass and adds value of attribute
+     * additional_moves to mother nature's position.
+     *
+     * @param movements of type int - mother nature's movements */
     @Override
     public void moveMotherNature(int movements) {
         super.moveMotherNature(movements);
@@ -183,22 +217,24 @@ public class BoardExpert extends Board {
         notifyObservers();
     }
 
-    /* methods for the regular usages of noEntryTiles in the game
-     * checks if valid action, sets and unsets noEntryTiles */
-
+    /** Methods putBackNoEntryTiles adds back a no entry tile to the board after it was used. */
     public void putBackNoEntryTile() {
         noEntryTiles++;
         setChanged();
         notifyObservers();
     }
 
+
+    /** Method useNoEntryTile reduces value of attribute noEntryTiles when character card 4 is played. */
     public void useNoEntryTile() {
         noEntryTiles--;
         setChanged();
         notifyObservers();
     }
 
-    /* called by the controller */
+    /** Method checkIfEnoughNoEntryTiles checks if there are any no entry tiles left on the board to be used.
+     *
+     * @return boolean - true if there are, false otherwise */
     public boolean checkIfEnoughNoEntryTiles() {
         if (noEntryTiles == 0)
             return false;

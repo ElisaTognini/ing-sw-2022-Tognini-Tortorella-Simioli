@@ -74,6 +74,7 @@ public class Card1 extends CharacterCardTemplate{
     @Override
     /* FORMAT: cardID followed by the color and number of the students placed on the card */
     public String toStringCard(){
+
         StringBuilder toRet = new StringBuilder(cardID + "-" + cost + "-");
 
         toRet.append(this.getDescription()).append("-");
