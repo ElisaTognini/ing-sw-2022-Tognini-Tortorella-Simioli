@@ -29,6 +29,9 @@ public class StudentViewComponent extends ImageView {
         this.setOnMouseClicked(mouseEvent -> {
             MainGUIController.setColor(studentColor);
             MainGUIController.setStudentSource(source);
+            if(MainGUIController.getChosenCard() != 0) {
+                expertStudentSelector(MainGUIController.getChosenCard());
+            }
         });
     }
 
@@ -54,5 +57,37 @@ public class StudentViewComponent extends ImageView {
         this.setFitHeight(15);
         this.setFitWidth(15);
         this.setStyle("-fx-border-color: #FFFFFF");
+    }
+
+    private void expertStudentSelector(int cardId){
+        switch(cardId) {
+            case 1:
+                if(source.equals("1")){
+                    MainGUIController.getParameter().setColor(color);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+        }
     }
 }

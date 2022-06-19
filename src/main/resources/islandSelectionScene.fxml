@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.IslandSelectionController">
+   <children>
+      <Label layoutX="191.0" layoutY="41.0" text="Click on selected island:">
+         <font>
+            <Font name="Ink Free" size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="doneButton" layoutX="270.0" layoutY="324.0" mnemonicParsing="false" text="DONE" />
+   </children>
+</AnchorPane>

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 /* utility class for useCard method in the character cards */
 public class Parameter implements Serializable {
+    private boolean set = false;
     private int islandID;
     private PawnDiscColor color;
     private ArrayList<PawnDiscColor> colorArrayList;
@@ -14,6 +15,7 @@ public class Parameter implements Serializable {
 
     public void setIslandID(int islandID){
         this.islandID = islandID;
+        set = true;
     }
     public void setColor(PawnDiscColor color) {this.color = color;}
     public void setColorArrayList(ArrayList<PawnDiscColor> colors){ this.colorArrayList = colors;}
@@ -27,4 +29,8 @@ public class Parameter implements Serializable {
     public ArrayList<PawnDiscColor> getColorArrayList(){ return colorArrayList;}
     public ArrayList<PawnDiscColor> getColorArrayList2(){ return colorArrayList2;}
     public int getMoves(){ return moves; }
+
+    public boolean isSet() {
+        return set;
+    }
 }

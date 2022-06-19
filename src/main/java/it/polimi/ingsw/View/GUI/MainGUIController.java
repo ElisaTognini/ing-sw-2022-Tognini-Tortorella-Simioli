@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.Client.ActionMessages.*;
+import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -9,11 +10,15 @@ import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.PlayedCardMessage;
 import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
 import it.polimi.ingsw.View.GUI.Components.*;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -24,8 +29,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -54,13 +61,18 @@ public class MainGUIController extends Observable {
     @FXML private TextArea expertCardTextArea;
 
 
-    ArrayList<IslandViewComponent> islandList = new ArrayList<>();
+    static ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<ImageView> islandsImgs = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
     HashMap<String, TowerColor> towerColors = new HashMap<>();
 
+    static Stage cardStage = new Stage();
+
     private static PawnDiscColor color;
     private static String studentSource;
+
+    static int chosenCard = 0;
+    static Parameter param;
 
     public void drawIslands(ArrayList<String> islands, int mnPosition){
 
@@ -428,6 +440,8 @@ public class MainGUIController extends Observable {
 
     public void drawExpertCards(ArrayList<String> cards){
 
+        param = new Parameter();
+
         expertCardsHBox.setPadding(new Insets(7));
         expertCardsHBox.setLayoutX(anchorPane.getWidth()/2 + 80 );
         expertCardsHBox.setLayoutY(anchorPane.getHeight()/2 + 15);
@@ -437,24 +451,38 @@ public class MainGUIController extends Observable {
         expertCardTextArea.setLayoutY(anchorPane.getHeight()/2 + 150);
 
         for(String c : cards){
+            StackPane cardPane = new StackPane();
+            GridPane studentGrid = new GridPane();
             String[] card = c.split("-");
             CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
-            character.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
-            character.setOnMouseExited(mouseEvent -> expertCardTextArea.setText(""));
-            character.setOnMouseClicked(mouseEvent -> getParameter(character.getCardId()));
-            expertCardsHBox.getChildren().add(character);
-
+            cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
+            cardPane.setOnMouseExited(mouseEvent -> expertCardTextArea.setText(""));
+            cardPane.setOnMouseClicked(mouseEvent -> {
+                chosenCard = Integer.valueOf(card[0]);
+                try {
+                    handleCard();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+                expertCardTextArea.setText("click works");
+            });
+            expertCardsHBox.getChildren().add(cardPane);
+            cardPane.getChildren().add(character);
+            if(c.length() > 3){
+                cardPane.getChildren().add(studentGrid);
+                for(int i = 3; i < card.length - 1; i += 2){
+                    for(int j = 0; j < Integer.valueOf(card[i+1]); j++) {
+                        StudentViewComponent student = new StudentViewComponent(PawnDiscColor.valueOf(card[i]), card[0]);
+                        studentGrid.add(student, 0, i - 3 + j);
+                        student.toFront();
+                    }
+                }
+            }
         }
     }
 
-    private void getParameter(int cardId) {
-        CharacterCardMessage message = new CharacterCardMessage();
-        message.setCardID(cardId);
-
-        message.setParam(ExpertModeParameterCollector.getParam(cardId));
-
-        setChanged();
-        notifyObservers(message);
+    public static Parameter getParameter() {
+        return param;
     }
 
     public void showError(BaseServerMessage message){
@@ -509,6 +537,119 @@ public class MainGUIController extends Observable {
 
     public static void setStudentSource(String source){
         studentSource = source;
+    }
+
+    public static ArrayList<IslandViewComponent> getIslands(){
+        return islandList;
+    }
+
+    public static int getChosenCard(){
+        return chosenCard;
+    }
+
+    public void setParamColor(PawnDiscColor color){
+        param.setColor(color);
+        paramChecker();
+    }
+
+    public void collectColor() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/studentSelectionScene.fxml"));
+        Parent root = loader.load();
+        Scene studentSelectionScene = new Scene(root);
+        cardStage.setScene(studentSelectionScene);
+        cardStage.show();
+    }
+
+    public void collectIslandId() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/islandSelectionScene.fxml"));
+        Parent root = loader.load();
+        Scene islandSelectionScene = new Scene(root);
+        cardStage.setScene(islandSelectionScene);
+        cardStage.show();
+        IslandSelectionController islandSelectionController = loader.getController();
+        Platform.runLater(() -> islandSelectionController.drawIslands(islandList));
+    }
+
+    public void handleCard() throws IOException {
+
+        CharacterCardMessage message = new CharacterCardMessage();
+        message.setCardID(chosenCard);
+
+        switch(chosenCard){
+            case 1:
+                collectColor();
+                collectIslandId();
+                message.setParam(param);
+                setChanged();
+                notifyObservers(message);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+        }
+        param = new Parameter();
+    }
+
+    public void paramChecker(){
+        CharacterCardMessage message = new CharacterCardMessage();
+        switch(chosenCard){
+            case 1:
+                if(param.getColor() != null && param.isSet()){
+                    setChanged();
+                    message.setCardID(chosenCard);
+                    message.setParam(param);
+                    notifyObservers(message);
+                    param = new Parameter();
+                    chosenCard = 0;
+                }
+                break;
+            case 2:
+
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+        }
+    }
+
+    public static void closeCardStage(){
+        cardStage.close();
     }
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.StudentSelectionController">
+   <children>
+      <Button layoutX="270.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#doneClicked" text="DONE" />
+      <HBox layoutX="98.0" layoutY="150.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <ImageView fx:id="blueStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectBlueStudent" preserveRatio="true">
+               <image>
+                  <Image url="@student_blue.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="greenStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectGreenStudent" preserveRatio="true">
+               <image>
+                  <Image url="@student_green.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pinkStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectPinkStudent" preserveRatio="true">
+               <image>
+                  <Image url="@student_pink.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="redStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectRedStudent" preserveRatio="true">
+               <image>
+                  <Image url="@student_red.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="yellowStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectYellowStudent" preserveRatio="true">
+               <image>
+                  <Image url="@student_yellow.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Label layoutX="179.0" layoutY="61.0" text="Click on desired student:">
+         <font>
+            <Font name="Ink Free" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
