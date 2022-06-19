@@ -6,7 +6,11 @@ import it.polimi.ingsw.Utils.Enums.TurnFlow;
 import it.polimi.ingsw.Model.Player;
 import java.util.*;
 
-/* this class manages the turn/round flow for both the Planning and Action Phases, based on the cards played */
+/** Class RoundManager manages the turn/round flow for both the Planning and Action Phases, based on the cards
+ * played: it contains references to the array list containing the players currently playing the match, the array
+ * list containing the players sorted based on the id of the assistant card they played, the current player,
+ * the number of students played during action phase, the assistant cards played in each round and a boolean value
+ * to determine whether if it's the planning phase or the action phase. */
 
 public class RoundManager extends Observable{
     private TurnFlow currentState;
@@ -18,7 +22,8 @@ public class RoundManager extends Observable{
     private boolean isPlanningPhase;
     private ArrayList<Player> sortedPlayerActions;
 
-    /* playerList is based on the order in which each player enters the lobby */
+    /** Constructor RoundManager creates a new instance of round manager.
+     *  @param playerList of type ArrayList - based on the order in which each player enters the lobby */
     public RoundManager(ArrayList<Player> playerList){
         players = new ArrayList<>();
         sortedPlayers = new ArrayList<>();
@@ -29,33 +34,56 @@ public class RoundManager extends Observable{
         isPlanningPhase = true;
     }
 
-    /* returns the current state of the turn */
+
+    /** getter method - Method getCurrentState returns the current state of the turn
+     *
+     * @return TurnFlow - current state
+     * */
     public TurnFlow getCurrentState(){
         return currentState;
     }
 
-    /* returns the player who is currently playing */
+
+    /** getter method - Method getCurrentPlayer returns the player who is currently playing
+     *
+     * @return Player - current player
+     * */
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
-    /* returns the number of students moved by the current player */
+
+    /** getter method - Method getMovedStudents returns the number of students moved by the current player
+     *
+     * @return int - moved students
+     * */
     public int getMovedStudents(){return movedStudents;}
 
-    /* a step forwards in the turn */
+
+    /** Method changeState makes the turn move forward
+     *
+     * @param state of type TurnFlow - the previous state of the turn
+     *
+     * @return TurnFlow - the new current state of the turn */
     public void changeState(TurnFlow state){
         currentState = state;
     }
 
-    /* picks the first player of the game */
+
+    /** Method pickFirstPlayerIndex randomly picks the first player to start the game
+     *
+     * @return int - the id of the player */
     public int pickFirstPlayerIndex(){
         Random rand = new Random();
         int randomIndex = rand.nextInt(players.size());
         return randomIndex;
     }
 
-    /* starting from the player with the lowest assistant card value, places the players
-    * in clockwise order into the ArrayList sortedPlayers */
+
+    /** Method computeTurnOrder, places the players in clockwise order into the ArrayList sortedPlayers,
+     * starting from the player with the lowest assistant card value.
+     *
+     * @param firstPlayer of type int - the id of the player randomly extracted */
     public void computeTurnOrder(int firstPlayer){
         sortedPlayers.clear();
         sortedPlayers.addAll(players);
@@ -67,9 +95,15 @@ public class RoundManager extends Observable{
         setChanged();
     }
 
-    /* this method checks if two players have played the same card;
-    * the corner case when the player has only one card left is already handled by sortActionPhase because
-    * sort does not reorder equal elements */
+
+    /** Method checkForDupe checks if two players have played the same card, because two players cannot play the same
+     * assistant card in the same turn except when they only have one card left.
+     * When this happens, the order of action is still preserved because Collection sort in sortActionPhase does not
+     * reorder equal elements.
+     *
+     * @param cardID of type int - the id of the assistant card played
+     *
+     * @return boolean - true is the same card (from a different deck) has already been played, false otherwise */
     public boolean checkForDupe(int cardID){
 
         if(cards.size() == players.size()){
@@ -79,11 +113,16 @@ public class RoundManager extends Observable{
         for(AssistantCard c: cards) {
             if (c.getAssistantCardID() == cardID) return true;
         }
-        //true if dupe is present, false otherwise
+
         return false;
     }
 
-    /*when this method is called, the round moves forward (if all players have picked a card) */
+
+    /** Method storeCards stores all the cards played by the players during that round.
+     * If all players have
+     * picked a card, the round moves forward
+     *
+     * @param card of type AssistantCard - the assistant card played by the player */
     public void storeCards(AssistantCard card){
 
         cards.add(card);
@@ -96,9 +135,9 @@ public class RoundManager extends Observable{
         }
     }
 
-    /* this method reorders the cards in "cards" ArrayList in ascending order */
-    /* so it's possible to compute the order in which every player enters the Action Phase */
-    /* and passes the first player of the next planning phase to the computeTurnOrder method */
+    /** Method sortActionPhase reorders the cards stored in the array list "cards" in ascending order in pursuance
+     * of the computing of the order in which every player enters the Action Phase and then it passes the first
+     * player of the next planning phase to the computeTurnOrder method */
     public void sortActionPhase(){
         isPlanningPhase = false;
         sortedPlayerActions.clear();
@@ -112,7 +151,7 @@ public class RoundManager extends Observable{
         }
     }
 
-    /* this method changes the player based on the order of the assistant cards*/
+    /** Method refreshCurrentPlayerAction changes the current player after the previous one has picked a card */
     public void refreshCurrentPlayerAction(){
         if(sortedPlayerActions.indexOf(currentPlayer) < sortedPlayerActions.size()-1){
             currentPlayer = sortedPlayerActions.get(sortedPlayerActions.indexOf(currentPlayer) + 1);
@@ -123,6 +162,9 @@ public class RoundManager extends Observable{
     }
 
 
+    /** Method startRound sets value of boolean attribute isPlanningPhase to true, puts back to false the value of
+     * boolean attribute cardPicked for each player, resets movedStudents back to zero and changes the state of the
+     * turn back to BEGINS_TURN. */
     public void startRound(){
         isPlanningPhase = true;
         for(Player p : players) p.setCardPickedToFalse();
@@ -132,6 +174,9 @@ public class RoundManager extends Observable{
         notifyObservers(ActionType.NEW_ROUND);
     }
 
+
+    /** Method refreshCurrentPlayer changes the current player to the next one in array list sortedPlayers if
+     * current player is not the last one in the list*/
     public void refreshCurrentPlayer(){
         if(sortedPlayers.indexOf(currentPlayer) < sortedPlayers.size()-1){
             currentPlayer = sortedPlayers.get(sortedPlayers.indexOf(currentPlayer) + 1);
@@ -140,10 +185,17 @@ public class RoundManager extends Observable{
         }
     }
 
+
+    /** getter method - Method getCards returns the assistant cards played by players in this round
+     *
+     * @return ArrayList - array list of assistant cards */
     public ArrayList<AssistantCard> getCards(){
         return cards;
     }
 
+    /** getter method - Method getCurrentPlayersCard returns the assistant card of the current player
+     *
+     * @return AssistantCard - current player's assistant card */
     public AssistantCard getCurrentPlayersCard(){
         for(AssistantCard c : cards){
             if(c.getOwner().getNickname().equals(currentPlayer.getNickname())){
@@ -153,7 +205,10 @@ public class RoundManager extends Observable{
         return null;
     }
 
-    /* the following two methods are needed in order to limit the number of students moved to three */
+    /** Method threeStudentsMoved checks if the current player has moved exactly three students from their entrance
+     * and, if so, sets value of attribute movedStudents back to 0.
+     *
+     * @return boolean - true if threeStudentsMoved == 3, false otherwise */
     public boolean threeStudentsMoved(){
         if(movedStudents == 3){
             movedStudents = 0;
@@ -162,27 +217,39 @@ public class RoundManager extends Observable{
         return false;
     }
 
+
+    /** Method increaseMovedStudents increases value of attribute movedStudents by one unit */
     public void increaseMovedStudents(){
         movedStudents++;
     }
 
+    /** Method change signals that this Observable object has changed */
     public void change(){
         setChanged();
     }
 
+    /** getter method - Method isPlanningPhase returns the value of the boolean attribute isPlanningPhase
+     *
+     * @return boolean - value of isPlanningPhase
+     * */
     public boolean isPlanningPhase() {
         return isPlanningPhase;
     }
 
+
+    /** getter method - Method getFirstPlanningPhase returns the first player of the sortedPlayers array list
+     *
+     * @return Player - first player of the array list */
     public Player getFirstPlanningPhase(){
         return sortedPlayers.get(0);
     }
 
+
+    /** setter method - Method setCurrentPlayer sets player as current player
+     *
+     * @param player of type Player - the next current player
+     * */
     public void setCurrentPlayer(Player player){
         currentPlayer = player;
-    }
-
-    public ArrayList<Player> getSortedPlayersAction(){
-        return sortedPlayerActions;
     }
 }

@@ -4,13 +4,11 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 import java.util.*;
 
-/*utility data structure which is a hashmap that has
-* - the color enum values as key
-* - the arraylists of students as values*/
+/** Class StudentContainer is a utility data structure, more precisely a hash map that has the color enum values as
+ * key and five array lists of students as values*/
 
 public class StudentContainer {
 
-    //value hash sets
     private ArrayList<Student> pinkStudents;
     private ArrayList<Student> yellowStudents;
     private ArrayList<Student> greenStudents;
@@ -19,14 +17,16 @@ public class StudentContainer {
 
     private Map<PawnDiscColor, ArrayList<Student>> container;
 
+    /** Constructor StudentContainer creates a new instance of student container, where it instantiates the map and the
+     * five arrays in the map and then associates the specified values with the specified keys in the map. */
     public StudentContainer() {
-        pinkStudents = new ArrayList<Student>();
-        yellowStudents = new ArrayList<Student>();
-        blueStudents = new ArrayList<Student>();
-        greenStudents = new ArrayList<Student>();
-        redStudents = new ArrayList<Student>();
+        pinkStudents = new ArrayList<>();
+        yellowStudents = new ArrayList<>();
+        blueStudents = new ArrayList<>();
+        greenStudents = new ArrayList<>();
+        redStudents = new ArrayList<>();
 
-        container = new HashMap<PawnDiscColor, ArrayList<Student>>();
+        container = new HashMap<>();
 
         container.put(PawnDiscColor.PINK, pinkStudents);
         container.put(PawnDiscColor.RED, redStudents);
@@ -35,14 +35,32 @@ public class StudentContainer {
         container.put(PawnDiscColor.GREEN, greenStudents);
     }
 
+    /** Method getInfluece returns the size of the array list associated to the specified color
+     *
+     * @param color of type PawnDiscColor - color
+     *
+     * @return int - the number of student of said color inside the array list */
     public int getInfluence(PawnDiscColor color){
         return container.get(color).size();
     }
 
+
+    /** Method addStudent adds a student to the container and puts it the array list associated to the color
+     * of said student.
+     *
+     * @param student of type Student - the student to be added to the container
+     **/
     public void addStudent(Student student){
         container.get(student.getColor()).add(student);
     }
 
+
+    /** Method retrieveStudent retrieves a student of the specified color from the corresponding array list inside
+     * the hash map.
+     *
+     * @param color of type PawnDiscColor - the color of the student
+     *
+     * @return Student - the student associated to that color */
     public Student retrieveStudent(PawnDiscColor color){
         Student toReturn;
 
@@ -52,13 +70,13 @@ public class StudentContainer {
         return toReturn;
     }
 
+
+    /** Method size returns the number of student inside the entire student container, result of the sum of
+     * the size of each color array list.
+     *
+     * @return int - the size of the student container */
     public int size(){
         return pinkStudents.size() + yellowStudents.size() + redStudents.size()
                 + greenStudents.size() + blueStudents.size();
-    }
-
-    public boolean checkIfContainerIsEmpty(PawnDiscColor color){
-        if(container.get(color).size() == 0) return true;
-        else return false;
     }
 }
