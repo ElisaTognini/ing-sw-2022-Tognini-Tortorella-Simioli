@@ -557,9 +557,6 @@ public class MainGUIController extends Observable {
     }
 
     public void collectIslandId() throws IOException {
-
-        cardStage = new Stage();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/islandSelectionScene.fxml"));
         Parent root = loader.load();
         Scene islandSelectionScene = new Scene(root);
@@ -579,11 +576,18 @@ public class MainGUIController extends Observable {
     }
 
     public void collectMoves() throws IOException {
-        cardStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExtraStepSelectionController.fxml"));
         Parent root = loader.load();
-        Scene islandSelectionScene = new Scene(root);
-        cardStage.setScene(islandSelectionScene);
+        Scene collectMovesScene = new Scene(root);
+        cardStage.setScene(collectMovesScene);
+        cardStage.showAndWait();
+    }
+
+    public void collectProfessors() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseProfessorScene.fxml"));
+        Parent root = loader.load();
+        Scene chooseProfScene = new Scene(root);
+        cardStage.setScene(chooseProfScene);
         cardStage.showAndWait();
     }
 
@@ -598,6 +602,7 @@ public class MainGUIController extends Observable {
                 collectIslandId();
                 break;
             case 2:
+                collectProfessors();
                 break;
             case 3:
             case 5:
