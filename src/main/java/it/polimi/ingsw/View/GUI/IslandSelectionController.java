@@ -53,4 +53,8 @@ public class IslandSelectionController {
 
     }
 
+    public void doneClicked(){
+        MainGUIController.closeCardStage();
+    }
+
 }

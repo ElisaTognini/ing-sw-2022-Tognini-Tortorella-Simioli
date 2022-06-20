@@ -13,6 +13,6 @@
             <Font name="Ink Free" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="doneButton" layoutX="270.0" layoutY="324.0" mnemonicParsing="false" text="DONE" />
+      <Button fx:id="doneButton" layoutX="270.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#doneClicked" text="DONE" />
    </children>
 </AnchorPane>

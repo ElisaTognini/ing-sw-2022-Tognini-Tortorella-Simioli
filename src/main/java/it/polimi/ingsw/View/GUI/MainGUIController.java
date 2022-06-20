@@ -557,17 +557,29 @@ public class MainGUIController extends Observable {
         Parent root = loader.load();
         Scene studentSelectionScene = new Scene(root);
         cardStage.setScene(studentSelectionScene);
-        cardStage.show();
+        cardStage.showAndWait();
     }
 
     public void collectIslandId() throws IOException {
+
+        cardStage = new Stage();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/islandSelectionScene.fxml"));
         Parent root = loader.load();
         Scene islandSelectionScene = new Scene(root);
         cardStage.setScene(islandSelectionScene);
-        cardStage.show();
         IslandSelectionController islandSelectionController = loader.getController();
         Platform.runLater(() -> islandSelectionController.drawIslands(islandList));
+        cardStage.showAndWait();
+    }
+
+    public void addNoEntryTile(ArrayList<Integer> islands){
+        for(Integer i : islands){
+            ImageView noEntryTile = new ImageView(new Image("/deny_island_icon.png"));
+            noEntryTile.setFitHeight(20);
+            noEntryTile.setFitWidth(20);
+            islandList.get(i).add(noEntryTile, 0, 5);
+        }
     }
 
     public void handleCard() throws IOException {
@@ -579,34 +591,42 @@ public class MainGUIController extends Observable {
             case 1:
                 collectColor();
                 collectIslandId();
-                message.setParam(param);
-                setChanged();
-                notifyObservers(message);
                 break;
             case 2:
                 break;
             case 3:
+                collectIslandId();
                 break;
             case 4:
                 break;
             case 5:
+                collectIslandId();
                 break;
             case 6:
+                // no parameters needed
                 break;
             case 7:
                 break;
             case 8:
+                // no parameters needed
                 break;
             case 9:
+                collectColor();
                 break;
             case 10:
                 break;
             case 11:
+                collectColor();
                 break;
             case 12:
+                collectColor();
                 break;
         }
+        message.setParam(param);
+        setChanged();
+        notifyObservers(message);
         param = new Parameter();
+        chosenCard = 0;
     }
 
     public void paramChecker(){
