@@ -105,6 +105,7 @@ public class GUI extends Application implements Observer{
             else {
                 Platform.runLater(() -> mainController.refreshCoins(message.getCoinCounters()));
                 Platform.runLater(() -> mainController.addNoEntryTile(message.getIslandsNETiles()));
+                Platform.runLater(() -> mainController.refreshStudentsOnCard(message.getExtractedCharCards()));
                 updateGameBoard(message.getViewUpdate_base());
                 expertView = message;
             }

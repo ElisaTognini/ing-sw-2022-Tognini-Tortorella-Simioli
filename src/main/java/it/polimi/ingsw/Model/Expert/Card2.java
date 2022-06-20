@@ -4,6 +4,8 @@ import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 
+    // to be fixed
+
 /** Class Card2 represents one of the twelve character cards: it contains a brief description of the effect of the card.
  * */
 

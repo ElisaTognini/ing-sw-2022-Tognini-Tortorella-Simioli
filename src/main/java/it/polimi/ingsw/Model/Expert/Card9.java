@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model.Expert;
 
+// to be tested
+
 /* this card allows to choose a color of student that will add no influence
 *  during the influence calculation of the turn in which the card is played */
 

@@ -71,6 +71,8 @@ public class MainGUIController extends Observable {
     private static PawnDiscColor color;
     private static String studentSource;
 
+    private ArrayList<GridPane> studentGrids;
+
     static int chosenCard = 0;
     static Parameter param;
 
@@ -132,10 +134,11 @@ public class MainGUIController extends Observable {
 
     public void refreshIslands(ArrayList<String> islands, int mnPosition){
         for(int i = 0; i < islands.size(); ++i){
-            if(i < islandList.size())
+            if(i < islandList.size()) {
                 islandList.get(i).getChildren().clear();
-            addStudents(islands.get(i), islandList.get(i));
-            addTowers(islandList.get(i), islands.get(i));
+                addStudents(islands.get(i), islandList.get(i));
+                addTowers(islandList.get(i), islands.get(i));
+            }
         }
 
         addMotherNature(mnPosition);
@@ -441,6 +444,8 @@ public class MainGUIController extends Observable {
 
     public void drawExpertCards(ArrayList<String> cards){
 
+        studentGrids = new ArrayList<>();
+
         param = new Parameter();
 
         expertCardsHBox.setPadding(new Insets(7));
@@ -454,6 +459,7 @@ public class MainGUIController extends Observable {
         for(String c : cards){
             StackPane cardPane = new StackPane();
             GridPane studentGrid = new GridPane();
+            studentGrids.add(studentGrid);
             String[] card = c.split("-");
             CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
             cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
@@ -465,7 +471,6 @@ public class MainGUIController extends Observable {
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
-                expertCardTextArea.setText("click works");
             });
             expertCardsHBox.getChildren().add(cardPane);
             cardPane.getChildren().add(character);
@@ -511,6 +516,27 @@ public class MainGUIController extends Observable {
                 color = null;
             }
         });
+    }
+
+    public void refreshStudentsOnCard(ArrayList<String> students){
+        for(Node n : expertCardsHBox.getChildren()){
+            if(n instanceof StackPane){
+                for(Node m : ((StackPane) n).getChildren()){
+                    if(m instanceof GridPane)
+                        ((GridPane) m).getChildren().clear();
+                }
+            }
+        }
+        for(int k = 0; k < students.size(); k++){
+            String pawns[] = students.get(k).split("-");
+            for(int i = 3; i < pawns.length - 1; i += 2){
+                for(int j = 0; j < Integer.valueOf(pawns[i+1]); j++) {
+                    StudentViewComponent student = new StudentViewComponent(PawnDiscColor.valueOf(pawns[i]), pawns[0]);
+                    studentGrids.get(k).add(student, 0, i - 3 + j);
+                    student.toFront();
+                }
+            }
+        }
     }
 
     public void winningScreen(String winner){

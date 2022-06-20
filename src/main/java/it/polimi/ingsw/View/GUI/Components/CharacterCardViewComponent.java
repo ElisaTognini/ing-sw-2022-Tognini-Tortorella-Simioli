@@ -33,37 +33,37 @@ public class CharacterCardViewComponent extends ImageView {
                 this.setImage(new Image("/CarteTOT_front.jpg"));
                 break;
             case 2:
-                this.setImage(new Image("/CarteTOT_front2.jpg"));
+                this.setImage(new Image("/CarteTOT_front12.jpg"));
                 break;
             case 3:
-                this.setImage(new Image("/CarteTOT_front3.jpg"));
+                this.setImage(new Image("/CarteTOT_front2.jpg"));
                 break;
             case 4:
-                this.setImage(new Image("/CarteTOT_front4.jpg"));
+                this.setImage(new Image("/CarteTOT_front3.jpg"));
                 break;
             case 5:
-                this.setImage(new Image("/CarteTOT_front5.jpg"));
+                this.setImage(new Image("/CarteTOT_front4.jpg"));
                 break;
             case 6:
-                this.setImage(new Image("/CarteTOT_front6.jpg"));
+                this.setImage(new Image("/CarteTOT_front5.jpg"));
                 break;
             case 7:
-                this.setImage(new Image("/CarteTOT_front7.jpg"));
+                this.setImage(new Image("/CarteTOT_front6.jpg"));
                 break;
             case 8:
-                this.setImage(new Image("/CarteTOT_front8.jpg"));
+                this.setImage(new Image("/CarteTOT_front7.jpg"));
                 break;
             case 9:
-                this.setImage(new Image("/CarteTOT_front9.jpg"));
+                this.setImage(new Image("/CarteTOT_front8.jpg"));
                 break;
             case 10:
-                this.setImage(new Image("/CarteTOT_front10.jpg"));
+                this.setImage(new Image("/CarteTOT_front9.jpg"));
                 break;
             case 11:
-                this.setImage(new Image("/CarteTOT_front11.jpg"));
+                this.setImage(new Image("/CarteTOT_front10.jpg"));
                 break;
             case 12:
-                this.setImage(new Image("/CarteTOT_front12.jpg"));
+                this.setImage(new Image("/CarteTOT_front11.jpg"));
                 break;
         }
         this.setFitHeight(120);
