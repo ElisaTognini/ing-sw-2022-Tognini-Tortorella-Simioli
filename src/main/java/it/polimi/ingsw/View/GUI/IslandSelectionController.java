@@ -20,6 +20,7 @@ public class IslandSelectionController {
     public void drawIslands(ArrayList<IslandViewComponent> islandList){
 
         int distance = 100;
+        doneButton.setVisible(false);
 
         for(int i = 0; i < islandList.size(); i++) {
             double angle = 2 * i * Math.PI / islandList.size();
@@ -34,7 +35,7 @@ public class IslandSelectionController {
             img.setFitWidth(60);
 
             img.setId(islandList.get(i).getId());
-            img.setLayoutX(x + 50);
+            img.setLayoutX(x);
             img.setLayoutY(y + 40);
 
             img.setOnMouseEntered(mouseEvent -> {
@@ -47,6 +48,7 @@ public class IslandSelectionController {
             });
             img.setOnMouseClicked(mouseEvent -> {
                 MainGUIController.getParameter().setIslandID(Integer.valueOf(img.getId()));
+                doneButton.setVisible(true);
             });
             anchorPane.getChildren().add(img);
         }

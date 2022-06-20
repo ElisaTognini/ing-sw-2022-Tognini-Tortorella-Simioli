@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.StudentSelectionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.StudentSelectionController">
    <children>
-      <Button layoutX="270.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#doneClicked" text="DONE" />
+      <Button fx:id="doneButton" layoutX="270.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#doneClicked" text="DONE" visible="false" />
       <HBox layoutX="98.0" layoutY="150.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
             <ImageView fx:id="blueStudent" fitHeight="65.0" fitWidth="77.0" onMouseClicked="#selectBlueStudent" preserveRatio="true">

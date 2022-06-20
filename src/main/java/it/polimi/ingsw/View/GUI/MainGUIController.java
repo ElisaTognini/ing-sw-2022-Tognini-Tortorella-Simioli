@@ -132,7 +132,8 @@ public class MainGUIController extends Observable {
 
     public void refreshIslands(ArrayList<String> islands, int mnPosition){
         for(int i = 0; i < islands.size(); ++i){
-            islandList.get(i).getChildren().clear();
+            if(i < islandList.size())
+                islandList.get(i).getChildren().clear();
             addStudents(islands.get(i), islandList.get(i));
             addTowers(islandList.get(i), islands.get(i));
         }
@@ -547,11 +548,6 @@ public class MainGUIController extends Observable {
         return chosenCard;
     }
 
-    public void setParamColor(PawnDiscColor color){
-        param.setColor(color);
-        paramChecker();
-    }
-
     public void collectColor() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/studentSelectionScene.fxml"));
         Parent root = loader.load();
@@ -582,6 +578,15 @@ public class MainGUIController extends Observable {
         }
     }
 
+    public void collectMoves() throws IOException {
+        cardStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExtraStepSelectionController.fxml"));
+        Parent root = loader.load();
+        Scene islandSelectionScene = new Scene(root);
+        cardStage.setScene(islandSelectionScene);
+        cardStage.showAndWait();
+    }
+
     public void handleCard() throws IOException {
 
         CharacterCardMessage message = new CharacterCardMessage();
@@ -595,12 +600,11 @@ public class MainGUIController extends Observable {
             case 2:
                 break;
             case 3:
+            case 5:
                 collectIslandId();
                 break;
             case 4:
-                break;
-            case 5:
-                collectIslandId();
+                collectMoves();
                 break;
             case 6:
                 // no parameters needed
@@ -611,15 +615,11 @@ public class MainGUIController extends Observable {
                 // no parameters needed
                 break;
             case 9:
+            case 11:
+            case 12:
                 collectColor();
                 break;
             case 10:
-                break;
-            case 11:
-                collectColor();
-                break;
-            case 12:
-                collectColor();
                 break;
         }
         message.setParam(param);
@@ -627,45 +627,6 @@ public class MainGUIController extends Observable {
         notifyObservers(message);
         param = new Parameter();
         chosenCard = 0;
-    }
-
-    public void paramChecker(){
-        CharacterCardMessage message = new CharacterCardMessage();
-        switch(chosenCard){
-            case 1:
-                if(param.getColor() != null && param.isSet()){
-                    setChanged();
-                    message.setCardID(chosenCard);
-                    message.setParam(param);
-                    notifyObservers(message);
-                    param = new Parameter();
-                    chosenCard = 0;
-                }
-                break;
-            case 2:
-
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-        }
     }
 
     public static void closeCardStage(){
