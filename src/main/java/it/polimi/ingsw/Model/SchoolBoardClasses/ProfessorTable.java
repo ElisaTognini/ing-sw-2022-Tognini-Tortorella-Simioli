@@ -99,7 +99,7 @@ public class ProfessorTable {
     }
 
     /** Method saveProfessor keeps track of the professors the player had before playing character card 2
-     * and saves it in array previousState */
+     * and saves it in array previousState, setting the value of boolean attribute ownedByPlayer to true. */
     public void saveProfessors() {
         previousState = new Professor[professors.length];
         int i = 0;
@@ -112,7 +112,7 @@ public class ProfessorTable {
     }
 
     /** Method resetPreviousProfessorTable resets the player's professor table to the state it was before playing
-     * character card 2*/
+     * character card 2 */
     public void resetPreviousProfessorTable(){
         professors = previousState;
     }

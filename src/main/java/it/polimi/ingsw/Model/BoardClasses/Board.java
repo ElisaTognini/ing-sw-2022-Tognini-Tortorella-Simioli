@@ -494,7 +494,7 @@ public class Board extends Observable{
             if(i==0) c = TowerColor.BLACK;
             else if(i == 1) c = TowerColor.WHITE;
             else if (i == 2) c = TowerColor.GREY;
-            schoolBoards.add(new SchoolBoard(studentsInEntrance ,numberOfTowers,c , mode, players.get(i)));
+            schoolBoards.add(new SchoolBoard(studentsInEntrance ,numberOfTowers,c , players.get(i)));
             for(int j = 0; j<studentsInEntrance; j++){
                 schoolBoards.get(i).getEntrance().addStudent(studentBag.drawStudent());
             }

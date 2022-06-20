@@ -12,6 +12,11 @@ import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
 
 import java.util.*;
 
+/** Class Model contains reference to the board class and to the round manager in order to manage the interaction
+ * between the actions allowed by the controller and the actual components of the game.
+ * Moreover, it keeps track of the game mode the game is played, the number of players and consequently the number
+ * of towers, the students on cloud and the number of clouds, as well as the students in the entrance.
+ * In addition, it contains an internal class to process the notifies of the round manager. */
 public class Model extends Observable implements Observer{
     private Board board;
     private RoundManager roundManager;
@@ -22,16 +27,19 @@ public class Model extends Observable implements Observer{
     private int studentsOnCloud;
     private int numberOfClouds;
     private int studentsInEntrance;
-    private String[] playerNames;
+    private final String[] playerNames;
     private ViewUpdateMessageWrapper messageWrapper;
     private TurnUpdates turnUpdates;
 
-    /* internal class which processes the messages sent by the notify() of the RoundManager */
+    /** Class TurnUpdates is an internal class which processes the messages sent by the method notify
+     * inside RoundManager */
     public class TurnUpdates extends Observable implements Observer{
 
+        /** Override of method update which sends a different notify type to match based on the argument it
+         * receives.
+         **/
         @Override
         public void update(Observable o, Object arg) {
-            /* in base ai messaggi che gli arrivano, TurnUpdates invia una diversa notify() al match */
             ActionType argument = (ActionType)arg;
             switch (argument){
                 case PLAYER_CHANGE:
@@ -50,6 +58,12 @@ public class Model extends Observable implements Observer{
         }
     }
 
+    /** Constructor Model creates a new instance of model based on the game mode, the number of players and the
+     * nicknames of the players.
+     *
+     * @param mode of type GameMode - the mode chosen by the players to play
+     * @param nicknames of type String[] - array list containing the nickname of the players
+     * @param numberOfPlayers of type int - the number of players */
     public Model(GameMode mode, String[] nicknames, int numberOfPlayers){
         this.mode = mode;
         this.numberOfPlayers = numberOfPlayers;
@@ -63,6 +77,7 @@ public class Model extends Observable implements Observer{
         messageWrapper = new ViewUpdateMessageWrapper();
     }
 
+    /** Override of method update which sends updates to the board, based on the game mode chosen */
     @Override
     public void update(Observable o, Object arg) {
         switch (mode){
@@ -77,14 +92,26 @@ public class Model extends Observable implements Observer{
         }
     }
 
+
+    /** getter method - Method getBoard returns the board associated to this model
+     *
+     * @return Board - board */
     public Board getBoard(){
             return board;
     }
 
+
+    /** getter method - Method getRoundManager returns the round manager associated to this model
+     *
+     * @return RoundManager - round manager */
     public RoundManager getRoundManager() {
         return roundManager;
     }
 
+
+    /** Private method setupBoard computes the number of players and, consequently, the number
+     * of towers, the students on cloud and the number of clouds, as well as the students in the entrance and
+     * creates a new instance of board based on the computed settings and the game mode chosen */
     private void setupBoard(){
         setupPlayers();
         computeSettings();
@@ -97,7 +124,10 @@ public class Model extends Observable implements Observer{
                     studentsInEntrance, mode);
         }
     }
-/* according to the choices of mode and number of players, this method computes those values for the board*/
+
+
+    /** Private method computeSettings computes number of towers, the students on cloud and the number of clouds,
+     * as well as the students in the entrance according to the choices of mode and number of players. */
     private void computeSettings(){
         studentsOnCloud = numberOfPlayers + 1;
         numberOfClouds = numberOfPlayers;
@@ -113,6 +143,9 @@ public class Model extends Observable implements Observer{
         }
     }
 
+
+    /** Private method setupPlayers creates a new instance of Player for each nickname in the array playerNames
+     * and adds them to the playerList array list */
     private void setupPlayers(){
         for(String s : playerNames){
             playerList.add(new Player(s));
@@ -120,25 +153,25 @@ public class Model extends Observable implements Observer{
     }
 
 
-    /* this method will be called by the controller each time a round is over; if it
-    * does return true, the controller will proceed to call the method which determines the winner */
+    /** Method isGameOver checks if someone won the game: the game ends if a player runs out of towers, when
+     * only three islands are left after the merging, when there are no more students in the bag or if any
+     * player runs out of assistant cards.
+     *
+     * @return boolean - true if one of the conditions for which the game ends is true, false otherwise */
     public boolean isGameOver(){
-        /*the game ends if a player runs out of towers*/
+
         for(SchoolBoard sb: board.getSchoolBoards()){
             if(sb.getTowerSection().isTowerSectionEmpty()){
                 return true;
             }
         }
 
-        /*or when only three islands are left after the merging */
         if(board.getIslandList().size() == 3)
             return true;
 
-        /* or when there are no more students in the bag */
         if(board.getStudentBag().checkIfStudentBagEmpty())
             return true;
 
-        /* or if any player runs out of assistant cards */
         for(AssistantCardDeck deck : board.getDecks()){
             if(deck.checkIfDeckIsEmpty()) return true;
         }
@@ -146,10 +179,14 @@ public class Model extends Observable implements Observer{
         return false;
     }
 
-    /* the winner is the player with the least towers in their tower section. In case of a tie regarding the
-    * number of towers, the winner is whoever controls the most professors. Method
-    * returns a reference to the winner  */
+    /** Method getWinner returns the player who won the game; the winner is the player with the least towers in their
+     * tower section.
+     * In case of a tie regarding the number of towers, the players who are tying are stored in an array list and
+     * the winner is whoever controls the most professors.
+     *
+     * @return Player - winner */
     public Player getWinner(){
+
         int minTowers = board.getPlayerSchoolBoard(playerList.get(0).getNickname()).getTowerSection().getNumberOfTowers();
         Player winner = playerList.get(0);
         ArrayList<Player> tiedPlayers = new ArrayList<>();
@@ -168,9 +205,6 @@ public class Model extends Observable implements Observer{
             }
         }
 
-        /* in case of a tie, one of the possible winners is stored in the winner local variable.
-        * To determine the actual winner we need to find the player we are tying with and confront the
-        * number of professors that is controlled */
         if(tie){
             tiedPlayers.add(playerList.get(0));
             int max = -1;
@@ -186,16 +220,32 @@ public class Model extends Observable implements Observer{
         return winner;
     }
 
+
+    /** getter method - Method getNumberOfClouds returns the number of clouds
+     *
+     * @return int - number of clouds */
     public int getNumberOfClouds (){
         return numberOfClouds;
     }
 
+
+    /** getter method - Method getMode returns the game mode
+     *
+     * @return GameMode - game mode*/
     public GameMode getMode(){return mode;}
 
+
+    /** getter method - Method getTurnUpdates returns the reference to the class TurnUpdates in this class
+     *
+     * @return TurnUpdates - value of attribute turnUpdates */
     public TurnUpdates getTurnUpdates(){
         return turnUpdates;
     }
 
+
+    /** getter method - Method getPlayerList returns the array list with the players
+     *
+     * @return ArrayList - array list of players */
     public ArrayList<Player> getPlayerList(){
         return playerList;
     }
