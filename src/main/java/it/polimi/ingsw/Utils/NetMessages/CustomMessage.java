@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Utils.NetMessages;
 
+/** this class stores all the possible messages and instructions the server
+ * can send to its users*/
+
 public class CustomMessage {
     public static String welcomeMessage = "Welcome to Eriantys!\n";
     public static String closingConnection = "Connection closed, bye!\n";
