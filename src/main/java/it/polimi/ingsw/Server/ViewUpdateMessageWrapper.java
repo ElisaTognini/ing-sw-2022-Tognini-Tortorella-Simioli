@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Model.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.Model.BasicElements.Island;
+import it.polimi.ingsw.Model.BoardClasses.Board;
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Utils.NetMessages.ExpertViewUpdateMessage;
 import it.polimi.ingsw.Utils.NetMessages.ViewUpdateMessage;
@@ -17,22 +18,37 @@ import java.util.ArrayList;
 
 public class ViewUpdateMessageWrapper{
 
+    /** @return message of type TurnChangeMessage which stores information about the current
+     * player in the match
+     * @see TurnChangeMessage*/
     public TurnChangeMessage turnChangeMessage(String currentPlayer){
         TurnChangeMessage message = new TurnChangeMessage();
         message.setCurrentPlayer(currentPlayer);
         return message;
     }
 
+    /** @return NewRoundMessage which notifies all users that a new round of the game
+     * is starting
+     * @see NewRoundMessage*/
     public NewRoundMessage newRoundMessage(){
         return new NewRoundMessage();
     }
 
+    /** @return EndGameMessage which notifies that the game is over and
+     * contains information about the winner, which is retrieved from the model
+     * @see EndGameMessage*/
     public EndGameMessage endGameMessage(String nickname){
         EndGameMessage message = new EndGameMessage();
         message.setWinner(nickname);
         return message;
     }
 
+    /** @return ViewUpdateMessage which contains all of the necessary informations
+     * that allow the client-side view to show the progress of the game. All informations
+     * are retrieved from the Model and its board
+     * @see Model
+     * @see Board
+     * @see ViewUpdateMessage*/
     public ViewUpdateMessage boardUpdateSimple(Model model){
         ViewUpdateMessage message = new ViewUpdateMessage();
 
@@ -65,8 +81,11 @@ public class ViewUpdateMessageWrapper{
 
     }
 
-    //da trovare modo intelligente di farlo: probabilmente con una classe che eredita da
-    // boardUpdate in modo da aggiungere roba e basta.
+    /** @return ExpertViewUpdateMessage that contains information about the game so that
+     * the client side view can update, including expert features (only called when expert
+     * mode has been chosen)
+     * @see ExpertViewUpdateMessage*/
+
     public ExpertViewUpdateMessage boardUpdateExpert(Model model){
         BoardExpert board = (BoardExpert)model.getBoard();
 
