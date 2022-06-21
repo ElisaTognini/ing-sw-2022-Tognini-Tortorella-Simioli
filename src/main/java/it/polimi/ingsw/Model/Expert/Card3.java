@@ -70,13 +70,13 @@ public class Card3 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
 

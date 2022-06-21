@@ -2,15 +2,25 @@ package it.polimi.ingsw.Model.Expert;
 
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
-/* factory class */
+/** Class cardManager is a factory class which creates a new instance of the corresponding character card, based on
+ * the card ID provided */
 
 public class CardManager {
 
     private BoardExpert board;
+
+    /** Constructor CardManager creates a new instance of card manager
+     *
+     * @param board of type BoardExpert - board*/
     public CardManager(BoardExpert board){
         this.board = board;
     }
 
+    /** Method returnCard returns new instance of the character card associated to the ID given as parameter
+     *
+     * @param cardID of type int - character card ID
+     *
+     * @return CharacterCardTemplate - new character card */
     public CharacterCardTemplate returnCard(int cardID){
         switch(cardID){
             case 1:

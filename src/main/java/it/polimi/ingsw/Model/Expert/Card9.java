@@ -1,11 +1,8 @@
 package it.polimi.ingsw.Model.Expert;
-
-// to be tested
+import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 /** Class Card9 represents one of the twelve character cards: it contains a brief description of the effect of the card.
  * */
-
-import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 public class Card9 extends CharacterCardTemplate{
 
@@ -13,7 +10,7 @@ public class Card9 extends CharacterCardTemplate{
             " during the influence calculation of the turn in which the card is played";
 
 
-    /** Constructor Card5 creates a new instance of this character card, assigning its ID and cost.
+    /** Constructor Card9 creates a new instance of this character card, assigning its ID and cost.
      *
      * @param board of type BoardExpert - board */
     public Card9(BoardExpert board){
@@ -54,13 +51,13 @@ public class Card9 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
 

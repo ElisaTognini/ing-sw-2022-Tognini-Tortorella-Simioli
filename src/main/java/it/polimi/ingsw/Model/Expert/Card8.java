@@ -10,7 +10,7 @@ public class Card8 extends CharacterCardTemplate{
     private final String description = "adds 2 to the influence of the owner of this card";
 
 
-    /** Constructor Card5 creates a new instance of this character card, assigning its ID and cost.
+    /** Constructor Card8 creates a new instance of this character card, assigning its ID and cost.
      *
      * @param board of type BoardExpert - board */
     public Card8(BoardExpert board){
@@ -50,13 +50,13 @@ public class Card8 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
 

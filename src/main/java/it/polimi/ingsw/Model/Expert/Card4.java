@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 /** Class Card4 represents one of the twelve character cards: it contains a brief description of the effect of the card.
@@ -50,20 +49,17 @@ public class Card4 extends CharacterCardTemplate{
             parameters = (Parameter) o;
         }
         else throw  new IllegalArgumentException();
-        if(parameters.getMoves() > 2 || parameters.getMoves() < 0){
-            return true;
-        }
-        return false;
+        return parameters.getMoves() > 2 || parameters.getMoves() < 0;
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
 

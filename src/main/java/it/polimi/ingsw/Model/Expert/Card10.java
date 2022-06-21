@@ -7,18 +7,36 @@ import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 
 import java.util.ArrayList;
 
-/* you may switch up to 2 students between your entrance and your dining room */
+/** Class Card10 represents one of the twelve character cards: it contains a brief description of the effect of the card.
+ * */
 
 public class Card10 extends CharacterCardTemplate{
 
     private final String description = "switch up to 2 students between entrance and dining room";
 
+
+    /** Constructor Card10 creates a new instance of this character card, assigning its ID and cost.
+     *
+     * @param board of type BoardExpert - board */
     public Card10(BoardExpert board){
         super(board);
         cardID = 10;
         cost = 1;
     }
 
+
+    /** Method useCard takes the parameter passed by the player inside the parameter o, one array list for the color of the
+     * students the player wants to move from the entrance to the dining room and one for those they want to move from the
+     * dining room to the entrance.
+     * This method removes one of the selected students from the entrance and stores it in a local variable while adding
+     * to the dining one of the students from the other batch of selected students. Finally, this method adds the student
+     * stored in the local variable inside the dining room.
+     * This process is repeated for each color stored in the first array list.
+     *
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the nickname of the player.
+     * */
     public void useCard(Object o, String nickname){
         Parameter parameters;
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
@@ -41,7 +59,14 @@ public class Card10 extends CharacterCardTemplate{
     }
 
 
-    /* checks that player has got at least two students in entrance of the requested colors */
+    /** Method checkIfActionIsForbidden checks that the player has got at least two students in entrance of the
+     * requested colors
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the player's nickname.
+     *
+     * @return boolean - true if action is forbidden, false otherwise
+     */
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname){
 
@@ -85,14 +110,22 @@ public class Card10 extends CharacterCardTemplate{
 
     }
 
+
+    /** Method toStringCard builds a String containing all the info stored in this class
+     *
+     *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
+     *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
+
+    /**getter method - Method getDescription returns the description of the effect of the card
+     *
+     * @return String - the description of the character card */
     @Override
     public String getDescription(){
         return description;
     }
-
 }
