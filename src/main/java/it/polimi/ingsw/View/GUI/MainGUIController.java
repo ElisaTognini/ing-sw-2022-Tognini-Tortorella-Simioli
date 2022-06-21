@@ -510,10 +510,12 @@ public class MainGUIController extends Observable {
 
     private void makeDRClickable(){
         DRsurface.setOnMouseClicked(mouseEvent -> {
-            if(studentSource.equals("entrance") && color != null){
-                setChanged();
-                notifyObservers(new MoveStudentToDRMessage(color));
-                color = null;
+            if(studentSource != null) {
+                if (studentSource.equals("entrance") && color != null) {
+                    setChanged();
+                    notifyObservers(new MoveStudentToDRMessage(color));
+                    color = null;
+                }
             }
         });
     }
@@ -617,6 +619,14 @@ public class MainGUIController extends Observable {
         cardStage.showAndWait();
     }
 
+    public void collectStudentList() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/studentListSelectionScene.fxml"));
+        Parent root = loader.load();
+        Scene chooseStudentListScene = new Scene(root);
+        cardStage.setScene(chooseStudentListScene);
+        cardStage.showAndWait();
+    }
+
     public void handleCard() throws IOException {
 
         CharacterCardMessage message = new CharacterCardMessage();
@@ -638,19 +648,18 @@ public class MainGUIController extends Observable {
                 collectMoves();
                 break;
             case 6:
+            case 8:
                 // no parameters needed
                 break;
             case 7:
-                break;
-            case 8:
-                // no parameters needed
+            case 10:
+                collectStudentList();
+                collectStudentList();
                 break;
             case 9:
             case 11:
             case 12:
                 collectColor();
-                break;
-            case 10:
                 break;
         }
         message.setParam(param);
