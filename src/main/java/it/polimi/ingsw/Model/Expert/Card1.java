@@ -86,7 +86,7 @@ public class Card1 extends CharacterCardTemplate{
 
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, followed by the color and
      *  number of the students placed on the card, each separated by a "-" .

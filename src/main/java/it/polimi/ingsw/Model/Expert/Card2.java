@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
-
-    // to be fixed
 
 /** Class Card2 represents one of the twelve character cards: it contains a brief description of the effect of the card.
  * */
@@ -49,20 +46,26 @@ public class Card2 extends CharacterCardTemplate{
     }
 
 
-    /** ? */
+    /** Method checkIfActionIsForbidden always returns false because action is never forbidden
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the player's nickname.
+     *
+     * @return boolean
+     */
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
         return false;
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription() ;
+        return cardID + "-" + cost + "-" + this.getDescription() ;
     }
 
 

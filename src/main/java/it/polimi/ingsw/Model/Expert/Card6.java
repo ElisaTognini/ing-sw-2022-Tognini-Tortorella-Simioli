@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 /** Class Card6 represents one of the twelve character cards: it contains a brief description of the effect of the card.
@@ -10,7 +9,7 @@ public class Card6 extends CharacterCardTemplate{
     private final String description = "when resolving Conquering on an island, towers do not count towards influence";
 
 
-    /** Constructor Card5 creates a new instance of this character card, assigning its ID and cost.
+    /** Constructor Card6 creates a new instance of this character card, assigning its ID and cost.
      *
      * @param board of type BoardExpert - board */
     public Card6(BoardExpert board){
@@ -63,11 +62,13 @@ public class Card6 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this classcardID, cost and description of the effect of the card, each separated by a "-" .
+    /** Method toStringCard builds a String containing all the info stored in this class
+     *
+     *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){
-        return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
+        return cardID + "-" + cost + "-" + this.getDescription();
     }
 
 
@@ -78,5 +79,4 @@ public class Card6 extends CharacterCardTemplate{
     public String getDescription(){
         return description;
     }
-
 }

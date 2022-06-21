@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BasicElements.Student;
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -18,7 +17,7 @@ public class Card7 extends CharacterCardTemplate{
     private StudentContainer students;
 
 
-    /** Constructor Card1 creates a new instance of this character card, assigning its ID and cost,
+    /** Constructor Card7 creates a new instance of this character card, assigning its ID and cost,
      * initializing a new student container and sets up the card.
      *
      * @param board of type BoardExpert - board */
@@ -110,7 +109,7 @@ public class Card7 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
+    /** Method toStringCard builds a String containing all the info stored in this class
      *
      *  @return String - FORMAT: cardID, cost and description of the effect of the card, followed by the color and
      *  number of the students placed on the card, each separated by a "-" .
