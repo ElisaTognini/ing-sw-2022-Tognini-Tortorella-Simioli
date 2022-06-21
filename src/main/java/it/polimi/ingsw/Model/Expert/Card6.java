@@ -63,9 +63,7 @@ public class Card6 extends CharacterCardTemplate{
     }
 
 
-    /** Method toString builds a String containing all the info stored in this class
-     *
-     *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
+    /** Method toString builds a String containing all the info stored in this classcardID, cost and description of the effect of the card, each separated by a "-" .
      *  */
     @Override
     public String toStringCard(){

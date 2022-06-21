@@ -2,8 +2,8 @@ package it.polimi.ingsw.Model.Expert;
 
 // to be tested
 
-/* this card allows to choose a color of student that will add no influence
-*  during the influence calculation of the turn in which the card is played */
+/** Class Card9 represents one of the twelve character cards: it contains a brief description of the effect of the card.
+ * */
 
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
@@ -12,11 +12,23 @@ public class Card9 extends CharacterCardTemplate{
     private final String description = "choose a color of student that will add no influence" +
             " during the influence calculation of the turn in which the card is played";
 
+
+    /** Constructor Card5 creates a new instance of this character card, assigning its ID and cost.
+     *
+     * @param board of type BoardExpert - board */
     public Card9(BoardExpert board){
         super(board);
         cardID = 9;
         cost = 3;
     }
+
+    /** Method useCard takes the parameter passed by the player inside the parameter o, the color of the students to be
+     * excluded from the calculation of the influence, and calls method ignoreInfluence of class board for that color.
+     *
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the nickname of the player.
+     * */
     public void useCard(Object o, String nickname){
         Parameter parameters;
 
@@ -28,19 +40,35 @@ public class Card9 extends CharacterCardTemplate{
         board.getIslandList().get(board.getMotherNaturePosition()).ignoreInfluence(parameters.getColor());
     }
 
+
+    /** Method checkIfActionIsForbidden always returns false because action is never forbidden
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the player's nickname.
+     *
+     * @return boolean
+     */
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
         return false;
     }
 
+
+    /** Method toString builds a String containing all the info stored in this class
+     *
+     *  @return String - FORMAT: cardID, cost and description of the effect of the card, each separated by a "-" .
+     *  */
     @Override
     public String toStringCard(){
         return String.valueOf(cardID) + "-" + String.valueOf(cost) + "-" + this.getDescription();
     }
 
+
+    /**getter method - Method getDescription returns the description of the effect of the card
+     *
+     * @return String - the description of the character card */
     @Override
     public String getDescription(){
         return description;
     }
-
 }

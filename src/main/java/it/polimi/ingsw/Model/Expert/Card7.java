@@ -8,7 +8,8 @@ import it.polimi.ingsw.Model.StudentContainer;
 
 import java.util.ArrayList;
 
-/* the player can choose up to three students on this card to switch with three in their entrance*/
+/** Class Card7 represents one of the twelve character cards: it contains a brief description of the effect of the card
+ * as well as a reference to a student container to store the students which are actually on this card. */
 
 public class Card7 extends CharacterCardTemplate{
 
@@ -16,6 +17,11 @@ public class Card7 extends CharacterCardTemplate{
 
     private StudentContainer students;
 
+
+    /** Constructor Card1 creates a new instance of this character card, assigning its ID and cost,
+     * initializing a new student container and sets up the card.
+     *
+     * @param board of type BoardExpert - board */
     public Card7(BoardExpert board){
         super(board);
         cardID = 7;
@@ -24,12 +30,22 @@ public class Card7 extends CharacterCardTemplate{
         setupCard();
     }
 
+
+    /** Private method setupCard adds four student to the card as per rules of the setup of the card */
     private void setupCard(){
         for(int i=0; i<6; i++){
             students.addStudent(board.getStudentBag().drawStudent());
         }
     }
 
+
+    /** Method use card takes the parameter passed by the player inside the parameter o, the students to switch from
+     * the card to the card and vice versa: for each student listed in the array list of students to change, this
+     * method takes one student from the entrance, adds it to the card, then takes one of the students from the card and
+     * adds it to the player's entrance, according to their choices.
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the nickname of the player */
     public void useCard(Object o, String nickname){
         Parameter parameters;
         SchoolBoard sb = board.getPlayerSchoolBoard(nickname);
@@ -51,6 +67,14 @@ public class Card7 extends CharacterCardTemplate{
         }
     }
 
+
+    /** Method checkIfActionIsForbidden checks if there are enough students of chosen colors in the entrance
+     *
+     * @param o of type Object - the parameters passed by the player
+     * @param nickname of type String - the player's nickname.
+     *
+     * @return boolean - true if action is forbidden, false otherwise
+     */
     @Override
     public boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException {
 
@@ -85,15 +109,12 @@ public class Card7 extends CharacterCardTemplate{
         return false;
     }
 
-    @Override
-    public String toString(){
-        return "on the card\n" + "PINK " + students.getInfluence(PawnDiscColor.PINK) +
-                "\nYELLOW " + students.getInfluence(PawnDiscColor.YELLOW) +
-                "\nGREEN " + students.getInfluence(PawnDiscColor.GREEN) +
-                "\nBLUE " + students.getInfluence(PawnDiscColor.BLUE) +
-                "\nRED " + students.getInfluence(PawnDiscColor.RED) + "\n\n";
-    }
 
+    /** Method toString builds a String containing all the info stored in this class
+     *
+     *  @return String - FORMAT: cardID, cost and description of the effect of the card, followed by the color and
+     *  number of the students placed on the card, each separated by a "-" .
+     *  */
     @Override
     public String toStringCard(){
         StringBuilder toRet = new StringBuilder(cardID + "-" + cost + "-");
@@ -105,10 +126,12 @@ public class Card7 extends CharacterCardTemplate{
         return toRet.toString();
     }
 
+
+    /**getter method - Method getDescription returns the description of the effect of the card
+     *
+     * @return String - the description of the character card */
     @Override
     public String getDescription(){
         return description;
     }
-
-
 }
