@@ -251,7 +251,9 @@ public class MainGUIController extends Observable {
     }
 
     private void addMotherNature(int i){
-        islandList.get(i).add(new MNViewComponent(), 0, 0);
+        try {
+            islandList.get(i).add(new MNViewComponent(), 0, 0);
+        } catch(Exception e) {}
     }
 
     private void addTowers(IslandViewComponent island, String s){
@@ -462,7 +464,7 @@ public class MainGUIController extends Observable {
             studentGrids.add(studentGrid);
             String[] card = c.split("-");
             CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
-            cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText(card[2]));
+            cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText("[" + card[1]+"] " + card[2]));
             cardPane.setOnMouseExited(mouseEvent -> expertCardTextArea.setText(""));
             cardPane.setOnMouseClicked(mouseEvent -> {
                 chosenCard = Integer.valueOf(card[0]);
@@ -604,7 +606,7 @@ public class MainGUIController extends Observable {
     }
 
     public void collectMoves() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExtraStepSelectionController.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExtraStepsSelectionController.fxml"));
         Parent root = loader.load();
         Scene collectMovesScene = new Scene(root);
         cardStage.setScene(collectMovesScene);

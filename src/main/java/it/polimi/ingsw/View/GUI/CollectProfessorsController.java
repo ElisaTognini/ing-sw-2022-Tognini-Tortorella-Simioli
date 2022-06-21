@@ -3,8 +3,10 @@ package it.polimi.ingsw.View.GUI;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
-import javax.swing.text.html.ImageView;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +22,10 @@ public class CollectProfessorsController {
     Set<PawnDiscColor> colorSet = new HashSet<PawnDiscColor>();
 
     public void doneClicked(){
+        ArrayList<PawnDiscColor> professors = new ArrayList<>();
         MainGUIController.closeCardStage();
-        MainGUIController.getParameter().getColorArrayList().addAll(colorSet);
+        professors.addAll(colorSet);
+        MainGUIController.getParameter().setColorArrayList(professors);
     }
 
     public void yellowProfClicked(){

@@ -70,6 +70,7 @@ public class BoardExpert extends Board {
             }
             sb.resetModifiedTable();
         }
+        setChanged();
         notifyObservers();
     }
 
@@ -155,6 +156,7 @@ public class BoardExpert extends Board {
 
                 if (schoolBoards.get(i).getModifiedTable()) {
                     schoolBoards.get(i).getProfessorTable().resetPreviousProfessorTable();
+                    schoolBoards.get(i).resetModifiedTable();
                 }
             }
 

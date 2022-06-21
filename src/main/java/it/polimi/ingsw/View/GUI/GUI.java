@@ -187,7 +187,7 @@ public class GUI extends Application implements Observer{
         primaryStage.setScene(gameScene);
         mainController = (MainGUIController)loader.getController();
         mainController.addObserver(client.getNetworkHandler());
-        primaryStage.setFullScreen(true);
+        primaryStage.setMaximized(true);
     }
 
     public void initClient(String ip){
