@@ -1,7 +1,6 @@
 package it.polimi.ingsw.View.GUI.Components;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
-import it.polimi.ingsw.Utils.Enums.TowerColor;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;

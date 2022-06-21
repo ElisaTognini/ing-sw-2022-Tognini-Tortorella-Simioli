@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Utils.NetMessages;
 
-import it.polimi.ingsw.Utils.NetMessages.ServerMessage;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -7,9 +7,7 @@ import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.assertFalse;
 
 public class Card3Test {

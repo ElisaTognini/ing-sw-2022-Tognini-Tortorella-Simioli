@@ -7,7 +7,6 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TurnFlow;
 import it.polimi.ingsw.Model.Model;
 import static org.junit.Assert.*;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 

@@ -5,7 +5,6 @@ import it.polimi.ingsw.Model.Model;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
 
-
 public class ModelTest {
     Model model;
 

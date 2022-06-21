@@ -7,7 +7,6 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Model;
 import it.polimi.ingsw.Model.Player;
 import static org.junit.Assert.*;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 

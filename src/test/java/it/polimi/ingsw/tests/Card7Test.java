@@ -9,7 +9,6 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 /* the player can choose up to three students on this card to switch with three in their entrance*/

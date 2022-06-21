@@ -1,7 +1,5 @@
 package it.polimi.ingsw.View.GUI.Components;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class IslandViewComponent extends GridPane {

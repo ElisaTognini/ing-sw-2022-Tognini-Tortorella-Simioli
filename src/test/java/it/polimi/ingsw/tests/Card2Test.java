@@ -9,8 +9,6 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
-
-
 import java.util.ArrayList;
 
 public class Card2Test {

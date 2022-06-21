@@ -2,12 +2,8 @@ package it.polimi.ingsw.View.GUI.Components;
 
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.View.GUI.MainGUIController;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
 public class StudentViewComponent extends ImageView {
     private PawnDiscColor color;
