@@ -39,7 +39,18 @@ public class Card9Test {
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        board.setMotherNaturePosition(5);
+        board.setMotherNaturePosition(8);
+        if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK)) {
+            board.moveStudent(PawnDiscColor.PINK, "player1", 8);
+            if(board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK)) {
+                board.moveStudent(PawnDiscColor.PINK, "player1", 8);
+                if (board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.PINK)) {
+                    board.moveStudent(PawnDiscColor.PINK, "player1");
+                }
+            }
+        }
+        board.assignProfessors();
+        board.conquerIsland();
         if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
             board.moveStudent(PawnDiscColor.BLUE, "player2", 8);
             if(board.getPlayerSchoolBoard("player2").getEntrance().isColorAvailable(PawnDiscColor.BLUE)) {
@@ -50,14 +61,14 @@ public class Card9Test {
             }
         }
         board.assignProfessors();
-        param.setColor(PawnDiscColor.BLUE);
+        param.setColor(PawnDiscColor.PINK);
         if(!board.isActionForbidden(9, param, "player2")){
             board.useCard(param, "player2", 9);
             board.conquerIsland();
             board.roundSetup();
         }
 
-        assertEquals(null, board.getIslandList().get(5).getOwner());
+        System.out.println("conqueror is " + board.getIslandList().get(board.getMotherNaturePosition()).getOwner().getNickname());
     }
 
     @Test

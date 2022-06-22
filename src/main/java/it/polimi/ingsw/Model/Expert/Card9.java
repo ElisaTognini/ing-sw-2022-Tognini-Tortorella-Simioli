@@ -20,7 +20,7 @@ public class Card9 extends CharacterCardTemplate{
     }
 
     /** Method useCard takes the parameter passed by the player inside the parameter o, the color of the students to be
-     * excluded from the calculation of the influence, and calls method ignoreInfluence of class island for that color.
+     * excluded from the calculation of the influence, and calls method setIgnoredInfluence of class board for that color.
      *
      *
      * @param o of type Object - the parameters passed by the player
@@ -34,7 +34,7 @@ public class Card9 extends CharacterCardTemplate{
         }
         else throw new IllegalArgumentException();
 
-        board.getIslandList().get(board.getMotherNaturePosition()).ignoreInfluence(parameters.getColor());
+        board.setIgnoredInfluence(parameters.getColor());
     }
 
 

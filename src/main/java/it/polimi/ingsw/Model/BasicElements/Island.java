@@ -22,7 +22,6 @@ public class Island {
     private int numberOfTowers;
     private int towersOnHold;
     private int influence;
-    private PawnDiscColor ignoredInfluence;
 
     /** Constructor Island creates a new instance of an island.
      *
@@ -36,7 +35,6 @@ public class Island {
         numberOfTowers = 0;
         towersOnHold = 0;
         influence = 0;
-        ignoredInfluence = null;
     }
 
 
@@ -77,12 +75,6 @@ public class Island {
     * @param color - of type PawnDiscColor - the color the influence has to be calculated of
     * @return Integer - the number of student of the color given, present on the island*/
     public int getInfluenceByColor(PawnDiscColor color){
-        if(ignoredInfluence != null){
-            if(ignoredInfluence.equals(color)) {
-                ignoredInfluence = null;
-                return 0;
-            }
-        }
             influence = container.getInfluence(color);
             return influence;
     }
@@ -185,26 +177,11 @@ public class Island {
      * @param n - of type int - number of towers on the island */
     public void setTowersOnHold(int n) { towersOnHold = n; }
 
-
-    /** ignoreInfluence takes in input the color chosen by the player to be excluded when calculating
-     * the influence on an island.
-     * Variable ignoredInfluence is set to null by default and only changed if character card 9 is played.
-     *
-     * @param color - of type PawnDiscColor - color chosen by the player to be excluded */
-    public void ignoreInfluence(PawnDiscColor color){
-        ignoredInfluence = color;
-    }
-
-
-    /** setter method - setIgnoredInfluence sets variable ignoreInfluence to null in setup or after character
-     * card 9 has been used. */
-    public void setIgnoredInfluencetoNull(){ignoredInfluence = null;}
-
-
     /** getter method - getNumberOfNEtiles returns the number of no entry tiles present on an island
      *
      * @return int - number of no entry tiles */
     public int getNumberOfNEtiles(){return noEntryTile;}
+
     public void setIslandID(int id){this.islandID = id;}
 
 

@@ -28,6 +28,7 @@ public class BoardExpert extends Board {
     private final int cardsToInstantiate = 3;
     private int additional_moves;
     private String extra;
+    private PawnDiscColor ignoredInfluence;
 
     /** Constructor BoardExpert creates a new instance of board expert
      *
@@ -45,6 +46,7 @@ public class BoardExpert extends Board {
         noEntryTiles = 4;
         cardIDs = new int[cardsToInstantiate];
         extra = null;
+        ignoredInfluence = null;
     }
 
 
@@ -62,7 +64,6 @@ public class BoardExpert extends Board {
         extra = null;
         for(Island i : islands){
             i.setTowersOnHold(0);
-            i.setIgnoredInfluencetoNull();
         }
         for(SchoolBoard sb : schoolBoards){
             if(sb.getModifiedTable()){
@@ -70,6 +71,7 @@ public class BoardExpert extends Board {
             }
             sb.resetModifiedTable();
         }
+        ignoredInfluence = null;
         setChanged();
         notifyObservers();
     }
@@ -137,6 +139,12 @@ public class BoardExpert extends Board {
                     if (schoolBoards.get(i).getProfessorTable().hasProfessor(color)) {
                         sum[i] = sum[i] + islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                     }
+
+                    if(ignoredInfluence != null){
+                        if(ignoredInfluence.equals(color)){
+                            sum[i] = sum[i] - islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                        }
+                    }
                 }
 
                 if (islands.get(motherNature.getPosition()).checkIfConquered()) {
@@ -162,6 +170,7 @@ public class BoardExpert extends Board {
 
             islands.get(motherNature.getPosition()).setTowersOnHold(0);
             extra = null;
+            ignoredInfluence = null;
 
             for (i = 0; i < sum.length; i++) {
                 if (sum[i] > maxInfluence) {
@@ -283,6 +292,9 @@ public class BoardExpert extends Board {
         return false;
     }
 
+    public void setIgnoredInfluence(PawnDiscColor color){
+        ignoredInfluence = color;
+    }
 
     /** getter method - method getPlayersCoinCounter returns the coin counter of the player whose nickname is
      * given in input.
