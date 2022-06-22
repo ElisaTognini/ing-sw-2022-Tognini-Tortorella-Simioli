@@ -141,7 +141,7 @@ public class BoardExpert extends Board {
                     }
 
                     if(ignoredInfluence != null){
-                        if(ignoredInfluence.equals(color)){
+                        if(ignoredInfluence.equals(color) && schoolBoards.get(i).getProfessorTable().hasProfessor(color)){
                             sum[i] = sum[i] - islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                         }
                     }
