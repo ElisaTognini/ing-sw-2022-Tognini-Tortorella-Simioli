@@ -6,19 +6,22 @@ import it.polimi.ingsw.Model.BasicElements.Student;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 
+/** Class CloudTileTest test class CloudTile */
+
 public class CloudTileTest {
 
     private CloudTile cloud = new CloudTile(0, 4);
     private Student[] array;
 
-    /* tests if cloud is actually empty after initialisation */
+    /** Method testIsCloudEmpty tests  the cloud is actually empty after initialisation */
     @Test
     public void testIsCloudEmpty() {
         assertEquals (true, cloud.isCloudEmpty());
     }
 
-    /* tests if addStudent works properly: it should add the first three students in the array and
-    * throw an exception for the last one*/
+
+    /** Method testAddStudent tests if addStudent works properly: it should add the first three students
+     * in the array and throw an exception for the last one*/
     @Test
     public void testAddStudent(){
         array = new Student[4];
@@ -31,8 +34,10 @@ public class CloudTileTest {
             cloud.fillCloud(array);
             cloud.fillCloud(array);
     }
-    /* tests if retrieveStudentFromCloud works properly: it should retrieve the first three students in
-    * the array and throw an exception for the last one because it doesn't exist*/
+
+
+    /** Method testRetrieveStudent tests if retrieveStudentFromCloud works properly: it should retrieve the first
+     * three students in the array and throws an exception for the last one because it doesn't exist. */
     @Test
     public void testRetrieveStudentFromCloud(){
             array = new Student[4];

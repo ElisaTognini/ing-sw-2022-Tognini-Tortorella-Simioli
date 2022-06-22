@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Model.Expert;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

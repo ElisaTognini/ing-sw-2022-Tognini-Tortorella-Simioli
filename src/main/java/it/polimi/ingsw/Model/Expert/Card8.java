@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 /** Class Card8 represents one of the twelve character cards: it contains a brief description of the effect of the card.

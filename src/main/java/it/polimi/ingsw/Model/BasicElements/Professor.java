@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.BasicElements;
-
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 /** Class Professor contains references to the color of the disk representing the professor and a variable that

@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model;
-
 import it.polimi.ingsw.Model.BasicElements.AssistantCardDeck;
 import it.polimi.ingsw.Model.BoardClasses.Board;
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
@@ -9,7 +8,6 @@ import it.polimi.ingsw.Server.ViewUpdateMessageWrapper;
 import it.polimi.ingsw.Utils.Enums.ActionType;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.NetMessages.TurnChangeMessage;
-
 import java.util.*;
 
 /** Class Model contains reference to the board class and to the round manager in order to manage the interaction

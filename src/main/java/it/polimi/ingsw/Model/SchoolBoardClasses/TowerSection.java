@@ -4,6 +4,7 @@ import it.polimi.ingsw.Utils.Enums.TowerColor;
 /** Class TowerSection is one of the classes which compose the player's school board: it contains an attribute for
  * the maximum towers to be added in the tower section, the actual number of towers inside the tower section and
  * a reference to their color.*/
+
 public class TowerSection {
 
     private final int maxNumberOfTowers;

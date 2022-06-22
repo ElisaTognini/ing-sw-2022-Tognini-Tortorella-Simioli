@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 
 /** Class cardManager is a factory class which creates a new instance of the corresponding character card, based on

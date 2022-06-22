@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.BasicElements;
 
 /** Class MotherNature contains a reference to the island mother nature is during a turn/round */
+
 public class MotherNature {
 
     private int position;

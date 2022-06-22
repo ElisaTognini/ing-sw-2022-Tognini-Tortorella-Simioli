@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
+/** Class RoundManagerTest tests class RoundManager */
 
 public class RoundManagerTest {
 
@@ -19,6 +20,8 @@ public class RoundManagerTest {
     ArrayList<Player> players = new ArrayList<>();
     Board boardTest;
 
+    /** Method getterSetterTest changes the current state of the match and then calls for getCurrentState to see
+     * if both setter and getter work properly. */
     @Test
     public void getterSetterTest(){
         players.add(new Player("player1"));
@@ -30,9 +33,11 @@ public class RoundManagerTest {
 
         manager.changeState(TurnFlow.CARD_PICKED);
         assertEquals(TurnFlow.CARD_PICKED, manager.getCurrentState());
-
     }
 
+
+    /** Method pickFirstPlayerTest test calls for pickFirstPlayerIndex and prints the nickname of the player
+     * extracted to screen. */
     @Test
     public void pickFirstPlayerTest(){
         players.add(new Player("player1"));
@@ -43,6 +48,8 @@ public class RoundManagerTest {
         System.out.println("first player is: " + players.get(manager.pickFirstPlayerIndex()).getNickname());
     }
 
+    /** Method startRoundTest calls for method startRound and checks that all the players have not picked a card
+     * and that the current state of the turn stored in round manager is BEGINS_TURN */
     @Test
     public void startRoundTest(){
         players.add(new Player("player1"));
@@ -58,6 +65,9 @@ public class RoundManagerTest {
         assertEquals(TurnFlow.BEGINS_TURN, manager.getCurrentState());
     }
 
+
+    /** Method planningPhaseTurnTest calls for method computeTurnOrder with a randomly extracted player ID, then
+     * uses refresh current player two times to print out to screen the nickname of second and third player. */
     @Test
     public void planningPhaseTurnTest(){
         players.add(new Player("player1"));
@@ -77,8 +87,12 @@ public class RoundManagerTest {
         System.out.println("third player is " + manager.getCurrentPlayer().getNickname());
     }
 
-    /* checks if card sorting order is correct, and if clockwise turn
-    * order is correctly computed*/
+    /** Method storeCardsComputeNextTurn test checks if card sorting order is correct, and if clockwise turn
+     * order is correctly computed. After that, it calls getCurrentPlayersCard and expects it to return null
+     * because no cards have been played yet. Then, it stores an assistant card for each player and calls for
+     * method ActionPhase to compute the order of the players based on the power factor of the card they played
+     * and prints their nickname as well as the card they played. Finally it prints all the cards played by the
+     * players in this round. */
     @Test
     public void storeCardsComputeNextTurnTest(){
         players.add(new Player("player1"));
@@ -93,7 +107,7 @@ public class RoundManagerTest {
 
         System.out.println("the first player of the game is: " + manager.getCurrentPlayer().getNickname());
 
-        assertEquals(null, manager.getCurrentPlayersCard()); // no card has been played yet
+        assertEquals(null, manager.getCurrentPlayersCard());
 
         manager.storeCards(boardTest.playAssistantCard(4, manager.getCurrentPlayer().getNickname()));
         manager.refreshCurrentPlayer();
@@ -118,6 +132,9 @@ public class RoundManagerTest {
         }
     }
 
+    /** Method checkForDupeTest simulates the situation for which two players played the same card; for the first
+     * player, it calls method checkForDupe and expects it to return false, while expects true for the second player.
+     * */
     @Test
     public void checkForDupeTest(){
         players.add(new Player("player1"));
@@ -154,6 +171,8 @@ public class RoundManagerTest {
         manager.storeCards(boardTest.playAssistantCard(7, manager.getCurrentPlayer().getNickname()));
     }
 
+
+    /** Method movingStudentsTest checks if getMovedStudents and increaseMovedStudents work properly */
     @Test
     public void movingStudentsTest(){
         players.add(new Player("player1"));
@@ -168,6 +187,7 @@ public class RoundManagerTest {
     }
 
 
+    /** Method multiRoundTest simulates the course of turn of a match between two players. */
     @Test
     public void multiRoundTest(){
 

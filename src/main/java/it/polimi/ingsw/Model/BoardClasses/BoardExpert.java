@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.BoardClasses;
-
 import it.polimi.ingsw.Model.BasicElements.Island;
 import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
@@ -8,7 +7,6 @@ import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
-
 import java.util.ArrayList;
 import java.util.Random;
 

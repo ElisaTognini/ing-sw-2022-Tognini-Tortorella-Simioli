@@ -7,15 +7,17 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TurnFlow;
 import it.polimi.ingsw.Model.Model;
 import static org.junit.Assert.*;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+/** Class BaseActionControllerTest tests class BaseActionController */
 
 public class BaseActionControllerTest {
 
     Controller controller;
     Model model;
 
+    /** Method initTest initialises new instances of model and controller to use in this class */
     @Test
     public void initTest() {
         String[] nicknames = new String[2];
@@ -24,6 +26,7 @@ public class BaseActionControllerTest {
         model = new Model(GameMode.SIMPLE, nicknames, 2);
         controller = new Controller(model);
     }
+
 
     @Test
     public void startGameTest() {

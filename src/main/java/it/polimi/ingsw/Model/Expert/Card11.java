@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.Expert;
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Model.StudentContainer;

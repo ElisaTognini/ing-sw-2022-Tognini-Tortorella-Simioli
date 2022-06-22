@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.BasicElements.Student;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
-
 import java.util.*;
 
 /** Class StudentContainer is a utility data structure, more precisely a hash map that has the color enum values as

@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.BasicElements;
-
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 
 /** Class Student contains reference to its color */

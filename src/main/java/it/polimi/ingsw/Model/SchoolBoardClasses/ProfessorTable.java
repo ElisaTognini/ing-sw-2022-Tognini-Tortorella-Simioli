@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.SchoolBoardClasses;
-
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.BasicElements.Professor;
 

@@ -5,10 +5,15 @@ import it.polimi.ingsw.Model.BasicElements.StudentBag;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 
+/** Class StudentBagTest tests class StudentBag */
+
 public class StudentBagTest {
 
     private StudentBag bag = new StudentBag(120);
 
+    /** Method testDraw checks if method drawStudent and removeStudent work properly, respectively extracting and
+     * removing the student extracted from the bag. For each student extracted, it increases a counter value in order
+     * to see if there are 24 students for each color. */
     @Test
     public void testDraw(){
 

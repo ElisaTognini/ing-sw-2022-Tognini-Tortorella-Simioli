@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model.BasicElements;
-
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
-
 import java.util.*;
 
 /** Class StudentBag contains a list of all the students which can be used to play the game */

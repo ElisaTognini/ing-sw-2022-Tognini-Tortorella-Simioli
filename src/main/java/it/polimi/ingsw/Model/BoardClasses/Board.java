@@ -1,12 +1,10 @@
 package it.polimi.ingsw.Model.BoardClasses;
-
 import it.polimi.ingsw.Model.BasicElements.*;
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.SchoolBoardClasses.SchoolBoard;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
-
 import java.util.*;
 
 /** Class Board controls most of the logic of the game model side, indeed it contains references to all the basic

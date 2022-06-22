@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.BoardClasses;
-
 import it.polimi.ingsw.Model.BasicElements.AssistantCard;
 import it.polimi.ingsw.Utils.Enums.ActionType;
 import it.polimi.ingsw.Utils.Enums.TurnFlow;

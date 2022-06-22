@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 /** Class Player contains the player's nickname and three boolean attributes which are dynamically changed if the player
  * wins the game, when they have picked a card or a cloud, respectively. */
+
 public class Player {
 
     private String nickname;

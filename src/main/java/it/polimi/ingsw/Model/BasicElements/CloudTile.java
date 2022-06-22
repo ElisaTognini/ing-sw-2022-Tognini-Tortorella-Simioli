@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Model.BasicElements;
+import java.util.Arrays;
 
 /** Class CloudTile contains references to an array of students present on the cloud; at the beginning of the game, the
  * array is initialised with null values to indicate that no students have been added yet, since they will be
@@ -6,7 +7,6 @@ package it.polimi.ingsw.Model.BasicElements;
  * based on the number of players currently playing the game, as well as the number of the clouds present in the game.
  * Each cloud has an ID, given by the Board class when it instances the clouds. */
 
-import java.util.Arrays;
 
 public class CloudTile {
 
