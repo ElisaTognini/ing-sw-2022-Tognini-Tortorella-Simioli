@@ -62,7 +62,7 @@ public class BoardExpert extends Board {
         extra = null;
         for(Island i : islands){
             i.setTowersOnHold(0);
-            i.setIgnoredInfluencetoZero();
+            i.setIgnoredInfluencetoNull();
         }
         for(SchoolBoard sb : schoolBoards){
             if(sb.getModifiedTable()){
