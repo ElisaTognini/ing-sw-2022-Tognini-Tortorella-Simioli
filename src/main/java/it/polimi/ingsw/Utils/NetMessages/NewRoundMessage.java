@@ -2,5 +2,9 @@ package it.polimi.ingsw.Utils.NetMessages;
 
 import java.io.Serializable;
 
-public class NewRoundMessage implements Serializable {
+/** this message is sent by the server to its users when a new round
+ * starts in game.
+ * @see Serializable*/
+
+public class NewRoundMessage implements Serializable, ServerMessage {
 }

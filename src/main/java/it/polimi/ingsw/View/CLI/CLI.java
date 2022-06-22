@@ -3,6 +3,9 @@ package it.polimi.ingsw.View.CLI;
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.*;
 
+/** class CLI displays current game state, errors, changes in turn and starting of matches,
+ * as well as all the game components, via command line */
+
 public class CLI extends View implements Observer {
 
     private Parser parser;
@@ -12,6 +15,9 @@ public class CLI extends View implements Observer {
     private String currentPlayer;
     private ArrayList<String> cardsPlayed = new ArrayList<>();
 
+    /** constructor for class CLI, sets up parser to run on a parallel thread and prints
+     * game logo
+     * @see Parser*/
     public CLI(){
         parser = new Parser();
         thread = new Thread(parser);
