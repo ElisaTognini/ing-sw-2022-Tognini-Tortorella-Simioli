@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.BasicElements.Island;
 import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.CoinCounter;
+import it.polimi.ingsw.Model.SchoolBoardClasses.ProfessorTable;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Model.Player;
@@ -29,6 +30,7 @@ public class BoardExpert extends Board {
     private int additional_moves;
     private String extra;
     private PawnDiscColor ignoredInfluence;
+    private boolean towersOnHold;
 
     /** Constructor BoardExpert creates a new instance of board expert
      *
@@ -47,6 +49,7 @@ public class BoardExpert extends Board {
         cardIDs = new int[cardsToInstantiate];
         extra = null;
         ignoredInfluence = null;
+        resetTowersOnHold();
     }
 
 
@@ -62,9 +65,6 @@ public class BoardExpert extends Board {
         /* setting extras back to default values */
         additional_moves = 0;
         extra = null;
-        for(Island i : islands){
-            i.setTowersOnHold(0);
-        }
         for(SchoolBoard sb : schoolBoards){
             if(sb.getModifiedTable()){
                 sb.getProfessorTable().resetPreviousProfessorTable();
@@ -72,6 +72,7 @@ public class BoardExpert extends Board {
             sb.resetModifiedTable();
         }
         ignoredInfluence = null;
+        resetTowersOnHold();
         setChanged();
         notifyObservers();
     }
@@ -111,7 +112,28 @@ public class BoardExpert extends Board {
         assignCoin(nickname, color);
     }
 
+    /**
+     * method assignProfessors overrides super Board's method assignProfessors. If card 2 has been used,
+     * the effects are granted and the old professor table is then restored.
+     * */
+    @Override
+    public void assignProfessors(){
 
+        ProfessorTable oldTable = null;
+        String owner = null;
+
+        for(SchoolBoard sb : schoolBoards) {
+            if (sb.getModifiedTable()) {
+                oldTable = sb.getProfessorTable();
+                owner = sb.getOwner().getNickname();
+            }
+        }
+
+        super.assignProfessors();
+        if(oldTable != null){
+           getPlayerSchoolBoard(owner).setProfessorTable(oldTable);
+        }
+    }
 
     /** Override of method conquerIsland in Board: firstly, it checks if the island has a no entry tile and
      * returns immediately if so, because it does not need to resolve the conquering. Then, while checking if
@@ -126,13 +148,20 @@ public class BoardExpert extends Board {
         int i, maxInfluence = 0;
         Player conqueror = null;
         boolean deuce = false;
-
+        ProfessorTable modifiedTable = null;
 
         if (islands.get(motherNature.getPosition()).hasANoEntryTile()) {
             islands.get(motherNature.getPosition()).removeNoEntryTile();
             putBackNoEntryTile();
             return;
         } else {
+
+            for(SchoolBoard sb : schoolBoards){
+                if(sb.getModifiedTable()){
+                    modifiedTable = sb.getProfessorTable();
+                }
+            }
+
             for (i = 0; i < sum.length; i++) {
                 sum[i] = 0;
                 for (PawnDiscColor color : PawnDiscColor.values()) {
@@ -145,12 +174,19 @@ public class BoardExpert extends Board {
                             sum[i] = sum[i] - islands.get(motherNature.getPosition()).getInfluenceByColor(color);
                         }
                     }
+
+                    if(modifiedTable != null && !schoolBoards.get(i).getModifiedTable()){
+                        if(schoolBoards.get(i).getProfessorTable().hasProfessor(color) &&
+                            modifiedTable.hasProfessor(color)){
+                            sum[i] = sum[i] - islands.get(motherNature.getPosition()).getInfluenceByColor(color);
+                        }
+                    }
                 }
 
                 if (islands.get(motherNature.getPosition()).checkIfConquered()) {
                     if (islands.get(motherNature.getPosition()).getOwner().getNickname().equals(schoolBoards.get(i).getOwner().getNickname())){
 
-                        if (islands.get(motherNature.getPosition()).getTowersOnHold() == 0)
+                        if (!towersOnHold)
                             sum[i] = sum[i] + islands.get(motherNature.getPosition()).getNumberOfTowers();
 
                         maxInfluence = sum[i];
@@ -168,9 +204,9 @@ public class BoardExpert extends Board {
                 }
             }
 
-            islands.get(motherNature.getPosition()).setTowersOnHold(0);
             extra = null;
             ignoredInfluence = null;
+            resetTowersOnHold();
 
             for (i = 0; i < sum.length; i++) {
                 if (sum[i] > maxInfluence) {
@@ -436,5 +472,22 @@ public class BoardExpert extends Board {
      * @return CoinCounter[] - array of coin counters */
     public CoinCounter[] getCoinCounters(){
         return coins;
+    }
+
+    /**
+     * setter method setTowersOnHold sets as true the variable that indicated that Character Card 6 has been used
+     * and thus, during this turn, towers do not count towards influence.
+     * */
+    public void setTowersOnHold(){
+        towersOnHold = true;
+    }
+
+    /**
+     * method resetTowersOnHold is called at the end of the turn during which Character Card 6 has been played
+     * and the variable towersOnHold is set back to false, so that towers count towards influence
+     * as per normal game rules.
+     * */
+    public void resetTowersOnHold(){
+        towersOnHold = false;
     }
 }
