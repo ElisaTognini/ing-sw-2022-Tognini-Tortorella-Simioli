@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Model.BoardClasses;
-import it.polimi.ingsw.Model.BasicElements.Island;
 import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.CoinCounter;
@@ -117,18 +116,23 @@ public class BoardExpert extends Board {
     @Override
     public void assignProfessors(){
 
-        ProfessorTable oldTable = null;
+        ProfessorTable oldTable = new ProfessorTable();
         String owner = null;
 
         for(SchoolBoard sb : schoolBoards) {
             if (sb.getModifiedTable()) {
-                oldTable = sb.getProfessorTable();
                 owner = sb.getOwner().getNickname();
+
+                for(PawnDiscColor c : PawnDiscColor.values()){
+                    if(sb.getProfessorTable().hasProfessor(c)){
+                        oldTable.addProfessor(c);
+                    }
+                }
             }
         }
 
         super.assignProfessors();
-        if(oldTable != null){
+        if(owner != null){
            getPlayerSchoolBoard(owner).setProfessorTable(oldTable);
         }
     }

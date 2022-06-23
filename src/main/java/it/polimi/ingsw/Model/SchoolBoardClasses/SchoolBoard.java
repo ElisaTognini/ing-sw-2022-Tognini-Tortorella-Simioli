@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.SchoolBoardClasses;
 import it.polimi.ingsw.Model.Player;
+import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import it.polimi.ingsw.Utils.Enums.TowerColor;
 
 /** Class SchoolBoard represents the player's school board and contains references to all the classes composing the
@@ -96,7 +97,15 @@ public class SchoolBoard {
      * @param professorTable of type ProfessorTable - professor table.
      * */
     public void setProfessorTable(ProfessorTable professorTable){
-        this.professorTable = professorTable;
+
+        for(PawnDiscColor c : PawnDiscColor.values()){
+            if(this.professorTable.hasProfessor(c)) {
+                this.professorTable.removeProfessor(c);
+            }
+            if (professorTable.hasProfessor(c)){
+                this.professorTable.addProfessor(c);
+            }
+        }
     }
 
 

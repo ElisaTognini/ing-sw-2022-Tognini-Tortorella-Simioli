@@ -55,6 +55,7 @@ public class Card2Test {
         } catch(IllegalArgumentException e){
             System.out.println("Wrong format");
         }
+        board.assignProfessors();
         board.conquerIsland();
         System.out.println(board.getPlayerSchoolBoard("player2").getProfessorTable());
 
