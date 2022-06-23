@@ -39,8 +39,10 @@ public class Card2Test {
     @Test
     public void usageTest(){
         initTest();
-        board.moveStudent(PawnDiscColor.PINK, "player1");
-        board.moveStudent(PawnDiscColor.PINK, "player1", board.getMotherNaturePosition());
+        if(board.getPlayerSchoolBoard("player1").getEntrance().getColorAvailability(PawnDiscColor.PINK) >=2) {
+            board.moveStudent(PawnDiscColor.PINK, "player1");
+            board.moveStudent(PawnDiscColor.PINK, "player1", board.getMotherNaturePosition());
+        }
         board.assignProfessors();
         Parameter param = new Parameter();
         ArrayList<PawnDiscColor> colors = new ArrayList<>();

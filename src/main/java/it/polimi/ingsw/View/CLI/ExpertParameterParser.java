@@ -6,8 +6,17 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** support class to Parser, which requests information from user
+ * and is responsible for its correct acquisition*/
 public class ExpertParameterParser {
 
+    /** this method requests information to enact character cards' effects
+     * to the user; it uses a switch-case construct to differentiate the requests
+     * and print custom dialog for each different card, and stores all user input
+     * in a Parameter object
+     * @param cardID of type int - the id of the card for which input is needed
+     * @return of type Parameter - all information retrieved is stored here
+     * @see Parameter*/
 
     public Parameter parseParameter(int cardID){
         Parameter param = new Parameter();
@@ -87,6 +96,9 @@ public class ExpertParameterParser {
         return param;
     }
 
+    /** this method requests a new integer to the user, and ensures its correct
+     * parsing.
+     * @return of type int - the integer acquired via CLI*/
     public int parseNewInt(){
         Scanner scanner = new Scanner(System.in);
         String i = "0";
@@ -109,6 +121,11 @@ public class ExpertParameterParser {
         toRet = Integer.parseInt(i);
         return toRet;
     }
+
+    /** this method requests a String to the player, checks its validity within
+     * the PawnDiscColor enum and ensures an actual color is given.
+     * @return of type PawnDiscColor - the pawn color requested to user
+     * @see PawnDiscColor*/
 
     public PawnDiscColor parseNewColor(){
         Scanner scanner = new Scanner(System.in);
@@ -137,6 +154,10 @@ public class ExpertParameterParser {
         return PawnDiscColor.valueOf(read);
     }
 
+    /** method specific to parsing all the professor colors for the correct use
+     * of character card 2. It ensures colors are expressed in a valid format
+     * before returning them in an ArrayList.
+     * @see it.polimi.ingsw.Model.Expert.Card2*/
     private ArrayList<PawnDiscColor> parseCard2(){
         Scanner scanner = new Scanner(System.in);
         ArrayList<PawnDiscColor> colors = new ArrayList<>();
@@ -168,6 +189,8 @@ public class ExpertParameterParser {
         return colors;
     }
 
+    /** utility method to perform color validity check
+     * @return boolean - true if color is valid*/
     private boolean checkColorValidity(String color){
         if(color.equals("RED") || color.equals("BLUE") || color.equals("GREEN") ||
                 color.equals("PINK") || color.equals("YELLOW"))

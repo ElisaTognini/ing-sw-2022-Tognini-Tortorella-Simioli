@@ -175,7 +175,7 @@
             <VBox fx:id="playedCardsVBox" layoutX="805.0" layoutY="203.0" prefHeight="51.0" prefWidth="265.0" />
             <TextArea fx:id="expertCardTextArea" disable="true" layoutX="734.0" layoutY="537.0" prefHeight="50.0" prefWidth="321.0" wrapText="true">
                <font>
-                  <Font name="Ink Free" size="11.0" />
+                  <Font name="Ink Free" size="9.0" />
                </font>
             </TextArea>
          </children></AnchorPane>

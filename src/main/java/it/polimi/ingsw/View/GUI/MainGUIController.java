@@ -537,6 +537,17 @@ public class MainGUIController extends Observable {
         }
     }
 
+    public void refreshCardDescriptions(ArrayList<String> cards){
+
+        int i = 0;
+
+        for(String c : cards){
+            String[] card = c.split("-");
+            StackPane cardPane = (StackPane) expertCardsHBox.getChildren().get(i);
+            cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText("[" + card[1]+"] " + card[2]));
+        }
+    }
+
     public void winningScreen(String winner){
         anchorPane.getChildren().clear();
         Label winnerLabel = new Label("This game is over!" +
