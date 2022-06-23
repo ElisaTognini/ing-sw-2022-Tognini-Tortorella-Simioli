@@ -1,5 +1,5 @@
 package it.polimi.ingsw.View.GUI;
-import it.polimi.ingsw.Utils.Enums.GameMode;
+
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.BaseUserMessage;
 import it.polimi.ingsw.Utils.NetMessages.SetupServerMessage;

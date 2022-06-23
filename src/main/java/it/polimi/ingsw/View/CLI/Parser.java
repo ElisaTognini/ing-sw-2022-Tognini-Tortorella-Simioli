@@ -7,10 +7,18 @@ import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
 import java.util.Observable;
 import java.util.Scanner;
 
+/** class parser listens for keyboard input from user on CLI. This class
+ * is kept running on a parallel thread so that both updates from server and user's keyboard
+ * can be accommodated with no synchronization conflicts.
+ * @see Runnable*/
+
 public class Parser extends Observable implements Runnable{
 
     GameMode mode;
 
+    /** override for Runnable's run method, this implementation continuously
+     * requests user to perform an action.
+     * @see Runnable*/
     @Override
     public void run() {
        while(true){
@@ -23,10 +31,14 @@ public class Parser extends Observable implements Runnable{
        }
     }
 
+    /** this method stores game mode so that correct information can be requested
+     * to the user.
+     * @param mode of type GameMode - game mode of this match*/
     public void setMode(GameMode mode){
         this.mode = mode;
     }
 
+    /** */
     public synchronized void parseActionTypeExpert() {
         Scanner scanner = new Scanner(System.in);
         int i;

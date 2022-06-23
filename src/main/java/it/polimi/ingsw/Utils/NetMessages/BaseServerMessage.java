@@ -1,7 +1,11 @@
 package it.polimi.ingsw.Utils.NetMessages;
 
 import java.io.Serializable;
-
+/** instances of this class contain a base message which is used
+ * for notifying players of errors in game (not your turn, action is forbidden...) and for
+ * notifying players last round or game are starting.
+ * As this message is sent through socket, this class implements Serializable.
+ * @see Serializable*/
 public class BaseServerMessage implements ServerMessage, Serializable {
     private String message;
 

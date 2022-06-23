@@ -10,7 +10,6 @@ import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 /* you may switch up to 2 students between your entrance and your dining room */

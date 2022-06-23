@@ -8,7 +8,6 @@ import it.polimi.ingsw.Model.Model;
 import it.polimi.ingsw.Utils.NetMessages.NotifyArgsController;
 import it.polimi.ingsw.Utils.NetMessages.BaseServerMessage;
 import it.polimi.ingsw.Utils.NetMessages.CustomMessage;
-import it.polimi.ingsw.Server.Match;
 
 import java.util.Observable;
 

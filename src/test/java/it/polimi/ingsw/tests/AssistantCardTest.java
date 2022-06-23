@@ -3,7 +3,6 @@ package it.polimi.ingsw.tests;
 import it.polimi.ingsw.Model.BasicElements.AssistantCard;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;

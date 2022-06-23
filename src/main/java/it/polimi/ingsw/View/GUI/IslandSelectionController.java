@@ -2,7 +2,6 @@ package it.polimi.ingsw.View.GUI;
 
 import it.polimi.ingsw.View.GUI.Components.IslandViewComponent;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

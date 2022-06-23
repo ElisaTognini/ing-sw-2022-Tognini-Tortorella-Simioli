@@ -9,8 +9,6 @@ import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
-
-
 import java.util.ArrayList;
 
 public class Card2Test {
@@ -41,6 +39,9 @@ public class Card2Test {
     @Test
     public void usageTest(){
         initTest();
+        board.moveStudent(PawnDiscColor.PINK, "player1");
+        board.moveStudent(PawnDiscColor.PINK, "player1", board.getMotherNaturePosition());
+        board.assignProfessors();
         Parameter param = new Parameter();
         ArrayList<PawnDiscColor> colors = new ArrayList<>();
         colors.add(PawnDiscColor.GREEN);

@@ -2,7 +2,13 @@ package it.polimi.ingsw.Utils.NetMessages;
 
 import java.io.Serializable;
 
-public class PlayedCardMessage implements Serializable {
+/** this class represents messages sent by the server to its clients when
+ * one of the players plays an assistant card in game, so that the information
+ * can be displayed and every other player is able to predict Mother Nature's path
+ * As this message is sent through socket, this class implements Serializable.
+ * @see Serializable*/
+
+public class PlayedCardMessage implements Serializable, ServerMessage {
     private String owner;
     private String cardID;
     private String powerFactor;

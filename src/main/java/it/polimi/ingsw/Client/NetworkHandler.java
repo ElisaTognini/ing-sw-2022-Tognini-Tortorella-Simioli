@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Utils.Enums.TurnFlow;
-
 import java.util.Observable;
 import java.util.Observer;
 

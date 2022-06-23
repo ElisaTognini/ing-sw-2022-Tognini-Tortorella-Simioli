@@ -18,24 +18,22 @@ public class Card6 extends CharacterCardTemplate{
         cost = 3;
     }
 
-    /** Method useCard takes the parameter passed by the player inside the parameter o, the island ID, gets the number
-     * of towers present on that island and sets it as value of attribute towersOnHold in board.
-     *
+    /** Method useCard takes the parameter passed by the player inside the parameter o, which has no effect for this card.
+     *  setTowersOnHold is called, which sets as true the variable towersOnHold in Board class, which indicated
+     *  that this card was played and towers do not count towards influence.
      *
      * @param o of type Object - the parameters passed by the player
      * @param nickname of type String - the nickname of the player.
      * */
     public void useCard(Object o, String nickname){
         Parameter parameters;
-        int temp = 0;
 
         if(o instanceof Parameter){
             parameters = (Parameter)o;
         }
         else throw new IllegalArgumentException();
 
-        temp = board.getIslandList().get(parameters.getIslandID()).getNumberOfTowers();
-        board.getIslandList().get(parameters.getIslandID()).setTowersOnHold(temp);
+        board.setTowersOnHold();
     }
 
 

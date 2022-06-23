@@ -1,19 +1,20 @@
 package it.polimi.ingsw.Utils.NetMessages;
 
-import it.polimi.ingsw.Utils.NetMessages.ServerMessage;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/* every time the model updates itself, it sends a message of this type towards the
-* virtualView, so that the virtualView can send it to the client and the client
-* can view the update. */
+/** contains representation of:
+ * - islands
+ * - clouds
+ * - schoolBoards
+ * - assistantCards
+ * all the information is stored in arrayLists, and it fully represents the model's current state.
+ * These messages are sent each time the model updates itself, so that changes to the game space
+ * can be seen by the players with changes to the view (both CLI and GUI)
+ * As these messages are sent via sockets, therefore this class implements Serializable
+ * @see Serializable*/
+
 public class ViewUpdateMessage implements ServerMessage, Serializable {
-    /* must contain representation of:
-    * - islands
-    * - clouds
-    * - schoolboards
-    * - assistantCards */
 
     private ArrayList<String> islands = new ArrayList<>();
     private ArrayList<String> clouds = new ArrayList<>();

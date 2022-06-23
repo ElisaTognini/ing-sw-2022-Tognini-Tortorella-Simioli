@@ -89,6 +89,16 @@ public class SchoolBoard {
      * @return boolean - true if a player played character card 2, false otherwise */
     public boolean getModifiedTable(){return modifiedTable;}
 
+    /**
+     * setter method setProfessorTable sets the professor table of this schoolboard ad the one that has been
+     * passed as parameter.
+     *
+     * @param professorTable of type ProfessorTable - professor table.
+     * */
+    public void setProfessorTable(ProfessorTable professorTable){
+        this.professorTable = professorTable;
+    }
+
 
     /** Method toString builds a String containing all the info stored in this class
      *

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.View.CLI;
 
-import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.NetMessages.*;
 import java.util.*;
+
+/** class CLI displays current game state, errors, changes in turn and starting of matches,
+ * as well as all the game components, via command line */
 
 public class CLI extends View implements Observer {
 
@@ -13,12 +15,19 @@ public class CLI extends View implements Observer {
     private String currentPlayer;
     private ArrayList<String> cardsPlayed = new ArrayList<>();
 
+    /** constructor for class CLI, sets up parser to run on a parallel thread and prints
+     * game logo
+     * @see Parser*/
     public CLI(){
         parser = new Parser();
         thread = new Thread(parser);
         System.out.println(AnsiColors.MAGENTA + AnsiColors.COOL_TITLE + AnsiColors.ANSI_RESET);
     }
 
+    /** override for super class View's displaySetupMessage method.
+     * This method coordinates the setup phase of the game by requesting information
+     * based on the received message.
+     * @see View*/
     @Override
     public void displaySetupMessage(SetupServerMessage message){
         if (message.getSetupServerMessage().equals(CustomMessage.welcomeMessage)) {
@@ -38,6 +47,13 @@ public class CLI extends View implements Observer {
         }
     }
 
+    /** this method is used to parse the number of players of the next match. It is only called
+     * if the player is the first to connect to an empty lobby, as it is evoked in response to
+     * a server message via View class's update method. It then notifies NetworkHandler class
+     *      * so that the message containing the requested information can be sent.
+     * @see View
+     * @see Observer
+     * @see Observable*/
     private void parseNumberOfPlayers() {
         Scanner scanner = new Scanner(System.in);
         int i = scanner.nextInt();
@@ -47,6 +63,13 @@ public class CLI extends View implements Observer {
         notifyObservers(message);
     }
 
+    /**this method is used to parse the GameMode of the next match. It is only called
+     * if the player is the first to connect to an empty lobby, as it is evoked in response to
+     * a server message via View class's update method. It then notifies NetworkHandler class
+     * so that the message containing the requested information can be sent.
+     * @see View
+     * @see Observer
+     * @see Observable*/
     private void parseGameMode(){
         Scanner scanner = new Scanner(System.in);
         String mode = scanner.nextLine();
@@ -56,6 +79,9 @@ public class CLI extends View implements Observer {
         notifyObservers(message);
     }
 
+    /** this method requests the player's nickname, and it then notifies NetworkHandler class
+     * so that the message containing the requested information can be sent.
+     * @see Observable*/
     private void parseNickname(){
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
@@ -65,11 +91,16 @@ public class CLI extends View implements Observer {
         notifyObservers(message);
     }
 
+    /** getter method for local reference to parser
+     * @return parser of type Parser - user's parser
+     * @see Parser*/
     public Parser getParser(){
         return parser;
     }
 
-
+    /** method prints via command line interface the elements regarding islands,
+     * decks and mother nature's position.
+     * @param message of type ViewUpdateMessage - information about whole game state*/
     public void buildNewBoard(ViewUpdateMessage message) {
         String header = "ISLANDS\n";
         header += AnsiColors.formatDiv("a------b------b-------b--------b------b-----b---------b--------c\n");
@@ -106,6 +137,8 @@ public class CLI extends View implements Observer {
         System.out.print("\n");
     }
 
+    /** this method prints via CLI the students on clouds and their IDs
+     * @param message of type ViewUpdateMessage - information about whole game state*/
         public void printClouds(ViewUpdateMessage message){
             System.out.println("CLOUDS: ");
             for(String cloud: message.getClouds()){
@@ -119,6 +152,9 @@ public class CLI extends View implements Observer {
             }
         }
 
+        /** this method prints the player's deck and all information regarding owned
+         * assistant cards
+         * @param decks of type ArrayList<String> - match's decks*/
         public void printDeck(ArrayList<String> decks){
             System.out.println("Assistant cards in your deck:");
             for(String deck: decks){
@@ -142,6 +178,9 @@ public class CLI extends View implements Observer {
             System.out.println("current player: " + currentPlayer);
     }
 
+    /** this method prints all school boards of players participating in the
+     * match.
+     * @param message of type ViewUpdateMessage - information about whole game state*/
     public void printSchoolboard(ViewUpdateMessage message) {
 
         for (String sb : message.getSchoolboards()) {
@@ -193,6 +232,9 @@ public class CLI extends View implements Observer {
         }
     }
 
+    /** this method prints expert features (character cards, coins and no entry tiles on islands)
+     * as well as calling buildNewBoard method so that base features can also be displayed
+     * @param message of type ExpertViewUpdateMessage - information about whole game state including expert features*/
     public void buildNewBoardExpert(ExpertViewUpdateMessage message){
         System.out.println("------------EXPERT FEATURES------------");
         System.out.print("ISLANDS WITH NO ENTRY TILES: ");
@@ -211,6 +253,9 @@ public class CLI extends View implements Observer {
 
     }
 
+    /** method prints all information about extracted character cards
+     * (description, cost, and other elements if present) on command line.
+     * @param extractedCards of type ArrayList<String> - all information about the cards*/
     public void printExtractedCards(ArrayList<String> extractedCards){
         StringBuilder str = null;
         ArrayList<String> descriptions = new ArrayList<>();
@@ -236,6 +281,8 @@ public class CLI extends View implements Observer {
         for(String d : descriptions) System.out.println("- " + d);
     }
 
+    /** this method prints all information about all players and the amount of coins they own.
+     * @param coinCounters of type ArrayList<String> contains all information about coins and their owners*/
     public void printCoinCounter(ArrayList<String> coinCounters){
         System.out.println("COINS ");
         for(String counter : coinCounters){
@@ -245,7 +292,10 @@ public class CLI extends View implements Observer {
         }
     }
 
-    /* this method prints errors in red, basing off the corresponding type of BaseServerMessage received */
+    /** this method prints player's rule
+     * misuse and errors in red, basing off the corresponding type of BaseServerMessage received
+     * It overrides super class's method displayError.
+     * @param message of type BaseServerMessage contains the type of error*/
     @Override
     public void displayError(BaseServerMessage message){
         System.out.println(AnsiColors.ANSI_RED + "\n" + message.getMessage() + AnsiColors.ANSI_RESET);
@@ -254,44 +304,76 @@ public class CLI extends View implements Observer {
         }
     }
 
+    /** this message prints a notification for the start of a new round
+     * on CLI interface. It overrides super class's method displayNewRoundMessage.
+     * @param message of type NewRoundMessage contains the message printed on screen*/
     @Override
     public void displayNewRoundMessage(NewRoundMessage message){
         cardsPlayed.clear();
         System.out.println(CustomMessage.startNewRound);
     }
 
+
+    /** this method prints a notification for the start of a new round
+     * on CLI interface. It overrides super class's method displayTurnChange.
+     * @param message of type TurnChangeMessage contains the message printed on screen*/
     @Override
     public void displayTurnChange(TurnChangeMessage message){
         System.out.println("Now playing " + message.getCurrentPlayer());
         currentPlayer = message.getCurrentPlayer();
     }
 
+    /** this method shows the victory screen when the game is over and displays the
+     * name of the winner on CLI interface.
+     *It overrides super class's displayEndOfGame method.
+     * @param message of type EndGameMessage contains the nickname of the winner of this match*/
     @Override
     public void displayEndOfGame(EndGameMessage message){
         System.out.println("Game over! Congrats to " + message.getWinner() + " who won the game");
     }
 
+    /** this method prints a new representation of the current state of the gameboard,
+     * it overrides super class's updateGameBoard method.
+     * @param message of type ViewUpdateMessage - information about whole game state
+     * */
     @Override
     public void updateGameBoard(ViewUpdateMessage message){
         buildNewBoard(message);
     }
 
+    /** this method prints a new representation of the current state of the gameboard,
+     * including expert features.
+     * it overrides super class's updateGameBoardExpert method.
+     * @param message of type ExpertViewUpdateMessage - information about whole game state
+     * */
     @Override
     public void updateGameBoardExpert(ExpertViewUpdateMessage message){
         buildNewBoardExpert(message);
     }
 
+    /** this method stores the gameMode which allows the methods of this class
+     * to differentiate information to display based on the game mode of this match.
+     * it overrides super class's setMode method
+     * @param mode of type GameMode - the game mode for this match*/
     @Override
     public void setMode(GameModeMessage mode){
         parser.setMode(mode.getMode());
         thread.start();
     }
 
+    /** this method stores the player's nickname to aid with
+     * printing everything correctly.
+     * it overrides super class's setNickname method
+     * @param nick of type NicknameMessage contains this player's nickname*/
     @Override
     public void setNickname(NicknameMessage nick){
         this.nickname = nick.getNickname();
     }
 
+    /** this message stores the assistant cards played for this round which are then displayed so that
+     * all players can predict Mother Nature's path.
+     * it overrides super class's setPlayedCard method
+     * @param message of type PlayedCardMessage contains information about played assstant card*/
     @Override
     public void setPlayedCard(PlayedCardMessage message){
         String stringBuilder = message.getOwner() + " " +

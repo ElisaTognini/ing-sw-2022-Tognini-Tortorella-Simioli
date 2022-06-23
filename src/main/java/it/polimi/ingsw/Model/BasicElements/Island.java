@@ -20,9 +20,7 @@ public class Island {
     private StudentContainer container;
     private int noEntryTile;
     private int numberOfTowers;
-    private int towersOnHold;
     private int influence;
-    private int ignoredInfluence;
 
     /** Constructor Island creates a new instance of an island.
      *
@@ -34,9 +32,7 @@ public class Island {
         container = new StudentContainer();
         noEntryTile = 0;
         numberOfTowers = 0;
-        towersOnHold = 0;
         influence = 0;
-        ignoredInfluence = 0;
     }
 
 
@@ -72,13 +68,12 @@ public class Island {
     /** Method getInfluenceByColor returns the number of students of the color given that are on the island, in
     * order to calculate the influence the player has on the island for that color. Influence is calculated if
     * the player actually has the professor of corresponding color.
-    * Variable ignoredInfluence is 0 by default: it changes only when Character Card 9 is played.
+    * Variable ignoredInfluence is null by default: it changes only when Character Card 9 is played.
     *
     * @param color - of type PawnDiscColor - the color the influence has to be calculated of
     * @return Integer - the number of student of the color given, present on the island*/
     public int getInfluenceByColor(PawnDiscColor color){
-            influence = container.getInfluence(color) + ignoredInfluence;
-            ignoredInfluence = 0;
+            influence = container.getInfluence(color);
             return influence;
     }
 
@@ -149,7 +144,7 @@ public class Island {
 
 
     /** Method increaseNumberOfTowers increases the number of towers on an island.
-     * This method is called in case of merge among adiacent islands, where one of the islands stay and increases
+     * This method is called in case of merge among adjacent islands, where one of the islands stay and increases
      * towers and number of students, while the other(s) are removed from the array list of islands referenced in the
      * Board class.
      *
@@ -166,40 +161,11 @@ public class Island {
         return numberOfTowers;
     }
 
-    /** getter method - getTowersOnHold returns the number of towers must be ignored during the calculation of the
-     * influence on island. Variable towersOnHold is set to 0 by default, can only be modified in Expert Mode when
-     * Character Card 6 has been played.
-     *
-     * @return Integer - number of towers which do not count for influence */
-    public int getTowersOnHold(){ return towersOnHold; }
-
-
-    /** setter method - setTowersOnHold, only called in Expert Mode when Character Card 6 has been played, sets
-     * the number the variable must have for the resolving of the influence in that turn.
-     *
-     * @param n - of type int - number of towers on the island */
-    public void setTowersOnHold(int n) { towersOnHold = n; }
-
-
-    /** ignoreInfluence takes in input the color chosen by the player to be excluded when calculating
-     * the influence on an island.
-     * Variable ignoredInfluence is set to 0 by default and only changed if character card 9 is played.
-     *
-     * @param color - of type PawnDiscColor - color chosen by the player to be excluded */
-    public void ignoreInfluence(PawnDiscColor color){
-        ignoredInfluence = -container.getInfluence(color);
-    }
-
-
-    /** setter method - setIgnoredInfluence sets variable ignoreInfluence to 0 in setup or after character
-     * card 9 has been used. */
-    public void setIgnoredInfluencetoZero(){ignoredInfluence = 0;}
-
-
     /** getter method - getNumberOfNEtiles returns the number of no entry tiles present on an island
      *
      * @return int - number of no entry tiles */
     public int getNumberOfNEtiles(){return noEntryTile;}
+
     public void setIslandID(int id){this.islandID = id;}
 
 
