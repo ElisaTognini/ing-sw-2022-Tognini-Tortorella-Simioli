@@ -41,6 +41,7 @@ public class Card2 extends CharacterCardTemplate{
 
         for(PawnDiscColor c: parameters.getColorArrayList()){
                 sb.getProfessorTable().addProfessor(c);
+
         }
         sb.setModifiedTable();
     }

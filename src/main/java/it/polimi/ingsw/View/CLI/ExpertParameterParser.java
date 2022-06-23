@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class ExpertParameterParser {
 
+
     public Parameter parseParameter(int cardID){
         Parameter param = new Parameter();
         switch(cardID){

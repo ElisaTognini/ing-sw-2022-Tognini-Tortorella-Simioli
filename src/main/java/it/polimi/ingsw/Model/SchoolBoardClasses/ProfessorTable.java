@@ -113,7 +113,14 @@ public class ProfessorTable {
     /** Method resetPreviousProfessorTable resets the player's professor table to the state it was before playing
      * character card 2 */
     public void resetPreviousProfessorTable(){
-        professors = previousState;
+        for(Professor p : professors){
+            removeProfessor(p.getColor());
+        }
+
+        for(Professor p : previousState){
+            if(p.isOwnedByPlayer())
+                addProfessor(p.getColor());
+        }
     }
 }
 
