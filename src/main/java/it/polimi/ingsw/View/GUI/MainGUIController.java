@@ -544,6 +544,7 @@ public class MainGUIController extends Observable {
             String[] card = c.split("-");
             StackPane cardPane = expertCardStackPanes.get(i);
             cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText("[" + card[1]+"] " + card[2]));
+            i++;
         }
     }
 
