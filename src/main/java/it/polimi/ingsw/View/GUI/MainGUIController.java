@@ -587,7 +587,9 @@ public class MainGUIController extends Observable {
         Parent root = loader.load();
         Scene studentSelectionScene = new Scene(root);
         cardStage.setScene(studentSelectionScene);
-        cardStage.showAndWait();
+        try {
+            cardStage.showAndWait();
+        }catch(IllegalStateException e){}
     }
 
     public void collectIslandId() throws IOException {
@@ -597,7 +599,9 @@ public class MainGUIController extends Observable {
         cardStage.setScene(islandSelectionScene);
         IslandSelectionController islandSelectionController = loader.getController();
         Platform.runLater(() -> islandSelectionController.drawIslands(islandList));
+        try{
         cardStage.showAndWait();
+        }catch (IllegalStateException e){}
     }
 
     public void addNoEntryTile(ArrayList<Integer> islands){
@@ -614,7 +618,9 @@ public class MainGUIController extends Observable {
         Parent root = loader.load();
         Scene collectMovesScene = new Scene(root);
         cardStage.setScene(collectMovesScene);
-        cardStage.showAndWait();
+        try {
+            cardStage.showAndWait();
+        }catch(IllegalStateException e){}
     }
 
     public void collectProfessors() throws IOException {
@@ -622,7 +628,10 @@ public class MainGUIController extends Observable {
         Parent root = loader.load();
         Scene chooseProfScene = new Scene(root);
         cardStage.setScene(chooseProfScene);
+        try{
         cardStage.showAndWait();
+        }catch (IllegalStateException e){}
+
     }
 
     public void collectStudentList() throws IOException {
@@ -630,7 +639,9 @@ public class MainGUIController extends Observable {
         Parent root = loader.load();
         Scene chooseStudentListScene = new Scene(root);
         cardStage.setScene(chooseStudentListScene);
-        cardStage.showAndWait();
+        try {
+            cardStage.showAndWait();
+        }catch(IllegalStateException e){}
     }
 
     public void handleCard() throws IOException {
