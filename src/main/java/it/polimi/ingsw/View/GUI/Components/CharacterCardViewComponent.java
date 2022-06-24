@@ -3,11 +3,20 @@ package it.polimi.ingsw.View.GUI.Components;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class CharacterCardViewComponent is used to handle character cards in GUI.
+ *
+ * @see ImageView
+ * */
 public class CharacterCardViewComponent extends ImageView {
 
     private int id;
-    private String description;
 
+    /**
+     * Constructor CharacterCardViewComponent creates a new CharacterCardViewComponent instance.
+     *
+     * @param id of type int - character card id.
+     * */
     public CharacterCardViewComponent(int id){
         this.id = id;
         setCharImage(id);
@@ -21,10 +30,12 @@ public class CharacterCardViewComponent extends ImageView {
         });
     }
 
-    public int getCardId() {
-        return id;
-    }
-
+    /**
+     * Method setCharImage associates an image to each character card,
+     * based on the parameter indicating the id of the card.
+     *
+     * @param id of type int - character card id.
+     * */
     private void setCharImage(int id) {
         switch (id){
             case 1:
@@ -66,5 +77,14 @@ public class CharacterCardViewComponent extends ImageView {
         }
         this.setFitHeight(120);
         this.setFitWidth(85);
+    }
+
+    /**
+     * Getter method getCardID returns the id of this character card.
+     *
+     * @return int - character card id.
+     * */
+    public int getCardId() {
+        return id;
     }
 }

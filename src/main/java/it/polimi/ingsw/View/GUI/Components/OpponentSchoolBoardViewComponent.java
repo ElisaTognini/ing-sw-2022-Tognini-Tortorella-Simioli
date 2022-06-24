@@ -10,6 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * Class OpponentSchoolBoardViewComponent is used to show any other players' schoolboards in GUI.
+ *
+ * @see GridPane
+ * */
 public class OpponentSchoolBoardViewComponent extends GridPane {
 
     private Label nickLabel = new Label();
@@ -21,6 +26,12 @@ public class OpponentSchoolBoardViewComponent extends GridPane {
     private Label yellowStudents = new Label();
     private Label towerNumber = new Label();
 
+    /**
+     * Constructor OpponentSchoolBoardViewComponent creates a new OpponentSchoolBoardViewComponent instance,
+     * which belongs to the player whose nickname is given as parameter.
+     *
+     * @param nickname of type String - nickname of the player who owns this schoolboard.
+     * */
     public OpponentSchoolBoardViewComponent(String nickname){
         this.nickname = nickname;
         setPadding(new Insets(5, 8, 5, 8));
@@ -67,31 +78,76 @@ public class OpponentSchoolBoardViewComponent extends GridPane {
         add(towerNumber, 1, 6);
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
+    /**
+     * Method showPinkStudents is used to indicate how many pink students belong to this opponent's
+     * entrance and/or dining room.
+     *
+     * @param entr of type String - number of pink students in opponent's entrance.
+     * @param dr of type String - number of pink students in opponent's dining room.
+     * */
     public void showPinkStudents(String entr, String dr){
         pinkStudents.setText(" entrance: " + entr + " dining room: " + dr);
     }
 
+    /**
+     * Method showBlueStudents is used to indicate how many blue students belong to this opponent's
+     * entrance and/or dining room.
+     *
+     * @param entr of type String - number of blue students in opponent's entrance.
+     * @param dr of type String - number of blue students in opponent's dining room.
+     * */
     public void showBlueStudents(String entr, String dr){
         blueStudents.setText(" entrance: " + entr + " dining room: " + dr);
     }
 
+    /**
+     * Method showGreenStudents is used to indicate how many green students belong to this opponent's
+     * entrance and/or dining room.
+     *
+     * @param entr of type String - number of green students in opponent's entrance.
+     * @param dr of type String - number of green students in opponent's dining room.
+     * */
     public void showGreenStudents(String entr, String dr){
         greenStudents.setText(" entrance: " + entr + " dining room: " + dr);
     }
 
+    /**
+     * Method showYellowStudents is used to indicate how many yellow students belong to this opponent's
+     * entrance and/or dining room.
+     *
+     * @param entr of type String - number of yellow students in opponent's entrance.
+     * @param dr of type String - number of yellow students in opponent's dining room.
+     * */
     public void showYellowStudents(String entr, String dr){
         yellowStudents.setText(" entrance: " + entr + " dining room: " + dr);
     }
 
+    /**
+     * Method showRedStudents is used to indicate how many red students belong to this opponent's
+     * entrance and/or dining room.
+     *
+     * @param entr of type String - number of red students in opponent's entrance.
+     * @param dr of type String - number of red students in opponent's dining room.
+     * */
     public void showRedStudents(String entr, String dr){
         redStudents.setText(" entrance: " + entr + " dining room: " + dr);
     }
 
+    /**
+     * Method showTowerNumber is used to indicate how many towers are left in this opponent's tower section.
+     *
+     * @param num of type String - number of towers left in tower section.
+     * */
     public void showTowerNumber(String num){
         towerNumber.setText(num);
+    }
+
+    /**
+     * Getter method getNickname returns the nickname of the player who owns this schoolboard.
+     *
+     * @return String - player nickname.
+     * */
+    public String getNickname() {
+        return nickname;
     }
 }

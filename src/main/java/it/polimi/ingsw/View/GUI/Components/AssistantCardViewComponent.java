@@ -1,14 +1,23 @@
 package it.polimi.ingsw.View.GUI.Components;
 
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+
+/**
+ * Class AssistantCardViewComponent is used to handle assistant cards in GUI.
+ *
+ * @see ImageView
+ * */
 
 public class AssistantCardViewComponent extends ImageView {
 
     private int cardID;
 
+    /**
+     * Constructor AssistantCardViewComponent creates a new AssistantCardViewComponent instance.
+     *
+     * @param id of type int - assistant card id.
+     * */
     public AssistantCardViewComponent(int id){
         this.cardID = id;
         cardSetter(id);
@@ -21,14 +30,13 @@ public class AssistantCardViewComponent extends ImageView {
             setFitHeight(110);
             setFitWidth(75);
         });
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-
-            }
-        });
     }
 
+    /**
+     * Method cardSetter associates an image to each assistant card, based on the parameter indicating the id of the card.
+     *
+     * @param id of type int - assistant card id.
+     * */
     public void cardSetter(int id){
         switch(id){
             case 1:
@@ -67,6 +75,11 @@ public class AssistantCardViewComponent extends ImageView {
         this.setFitWidth(75);
     }
 
+    /**
+     * Getter method getCardID returns the id of this assistant card.
+     *
+     * @return int - assistant card id.
+     * */
     public int getCardID() {
         return cardID;
     }
