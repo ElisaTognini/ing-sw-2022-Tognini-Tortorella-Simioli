@@ -301,6 +301,7 @@ public class CLI extends View implements Observer {
         System.out.println(AnsiColors.ANSI_RED + "\n" + message.getMessage() + AnsiColors.ANSI_RESET);
         if(message.getMessage().equals(CustomMessage.closingConnection)){
             System.out.println("thank you for playing!");
+            System.exit(0);
         }
     }
 

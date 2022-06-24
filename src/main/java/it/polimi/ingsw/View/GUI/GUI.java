@@ -137,6 +137,11 @@ public class GUI extends Application implements Observer{
             Platform.runLater(() -> mainController.winningScreen(message.getWinner()));
         }
 
+        @Override
+        public void displayNewRoundMessage(NewRoundMessage message){
+            Platform.runLater(() -> mainController.clearPlayedCardLabels());
+        }
+
     }
 
     private InternalGUI internalGUI;

@@ -58,6 +58,7 @@ public class MainGUIController extends Observable {
     static ArrayList<IslandViewComponent> islandList = new ArrayList<>();
     ArrayList<ImageView> islandsImgs = new ArrayList<>();
     ArrayList<GridPane> cloudGrids = new ArrayList<>();
+    ArrayList<StackPane> expertCardStackPanes = new ArrayList<>();
     HashMap<String, TowerColor> towerColors = new HashMap<>();
 
     static Stage cardStage = new Stage();
@@ -150,8 +151,6 @@ public class MainGUIController extends Observable {
             refreshSchoolBoards(schoolBoards);
         }
 
-
-
         mainPlayerSB.setLayoutY(550);
         mainPlayerSB.setLayoutX(13);
         mainPlayerSB.setFitWidth(500);
@@ -214,7 +213,6 @@ public class MainGUIController extends Observable {
             playedCardsVBox.getChildren().add(new PlayedCardLabel(deck[0]));
             if(deck[0].equals(GUI.getNickname())) {
                 refreshDeck(d);
-                return;
             }
 
         }
@@ -456,6 +454,7 @@ public class MainGUIController extends Observable {
             StackPane cardPane = new StackPane();
             GridPane studentGrid = new GridPane();
             studentGrids.add(studentGrid);
+            expertCardStackPanes.add(cardPane);
             String[] card = c.split("-");
             CharacterCardViewComponent character = new CharacterCardViewComponent(Integer.valueOf(card[0]));
             cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText("[" + card[1]+"] " + card[2]));
@@ -543,7 +542,7 @@ public class MainGUIController extends Observable {
 
         for(String c : cards){
             String[] card = c.split("-");
-            StackPane cardPane = (StackPane) expertCardsHBox.getChildren().get(i);
+            StackPane cardPane = expertCardStackPanes.get(i);
             cardPane.setOnMouseEntered(mouseEvent -> expertCardTextArea.setText("[" + card[1]+"] " + card[2]));
         }
     }
@@ -680,4 +679,11 @@ public class MainGUIController extends Observable {
         cardStage.close();
     }
 
+    public void clearPlayedCardLabels() {
+        for(Node n : playedCardsVBox.getChildren()){
+            if(n instanceof PlayedCardLabel){
+                ((PlayedCardLabel) n).setText("");
+            }
+        }
+    }
 }
