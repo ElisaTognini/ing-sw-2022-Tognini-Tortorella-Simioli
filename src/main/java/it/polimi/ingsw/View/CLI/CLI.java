@@ -56,7 +56,21 @@ public class CLI extends View implements Observer {
      * @see Observable*/
     private void parseNumberOfPlayers() {
         Scanner scanner = new Scanner(System.in);
-        int i = scanner.nextInt();
+        int i;
+
+        do {
+            String num;
+            num = scanner.next();
+            if(!num.equals("2") && !num.equals("3")){
+                System.err.println("enter a valid player number!\n");
+            }
+            else{
+                i = Integer.valueOf(num);
+                break;
+            }
+
+        }while(true);
+
         BaseUserMessage message = new BaseUserMessage();
         message.setNumberOfPlayers(i);
         setChanged();
@@ -72,7 +86,14 @@ public class CLI extends View implements Observer {
      * @see Observable*/
     private void parseGameMode(){
         Scanner scanner = new Scanner(System.in);
-        String mode = scanner.nextLine();
+        String mode;
+        do {
+            mode = scanner.nextLine();
+
+            if(!mode.equalsIgnoreCase("SIMPLE") &&  !mode.equalsIgnoreCase("EXPERT")){
+                System.err.println("enter a valid game mode!\n");
+            }
+        }while(!mode.equalsIgnoreCase("SIMPLE") &&  !mode.equalsIgnoreCase("EXPERT"));
         BaseUserMessage message = new BaseUserMessage();
         message.setGameMode(mode);
         setChanged();
