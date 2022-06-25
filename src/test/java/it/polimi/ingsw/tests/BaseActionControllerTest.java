@@ -28,33 +28,43 @@ public class BaseActionControllerTest {
     }
 
 
+    /** Method startGameTest calls for startGame using this controller*/
     @Test
     public void startGameTest() {
         initTest();
         controller.getBaseActionController().startGame();
     }
 
+    /** Method chooseAssistantCardTest checks if round manager is currently on BEGINS_TURN, then simulates the planning
+     * phase when players have to pick an AssistantCard: in this test, one of the players enters an invalid card ID
+     * to see if the controller handles it correctly.
+     * This test is run five times in order to make sure this happens with both players, since the order for the first
+     * planning is extracted randomly. */
     @RepeatedTest(5)
     public void chooseAssistantCardTest() {
         initTest();
         controller.getBaseActionController().startGame();
         if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
-            //System.out.println("if");
-            //System.out.println(model.getRoundManager().getCurrentState());
+
+            assertTrue(TurnFlow.BEGINS_TURN.equals(model.getRoundManager().getCurrentState()));
             assertTrue(controller.getBaseActionController().chooseAssistantCard(1, "player1"));
             assertFalse(controller.getBaseActionController().chooseAssistantCard(12, "player2"));
             assertTrue(controller.getBaseActionController().chooseAssistantCard(2, "player2"));
-            //System.out.println(model.getRoundManager().getCurrentState());
+            assertTrue(TurnFlow.CARD_PICKED.equals(model.getRoundManager().getCurrentState()));
         } else {
-            //System.out.println("else");
-            //System.out.println(model.getRoundManager().getCurrentState());
+            assertTrue(TurnFlow.BEGINS_TURN.equals(model.getRoundManager().getCurrentState()));
             assertFalse(controller.getBaseActionController().chooseAssistantCard(12, "player2"));
             assertTrue(controller.getBaseActionController().chooseAssistantCard(2, "player2"));
             assertTrue(controller.getBaseActionController().chooseAssistantCard(1, "player1"));
-            //System.out.println(model.getRoundManager().getCurrentState());
+            assertTrue(TurnFlow.CARD_PICKED.equals(model.getRoundManager().getCurrentState()));
         }
     }
 
+
+    /** Method moveStudentToDRTest checks if the controller handles the action phase correctly: firstly, it stores
+     * two cards for the two players, then checks if current state in round manager is set to CARD_PICKED and, if the
+     * player has the selected color in their entrance, it calls for moveStudentToDR to move students from the entrance
+     * to the dining room. */
     @RepeatedTest(5)
     public void moveStudentToDRTest() {
         AssistantCard card1;
@@ -87,6 +97,14 @@ public class BaseActionControllerTest {
         }
     }
 
+
+
+    /** Method moveStudentToIslandTest checks if the controller handles the action phase correctly: firstly, it stores
+     * two cards for the two players, then checks if current state in round manager is set to CARD_PICKED and, if the
+     * player has the selected color in their entrance, it calls for moveStudentToIsland to move students from the
+     * entrace to the dining room.
+     * Variable threeStudentsMoved is increased manually for the purpose of this test only.
+     * */
     @RepeatedTest(5)
     public void moveStudentToIslandTest(){
         AssistantCard card1;
@@ -107,7 +125,7 @@ public class BaseActionControllerTest {
             model.getRoundManager().storeCards(card2);
         }
 
-        /* Increased manually for the purpose of this test only */
+
         model.getRoundManager().increaseMovedStudents();
         model.getRoundManager().increaseMovedStudents();
 
@@ -126,7 +144,11 @@ public class BaseActionControllerTest {
         }
     }
 
-    /*@RepeatedTest(5)
+
+    /** Method picksCloudTest checks if the controller handles correctly the choosing of a cloud tile,
+     * handling the situation where a cloud has already been picked.
+     * Turn flow manually set to MOVED_STUDENTS from the start just for the purpose of this test. */
+    @RepeatedTest(5)
     public void picksCloudTest() {
 
         AssistantCard card1;
@@ -147,18 +169,19 @@ public class BaseActionControllerTest {
             model.getRoundManager().storeCards(card2);
         }
 
-        /* Turn flow manually set to MOVED_STUDENTS from the start just for the purpose of this test
         model.getRoundManager().changeState(TurnFlow.MOVED_STUDENTS);
 
         if (model.getRoundManager().getCurrentPlayer().getNickname().equals("player1")) {
             assertTrue(controller.getBaseActionController().picksCloud("player1", 1));
+            model.getRoundManager().changeState(TurnFlow.MOVED_STUDENTS);
             assertFalse(controller.getBaseActionController().picksCloud("player2", 1));
             assertTrue(controller.getBaseActionController().picksCloud("player2", 0));
         } else {
             assertTrue(controller.getBaseActionController().picksCloud("player2", 1));
+            model.getRoundManager().changeState(TurnFlow.MOVED_STUDENTS);
             assertFalse(controller.getBaseActionController().picksCloud("player1", 1));
             assertTrue(controller.getBaseActionController().picksCloud("player1", 0));
         }
 
-    }*/
+    }
 }

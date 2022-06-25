@@ -10,12 +10,18 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
+/** Class BoardTest tests class BoardTest. */
+
 public class BoardTest {
 
     ArrayList<Player> players = new ArrayList<>();
     Board boardToTest;
     Model model;
 
+    /** Method playAssistantCardTest tests the playing of an assistant card and checks if the value of the card match
+     * the ones stored in local variable card.
+     *
+     * */
     @Test
     public void playAssistantCardTest(){
         players.add(new Player("player1"));
@@ -25,14 +31,16 @@ public class BoardTest {
         try {
             boardToTest.setup();
         }catch (Exception e){}
+
         AssistantCard card = new AssistantCard(1, 1, players.get(0));
         card = boardToTest.playAssistantCard(1, "player1");
         assertEquals(1, card.getAssistantCardID());
         assertEquals(1, card.getMotherNatureMovements());
     }
 
+
+    /** Method moveStudentTest tests moving of a student from the entrance to the dining room. */
     @Test
-    /* moving students from entrance to dining room */
     public void moveStudentTest(){
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -41,13 +49,18 @@ public class BoardTest {
         try {
             boardToTest.setup();
         }catch (Exception e){}
+
         if(boardToTest.colorAvailableInEntrance("player2", PawnDiscColor.BLUE)){
             boardToTest.moveStudent(PawnDiscColor.BLUE, "player2");
+            assertTrue(boardToTest.getSchoolBoards().get(1).getDiningRoom().influenceForProf(PawnDiscColor.BLUE) == 1);
         }
     }
 
+
+    /** Method moveStudentTest tests moving of a student from the entrance to an island. */
     @Test
     public void moveStudentToIslandTest(){
+        int i = 0;
         players.add(new Player("player1"));
         players.add(new Player("player2"));
         boardToTest = new Board(players, 2, 8,
@@ -55,11 +68,18 @@ public class BoardTest {
         try {
             boardToTest.setup();
         }catch (Exception e){}
+
+        i = boardToTest.getIslandList().get(4).getInfluenceByColor(PawnDiscColor.GREEN);
+
         if(boardToTest.colorAvailableInEntrance("player1", PawnDiscColor.GREEN)){
             boardToTest.moveStudent(PawnDiscColor.GREEN, players.get(0).getNickname(), 4);
+            i = i + boardToTest.getIslandList().get(4).getInfluenceByColor(PawnDiscColor.GREEN);
+            assertTrue(i >= 1);
         }
     }
 
+
+    /** Method pickCloudTileTest tests the choosing of a cloud tile. */
     @Test
     public void pickCloudTileTest(){
         players.add(new Player("player1"));
@@ -67,17 +87,24 @@ public class BoardTest {
         players.add(new Player("player3"));
         boardToTest = new Board(players, 3, 6,
                 4, 9, GameMode.SIMPLE);
+        int i = 0;
         try {
             boardToTest.setup();
         }catch (Exception e){}
-        for(PawnDiscColor c : PawnDiscColor.values()){
-            if(boardToTest.colorAvailableInEntrance("player3", c))
-                boardToTest.moveStudent(c, "player3");
-        }
+        do {
+            for (PawnDiscColor c : PawnDiscColor.values()) {
+                if (boardToTest.colorAvailableInEntrance("player3", c))
+                    boardToTest.moveStudent(c, "player3");
+                i++;
+            }
+        }while(i<3);
         if(!boardToTest.getPlayerSchoolBoard(players.get(2).getNickname()).getEntrance().isEntranceFull())
             boardToTest.chooseCloudTile("player3", 2);
     }
 
+
+    /** Method moveMotherNatureTest tests the moving of mother nature: it calls for moveMotherNature and assigns it
+     * n movements, then checks if the module operation computes correctly. */
     @Test
     public void moveMotherNatureTest(){
         int initial_pos;
@@ -96,8 +123,8 @@ public class BoardTest {
         assertEquals(final_pos, boardToTest.getMotherNaturePosition());
     }
 
+    /** Method assignProfessorsTest method tests the assigning of the professors */
     @Test
-    /* test for the assignProfessors method */
     public void assignProfessorsTest() {
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -120,7 +147,7 @@ public class BoardTest {
         System.out.println(boardToTest.getPlayerSchoolBoard("player2").getProfessorTable());
     }
 
-    /* this test attempts to simulate a turn to test the way the various methods interact
+    /** Method turnFacSimileTest attempts to simulate a turn to test the way the various methods interact
     * with each other, testing the way an island can be conquered based on the way mother nature moves,
     * not integrating the assistant card drawing which is tested along with the turn manager class */
     @Test
@@ -134,7 +161,6 @@ public class BoardTest {
             boardToTest.setup();
         }catch (Exception e){}
 
-        /* simulated turn (partial)*/
         int ip = 0;
         while(ip < 3){
             for(PawnDiscColor c : PawnDiscColor.values()){
@@ -154,9 +180,8 @@ public class BoardTest {
             System.out.println("player 2 conquered the " + boardToTest.getMotherNaturePosition() + " island!");
     }
 
-    /* more structured game-phase tests will be possible when testing the
-    * Model class and controller classes*/
-    /* out of bounds exception is thrown, i still need to understand where  */
+    /** Method repeatedConqueringTest simulates a player's turn where they move students both to the island and to the
+     * their dining room, then conquers the island and checks if there's merging to do. */
     @Test
     public void repeatedConqueringTest() {
         players.add(new Player("player1"));
@@ -191,8 +216,13 @@ public class BoardTest {
         }
     }
 
+
+    /** Method conquerTest tests the conquering of an island: firstly, it tests the conquering of empty islands,
+     *  handling the conquering of an island when two players hold the same influence, leaving the island
+     *  unconquered.
+     *  If the island has not yet been conquered and there is a tie between players regarding the influence,
+     *  the island is conquered by the current player (nickname in the conquerIsland parameters)*/
     @RepeatedTest(20)
-    /* handles corner cases for conquering islands */
     public void conquerTest() {
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -202,16 +232,12 @@ public class BoardTest {
             boardToTest.setup();
         }catch (Exception e){}
 
-        /* tests the conquering of empty islands */
         boardToTest.getMotherNature().setPosition((boardToTest.getMotherNaturePosition() + 6) % 12);
         System.out.println("is island empty? " + boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfIslandIsEmpty());
         boardToTest.conquerIsland();
 
         assertEquals(false, boardToTest.getIslandList().get(boardToTest.getMotherNaturePosition()).checkIfConquered());
 
-        /* checks the conquering of an island when two players hold the same influence - unconquered island */
-        /* if the island has not yet been conquered and there is a tie between players regarding the influence,
-         * the island is conquered by the current player (nickname in the conquerIsland parameters)*/
         for (int i = 0; i < 2; i++) {
             try {
                 boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1", boardToTest.getMotherNaturePosition());
@@ -232,7 +258,6 @@ public class BoardTest {
             System.out.println("island wasn't conquered!");
         }
 
-        /*checking if a conquered island with the same influence doesn't change owner*/
         try {
             boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1", boardToTest.getMotherNaturePosition());
             boardToTest.moveStudent(PawnDiscColor.YELLOW, "player1");
@@ -265,6 +290,4 @@ public class BoardTest {
             System.out.println("island not conquered!\n");
         }
     }
-
-
 }

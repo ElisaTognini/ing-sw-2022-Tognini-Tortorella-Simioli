@@ -11,13 +11,15 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
+/** Class Card1Test tests class Card1*/
+
 public class Card1Test {
 
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the card */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -27,7 +29,6 @@ public class Card1Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(1);
         cards[1] = manager.returnCard(2);
@@ -36,9 +37,10 @@ public class Card1Test {
         board.setExtractedCards(cards);
     }
 
+
+    /** Method usageTest tests the usage of the card and its impact on the game, calling isActionForbidden to make sure
+     * that the action is not forbidden, that the parameters are valid. */
     @RepeatedTest(5)
-    /*test followed with a debugger shows the correct
-    * effects acted by the card on the board.*/
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
@@ -51,6 +53,8 @@ public class Card1Test {
             System.out.println("No pink students on card");
     }
 
+
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();

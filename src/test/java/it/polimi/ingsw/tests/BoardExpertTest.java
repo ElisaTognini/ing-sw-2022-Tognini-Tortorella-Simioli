@@ -12,16 +12,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+/** Class BoardExpertTest tests class BoardExpert. */
+
 public class BoardExpertTest {
 
     private BoardExpert board;
     private ArrayList<Player> players = new ArrayList<Player>();
     Model model;
 
+
+    /** Method setupTest adds two new instances of player to the playerList and then creates and sets up a new
+     * instance of BoardExpert. */
     @Test
-    /* following the execution of the method with the debugger;
-    * instantiation of the three random cards is also tested here -
-    * the methods involved work correctly */
     public void setupTest(){
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -29,9 +31,10 @@ public class BoardExpertTest {
         board.setup();
     }
 
+
+    /** Method assignCoinTest tests whether a coin is assigned for every three students of the same color that are
+     * placed in the dining room*/
     @Test
-    /* tests whether a coin is assigned for every three students of the same
-    * color that are placed in the dining room*/
     public void assignCoinTest(){
         players.add(new Player("player1"));
         players.add(new Player("player2"));
@@ -47,8 +50,9 @@ public class BoardExpertTest {
         }
     }
 
-    /* purchase card test - testing the unavailability of a card and the case in which
-    * a player does not have enough coins, as well as the increasing of the cost of the card after usage*/
+
+    /** Method purchaseCardTest tests purchase of a character card and handles the unavailability of a card, the case
+     * in which a player does not have enough coins, as well as the increasing of the cost of the card after usage. */
     @RepeatedTest(50)
     public void purchaseCardTest(){
         players.add(new Player("player1"));
@@ -62,14 +66,12 @@ public class BoardExpertTest {
         board = new BoardExpert(players, 2,8,3,10, GameMode.EXPERT);
         board.setup();
 
-        /* player earns some coins */
         for(int i = 0; i < 7; i++) {
             if (board.getPlayerSchoolBoard("player1").getEntrance().isColorAvailable(PawnDiscColor.RED)) {
                 board.moveStudent(PawnDiscColor.RED, "player1");
             }
         }
 
-        /* purchasing and using card */
         if(board.checkIfCardPresent(2) && board.getPlayersCoinCounter("player1").checkIfEnoughCoins(
                 board.getCardsCost(2)
         )){
@@ -78,7 +80,6 @@ public class BoardExpertTest {
             board.useCard(param, "player1", 2);
             System.out.println("card 2 purchased; player now has " + board.getPlayersCoinCounter("player1").getCoins() + " coins");
             assertEquals(prevCost+1, board.getCardsCost(2));
-
         }
         else if(!board.checkIfCardPresent(2))
             System.out.println("card 2 not available.");
@@ -86,5 +87,5 @@ public class BoardExpertTest {
             System.out.println("player does not have enough coins");
     }
 
-
 }
+

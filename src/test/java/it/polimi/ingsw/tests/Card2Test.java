@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
+/** Class Card2Test tests class Card2*/
+
 public class Card2Test {
 
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -27,7 +29,6 @@ public class Card2Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(2);
         cards[1] = manager.returnCard(1);
@@ -36,6 +37,10 @@ public class Card2Test {
         board.setExtractedCards(cards);
     }
 
+    /** Method usageTest tests multiple usages of the card and its impact on the game, calling isActionForbidden to make sure
+     * that the action is not forbidden, that the parameters are valid.
+     *
+     * @throws IllegalArgumentException e if the format of the argument passed is wrong. */
     @Test
     public void usageTest(){
         initTest();
@@ -61,7 +66,7 @@ public class Card2Test {
         board.conquerIsland();
         System.out.println(board.getPlayerSchoolBoard("player2").getProfessorTable());
 
-        // second usage
+
         colors = new ArrayList<>();
         colors.add(PawnDiscColor.RED);
         colors.add(PawnDiscColor.YELLOW);
@@ -77,6 +82,10 @@ public class Card2Test {
         System.out.println(board.getPlayerSchoolBoard("player2").getProfessorTable());
     }
 
+    /** Method exceptionTest tests if method useCard correctly throws an exception if the format passed as parameter
+     * is not valid
+     *
+     * @throws IllegalArgumentException e if the format of the argument passed is wrong. */
     @Test
     public void exceptionTest(){
         initTest();
@@ -87,6 +96,9 @@ public class Card2Test {
         }
     }
 
+
+    /** Method forbiddenActionTest passes an array list of colors as parameter and then calls for isActionForbidden
+     * to check if parameters are correct.*/
     @Test
     public void forbiddenActionTest(){
         initTest();
@@ -100,6 +112,8 @@ public class Card2Test {
         assertFalse(board.isActionForbidden(2, param, "player2"));
     }
 
+
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();
