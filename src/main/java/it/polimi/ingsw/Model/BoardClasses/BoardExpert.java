@@ -330,6 +330,13 @@ public class BoardExpert extends Board {
         return false;
     }
 
+    /**
+     * Method setIgnoredInfluence is called when card 9 is used and it allows to ignore the influence of
+     * a specific color indicated as parameter.
+     *
+     * @param color of type PawnDiscColor - color that has to be ignored while calculating influence.
+     * */
+
     public void setIgnoredInfluence(PawnDiscColor color){
         ignoredInfluence = color;
     }
