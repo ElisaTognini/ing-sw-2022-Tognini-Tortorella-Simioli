@@ -22,7 +22,7 @@ public class ClientConnection extends Observable implements Runnable {
     private ObjectInputStream in;
     private boolean active;
     private String nickname;
-    private int matchID;
+    private Integer matchID;
     private boolean matchHasStarted = false;
 
     /** constructor for ClientConnection class, saves references to both the
@@ -34,6 +34,7 @@ public class ClientConnection extends Observable implements Runnable {
         this.socket = socket;
         this.server = server;
         active =  true;
+        matchID = null;
     }
 
     /** ClientConnection class extends Runnable, this method implements the method run
@@ -89,6 +90,8 @@ public class ClientConnection extends Observable implements Runnable {
             out.flush();
         } catch (IOException e) {
             System.err.println("Error while sending message\n");
+            if(server.getWaitingClients().contains(this))
+                server.clearLobby();
             System.out.println(e.getMessage());
         }
     }
@@ -103,9 +106,12 @@ public class ClientConnection extends Observable implements Runnable {
     /** notifies the user that connection is being closed and closes socket,
      * then setting the connection as inactive by setting active to false*/
     public synchronized void closeConnection(){
-        send(new BaseServerMessage(CustomMessage.closingConnection));
+        if(!server.getWaitingClients().contains(this))
+            send(new BaseServerMessage(CustomMessage.closingConnection));
         try{
             socket.close();
+            in.close();
+            out.close();
         } catch (IOException e) {
             System.err.println("Error while closing connection!\n");
         }
@@ -113,7 +119,7 @@ public class ClientConnection extends Observable implements Runnable {
     }
 
     /** this method passes a reference to this instance to the server,
-     * makimg it deregister this connection*/
+     * making it deregister this connection*/
     private void close(){
         closeConnection();
         System.out.println("Deregistering client");
@@ -123,7 +129,7 @@ public class ClientConnection extends Observable implements Runnable {
 
     /** this method requests the number of players for the next match to the user
      * if the user is the first player to connect in said match*/
-    public synchronized int parseNumberOfPlayers() {
+    public synchronized Integer parseNumberOfPlayers() {
         Object read;
         while(true){
             try {
@@ -137,7 +143,7 @@ public class ClientConnection extends Observable implements Runnable {
                 }
             } catch (IOException | ClassNotFoundException  e) {
                 System.err.println(e.getMessage());
-                server.deregisterConnection(this);
+                return  null;
             }
         }
     }
@@ -158,6 +164,7 @@ public class ClientConnection extends Observable implements Runnable {
                 else send(new BaseServerMessage(CustomMessage.errorGameMode));
             } catch (IOException | ClassNotFoundException  e) {
                 System.err.println("Input stream error\n");
+                return null;
             }
         }
     }
@@ -165,7 +172,6 @@ public class ClientConnection extends Observable implements Runnable {
     /** this method requests and parses username for this player */
     public synchronized String parseNickname(){
         Object read;
-        String nickname;
         while(true){
             try {
                 read = in.readObject();
@@ -175,20 +181,21 @@ public class ClientConnection extends Observable implements Runnable {
                 else send(new BaseServerMessage(CustomMessage.invalidFormat));
             } catch (IOException | ClassNotFoundException  e) {
                 System.err.println("Input stream error\n");
+                return null;
             }
         }
     }
 
     /** this method associates the player connection to the match the player
      * is participating in
-     * @param matchID of type int identifies the match*/
-    public void setMatchID(int matchID){
+     * @param matchID of type Integer identifies the match*/
+    public void setMatchID(Integer matchID){
         this.matchID = matchID;
     }
 
     /** this method returns the match the user on this connection is partaking in
-     * @return matchID of type int*/
-    public int getMatchID(){
+     * @return matchID of type Integer*/
+    public Integer getMatchID(){
         return matchID;
     }
 

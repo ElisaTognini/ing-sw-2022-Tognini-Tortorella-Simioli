@@ -17,9 +17,9 @@ public class Server {
     private final int PORT = 12345;
     private ServerSocket serverSocket;
     private ExecutorService executor = Executors.newFixedThreadPool(128);
-    private ArrayList<ClientConnection> waitingClients = new ArrayList<>();
+    private ArrayList<ClientConnection> waitingClients;
     private ArrayList<Match> matches;
-    private int matchPlayers;
+    private Integer matchPlayers;
 
 
     /**
@@ -49,10 +49,16 @@ public class Server {
         if(waitingClients.size() == 1 ){
             c.send(new SetupServerMessage(CustomMessage.requestNumberOfPlayers));
             matchPlayers = c.parseNumberOfPlayers();
+            if(matchPlayers == null)
+                clearLobby();
             c.send(new SetupServerMessage(CustomMessage.requestGameMode));
             gameMode = c.parseGameMode();
+            if(gameMode == null)
+                clearLobby();
             c.send(new SetupServerMessage(CustomMessage.askNickname));
             String nick = c.parseNickname();
+            if(nick == null)
+                clearLobby();
             c.send(new NicknameMessage(nick));
             c.setNickname(nick);
             /* Now creating match*/
@@ -63,6 +69,8 @@ public class Server {
             do {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
+                if(nickChecker == null)
+                    clearLobby();
                 if(isNicknameDuplicated(nickChecker, c)) c.send(new BaseServerMessage(CustomMessage.duplicatedNickname));
             }while(isNicknameDuplicated(nickChecker, c));
             c.send(new NicknameMessage(nickChecker));
@@ -75,6 +83,8 @@ public class Server {
             do {
                 c.send(new SetupServerMessage(CustomMessage.askNickname));
                 nickChecker = c.parseNickname();
+                if(nickChecker == null)
+                    clearLobby();
             }while(isNicknameDuplicated(nickChecker, c));
             c.send(new NicknameMessage(nickChecker));
             c.setNickname(nickChecker);
@@ -152,14 +162,15 @@ public class Server {
      * terminating it for all of them, without having influence on the other concurrent matches*/
     public void deregisterConnection(ClientConnection clientConnection) {
         ArrayList<VirtualView> match = getMatchByID(clientConnection.getMatchID()).getMatchPlayersViews();
-        int id = clientConnection.getMatchID();
+        Integer id = clientConnection.getMatchID();
         for(VirtualView v : match){
             if(v.getClientConnection() != null){
                 v.getClientConnection().closeConnection();
             }
         }
-        matches.remove(getMatchByID(id));
-        System.out.println("now playing " + matches.size() + " concurrent matches");
+        if(id != null) {
+            matches.remove(getMatchByID(id));
+        }
     }
 
     /**
@@ -175,6 +186,20 @@ public class Server {
                 return m;
         }
         throw new IllegalArgumentException();
+    }
+
+    /** getter method for waitingClients list that acts as lobby
+     * @return waitingList of type ArrayList<ClientConnection>*/
+    public ArrayList<ClientConnection> getWaitingClients(){
+        return waitingClients;
+    }
+
+    /** method clears lobby of all waiting clients */
+    public void clearLobby(){
+        for(ClientConnection c : waitingClients){
+            c.closeConnection();
+        }
+        waitingClients.clear();
     }
 
 }
