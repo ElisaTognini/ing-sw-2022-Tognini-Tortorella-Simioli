@@ -50,13 +50,14 @@ public class BoardExpert extends Board {
     }
 
 
-    @Override
+
     /** Override of method roundSetup in Board: calls method from superclass and then sets value of attributes
      * additional_moves, towersOnHold, ignoredInfluence, extra to default values and resets player's professor
      * table to its previous values (only if character card 2 has been played).
      * additional_moves is set to 0 by default and modified only if character card 4 1has been played;
      * towersOnHold and ignoredInfluence are set to 0 by default and changed only if character card 6 has been played;
      * extra is set to null by default and modified only if character card 8 has been played */
+    @Override
     public void roundSetup(){
         super.roundSetup();
         /* setting extras back to default values */

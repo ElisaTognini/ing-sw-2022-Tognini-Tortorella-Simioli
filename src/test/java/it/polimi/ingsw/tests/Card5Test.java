@@ -6,16 +6,19 @@ import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+
+/** Class Card4Test tests class Card4 */
 
 public class Card5Test {
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -33,11 +36,17 @@ public class Card5Test {
         board.setExtractedCards(cards);
     }
 
+    /** Method usageTest tests the usage of the card and its impact on the game;
+     * it covers corner case of more than one no entry tile on the same island and checks if the number of no entry tiles
+     * on the board decrease accordingly to the usage of the no entry tiles.
+     *
+     * @throws IndexOutOfBoundsException e if the integer passed does not correspond to an ID of an existent island.
+     **/
     @Test
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
-        /* covers corner case of more than one no entry tile on the same island*/
+
         for(int i=0; i<4;i++ ) {
             param.setIslandID(3);
             try {
@@ -49,10 +58,16 @@ public class Card5Test {
         assertFalse(board.checkIfEnoughNoEntryTiles());
     }
 
+
+    /** Method forbiddenActionTest sets the ID of the island where the no entry tiles will be added and then tries to
+     * add one to said island 7 times, the first four times it should go successfully, then the other three times action
+     * will be forbidden because there are no no entry tiles available on the board.
+     * Then, it sets the island ID to an invalid value to see if method isActionForbidden works properly for the island
+     * ID too.
+     *
+     **/
     @Test
     public void forbiddenActionTest(){
-        /* to be added: corner case test for when all of the no entry tiles have been placed
-        *  and also to be checked if they are added back to the board once a player goes on the island */
         initTest();
         Parameter param = new Parameter();
         param.setIslandID(2);
@@ -67,12 +82,16 @@ public class Card5Test {
                 System.out.println("out of NE tiles");
             }
         }
+
+        param.setIslandID(13);
+        assertTrue(board.isActionForbidden(5, param, "player1"));
     }
 
+
+    /** Method NEtileRetrievalTest checks if no entry tiles are retrieved correctly when the card is used. */
     @Test
     public void NEtileRetrievalTest(){
         forbiddenActionTest();
-        /* at this point, we have 4 NEtiles on island 2 */
         System.out.println("we have " + board.getIslandList().get(2).getNumberOfNEtiles() + " NE tiles");
         board.setMotherNaturePosition(2);
         board.conquerIsland();
@@ -81,6 +100,7 @@ public class Card5Test {
         assertEquals(2, board.getIslandList().get(2).getNumberOfNEtiles());
     }
 
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();

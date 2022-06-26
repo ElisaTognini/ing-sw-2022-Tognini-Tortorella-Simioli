@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
+/** Class Card4Test tests class Card4*/
+
 public class Card4Test {
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -33,10 +35,12 @@ public class Card4Test {
         board.setExtractedCards(cards);
     }
 
+
+    /** Method usageTest tests the usage of the card and its impact on the game
+     *
+     * @throws IndexOutOfBoundsException e if the integer passed is less than 0 or bigger than 2.
+     **/
     @Test
-    /* test executed with two parameters, one allowed and the other forbidden; the test runs
-    * successfully for the first parameter, while throws an index out of bound exception for the second, as
-    * it should because the player's only allowed to make two additional moves*/
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
@@ -54,15 +58,25 @@ public class Card4Test {
         }
     }
 
+
+    /** Method forbiddenActionTest passes an integer then calls for isActionForbidden to check if parameters are
+     * correct.
+     *
+     **/
     @Test
     public void forbiddenActionTest(){
         initTest();
         Parameter param = new Parameter();
-        param.setMoves(6);
 
+        param.setMoves(6);
         assertTrue(board.isActionForbidden(4, param, "player2"));
+
+        param.setMoves(2);
+        assertFalse(board.isActionForbidden(4, param, "player2"));
     }
 
+
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();
