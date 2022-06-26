@@ -10,15 +10,16 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
-/* in setup, draw 4 students and place them on this card
- *  take 1 student from this card and place it in your dining room.
- *  then, take a new student from the bag and place it on this card */
+import static org.junit.Assert.assertEquals;
+
+/** Class Card11Test tests class Card11*/
+
 public class Card11Test {
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -28,7 +29,6 @@ public class Card11Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(11);
         cards[1] = manager.returnCard(1);
@@ -37,8 +37,15 @@ public class Card11Test {
         board.setExtractedCards(cards);
     }
 
-    @RepeatedTest(10)
+    /** Method usageTest tests the usage of the card and its impact on the game: if the selected color is present among
+     * the ones of the students which are on the card, it prints the player's dining room before and after the card is
+     * used. Moreover, it covers the corner case where the student bag is empty and the card is not refilled after use.
+     *
+     **/
+    @RepeatedTest(5)
     public void usageTest(){
+        int x;
+
         initTest();
 
         Parameter param = new Parameter();
@@ -53,14 +60,29 @@ public class Card11Test {
         {
             System.out.println("action not permitted");
         }
+
+        x = board.getStudentBag().availableStudents();
+        for(int i= 0; i < x ; i++) {
+            board.getStudentBag().drawStudent();
+        }
+
+        assertEquals(0, board.getStudentBag().availableStudents());
+
+        System.out.println(board.getExtractedCards()[0].toStringCard());
+        param.setColor(PawnDiscColor.GREEN);
+        if(!board.isActionForbidden(11, param, "player1")) {
+            board.useCard(param, "player1", 11);
+            System.out.println(board.getExtractedCards()[0].toStringCard());
+        }
+
     }
 
+
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();
         System.out.println(board.getExtractedCards()[0].toStringCard());
     }
-
-    /*to test: last three students remaining with an empty bag.*/
 
 }

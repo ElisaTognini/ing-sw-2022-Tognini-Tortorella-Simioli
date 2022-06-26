@@ -11,13 +11,18 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
-/* the player can choose up to three students on this card to switch with three in their entrance*/
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+/** Class Card7Test tests class Card7 */
+
 public class Card7Test {
 
     BoardExpert board;
     ArrayList<Player> players;
     CharacterCardTemplate[] cards;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
     public void initTest(){
         players = new ArrayList<>();
@@ -35,6 +40,11 @@ public class Card7Test {
         board.setExtractedCards(cards);
     }
 
+    /** Method usageTest tests the usage of the card and its impact on the game: it adds three colors for each array
+     * list of colors, which represent the students to swap, then, if the action is not forbidden, proceeds to swap them
+     * and finally prints to screen the entrance and the students now on the card.
+     *
+     **/
     @RepeatedTest(10)
     public void usageTest(){
         initTest();
@@ -66,6 +76,8 @@ public class Card7Test {
         }
     }
 
+
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();

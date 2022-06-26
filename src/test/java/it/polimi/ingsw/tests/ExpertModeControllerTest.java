@@ -11,11 +11,14 @@ import it.polimi.ingsw.Model.Model;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+/** Class ExpertModeControllerTest tests class ExpertModeController */
+
 public class ExpertModeControllerTest {
 
     private Controller controller;
     private Model model;
 
+    /**Method initTest initialises a new instance of model and controller and starts game*/
     @Test
     public void initTest(){
         String[] nicknames = new String[2];
@@ -26,6 +29,9 @@ public class ExpertModeControllerTest {
         controller.getBaseActionController().startGame();
     }
 
+    /** Method useCardTest simulates a turn where a player moves students and try to purchase a card, giving the
+     * parameters in input. Expert controller checks if the player has enough coins and if the action is
+     * permetted. */
     @RepeatedTest(5)
     public void useCardTest() {
         initTest();

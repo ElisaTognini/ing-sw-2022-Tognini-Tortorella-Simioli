@@ -12,13 +12,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-/* you may switch up to 2 students between your entrance and your dining room */
+/** Class Card10Test tests class Card10*/
+
 public class Card10Test {
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -28,7 +29,6 @@ public class Card10Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(10);
         cards[1] = manager.returnCard(1);
@@ -37,6 +37,11 @@ public class Card10Test {
         board.setExtractedCards(cards);
     }
 
+    /** Method usageTest tests the usage of the card and its impact on the game: it adds three colors for each array
+     * list of colors, which represent the students to swap, then, if the action is not forbidden, proceeds to swap them
+     * and finally prints to screen the entrance and the students now on the card.
+     *
+     * @throws IndexOutOfBoundsException e if there are no students available of selected color in the entrance. */
     @RepeatedTest(10)
     public void usageTest(){
         initTest();
@@ -77,6 +82,10 @@ public class Card10Test {
 
     }
 
+    /** Method forbiddenActionTest checks if the player passed the correct parameters in input and if the two
+     * array lists of colors are of the same size.
+     *
+     *@throws IndexOutOfBoundsException e if there are no students available of selected color in the entrance. */
     @Test
     public void forbiddenActionsTest(){
         initTest();
@@ -106,6 +115,7 @@ public class Card10Test {
         assertTrue(board.isActionForbidden(10, param, "player1"));
     }
 
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();

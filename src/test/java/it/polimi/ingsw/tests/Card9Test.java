@@ -7,17 +7,18 @@ import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 
-/* this card allows to choose a color of student that will add no influence
- *  during the influence calculation of the turn in which the card is played */
+/** Class Card9Test tests class Card9 */
+
 public class Card9Test {
     BoardExpert board;
     ArrayList<Player> players;
     CharacterCardTemplate[] cards;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
     public void initTest(){
         players = new ArrayList<>();
@@ -35,7 +36,11 @@ public class Card9Test {
         board.setExtractedCards(cards);
     }
 
-    @Test
+    /** Method usageTest tests the usage of the card and its impact on the game: firstly, player 1 conquers an island;
+     * then player2 plays this card to cancel pink influence and conquer the island themselves.
+     *
+     **/
+    @RepeatedTest(5)
     public void usageTest(){
         initTest();
         Parameter param = new Parameter();
@@ -71,6 +76,7 @@ public class Card9Test {
         System.out.println("conqueror is " + board.getIslandList().get(board.getMotherNaturePosition()).getOwner().getNickname());
     }
 
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();

@@ -1,9 +1,5 @@
 package it.polimi.ingsw.tests;
 
-/* choose a type of student: every player (including yourself) must return 3 students of that type
- *  from their dining room to the bag. If any player has fewer than 3 students of that type,
- *  return as many students as they have */
-
 import it.polimi.ingsw.Model.BoardClasses.BoardExpert;
 import it.polimi.ingsw.Utils.Enums.GameMode;
 import it.polimi.ingsw.Utils.Enums.PawnDiscColor;
@@ -11,16 +7,21 @@ import it.polimi.ingsw.Model.Expert.CardManager;
 import it.polimi.ingsw.Model.Expert.CharacterCardTemplate;
 import it.polimi.ingsw.Model.Expert.Parameter;
 import it.polimi.ingsw.Model.Player;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+
+/** Class Card12Test tests class Card12*/
 
 public class Card12Test {
 
     BoardExpert board;
     ArrayList<Player> players;
 
+    /** Method initTest tests the initialisation of the cards */
     @Test
-    //testing the initialization of the card
     public void initTest(){
         CharacterCardTemplate[] cards;
         players = new ArrayList<>();
@@ -30,7 +31,6 @@ public class Card12Test {
         board.setup();
         CardManager manager = new CardManager(board);
 
-        //in the actual game there will always be three different cards
         cards = new CharacterCardTemplate[3];
         cards[0] = manager.returnCard(12);
         cards[1] = manager.returnCard(1);
@@ -39,7 +39,11 @@ public class Card12Test {
         board.setExtractedCards(cards);
     }
 
-    @Test
+    /** Method usageTest tests the usage of the card and its impact on the game: firstly, each player moves a student
+     three students of selected color (or as many as they have, if there are less than three of that color in the
+     entrance); then, if action is not forbidden, it calls for useCard.
+     **/
+    @RepeatedTest(5)
     public void usageTest(){
         initTest();
         int i = 3;
@@ -59,8 +63,12 @@ public class Card12Test {
         if(!board.isActionForbidden(12, param, "player2"))
             board.useCard(param, "player2", 12);
 
+        for(Player p : players){
+            assertEquals(0, board.getPlayerSchoolBoard(p.getNickname()).getDiningRoom().influenceForProf(PawnDiscColor.BLUE));
+        }
     }
 
+    /** Method toStringCardTest checks if toStringCard prints the correct info about the card selected. */
     @Test
     public void toStringCardTest(){
         initTest();
