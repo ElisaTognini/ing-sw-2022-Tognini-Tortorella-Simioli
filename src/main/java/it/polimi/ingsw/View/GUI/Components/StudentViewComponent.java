@@ -5,10 +5,22 @@ import it.polimi.ingsw.View.GUI.MainGUIController;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class StudentViewComponent is used to handle student pawns in GUI.
+ *
+ * @see ImageView
+ * */
 public class StudentViewComponent extends ImageView {
     private PawnDiscColor color;
     private String source;
 
+    /**
+     * Constructor StudentViewComponent creates a new StudentViewComponent instance, specifying
+     * the color of the student, and its source (e.g. "entrance", "cloud"...).
+     *
+     * @param studentColor of type PawnDiscColor - student color.
+     * @param source of type String - source.
+     * */
     public StudentViewComponent(PawnDiscColor studentColor, String source){
         this.color = studentColor;
         this.source = source;
@@ -25,12 +37,15 @@ public class StudentViewComponent extends ImageView {
         this.setOnMouseClicked(mouseEvent -> {
             MainGUIController.setColor(studentColor);
             MainGUIController.setStudentSource(source);
-            if(MainGUIController.getChosenCard() != 0) {
-                expertStudentSelector(MainGUIController.getChosenCard());
-            }
         });
     }
 
+    /**
+     * Method colorSetter assigns to a student pawn an image with its color,
+     * which is passed as parameter.
+     *
+     * @param color of type PawnDiscColor - student color.
+     * */
     private void colorSetter(PawnDiscColor color){
         this.setStyle("-fx-border-color: #FFFFFF");
         switch(color){
@@ -53,37 +68,5 @@ public class StudentViewComponent extends ImageView {
         this.setFitHeight(15);
         this.setFitWidth(15);
         this.setStyle("-fx-border-color: #FFFFFF");
-    }
-
-    private void expertStudentSelector(int cardId){
-        switch(cardId) {
-            case 1:
-                if(source.equals("1")){
-                    MainGUIController.getParameter().setColor(color);
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-        }
     }
 }
