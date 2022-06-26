@@ -6,7 +6,8 @@ import java.io.Serializable;
  * one of the players plays an assistant card in game, so that the information
  * can be displayed and every other player is able to predict Mother Nature's path
  * As this message is sent through socket, this class implements Serializable.
- * @see Serializable*/
+ * @see Serializable
+ * @see ServerMessage*/
 
 public class PlayedCardMessage implements Serializable, ServerMessage {
     private String owner;

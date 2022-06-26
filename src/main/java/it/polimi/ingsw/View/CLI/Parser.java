@@ -10,7 +10,8 @@ import java.util.Scanner;
 /** class parser listens for keyboard input from user on CLI. This class
  * is kept running on a parallel thread so that both updates from server and user's keyboard
  * can be accommodated with no synchronization conflicts.
- * @see Runnable*/
+ * @see Runnable
+ * @see java.util.Observable */
 
 public class Parser extends Observable implements Runnable{
 

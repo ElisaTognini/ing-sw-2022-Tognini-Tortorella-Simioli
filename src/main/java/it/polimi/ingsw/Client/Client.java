@@ -98,21 +98,20 @@ public class Client extends Observable {
      * @param socketIn - of type ObjectInputStream - references the input received.
      *
      * @return the Thread t that reads the object.
+     *
+     * @see Thread
      * */
 
     public Thread asyncReadFromSocket(ObjectInputStream socketIn) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while(active) {
-                        Object input = socketIn.readObject();
-                        setChanged();
-                        notifyObservers(input);
-                    }
-                } catch (IOException | ClassNotFoundException e) {
-                    setActive(false);
+        Thread t = new Thread(() -> {
+            try {
+                while(active) {
+                    Object input = socketIn.readObject();
+                    setChanged();
+                    notifyObservers(input);
                 }
+            } catch (IOException | ClassNotFoundException e) {
+                setActive(false);
             }
         });
         return t;
@@ -122,6 +121,8 @@ public class Client extends Observable {
      * Getter method getNetworkHandler returns the NetworkHandler that is handling the connection of this client to the server.
      *
      * @return the networkHandler (of type NetworkHandler) of this Client object.
+     *
+     * @see NetworkHandler
      * */
 
     public NetworkHandler getNetworkHandler() {

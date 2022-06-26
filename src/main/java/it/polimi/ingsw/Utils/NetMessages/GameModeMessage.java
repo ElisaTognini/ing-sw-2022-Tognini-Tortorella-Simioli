@@ -7,7 +7,9 @@ import java.io.Serializable;
 /** this message is sent from the server to the users participating in a
  * match when said match starts. It only contains the game mode (simple or expert).
  * As this message is sent through sockets, this class implements Serializable
- * @see Serializable*/
+ * @see Serializable
+ * @see ServerMessage
+ * */
 
 public class GameModeMessage implements Serializable, ServerMessage {
 

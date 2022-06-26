@@ -42,7 +42,9 @@ public class AssistantCardDeck {
      *
      * @param cardID - of type int - the card ID of the card chosen by the player
      * @return AssistantCard - the reference to the actual card with corresponding power factor; otherwise
-     *      it returns null if the card was not found or the given ID was invalid */
+     *      it returns null if the card was not found or the given ID was invalid
+     * @see AssistantCard
+     */
     public AssistantCard drawCard(int cardID){
         AssistantCard toRet;
         for(AssistantCard c : cards){

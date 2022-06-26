@@ -42,7 +42,10 @@ public abstract class CharacterCardTemplate {
     /** Method useCard allows the usage of the card, and it is overridden in cards that need parameters.
      *
      * @param o of type Object - the parameters passed by the player
-     * @param nickname of type String - the nickname of the player */
+     * @param nickname of type String - the nickname of the player
+     *
+     * @throws IllegalArgumentException when the provided object is not a character card.
+     * */
     public abstract void useCard(Object o, String nickname) throws IllegalArgumentException;
 
 
@@ -53,6 +56,8 @@ public abstract class CharacterCardTemplate {
      * @param nickname of type String - the player's nickname.
      *
      * @return boolean - true if action is forbidden, false otherwise
+     *
+     * @throws IllegalArgumentException when an inappropriate object is provided.
      * */
     public abstract boolean checkIfActionIsForbidden(Object o, String nickname) throws IllegalArgumentException;
 

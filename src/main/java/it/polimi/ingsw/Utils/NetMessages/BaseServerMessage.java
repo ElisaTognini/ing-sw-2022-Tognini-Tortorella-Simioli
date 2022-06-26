@@ -5,7 +5,9 @@ import java.io.Serializable;
  * for notifying players of errors in game (not your turn, action is forbidden...) and for
  * notifying players last round or game are starting.
  * As this message is sent through socket, this class implements Serializable.
- * @see Serializable*/
+ * @see Serializable
+ * @see ServerMessage
+ * */
 public class BaseServerMessage implements ServerMessage, Serializable {
     private String message;
 

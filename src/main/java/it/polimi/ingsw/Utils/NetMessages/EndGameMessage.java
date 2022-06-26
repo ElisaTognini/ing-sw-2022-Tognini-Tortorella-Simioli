@@ -6,7 +6,9 @@ import java.io.Serializable;
  * match is over. This message notifies all players of the end of the game, and it
  * contains information about the winner.
  * As this message is sent through sockets, this class implements Serializable
- * @see Serializable*/
+ * @see Serializable
+ * @see ServerMessage
+ * */
 
 public class EndGameMessage implements Serializable, ServerMessage {
 

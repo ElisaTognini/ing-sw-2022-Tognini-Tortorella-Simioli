@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * These messages are sent each time the model updates itself, so that changes to the game space
  * can be seen by the players with changes to the view (both CLI and GUI)
  * As these messages are sent via sockets, therefore this class implements Serializable
- * @see Serializable*/
+ * @see Serializable
+ * @see ServerMessage */
 
 public class ViewUpdateMessage implements ServerMessage, Serializable {
 

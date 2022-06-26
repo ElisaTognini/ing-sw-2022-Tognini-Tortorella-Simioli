@@ -10,7 +10,9 @@ import java.util.ArrayList;
  * As this message is sent through sockets by the server to players in a match, this
  * class implements Serializable.
  * @see Serializable
- * @see ViewUpdateMessage*/
+ * @see ViewUpdateMessage
+ * @see ServerMessage
+ * */
 
 public class ExpertViewUpdateMessage implements ServerMessage, Serializable {
     private ViewUpdateMessage viewUpdate_base;

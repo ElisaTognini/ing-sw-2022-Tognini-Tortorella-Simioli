@@ -2,7 +2,10 @@ package it.polimi.ingsw.Model.BasicElements;
 import it.polimi.ingsw.Model.Player;
 
 /** AssistantCard contains the power factor of the card and the number of movements Mother Nature can perform
-* when the card is played.*/
+* when the card is played.
+ *
+ * @see java.lang.Comparable
+ * */
 
 public final class AssistantCard implements Comparable{
 
