@@ -16,6 +16,16 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Class GUI allows to play using the graphic interface.
+ * In here is where the initial scenes and the main game scene are set.
+ * It contains a private class InternalGUI with methods that take input regarding nickname,
+ * gamemode and number of players, display messages and errors,
+ * put in place the different elements of the game.
+ *
+ * @see javafx.application.Application
+ * @see java.util.Observer
+ * */
 public class GUI extends Application implements Observer{
 
     Stage primaryStage;
@@ -27,8 +37,19 @@ public class GUI extends Application implements Observer{
     ViewUpdateMessage baseView;
     ExpertViewUpdateMessage expertView;
 
+    /**
+     * Private class InternalGUI contains methods that take user input, display messages
+     * and set up the elements of the game.
+     *
+     * @see View
+     * */
     private class InternalGUI extends View {
 
+        /**
+         * Method displaySetupMessage is used to show server setup messages in GUI.
+         *
+         * @param message of type SetupServerMessage - server setup message.
+         * */
         @Override
         public void displaySetupMessage(SetupServerMessage message) {
             if(message.getSetupServerMessage().equals(CustomMessage.welcomeMessage)){
@@ -45,6 +66,12 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        /**
+         * Method displayError is used to show an error message in GUI, coming from the server,
+         * when a player tries to use a nickname that has already been chosen by another player.
+         *
+         * @param message of type BaseServerMessage - server error message.
+         * */
         @Override
         public void displayError(BaseServerMessage message){
             if(message.getMessage().equals(CustomMessage.duplicatedNickname)){
@@ -56,6 +83,13 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        /**
+         * Method updateGameBoard refreshes the main game scene showing updates in board after each action
+         * performed by a player.
+         * It is called when playing in either simple or expert mode.
+         *
+         * @param message of type ViewUpdateMessage - message containing info on updated board.
+         * */
         @Override
         public void updateGameBoard(ViewUpdateMessage message){
             if(baseView == null){
@@ -92,6 +126,14 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        /**
+         * Method updateGameBoard refreshes the main game scene showing updates in board after each action
+         * performed by a player, when playing in expert mode. It is called after updateGameBoard() to show
+         * additional updates regarding elements that are not present in simple mode.
+         *
+         * @param message of type ExpertViewUpdateMessage - message containing info on updated elements
+         *                that only belong to expert mode.
+         * */
         @Override
         public void updateGameBoardExpert(ExpertViewUpdateMessage message) {
             if(expertView == null){
@@ -110,21 +152,45 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        /**
+         * Method setMode is used to set the mode in which a match is going to be played (simple or expert).
+         *
+         * @param gameMode of type GameModeMessage - message that requests the game mode.
+         * */
         @Override
         public void setMode(GameModeMessage gameMode){
             mode = gameMode.getMode();
         }
 
+        /**
+         * Method setNickname is used to set a player's nickname when passed as input.
+         *
+         * @param nickname of type NicknameMessage - player's nickname.
+         * */
         @Override
         public void setNickname(NicknameMessage nickname){
             nick = nickname.getNickname();
         }
 
+        /**
+         * Method setPlayedCard calls a method in main GUI controller that informs the player
+         * of the assistant card chosen by the opponent(s).
+         *
+         * @param message of type PlayedCardMessage - message containing information on the assistant card
+         *                chosen by another player.
+         * */
         @Override
         public void setPlayedCard(PlayedCardMessage message){
             Platform.runLater(() -> mainController.showOpponentplayedCard(message));
         }
 
+        /**
+         * Method displayTurnChange informs the player when a turn change occurs, letting them know
+         * whose turn it is at that point.
+         *
+         * @param message of type TurnChangeMessage - message containing information about the player in turn when
+         *                a turn change occurs.
+         * */
         @Override
         public void displayTurnChange(TurnChangeMessage message){
             if(mainController != null) {
@@ -132,11 +198,22 @@ public class GUI extends Application implements Observer{
             }
         }
 
+        /**
+         * Method displayEndOfGame informs the player when the game is over,
+         * displaying the nickname of the winner as well.
+         *
+         * @param message of type EndGameMessage - end of game message containing winner nickname.
+         * */
         @Override
         public void displayEndOfGame(EndGameMessage message){
             Platform.runLater(() -> mainController.winningScreen(message.getWinner()));
         }
 
+        /**
+         * Method displayNewRoundMessage is called at the beginning of a new turn.
+         *
+         * @param message of type NewRoundMessage - new round message.
+         * */
         @Override
         public void displayNewRoundMessage(NewRoundMessage message){
             Platform.runLater(() -> mainController.clearPlayedCardLabels());
@@ -146,10 +223,20 @@ public class GUI extends Application implements Observer{
 
     private InternalGUI internalGUI;
 
+    /**
+     * Main method calls the start method that starts the game using the graphic interface.
+     * */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Method start sets up the initial scene, shown before the main game scene.
+     *
+     * @param stage of type Stage - game stage.
+     *
+     * @see Application#start(Stage)
+     * */
     @Override
     public void start(Stage stage){
 
@@ -166,6 +253,12 @@ public class GUI extends Application implements Observer{
 
     }
 
+    /**
+     * Method setupStartingScene sets up and shows the inital scenes requesting ip, nickname,
+     * number of players and gamemode.
+     *
+     * @throws IOException when an I/O exception occurs.
+     * */
     private void setupStartingScene() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameStartScene.fxml"));
         Parent root = loader.load();
@@ -183,6 +276,12 @@ public class GUI extends Application implements Observer{
         primaryStage.show();
     }
 
+    /**
+     * Method setupMainGameScene sets up the scene that allows the user to interact with
+     * the elements of the game.
+     *
+     * @throws IOException when an I/O exception occurs.
+     * */
     public void setupMainGameScene(ViewUpdateMessage message) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainGameScene.fxml"));
         Parent root = loader.load();
@@ -194,29 +293,44 @@ public class GUI extends Application implements Observer{
         primaryStage.setMaximized(true);
     }
 
+    /**
+     * Method initClient initializes a client and connects it to the server at the given ip.
+     *
+     * @param ip of type String - server ip.
+     * */
     public void initClient(String ip){
         client = new Client(ip, 12345);
         client.addObserver(internalGUI);
         initialController.addObserver(client.getNetworkHandler());
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                client.run();
-            }
-        });
+        Thread t = new Thread(() -> client.run());
         t.start();
     }
 
+    /**
+     * Method update calls method initClient when ip address is received.
+     *
+     * @see Observer#update(Observable, Object)
+     * */
     @Override
     public void update(Observable o, Object arg) {
             initClient((String) arg);
             initialController.deleteObserver(this);
     }
 
+    /**
+     * Getter method getNickname returns a player's nickname.
+     *
+     * @return String - nickname
+     * */
     public static String getNickname(){
         return nick;
     }
 
+    /**
+     * Getter method getMode returns chosen gamemode.
+     *
+     * @return GameMode - gamemode.
+     * */
     public static GameMode getMode(){
         return mode;
     }
