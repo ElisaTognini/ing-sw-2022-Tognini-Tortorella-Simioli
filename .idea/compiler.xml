@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ing-sw-2022-Tognini-Tortorella-Simioli" target="8" />
+      <module name="ing-sw-2022-Tognini-Tortorella-Simioli" target="17" />
       <module name="softeng-GC19" target="8" />
     </bytecodeTargetLevel>
   </component>
