@@ -13,6 +13,12 @@ import javafx.scene.layout.VBox;
 
 import java.util.Observable;
 
+/**
+ * Class GUIControllerInitialPhase is the controller class for the first scenes in GUI, used for initialization
+ * (where ip, number of players, mode and nicknames are requested).
+ *
+ * @see java.util.Observable
+ * */
 public class GUIControllerInitialPhase extends Observable {
 
     String ipAddress;
@@ -29,6 +35,12 @@ public class GUIControllerInitialPhase extends Observable {
     private TextField nicknameTextField = new TextField();
     private Label errorLabel = new Label();
 
+    /**
+     * Method getIPAddress shows a TextField to get from user input the ip of the server to which
+     * the client has to connect.
+     *
+     * @param ke of type KeyEvent - key event that detects when enter key gets pressed.
+     * */
     public void getIPAddress(KeyEvent ke){
         if(ke.getCode().equals(KeyCode.ENTER)){
             ipAddress = ipTextField.getText();
@@ -38,10 +50,22 @@ public class GUIControllerInitialPhase extends Observable {
         }
     }
 
+    /**
+     * Method displayWelcome displays a welcome message to the player who just connected.
+     *
+     * @param welcome of type SetupServerMessage - welcome message.
+     * */
     public void displayWelcome(SetupServerMessage welcome){
         initialSceneLabel.setText(welcome.getSetupServerMessage());
     }
 
+    /**
+     * Method requestPlayerNumber shows a label indicating that the player has to select the desired number
+     * of players (either two or three) of the match they are initiating, by clicking one of the two buttons
+     * indicating the numbers 2 and 3.
+     *
+     * @param message of type SetupServerMessage - setup message requesting number of players.
+     * */
     public void requestPlayerNumber(SetupServerMessage message) {
         initialSceneLabel.setText(message.getSetupServerMessage());
         twoPlayers.setOnAction(actionEvent -> {
