@@ -79,7 +79,11 @@ public class GUIControllerInitialPhase extends Observable {
         vBox.getChildren().addAll(twoPlayers, threePlayers);
     }
 
-
+    /**
+     * Method requestPlayerNumber shows a label indicating that the player has to select the desired number
+     * of players (either two or three) of the match they are initiating, by clicking one of the two buttons
+     * indicating the numbers 2 and 3.
+     * */
     public void requestGameMode() {
         initialSceneLabel.setText("Choose the gamemode:");
         simpleMode.setOnAction(actionEvent -> {
@@ -93,6 +97,12 @@ public class GUIControllerInitialPhase extends Observable {
         vBox.getChildren().addAll(simpleMode, expertMode);
     }
 
+    /**
+     * Method requestNickname shows a label asking the player for their desired nickname.
+     * The player writes the nickname in a TextField, and it is sent to the server when enter key gets pressed.
+     *
+     * @param message of type SetupServerMessage - setup message requesting the nickname.
+     * */
     public void requestNickname(SetupServerMessage message) {
         vBox.getChildren().add(nicknameTextField);
         initialSceneLabel.setText(message.getSetupServerMessage());
@@ -104,12 +114,24 @@ public class GUIControllerInitialPhase extends Observable {
         });
     }
 
+    /**
+     * Method displayDuplicatedNickname displays an error when a player tries to choose
+     * a nickname that was already chosen by another player.
+     *
+     * @param message of type BaseServerMessage - server message indicating error.
+     * */
     public void displayDuplicatedNickname(BaseServerMessage message) {
         errorLabel.setId("errorLabel");
         errorLabel.setText(message.getMessage());
         vBox.getChildren().add(errorLabel);
     }
 
+    /**
+     * Method makeNumberOfPlayersMessage sets the number of players of the match to the number
+     * that was passed as parameter.
+     *
+     * @param number of type int - number of players.
+     * */
     private void makeNumberOfPlayersMessage(int number){
         BaseUserMessage playerNumber = new BaseUserMessage();
         playerNumber.setNumberOfPlayers(number);
@@ -117,6 +139,11 @@ public class GUIControllerInitialPhase extends Observable {
         notifyObservers(playerNumber);
     }
 
+    /**
+     * Method makeModeMessage sets the mode of the match to the one that was passed as parameter.
+     *
+     * @param mode of type String - game mode.
+     * */
     private void makeModeMessage(String mode){
         BaseUserMessage gameMode = new BaseUserMessage();
         gameMode.setGameMode(mode);
@@ -124,6 +151,11 @@ public class GUIControllerInitialPhase extends Observable {
         notifyObservers(gameMode);
     }
 
+    /**
+     * Method makeNicknameMessage sets the nickname of a player to the one that was passed as parameter.
+     *
+     * @param nickname of type String - player nickname.
+     * */
     private void makeNicknameMessage(String nickname){
         BaseUserMessage nicknameMessage = new BaseUserMessage();
         nicknameMessage.setNickname(nickname);

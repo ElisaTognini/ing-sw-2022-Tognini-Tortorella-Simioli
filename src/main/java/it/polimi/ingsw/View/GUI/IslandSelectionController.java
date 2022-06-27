@@ -9,12 +9,22 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
 
+/**
+ * Class IslandSelectionController is used to handle islands for character cards 3 and 5.
+ * It allows the player to select the island on which they want the character card action to be performed.
+ * */
 public class IslandSelectionController {
 
     @FXML AnchorPane anchorPane;
 
     @FXML Button doneButton;
 
+    /**
+     * Method drawIslands shows, in a new stage, the islands in a similar way to the ones on the main game scene,
+     * allowing the player to recognize and select the one on which they want the character card action to be performed.
+     *
+     * @param islandList of type ArrayList - islands to display.
+     * */
     public void drawIslands(ArrayList<IslandViewComponent> islandList){
 
         int distance = 100;
@@ -53,6 +63,9 @@ public class IslandSelectionController {
 
     }
 
+    /**
+     * Method doneClicked closes the selection stage when "done" button is clicked.
+     * */
     public void doneClicked(){
         MainGUIController.closeCardStage();
     }
