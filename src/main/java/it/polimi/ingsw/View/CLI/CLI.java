@@ -21,7 +21,7 @@ public class CLI extends View implements Observer {
     public CLI(){
         parser = new Parser();
         thread = new Thread(parser);
-        System.out.println(AnsiColors.MAGENTA + AnsiColors.COOL_TITLE + AnsiColors.ANSI_RESET);
+        System.out.println(AnsiColors.COOL_TITLE);
     }
 
     /** override for super class View's displaySetupMessage method.
@@ -31,7 +31,7 @@ public class CLI extends View implements Observer {
     @Override
     public void displaySetupMessage(SetupServerMessage message){
         if (message.getSetupServerMessage().equals(CustomMessage.welcomeMessage)) {
-            System.out.println(AnsiColors.BLUE + message.getSetupServerMessage() + AnsiColors.ANSI_RESET);
+            System.out.println(message.getSetupServerMessage());
         }
         else if(message.getSetupServerMessage().equals(CustomMessage.requestNumberOfPlayers)){
             System.out.println("\n" + message.getSetupServerMessage());
@@ -42,7 +42,7 @@ public class CLI extends View implements Observer {
             parseGameMode();
         }
         else if(message.getSetupServerMessage().equals(CustomMessage.askNickname)){
-            System.out.println(AnsiColors.ANSI_YELLOW + "\n" + message.getSetupServerMessage() + AnsiColors.ANSI_RESET);
+            System.out.println("\n" + message.getSetupServerMessage());
             parseNickname();
         }
     }
@@ -319,7 +319,7 @@ public class CLI extends View implements Observer {
      * @param message of type BaseServerMessage contains the type of error*/
     @Override
     public void displayError(BaseServerMessage message){
-        System.out.println(AnsiColors.ANSI_RED + "\n" + message.getMessage() + AnsiColors.ANSI_RESET);
+        System.out.println("\n" + message.getMessage());
         if(message.getMessage().equals(CustomMessage.closingConnection)){
             System.out.println("thank you for playing!");
             System.exit(0);

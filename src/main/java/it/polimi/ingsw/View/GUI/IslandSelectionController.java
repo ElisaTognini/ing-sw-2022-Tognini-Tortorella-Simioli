@@ -15,7 +15,6 @@ public class IslandSelectionController {
 
     @FXML Button doneButton;
 
-    // dimensions to be checked and fixed
     public void drawIslands(ArrayList<IslandViewComponent> islandList){
 
         int distance = 100;

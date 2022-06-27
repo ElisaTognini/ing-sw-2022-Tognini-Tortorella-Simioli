@@ -58,7 +58,7 @@ public class Parser extends Observable implements Runnable{
             i = scanner.nextInt();
             if (i <= 0 || i > 5) {
                 flag = true;
-                System.out.println(AnsiColors.ANSI_RED + "invalid action type.\n" + AnsiColors.ANSI_RESET);
+                System.out.println("invalid action type.\n");
             }
         } while (flag == true);
         selectAction(i);
@@ -82,7 +82,7 @@ public class Parser extends Observable implements Runnable{
                 i = scanner.nextInt();
                 if (i <= 0 || i > 4) {
                     flag = true;
-                    System.out.println(AnsiColors.ANSI_RED + "invalid action type.\n" + AnsiColors.ANSI_RESET);
+                    System.out.println("invalid action type.\n");
                 }
             } while (flag == true);
             selectAction(i);
@@ -130,7 +130,7 @@ public class Parser extends Observable implements Runnable{
             i = scanner.nextInt();
             if(i < 0 || i > 10){
                 flag = true;
-                System.out.println(AnsiColors.ANSI_RED + "choose a valid card number!\n" + AnsiColors.ANSI_RESET);
+                System.out.println("choose a valid card number!\n");
             }
         }while(flag == true);
 
@@ -181,7 +181,7 @@ public class Parser extends Observable implements Runnable{
                 i = scanner.nextInt();
                 if (i < 0 || i > 11) {
                     flag = true;
-                    System.out.println(AnsiColors.ANSI_RED + "choose a valid IslandID\n" + AnsiColors.ANSI_RESET);
+                    System.out.println("choose a valid IslandID\n");
                 }
             } while (flag == true);
         }catch(Exception e){
@@ -222,7 +222,7 @@ public class Parser extends Observable implements Runnable{
                 i = scanner.nextInt();
                 if (i < 0 || i > 2) {
                     flag = true;
-                    System.out.println(AnsiColors.ANSI_RED + "choose a valid cloud number!\n" + AnsiColors.ANSI_RESET);
+                    System.out.println("choose a valid cloud number!\n");
                 }
             } while (flag == true);
 

@@ -3,12 +3,6 @@ package it.polimi.ingsw.View.CLI;
 /** storage class for visual elements for CLI */
 
 public class AnsiColors {
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String	MAGENTA	= "\u001B[35m";
-    public static final String	BLUE = "\u001B[34m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_RED = "\u001B[31m";
 
     public static final String COOL_TITLE = "\n" +
             "      :::::::::: :::::::::  :::::::::::     :::     ::::    ::: ::::::::::: :::   :::  :::::::: \n" +

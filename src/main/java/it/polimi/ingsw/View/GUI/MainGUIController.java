@@ -698,4 +698,8 @@ public class MainGUIController extends Observable {
             }
         }
     }
+
+    public void hideTextArea() {
+        expertCardTextArea.setVisible(false);
+    }
 }
