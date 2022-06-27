@@ -5,6 +5,7 @@ import it.polimi.ingsw.View.GUI.GUI;
 
 import java.util.Scanner;
 
+/** app class for Client*/
 public class ClientApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
