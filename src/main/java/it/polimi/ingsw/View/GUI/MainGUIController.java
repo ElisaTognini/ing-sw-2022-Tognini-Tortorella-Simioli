@@ -31,6 +31,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
+/**
+ * Class MainGUIController represents the main GUI controller. It is used to handle the main scene of the game,
+ * therefore to handle matches.
+ *
+ * @see Observable
+ * */
 public class MainGUIController extends Observable {
 
     @FXML private AnchorPane anchorPane;
@@ -71,6 +77,15 @@ public class MainGUIController extends Observable {
     static int chosenCard = 0;
     static Parameter param;
 
+    /**
+     * Method drawIslands is used to show the islands on the main game scene. This method redraws the islands, so that
+     * two or more islands become one in case of merge, and adds mother nature on one of them, specified by
+     * mnPosition parameter.
+     * A click on an island allows the player (if permitted) to select it as the destination to move a student to.
+     *
+     * @param islands of type ArrayList - islands to draw.
+     * @param mnPosition of type int - mother nature position.
+     * */
     public void drawIslands(ArrayList<String> islands, int mnPosition){
 
         int distance = 300;
@@ -127,6 +142,12 @@ public class MainGUIController extends Observable {
         addMotherNature(mnPosition);
     }
 
+    /**
+     * Method refreshIslands is used to refresh any elements present on every island, after any user action.
+     *
+     * @param islands of type ArrayList - islands.
+     * @param mnPosition of type int - mother nature position.
+     * */
     public void refreshIslands(ArrayList<String> islands, int mnPosition){
         for(int i = 0; i < islands.size(); ++i){
             if(i < islandList.size()) {
@@ -139,6 +160,11 @@ public class MainGUIController extends Observable {
         addMotherNature(mnPosition);
     }
 
+    /**
+     * Method drawSchoolBoards shows the schoolboard(s) belonging to the opponent(s).
+     *
+     * @param schoolBoards of type ArrayList - schoolboard(s) of the opponent(s).
+     * */
     public void drawSchoolBoards(ArrayList<String> schoolBoards){
 
         for(String sb : schoolBoards){
@@ -166,6 +192,12 @@ public class MainGUIController extends Observable {
 
     }
 
+    /**
+     * Method drawClouds shows the clouds on the main game scene.
+     * A click on a cloud allows the player to select it and take to their entrance the student pawns which it hosts.
+     *
+     * @param clouds of type ArrayList - clouds.
+     * */
     public void drawClouds(ArrayList<String> clouds){
 
         cloudHBox.setLayoutX(anchorPane.getWidth()/2 + 120);
@@ -196,6 +228,12 @@ public class MainGUIController extends Observable {
 
     }
 
+    /**
+     * Method drawDeck shows the assistant card deck belonging to the player.
+     * A click on the desired assistant card in deck allows the player to use it.
+     *
+     * @param decks - decks.
+     * */
     public void drawDeck(ArrayList<String> decks){
 
         deckHolder.setLayoutX(13);
@@ -218,6 +256,12 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method addStudents is used to add student pawns to the gridpanes of the islands, specifying their color and
+     * modifying their source to "island", since they are now set on an island.
+     *
+     * @param c of type String - string to be split, indicating how many students of each color are on an island.
+     * */
     public void addStudents(String c, IslandViewComponent island){
         int i = 0;
         String[] colors = c.split(" ");
@@ -242,12 +286,24 @@ public class MainGUIController extends Observable {
         }
     }
 
+
+    /**
+     * Method addMotherNature sets mother nature to its updated position on specified island.
+     *
+     * @param i of type int - island representing new mother nature position.
+     * */
     private void addMotherNature(int i){
         try {
             islandList.get(i).add(new MNViewComponent(), 0, 0);
         } catch(Exception e) {}
     }
 
+    /**
+     * Method addTowers adds towers, if any, to conquered islands.
+     *
+     * @param island of type IslandViewComponent - island on which towers are to be added.
+     * @param s of type String - string to be split in order to get number of towers.
+     * */
     private void addTowers(IslandViewComponent island, String s){
         String[] data = s.split(" ");
 
@@ -261,6 +317,11 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method studentsOnClouds refreshes the students to be picked from clouds, setting their source to "cloud".
+     *
+     * @param clouds of type ArrayList - clouds on which students are to be added.
+     * */
     public void studentsOnClouds(ArrayList<String> clouds){
         for(int i = 0; i < clouds.size(); i++){
             cloudGrids.get(i).getChildren().clear();
@@ -275,6 +336,12 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method refreshDeck refreshes the player's assistant card deck, so that they can only see the cards
+     * that are still available.
+     *
+     * @param deck of type String - string to be split containing assistant cards owned by the player.
+     * */
     public void refreshDeck(String deck){
         deckHolder.getChildren().clear();
         String[] cards = deck.split(" ");
@@ -288,6 +355,12 @@ public class MainGUIController extends Observable {
         makeCardsClickable();
     }
 
+    /**
+     * Method refreshSchoolBoards calls methods to refresh either the main schoolboard
+     * or the one(s) belonging to the opponent(s).
+     *
+     * @param schoolBoards - of type ArrayList - schoolboards.
+     * */
     public void refreshSchoolBoards(ArrayList<String> schoolBoards){
         for(String sb : schoolBoards){
             String[] schoolboard = sb.split("\n");
@@ -299,6 +372,11 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method refreshMainSB refreshes the main schoolboard, showing changes in students, towers and owned professors.
+     *
+     * @param mySchoolBoard of type String[] - main schoolboard.
+     * */
     private void refreshMainSB(String[] mySchoolBoard) {
 
         int col = 0;
@@ -386,6 +464,12 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method refreshOpponentSchoolboard refreshes the schoolboard belonging to the opponent,
+     * showing changes in students and towers.
+     *
+     * @param opponentSchoolBoard of type String[] - opponent schoolboard.
+     * */
     private void refreshOpponentSchoolboard(String[] opponentSchoolBoard){
         for(Node n : opponentSBHbox.getChildren()){
             if(n instanceof OpponentSchoolBoardViewComponent){
@@ -407,11 +491,21 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method showTurnChange shows the nickname of the player currently playing at each turn change.
+     *
+     * @param message of type TurnChangeMessage - turn change message.
+     * */
     public void showTurnChange(TurnChangeMessage message){
         myNickLabel.setText("currently playing: " + message.getCurrentPlayer());
         myNickLabel.setTextFill(new Color(0.5, 1, 0.97, 1));
     }
 
+    /**
+     * Method showOpponentplayedCard shows, inside a label, the assistant card chosen by the opponent for that round.
+     *
+     * @param message of type PlayedCardMessage - message containing info about the assistant card played.
+     * */
     public void showOpponentplayedCard(PlayedCardMessage message){
         for(Node n : playedCardsVBox.getChildren()){
             if(n instanceof PlayedCardLabel){
@@ -423,10 +517,21 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method setMyNickLabel sets a player's nickname on a label on their screen.
+     *
+     * @param nickname of type String - player's nickname.
+     * */
     public void setMyNickLabel(String nickname){
         myNickLabel.setText(nickname + " 's screen");
     }
 
+    /**
+     * Method refreshCoins rewrites the number of coins owned by the player, updating it if any coins have been earned.
+     * [Expert mode only]
+     *
+     * @param coinCounters of type ArrayList - coin counters.
+     * */
     public void refreshCoins(ArrayList<String> coinCounters){
         for(String cc : coinCounters){
             String[] counter = cc.split(" ");
@@ -436,6 +541,13 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method drawExpertCards shows the character cards that were picked for this match, adding a description
+     * of their effects on a label and placing students on cards that need to have students on.
+     * [Expert mode only]
+     *
+     * @param cards of type ArrayList - character cards.
+     * */
     public void drawExpertCards(ArrayList<String> cards){
 
         studentGrids = new ArrayList<>();
@@ -482,15 +594,29 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Getter method getParameter returns a parameter, which is used to handle the effects of character cards.
+     * [Expert mode only]
+     *
+     * @return Parameter - parameter.
+     * */
     public static Parameter getParameter() {
         return param;
     }
 
+    /**
+     * Method showError is used to show error messages coming from the server.
+     *
+     * @param message of type BaseServerMessage - server error message.
+     * */
     public void showError(BaseServerMessage message){
         myNickLabel.setText(message.getMessage());
         myNickLabel.setTextFill(new Color(1, 0, 0.15, 1));
     }
 
+    /**
+     * Method makeCardsClickable is an utility method needed to detect which assistant card gets clicked.
+     * */
     public void makeCardsClickable(){
         for(Node n : deckHolder.getChildren()){
             if(n instanceof AssistantCardViewComponent){
@@ -503,6 +629,9 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method makeDRClickable allows to place a student in dining room after having clicked on it.
+     * */
     private void makeDRClickable(){
         DRsurface.setOnMouseClicked(mouseEvent -> {
             if(studentSource != null) {
@@ -515,6 +644,11 @@ public class MainGUIController extends Observable {
         });
     }
 
+    /**
+     * Method refreshStudentsOnCard is used to refresh the students placed on  a character card when playing in expert mode.
+     *
+     * @param students of type ArrayList - students on card.
+     * */
     public void refreshStudentsOnCard(ArrayList<String> students){
         for(Node n : expertCardsHBox.getChildren()){
             if(n instanceof StackPane){
@@ -536,6 +670,13 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method refreshCardDescriptions is used to show the description of a character card and
+     * its cost, which gets updated if the card has been used.
+     * [Expert mode only]
+     *
+     * @param cards of type ArrayList - character cards.
+     * */
     public void refreshCardDescriptions(ArrayList<String> cards){
 
         int i = 0;
@@ -548,6 +689,12 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method winningScreen removes from scene all the elements of the game and sets a label showing
+     * the nickname of the winner of the match.
+     *
+     * @param winner of type String - winner's nickname.
+     * */
     public void winningScreen(String winner){
         anchorPane.getChildren().clear();
         Label winnerLabel = new Label("This game is over!" +
@@ -559,30 +706,49 @@ public class MainGUIController extends Observable {
         anchorPane.getChildren().add(winnerLabel);
     }
 
-    public static String getStudentSource(){
-        return studentSource;
-    }
-
+    /**
+     * Getter method getColor returns the color of a student or professor.
+     *
+     * @return PawnDiscColor - color.
+     * */
     public static PawnDiscColor getColor(){
         return color;
     }
 
+    /**
+     * Setter method setColor sets the color of a student or professor to the one specified as parameter.
+     *
+     * @param c of type PawnDiscColor - color to be set.
+     * */
     public static void setColor(PawnDiscColor c){
         color = c;
     }
 
+    /**
+     * Setter method setStudentSource sets the source of a student pawn to the one specified as parameter.
+     *
+     * @param source of type String - source to be set.
+     * */
     public static void setStudentSource(String source){
         studentSource = source;
     }
 
+    /**
+     * Getter method getIslands returns the ArrayList containing the islands.
+     *
+     * @return ArrayList - islands ArrayList.
+     * */
     public static ArrayList<IslandViewComponent> getIslands(){
         return islandList;
     }
 
-    public static int getChosenCard(){
-        return chosenCard;
-    }
-
+    /**
+     * Method collectColor is used to show a new stage in which the player can select the color of a student,
+     * in order to achieve an effect from a character card.
+     * [Expert mode only]
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void collectColor() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/studentSelectionScene.fxml"));
         Parent root = loader.load();
@@ -593,6 +759,13 @@ public class MainGUIController extends Observable {
         }catch(IllegalStateException e){}
     }
 
+    /**
+     * Method collectIslandId is used to show a new stage in which the player can select a specific island,
+     * in order to achieve an effect from a character card.
+     * [Expert mode only]
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void collectIslandId() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/islandSelectionScene.fxml"));
         Parent root = loader.load();
@@ -605,6 +778,12 @@ public class MainGUIController extends Observable {
         }catch (IllegalStateException e){}
     }
 
+    /**
+     * Method addNoEntryTile is used to place a no-entry tile on an island when a player decides to do it.
+     * [Expert mode only]
+     *
+     * @param islands of type ArrayList - islands.
+     * */
     public void addNoEntryTile(ArrayList<Integer> islands){
         for(Integer i : islands){
             ImageView noEntryTile = new ImageView(new Image("/deny_island_icon.png"));
@@ -614,6 +793,13 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method collectMoves is used to show a new stage in which the player can click a button that allows them
+     * to select the number of additional steps that mother nature will take.
+     * [Expert mode only]
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void collectMoves() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ExtraStepsSelectionController.fxml"));
         Parent root = loader.load();
@@ -624,6 +810,12 @@ public class MainGUIController extends Observable {
         }catch(IllegalStateException e){}
     }
 
+    /**
+     * Method collectMoves is used to show a new stage in which the player can select the color of the professor(s)
+     * they want to take control of for the turn, when using a specific character card.
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void collectProfessors() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseProfessorScene.fxml"));
         Parent root = loader.load();
@@ -635,6 +827,13 @@ public class MainGUIController extends Observable {
 
     }
 
+    /**
+     * Method collectStudentList is used to show a new stage from which it's possible to collect student colors,
+     * in order to achieve an effect from a character card.
+     * [Expert mode only]
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void collectStudentList() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/studentListSelectionScene.fxml"));
         Parent root = loader.load();
@@ -645,6 +844,12 @@ public class MainGUIController extends Observable {
         }catch(IllegalStateException e){}
     }
 
+    /**
+     * Method handleCard is called when a character card is used, and based on its id different methods are called
+     * in order to obtain the desired character card effect.
+     *
+     * @throws IOException if an I/O exception occurs.
+     * */
     public void handleCard() throws IOException {
 
         CharacterCardMessage message = new CharacterCardMessage();
@@ -687,10 +892,17 @@ public class MainGUIController extends Observable {
         chosenCard = 0;
     }
 
+    /**
+     * Method closeCardStage closes the new stage that gets opened in order to take in any needed parameters
+     * that were required to use a character card.
+     * */
     public static void closeCardStage(){
         cardStage.close();
     }
 
+    /**
+     * Method clearPlayedCardLabels clears the labels that show the assistant cards played by every player in a round.
+     * */
     public void clearPlayedCardLabels() {
         for(Node n : playedCardsVBox.getChildren()){
             if(n instanceof PlayedCardLabel){
@@ -699,6 +911,10 @@ public class MainGUIController extends Observable {
         }
     }
 
+    /**
+     * Method hideTextArea is used when playing in simple mode in order to hide the text area that in expert mode
+     * is used to show the descriptions of character cards.
+     * */
     public void hideTextArea() {
         expertCardTextArea.setVisible(false);
     }
