@@ -10,7 +10,6 @@ public class CLI extends View implements Observer {
 
     private Parser parser;
     private Thread thread;
-    private String[][] board;
     private String nickname;
     private String currentPlayer;
     private ArrayList<String> cardsPlayed = new ArrayList<>();
