@@ -7,7 +7,7 @@ This project brings Eriantys, a children board game by Cranio Creations, to life
 
 It was developed by a team of three people, Elisa Tognini, Mara Tortorella and Emilia Simioli, as a Java 17 project with Maven Integration.
 
-The game works on Windows, MacOS, and Linux.
+The game works on Windows, MacOS, and Linux (Although GUI visualization is not optimal in this OS).
 
 ## Overview 
 
@@ -58,11 +58,15 @@ To properly understand this part of the readme, basic knowledge of Eriantys game
 
 #### basic rules playing aid
 
-after moving three students during a player's turn, mother nature will move on its own and conquered or merged islands will become visible after picking a cloud tile.
+To move students, simply click on a student in your entrance and then click either on an island or on your dining room. To pick a cloud, simply click on it. 
+
+After moving three students during a player's turn, mother nature will move on its own and conquered or merged islands will become visible after picking a cloud tile.
 
 After picking a cloud tile, the turn of the current player ends and either the next turn or a new round starts.
 
 #### expert rules playing aid
+To choose a character card, click on it. 
+
 Any character card that modifies influence or Mother Nature's path will NOT have a visible effect if chosen after moving the third student of the turn; as per game rules, Mother Nature moves after three students have been removed from a player's entrance. After that, influence on the island MN lands on is automatically calculated, therefore certain character cards will not modify the outcome if chosen after influence evaluation has already happened. 
 
 When playing using the graphic interface, the player will be requested to take some actions depending on the character card(s) they choose during the game:   
