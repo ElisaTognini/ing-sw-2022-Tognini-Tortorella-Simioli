@@ -1,4 +1,6 @@
 # ERIANTYS
+![](https://img.dungeondice.it/49229-large_default/eriantys.jpg)
+
 ## The Project
 
 This project brings Eriantys, a children board game by Cranio Creations, to life as a Java multiplayer videogame. 
