@@ -50,7 +50,7 @@ After the client being launched, the user is asked to choose which interface (GU
 
 ## Tests
 
-Project was tested using JUnit unit tests. Running all written tests with coverage results in 82% coverage for Controller package, and 96% coverage for pack Model, as required in projet requirements. 
+Project was tested using JUnit unit tests. Running all written tests with coverage results in 82% coverage for Controller package, and 96% coverage for package Model, as required in project requirements. 
 
 ## In-Game notes
 
