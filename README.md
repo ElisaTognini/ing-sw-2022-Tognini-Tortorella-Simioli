@@ -35,7 +35,7 @@ The Client can be launched using the executable jar Client.jar. (note: as noted 
 java -jar Client.jar
 ```
 
-After the client being launched, the user is asked to choose which interface (GUI or CLI) they want to play with and then they have to insert the IP address that the server is currenlty running on.
+After the client being launched, the user is asked to choose which interface (GUI or CLI) they want to play with and then they have to insert the IP address that the server is currently running on.
 
 ## Implemented Functionalities
 
